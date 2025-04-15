@@ -21,12 +21,15 @@ document.addEventListener('DOMContentLoaded', () => {
         const navLinks = mainNav.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                if (mainNav.classList.contains('active')) {
-                    mainNav.classList.remove('active');
-                    const icon = menuButton.querySelector('i');
-                    icon.classList.remove('fa-times');
-                    icon.classList.add('fa-bars');
-                    menuButton.setAttribute('aria-label', 'Open Menu');
+                // Only close if the link is not for the current page's section
+                if (!link.getAttribute('href').startsWith('#') || window.location.pathname === '/' || window.location.pathname === '/index.html') {
+                     if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active');
+                        const icon = menuButton.querySelector('i');
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                        menuButton.setAttribute('aria-label', 'Open Menu');
+                    }
                 }
             });
         });
@@ -69,20 +72,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const selectedPaymentRadio = orderForm.querySelector('input[name="paymentMethod"]:checked');
                 const instaUsernameInput = orderForm.querySelector('#instaUsername'); // Specific to instagram form
 
-                // Validation
+                // Basic Validation (can be enhanced)
                 if (!selectedPackageRadio) {
                     alert("Please select a package.");
                     return;
                 }
-                 // Specific validation for Instagram username
-                if (instaUsernameInput && instaUsernameInput.value.trim() === "") {
+                 if (instaUsernameInput && instaUsernameInput.value.trim() === "") {
                      alert("Please enter your Instagram Username.");
                      instaUsernameInput.focus();
                      return;
                  }
                  if (!clientNameInput || clientNameInput.value.trim() === "") {
                     alert("Please enter your name.");
-                    clientNameInput.focus();
+                    if(clientNameInput) clientNameInput.focus();
                     return;
                 }
                 if (!selectedPaymentRadio) {
@@ -93,15 +95,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Get form data
                 const duration = selectedPackageRadio.value;
                 const price = selectedPackageRadio.getAttribute('data-price');
-                const clientName = clientNameInput.value.trim();
+                const clientName = clientNameInput ? clientNameInput.value.trim() : 'N/A';
                 const paymentMethod = selectedPaymentRadio.value;
-                const instagramUsername = instaUsernameInput ? instaUsernameInput.value.trim() : null; // Get username if field exists
+                const instagramUsername = instaUsernameInput ? instaUsernameInput.value.trim() : null;
 
                 // Construct WhatsApp message
-                const whatsappNumber = "256762193386"; // Replace with your actual number
+                const whatsappNumber = "256762193386"; // Your WhatsApp Number
                 let message = `Order for Cartelug:\n\n`;
                 message += `*Service:* ${serviceName}\n`;
-                if (instagramUsername) { // Add username only if it exists
+                if (instagramUsername) {
                     message += `*Instagram Username:* ${instagramUsername}\n`;
                 }
                 message += `*Package:* ${duration}\n`;
@@ -112,11 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Encode and redirect
                 const encodedMessage = encodeURIComponent(message);
                 const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-                window.location.href = whatsappURL; // Or window.open(whatsappURL, '_blank');
+
+                // Redirect (consider window.open for new tab)
+                 window.location.href = whatsappURL;
+                 // window.open(whatsappURL, '_blank'); // Opens in new tab
+
+                 // Optional: Reset form after trying to send
+                 // orderForm.reset();
             });
         }
     };
-    // Setup redirects if the forms exist on the current page
+    // Setup redirects for all order forms
     setupOrderFormRedirect('netflix-order-form', 'Netflix');
     setupOrderFormRedirect('prime-order-form', 'Prime Video');
     setupOrderFormRedirect('spotify-order-form', 'Spotify');
@@ -126,56 +134,56 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof Swiper !== 'undefined' && document.querySelector('.testimonial-swiper')) {
         try {
             const testimonialSwiper = new Swiper('.testimonial-swiper', {
-                // Optional parameters
                 direction: 'horizontal',
                 loop: true,
                 slidesPerView: 1,
                 spaceBetween: 30,
                 grabCursor: true,
-                autoHeight: true, // Adjusts slider height to content
-
-                // If we need pagination
+                autoHeight: true,
                 pagination: {
                     el: '.swiper-pagination',
                     clickable: true,
                 },
-
-                // Navigation arrows
                 navigation: {
                     nextEl: '.swiper-button-next',
                     prevEl: '.swiper-button-prev',
                 },
-
-                // Accessibility
                  a11y: {
                      prevSlideMessage: 'Previous slide',
                      nextSlideMessage: 'Next slide',
                      paginationBulletMessage: 'Go to slide {{index}}',
                  },
+                 autoplay: { // Optional autoplay
+                    delay: 5000, // 5 seconds
+                    disableOnInteraction: false, // Keep playing after user interaction
+                 },
             });
         } catch (error) {
             console.error("Swiper initialization failed:", error);
+            // Optionally display a fallback message if Swiper fails
+            const swiperContainer = document.querySelector('.testimonial-swiper');
+            if (swiperContainer) {
+                swiperContainer.innerHTML = '<p style="text-align: center; color: var(--text-medium);">Testimonials could not be loaded.</p>';
+            }
         }
     }
 
 
     // --- Contact Page Issue Card WhatsApp Redirect Logic ---
-    const issueButtons = document.querySelectorAll('.issue-card[data-service]'); // Select only buttons with data-service
+    // Select buttons specifically designed for WhatsApp redirect (using data attributes)
+    const issueButtons = document.querySelectorAll('.issue-card[data-service][data-issue]');
     issueButtons.forEach(button => {
-        // Check if this button is the one we modified (it won't have data-service anymore)
-        // Or more robustly, check if its parent doesn't contain the specific new elements.
-        // For simplicity here, we assume the button element itself implies it's NOT the modified card.
          button.addEventListener('click', () => {
             const service = button.getAttribute('data-service');
             const issue = button.getAttribute('data-issue');
-            const whatsappNumber = "256762193386"; // CONFIRM THIS NUMBER
+            const whatsappNumber = "256762193386"; // Your WhatsApp Number
             let message = `Help Request for Cartelug:\n\n`;
             message += `*Service:* ${service}\n`;
             message += `*Issue:* ${issue}\n\n`;
             message += `Please describe the problem in detail:`;
             const encodedMessage = encodeURIComponent(message);
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-            window.open(whatsappURL, '_blank'); // Open in new tab
+            window.open(whatsappURL, '_blank'); // Open in new tab is usually better for support links
         });
     });
 
@@ -187,12 +195,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (paymentEscalateBtn && paymentInitialDiv && paymentApologyDiv) {
         paymentEscalateBtn.addEventListener('click', () => {
-            // Hide the initial instructions and the button itself
-            paymentInitialDiv.style.display = 'none';
-
-            // Show the apology message
-            paymentApologyDiv.classList.remove('hidden'); // Use class manipulation
-            // Or use: paymentApologyDiv.style.display = 'block';
+            paymentInitialDiv.style.display = 'none'; // Hide initial instructions
+            paymentApologyDiv.classList.remove('hidden'); // Show apology/resolution message
+            paymentApologyDiv.style.display = 'block'; // Ensure it's visible if hidden class doesn't use !important
         });
     }
     // --- End of Netflix Payment Issue Card Logic ---
@@ -205,3 +210,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 }); // End of DOMContentLoaded listener
+
+
+// --- Preloader ---
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Add a small delay before starting fade-out for smoother visual effect
+        setTimeout(() => {
+            preloader.classList.add('hidden');
+        }, 150); // Adjust delay if needed (e.g., 150ms)
+
+        // Optional: Remove the preloader from DOM after transition ends to free up resources
+        preloader.addEventListener('transitionend', function handleTransitionEnd(event) {
+            // Ensure the event is for the opacity or visibility transition
+             if (event.propertyName === 'opacity' || event.propertyName === 'visibility') {
+                if (preloader.classList.contains('hidden')) {
+                   // preloader.remove(); // Uncomment this line if you want to remove it completely
+                   // Remove the listener to prevent it firing multiple times if other transitions occur
+                   preloader.removeEventListener('transitionend', handleTransitionEnd);
+                }
+             }
+        });
+    }
+});
+// --- End Preloader ---
