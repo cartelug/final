@@ -1,276 +1,355 @@
-/* === Improved Renewal Page Styles (renew.css) === */
+/* === Multi-Step Renewal Page Styles (renew.css) === */
 
 /* Section Setup */
-.renewal-section-v2 {
+.renewal-section-v3 {
     min-height: calc(100vh - 80px - 150px); /* Adjust based on header/footer */
     display: flex;
-    flex-direction: column; /* Align items vertically */
-    align-items: center;
-    justify-content: center; /* Center content vertically */
-    padding: 60px 0; /* Reduced top/bottom padding */
-    background: var(--dark-bg); /* Use dark background */
+    align-items: flex-start; /* Align container top */
+    justify-content: center;
+    padding: 60px 0 80px 0; /* More padding bottom */
+    background: var(--dark-bg);
+    overflow: hidden; /* Prevent scrollbars during transitions */
 }
 
-.renewal-section-v2 .container {
-    max-width: 900px; /* Slightly wider container */
+.renewal-container {
+    max-width: 750px; /* Optimal width for steps */
     width: 100%;
-    text-align: center;
-}
-
-/* Titles and Subtitles */
-.renewal-title-v2 {
-    font-size: clamp(2rem, 5vw, 2.6rem);
-    color: #fff;
-    margin-bottom: 10px;
-    font-weight: 700;
-}
-
-.renewal-subtitle-v2 {
-    font-size: 1.1rem;
-    color: var(--text-medium);
-    margin-bottom: 40px;
-}
-
-/* Service Selection Grid */
-.service-selection-grid-v2 {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjust min width */
-    gap: 30px; /* Slightly reduced gap */
-    margin-bottom: 40px; /* Space before details section */
-}
-
-.service-card-v2 {
     background-color: var(--card-bg);
-    border: 2px solid var(--card-border);
-    padding: 35px 25px;
-    border-radius: 18px; /* More rounded */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 25px;
+    padding: 40px 50px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+    position: relative; /* Needed for step positioning */
+    min-height: 500px; /* Ensure container has height */
+}
+
+/* Step Styling */
+.renewal-step {
+    position: absolute; /* Position steps on top of each other */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; /* Take full container height */
+    padding: 40px 50px; /* Match container padding */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(30px); /* Start off-screen right */
+    transition: opacity 0.5s ease-out, visibility 0s linear 0.5s, transform 0.5s ease-out;
+    display: flex;
+    flex-direction: column; /* Structure step content vertically */
+}
+
+.renewal-step.active-step {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0); /* Slide in */
+    transition: opacity 0.5s ease-out 0.1s, visibility 0s linear 0s, transform 0.5s ease-out 0.1s; /* Delay entry */
+    z-index: 10; /* Bring active step to front */
+}
+
+/* Styling for previous step animating out */
+.renewal-step.exiting-step {
+    opacity: 0;
+    transform: translateX(-30px); /* Slide out left */
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+    z-index: 5;
+}
+
+/* Step Header */
+.step-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 35px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative; /* For back button absolute positioning if needed */
+}
+
+.step-number {
+    background-color: var(--cta-blue);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    box-shadow: 0 3px 8px rgba(0, 122, 255, 0.3);
+}
+
+.step-title {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    color: #fff;
+    font-weight: 600;
+    margin: 0;
+    flex-grow: 1; /* Take available space */
+    text-align: left;
+}
+.step-title .dynamic-service-name {
+    font-weight: 700;
+    /* Color can be set via JS or specific classes if needed */
+}
+
+/* Back Button in Header */
+.step-back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-medium);
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin-right: 5px; /* Space before number */
+}
+.step-back-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+
+/* Step Content Area */
+.step-content {
+    flex-grow: 1; /* Allow content to fill space */
+    overflow-y: auto; /* Add scroll if content overflows */
+    padding-right: 10px; /* Space for scrollbar */
+    margin-right: -10px; /* Offset padding */
+}
+
+/* Step Footer Area */
+.step-footer {
+    margin-top: 30px; /* Space above footer */
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: flex-end; /* Align buttons right by default */
+    align-items: center;
+}
+/* Specific footer alignment for step 3 */
+#step-3 .step-footer {
+    justify-content: center; /* Center start over button */
+}
+
+
+/* --- Step 1: Service Selection --- */
+.service-selection-grid-v3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 25px;
+    padding-top: 10px; /* Add some space */
+}
+
+.service-card-v3 {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    padding: 30px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    text-align: center;
 }
 
-.service-card-v2:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
-/* Styling for the selected card (Standard Highlight) */
-.service-card-v2.selected {
-    /* --- Use a standard highlight color --- */
-    /* Option 1: Use your site's primary CTA blue */
-    border-color: var(--cta-blue);
-    background-color: rgba(0, 122, 255, 0.1); /* Light blue tint */
-    box-shadow: 0 0 25px rgba(0, 122, 255, 0.3); /* Blue glow */
-
-    /* Option 2: Use a neutral grey highlight (uncomment below and comment Option 1) */
-    /*
-    border-color: #aaaaaa;
+.service-card-v3:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 0 20px rgba(200, 200, 200, 0.2);
-    */
-
-    /* --- Keep the transform effect --- */
-    transform: translateY(-5px) scale(1.02);
-}
-/* Use service color for border when selected */
-.service-card-v2.selected[data-color] {
-    border-color: var(--service-color); /* JS will set this variable */
-    box-shadow: 0 0 25px var(--service-shadow-color); /* JS will set this variable */
-    background-color: var(--service-bg-color); /* JS will set this variable */
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-
-.service-card-v2 img {
-    max-height: 60px; /* Slightly larger logos */
+.service-card-v3 img {
+    max-height: 55px;
     width: auto;
     object-fit: contain;
     margin-bottom: 5px;
-    filter: grayscale(30%); /* Slightly desaturate inactive logos */
-    transition: filter 0.3s ease;
 }
 
-.service-card-v2:hover img,
-.service-card-v2.selected img {
-    filter: grayscale(0%); /* Full color on hover/select */
-}
-
-
-.service-card-v2 span {
+.service-card-v3 span {
     font-weight: 600;
     color: var(--text-light);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
 }
 
-/* --- Details Section --- */
-.details-section-v2 {
-    background-color: rgba(28, 28, 28, 0.85); /* Slightly different bg */
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid var(--card-border);
-    padding: 35px 40px;
-    margin-top: 20px; /* Space from selection grid */
-    text-align: left;
-    overflow: hidden; /* Contain elements */
-    /* Transition for smooth appearance */
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: max-height 0.7s ease-out, opacity 0.5s ease-out 0.1s, transform 0.5s ease-out 0.1s, padding 0.5s ease-out;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
-}
-
-.details-section-v2.visible {
-    max-height: 1000px; /* Large enough to accommodate content */
-    opacity: 1;
-    transform: translateY(0);
-    padding: 35px 40px; /* Ensure padding is applied */
-}
-
-.details-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-    color: var(--text-medium);
-    font-size: 1.1rem;
-    text-align: center;
-    border: 2px dashed rgba(255, 255, 255, 0.1);
-    border-radius: 15px;
-}
-.details-placeholder i {
-    margin-right: 10px;
-    color: var(--cta-blue);
-    font-size: 1.3rem;
-}
-
-
-.details-content {
-    /* Content initially hidden, JS shows it */
-}
-
-.details-title {
-    text-align: center;
-    font-size: clamp(1.6rem, 4vw, 2rem);
-    color: #fff;
-    margin-bottom: 35px;
-    font-weight: 700;
-    padding-bottom: 15px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.details-title #details-service-name {
-    color: var(--cta-blue); /* Default, JS overrides */
-}
-/* Service-specific title colors */
-.details-title.netflix #details-service-name { color: var(--netflix-red); }
-.details-title.spotify #details-service-name { color: var(--spotify-green); }
-.details-title.prime #details-service-name { color: var(--prime-blue); }
-
-
-/* Sub-section styling */
-.details-pricing,
-.details-payment,
-.details-confirmation {
-    margin-bottom: 35px;
-}
-.details-confirmation {
-    margin-bottom: 10px; /* Less margin at the end */
-}
-
-
-.details-pricing h3,
-.details-payment h3,
-.details-confirmation h3 {
-    font-size: 1.2rem;
-    color: var(--text-light);
-    margin-bottom: 15px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    font-weight: 600;
-}
-
-/* Pricing List */
-#details-pricing-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+/* --- Step 2: Duration Selection --- */
+.duration-selection-options {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    padding-top: 10px;
+}
+.loading-text {
+    color: var(--text-medium);
+    font-style: italic;
+    text-align: center;
+    padding: 20px;
 }
 
-#details-pricing-list li {
+/* Custom Radio Button Styling */
+.duration-option {
+    display: block; /* Each option on its own line */
+}
+.duration-option input[type="radio"] {
+    opacity: 0; /* Hide actual radio */
+    position: absolute;
+    width: 1px;
+    height: 1px;
+}
+.duration-option label {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Space out duration and price */
     align-items: center;
-    padding: 8px 0;
-    font-size: 1rem;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+    padding: 18px 25px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: rgba(255, 255, 255, 0.05);
+    font-weight: 500;
+    font-size: 1.05rem;
 }
-#details-pricing-list li:last-child { border-bottom: none; }
-
-#details-pricing-list .duration { color: var(--text-medium); }
-#details-pricing-list .price {
+.duration-option label .duration-text {
+    color: var(--text-light);
+}
+.duration-option label .price-text {
     font-weight: 700;
     color: #fff;
-    background-color: rgba(0,0,0,0.25);
+    background-color: rgba(0,0,0,0.2);
     padding: 4px 10px;
     border-radius: 6px;
-    font-size: 0.95rem;
+    font-size: 1rem;
 }
 
-/* Payment Methods */
-.payment-method-v2 {
+.duration-option label:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Checked state */
+.duration-option input[type="radio"]:checked + label {
+    border-color: var(--cta-blue);
+    background-color: rgba(0, 122, 255, 0.15);
+    box-shadow: 0 0 15px rgba(0, 122, 255, 0.2);
+}
+.duration-option input[type="radio"]:checked + label .duration-text {
+    font-weight: 700;
+}
+.duration-option input[type="radio"]:focus + label { /* Accessibility focus */
+     box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.4);
+}
+
+/* Next Button */
+.step-next-btn {
+    background-color: var(--cta-blue);
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.step-next-btn:hover:not(:disabled) {
+    background-color: var(--cta-blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 122, 255, 0.3);
+}
+.step-next-btn:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+.step-next-btn i {
+    transition: transform 0.3s ease;
+}
+.step-next-btn:hover:not(:disabled) i {
+    transform: translateX(3px);
+}
+
+
+/* --- Step 3: Payment & Confirmation --- */
+.payment-confirmation-content {
+    padding-top: 10px;
+}
+.payment-instruction-summary {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 30px;
+    background-color: rgba(0, 122, 255, 0.1);
+    padding: 15px 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 122, 255, 0.2);
+    text-align: center;
+}
+.payment-instruction-summary strong {
+    font-weight: 700;
+    color: #fff; /* White for emphasis */
+}
+
+.payment-methods-v3 {
+    margin-bottom: 35px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-method-v3 {
     display: flex;
     align-items: center;
     gap: 15px;
     background-color: rgba(255, 255, 255, 0.05);
     padding: 15px 20px;
     border-radius: 12px;
-    margin-bottom: 15px;
-    border: 1px solid transparent; /* Placeholder for potential highlight */
 }
-.payment-method-v2:last-child { margin-bottom: 0; }
 
-.payment-icon-v2 {
+.payment-icon-v3 {
     max-height: 30px;
     width: auto;
     flex-shrink: 0;
 }
 
-.payment-info-v2 {
+.payment-info-v3 {
     display: flex;
     flex-direction: column;
     line-height: 1.4;
-    flex-grow: 1; /* Take remaining space */
+    flex-grow: 1;
 }
-
-.payment-info-v2 span:first-child { /* Network name */
+.payment-info-v3 span:first-child {
     font-size: 0.9rem;
     color: var(--text-medium);
 }
-
-.payment-info-v2 small { /* Account name */
+.payment-info-v3 small {
     font-size: 0.85rem;
     color: var(--text-medium);
     margin-top: 2px;
 }
 
-/* Wrapper for number and copy button */
-.number-copy-wrapper {
+.number-copy-wrapper-v3 {
     display: flex;
     align-items: center;
     gap: 10px;
     margin: 2px 0;
 }
-
-.number-copy-wrapper strong { /* Phone number */
+.number-copy-wrapper-v3 strong {
     font-size: 1.15rem;
     font-weight: 700;
     color: #fff;
@@ -278,7 +357,7 @@
 }
 
 /* Copy Button */
-.copy-btn {
+.copy-btn-v3 {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--text-medium);
@@ -291,33 +370,35 @@
     align-items: center;
     gap: 4px;
 }
-
-.copy-btn:hover {
+.copy-btn-v3:hover {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
 }
-.copy-btn:active {
+.copy-btn-v3:active {
     transform: scale(0.95);
 }
-.copy-btn .fa-check { /* Style for checkmark after copy */
+.copy-btn-v3 .fa-check {
     color: var(--spotify-green);
 }
 
-
-/* Confirmation Section */
-.details-confirmation p {
+/* WhatsApp Confirmation */
+.whatsapp-confirmation-v3 {
+    text-align: center;
+    margin-top: 30px;
+}
+.whatsapp-confirmation-v3 p {
     color: var(--text-medium);
     margin-bottom: 20px;
     font-size: 0.95rem;
     line-height: 1.6;
 }
 
-.whatsapp-button-v2 {
+.whatsapp-button-v3 {
     background-color: var(--whatsapp-green);
-    width: 100%; /* Full width button */
-    max-width: 400px; /* Max width */
-    margin: 0 auto; /* Center */
-    display: flex; /* Use flex to center icon/text */
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
@@ -326,55 +407,78 @@
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
     font-weight: 600;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    transition: all 0.3s ease;
 }
-
-.whatsapp-button-v2:hover {
+.whatsapp-button-v3:hover {
     background-color: #1fbc5d;
     box-shadow: 0 7px 20px rgba(37, 211, 102, 0.3);
     transform: translateY(-3px);
 }
 
+/* Start Over Button */
+.step-start-over-btn {
+    background: none;
+    border: 1px solid var(--text-medium);
+    color: var(--text-medium);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.step-start-over-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: #fff;
+}
+.step-start-over-btn i {
+    transition: transform 0.4s ease;
+}
+.step-start-over-btn:hover i {
+    transform: rotate(-360deg);
+}
+
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
-    .renewal-section-v2 { padding: 50px 0; }
-    .service-selection-grid-v2 {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 25px;
+    .renewal-container, .renewal-step {
+        padding: 30px 30px; /* Reduce padding */
     }
-    .details-section-v2 { padding: 30px 25px; }
-    .details-title { font-size: 1.6rem; margin-bottom: 30px;}
-    .details-pricing h3, .details-payment h3, .details-confirmation h3 { font-size: 1.1rem; }
-    #details-pricing-list li { font-size: 0.95rem; }
-    .payment-method-v2 { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .payment-icon-v2 { margin-bottom: 5px; }
-    .number-copy-wrapper strong { font-size: 1.1rem; }
+    .step-title { font-size: 1.5rem; }
+    .service-selection-grid-v3 {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 20px;
+    }
+    .duration-option label { padding: 15px 20px; font-size: 1rem; }
+    .payment-instruction-summary { font-size: 1rem; padding: 12px 15px;}
+    .payment-method-v3 { flex-direction: column; align-items: flex-start; gap: 8px; }
 }
 
 @media (max-width: 480px) {
-    .renewal-section-v2 { padding: 40px 0; }
-    .renewal-title-v2 { font-size: 1.8rem; }
-    .renewal-subtitle-v2 { font-size: 1rem; margin-bottom: 30px; }
-    .service-selection-grid-v2 {
-        grid-template-columns: 1fr 1fr; /* Force two columns */
-        gap: 15px;
+    .renewal-section-v3 { padding: 40px 0 60px 0; }
+    .renewal-container, .renewal-step {
+        padding: 25px 15px; /* Further reduce padding */
+        border-radius: 20px;
     }
-    .service-card-v2 { padding: 25px 15px; }
-    .service-card-v2 img { max-height: 50px; }
-    .service-card-v2 span { font-size: 1rem; }
-
-    .details-section-v2 { padding: 25px 15px; margin-top: 30px;}
-    .details-title { font-size: 1.5rem; margin-bottom: 25px;}
-    .details-pricing h3, .details-payment h3, .details-confirmation h3 { font-size: 1.05rem; }
-    #details-pricing-list li { flex-direction: column; align-items: flex-start; gap: 4px; }
-    #details-pricing-list .price { margin-top: 2px; font-size: 0.9rem;}
-    .payment-method-v2 { padding: 12px 15px; }
-    .number-copy-wrapper strong { font-size: 1.05rem; }
-    .copy-btn { padding: 3px 6px; font-size: 0.75rem; }
-    .details-confirmation p { font-size: 0.9rem; }
-    .whatsapp-button-v2 { font-size: 1rem; padding: 12px 20px; }
+    .step-header { gap: 10px; margin-bottom: 25px; }
+    .step-number { width: 30px; height: 30px; font-size: 0.9rem; }
+    .step-back-btn { width: 30px; height: 30px; font-size: 0.9rem; }
+    .step-title { font-size: 1.25rem; }
+    .service-selection-grid-v3 { grid-template-columns: 1fr 1fr; gap: 15px; }
+    .service-card-v3 { padding: 20px 10px; }
+    .service-card-v3 img { max-height: 45px; }
+    .service-card-v3 span { font-size: 0.95rem; }
+    .duration-option label { padding: 14px 15px; font-size: 0.95rem; }
+    .duration-option label .price-text { font-size: 0.9rem; }
+    .step-next-btn { width: 100%; justify-content: center; }
+    .payment-instruction-summary { font-size: 0.95rem; }
+    .payment-method-v3 { padding: 12px 15px; }
+    .number-copy-wrapper-v3 strong { font-size: 1.05rem; }
+    .copy-btn-v3 { padding: 3px 6px; font-size: 0.75rem; }
+    .whatsapp-confirmation-v3 p { font-size: 0.9rem; }
+    .whatsapp-button-v3 { font-size: 1rem; padding: 12px 20px; }
+    .step-start-over-btn { width: 100%; justify-content: center; }
 }
