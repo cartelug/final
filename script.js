@@ -434,7 +434,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (service) {
                     const whatsappNumber = "256762193386";
                     // Updated confirmation message
-                    const message = `Hi Cartelug, I've just paid for my ${service} renewal. Please check and confirm.`;
+                    const message = `Hi , I've just renewed my ${service}. Please check and confirm.`;
                     const encodedMessage = encodeURIComponent(message);
                     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
                     window.location.href = whatsappURL; // Redirect
