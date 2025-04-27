@@ -249,19 +249,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- Renewal Page Logic ---
-    // Get all necessary elements from the renewal page HTML
-    const serviceSelectionView = document.getElementById('service-selection'); // Initial view with logos
-    const instructionsView = document.getElementById('instructions-view');     // View with instructions/prices
-    const serviceLogoCards = document.querySelectorAll('.service-logo-card');  // Clickable service logos
-    const backButton = document.getElementById('back-to-selection');           // Button to go back
-    const selectedServiceNameSpan = document.getElementById('selected-service-name'); // Span to show selected service
-    const instructionTitle = document.querySelector('.instruction-title');      // H2 title for instructions view
-    const whatsappConfirmBtn = document.getElementById('whatsapp-confirm-btn'); // WhatsApp confirmation button
-    const pricingListUl = document.getElementById('pricing-list');              // <ul> element for pricing
+    // --- Improved Renewal Page Logic (Single View) ---
+    // Get elements for the improved renewal page
+    const serviceCardsV2 = document.querySelectorAll('.service-card-v2');
+    const detailsSection = document.getElementById('details-section');
+    const detailsPlaceholder = detailsSection?.querySelector('.details-placeholder'); // Use optional chaining
+    const detailsContent = detailsSection?.querySelector('.details-content');
+    const detailsServiceNameSpan = document.getElementById('details-service-name');
+    const detailsPricingListUl = document.getElementById('details-pricing-list');
+    const whatsappConfirmBtnV2 = document.getElementById('whatsapp-confirm-btn-v2');
+    const detailsTitle = detailsSection?.querySelector('.details-title');
 
-    // Define the renewal prices (centralized data)
-    const renewalPrices = {
+    // Define renewal prices
+    const renewalPricesV2 = {
         "Netflix": [
             { duration: "2 Months", price: "50,000 UGX" },
             { duration: "3 Months", price: "75,000 UGX" },
@@ -277,149 +277,149 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
-    // IMPORTANT: Check if we are actually on the renewal page before running renewal-specific code
-    if (serviceSelectionView && instructionsView && serviceLogoCards.length > 0 && pricingListUl) {
+    // Check if we are on the improved renewal page
+    if (serviceCardsV2.length > 0 && detailsSection && detailsContent && detailsPricingListUl) {
 
-        // Function to populate the pricing list based on the selected service
-        const displayPrices = (serviceName) => {
-            pricingListUl.innerHTML = ''; // Clear any existing price items
-            const prices = renewalPrices[serviceName]; // Get the price data for this service
-            const pricingSection = pricingListUl.closest('.renewal-pricing-section'); // Get the container div
-
-            if (prices && prices.length > 0) { // Check if prices exist
-                // Create and add list items for each price option
+        // Function to display prices in the details section
+        const displayPricesV2 = (serviceName) => {
+            detailsPricingListUl.innerHTML = ''; // Clear existing list
+            const prices = renewalPricesV2[serviceName];
+            if (prices && prices.length > 0) {
                 prices.forEach(item => {
                     const li = document.createElement('li');
                     li.innerHTML = `
                         <span class="duration">${item.duration}</span>
                         <span class="price">${item.price}</span>
                     `;
-                    pricingListUl.appendChild(li);
+                    detailsPricingListUl.appendChild(li);
                 });
-                // Make sure the pricing section container is visible
-                if (pricingSection) pricingSection.style.display = 'block';
             } else {
-                 // If no prices are defined for the service, hide the section
-                 if (pricingSection) pricingSection.style.display = 'none';
-                 console.warn(`No renewal prices found for service: ${serviceName}`); // Log a warning
+                // Optionally display a message if no prices are found
+                detailsPricingListUl.innerHTML = '<li>No pricing available for this service.</li>';
+                console.warn(`No renewal prices found for service: ${serviceName}`);
             }
         };
 
-        // Function to switch to the Instructions View
-        const showInstructionsView = (serviceName) => {
-            // Update the displayed service name and the WhatsApp button's data attribute
-            if(selectedServiceNameSpan) selectedServiceNameSpan.textContent = serviceName;
-            if(whatsappConfirmBtn) whatsappConfirmBtn.setAttribute('data-service', serviceName);
-
-            // Apply a CSS class to the title based on the service for potential styling
-            if(instructionTitle) {
-                instructionTitle.className = 'instruction-title'; // Reset classes first
-                if (serviceName.toLowerCase().includes('netflix')) instructionTitle.classList.add('netflix');
-                else if (serviceName.toLowerCase().includes('spotify')) instructionTitle.classList.add('spotify');
-                else if (serviceName.toLowerCase().includes('prime')) instructionTitle.classList.add('prime');
-            }
-
-            // Populate the pricing list for the selected service
-            displayPrices(serviceName);
-
-            // Animate the view change
-            if(serviceSelectionView) serviceSelectionView.classList.remove('active-view'); // Start fade-out
-            // Wait for the fade-out transition to finish before showing the new view
-            setTimeout(() => {
-                if(serviceSelectionView) serviceSelectionView.style.display = 'none'; // Hide completely
-                if(instructionsView) {
-                    instructionsView.style.display = 'block'; // Make it displayable
-                    void instructionsView.offsetWidth; // Force browser reflow (important for transition)
-                    instructionsView.classList.add('active-view'); // Add class to trigger fade-in
-                }
-            }, 600); // This duration MUST match the transition duration in renew.css
-        };
-
-        // Function to switch back to the Service Selection View
-        const showSelectionView = () => {
-            // Animate the view change back
-            if(instructionsView) instructionsView.classList.remove('active-view'); // Start fade-out
-            setTimeout(() => {
-                if(instructionsView) instructionsView.style.display = 'none'; // Hide completely
-                if(serviceSelectionView) {
-                    serviceSelectionView.style.display = 'block'; // Make displayable
-                    void serviceSelectionView.offsetWidth; // Force reflow
-                    serviceSelectionView.classList.add('active-view'); // Trigger fade-in
-                }
-                 // Also hide and clear the pricing section when going back
-                 const pricingSection = pricingListUl.closest('.renewal-pricing-section');
-                 if(pricingSection) pricingSection.style.display = 'none';
-                 pricingListUl.innerHTML = ''; // Clear the price list
-            }, 600); // Match transition duration
-        };
-
-        // Add click event listeners to all service logo cards
-        serviceLogoCards.forEach(card => {
+        // Add click listeners to service cards
+        serviceCardsV2.forEach(card => {
             card.addEventListener('click', () => {
-                const service = card.getAttribute('data-service'); // Get the service name
-                if (service) showInstructionsView(service); // Show instructions for that service
+                const selectedService = card.getAttribute('data-service');
+                const serviceColor = card.getAttribute('data-color') || 'var(--cta-blue)'; // Get color or default
+
+                // Remove 'selected' class from all cards
+                serviceCardsV2.forEach(c => {
+                    c.classList.remove('selected');
+                    c.style.removeProperty('--service-color'); // Remove custom properties
+                    c.style.removeProperty('--service-shadow-color');
+                    c.style.removeProperty('--service-bg-color');
+                });
+
+                // Add 'selected' class to the clicked card
+                card.classList.add('selected');
+                // Apply dynamic styling using CSS variables
+                const shadowColor = serviceColor.replace(')', ', 0.3)').replace('rgb', 'rgba'); // Create shadow color
+                const bgColor = serviceColor.replace(')', ', 0.1)').replace('rgb', 'rgba'); // Create bg color
+                card.style.setProperty('--service-color', serviceColor);
+                card.style.setProperty('--service-shadow-color', shadowColor);
+                card.style.setProperty('--service-bg-color', bgColor);
+
+
+                // Update details section content
+                if (detailsServiceNameSpan) detailsServiceNameSpan.textContent = selectedService;
+                if (whatsappConfirmBtnV2) whatsappConfirmBtnV2.setAttribute('data-service', selectedService);
+
+                // Update title color (optional, using class)
+                if (detailsTitle) {
+                    detailsTitle.className = 'details-title'; // Reset
+                    if (selectedService.toLowerCase().includes('netflix')) detailsTitle.classList.add('netflix');
+                    else if (selectedService.toLowerCase().includes('spotify')) detailsTitle.classList.add('spotify');
+                    else if (selectedService.toLowerCase().includes('prime')) detailsTitle.classList.add('prime');
+                }
+
+                // Display prices
+                displayPricesV2(selectedService);
+
+                // Hide placeholder, show content, and reveal the details section
+                if (detailsPlaceholder) detailsPlaceholder.style.display = 'none';
+                if (detailsContent) detailsContent.style.display = 'block';
+                detailsSection.classList.add('visible'); // Trigger transition
+
+                 // Scroll the details section into view smoothly (optional)
+                 setTimeout(() => {
+                     detailsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                 }, 100); // Slight delay after transition starts
+
             });
         });
 
-        // Add click event listener to the 'Change Service' (back) button
-        if (backButton) {
-            backButton.addEventListener('click', showSelectionView);
-        }
-
-        // Add click event listener to the 'Confirm Renewal Payment' WhatsApp button
-        if (whatsappConfirmBtn) {
-            whatsappConfirmBtn.addEventListener('click', () => {
-                const service = whatsappConfirmBtn.getAttribute('data-service'); // Get the currently selected service
+        // WhatsApp Confirmation Button Logic
+        if (whatsappConfirmBtnV2) {
+            whatsappConfirmBtnV2.addEventListener('click', () => {
+                const service = whatsappConfirmBtnV2.getAttribute('data-service');
                 if (service) {
-                    const whatsappNumber = "256762193386"; // Your WhatsApp number
-                    // Create the simple confirmation message
-                    const message = `Renewal complete for ${service}`;
-                    const encodedMessage = encodeURIComponent(message); // Prepare for URL
+                    const whatsappNumber = "256762193386";
+                    // Updated, more instructive message
+                    const message = `Hi Cartelug, I've just paid for my ${service} renewal. Please check and confirm.`;
+                    const encodedMessage = encodeURIComponent(message);
                     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-                    window.location.href = whatsappURL; // Redirect the user
+                    window.location.href = whatsappURL; // Redirect
                 } else {
-                    // Error handling in case the service name wasn't set
-                    console.error("No service selected for WhatsApp confirmation.");
-                    alert("Error: Please go back and select a service.");
+                    alert("Please select a service first before confirming payment."); // Guide user
                 }
             });
         }
 
-        // Initial setup when the renewal page loads:
-        // Make the service selection view visible with its entry animation
-        if(serviceSelectionView) {
-             serviceSelectionView.style.display = 'block'; // Set display first
-             // Use a tiny timeout to ensure the 'active-view' class is added *after* display:block
-             // This allows the entry animation (opacity/transform) to run correctly
-             setTimeout(() => serviceSelectionView.classList.add('active-view'), 50);
-        }
-         // Ensure the pricing section is explicitly hidden initially
-         const pricingSection = pricingListUl.closest('.renewal-pricing-section');
-         if(pricingSection) pricingSection.style.display = 'none';
+        // --- ClipboardJS Initialization ---
+        // Check if ClipboardJS is loaded
+        if (typeof ClipboardJS !== 'undefined') {
+            const clipboard = new ClipboardJS('.copy-btn');
 
-    } // End of the check for renewal page elements
-    // --- End Renewal Page Logic ---
+            clipboard.on('success', function(e) {
+                console.log('Copied:', e.text);
+                const originalText = e.trigger.innerHTML; // Store original button content
+                // Provide visual feedback
+                e.trigger.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                e.trigger.disabled = true; // Briefly disable button
+
+                // Reset button text after a short delay
+                setTimeout(() => {
+                    e.trigger.innerHTML = originalText;
+                    e.trigger.disabled = false;
+                }, 1500); // Reset after 1.5 seconds
+
+                e.clearSelection(); // Deselect text
+            });
+
+            clipboard.on('error', function(e) {
+                console.error('Copy failed:', e.action);
+                // Optionally provide fallback feedback
+                alert('Failed to copy. Please copy manually.');
+            });
+        } else {
+            console.warn("ClipboardJS library not loaded. Copy buttons will not work.");
+            // Hide copy buttons if library isn't loaded
+            document.querySelectorAll('.copy-btn').forEach(btn => btn.style.display = 'none');
+        }
+        // --- End ClipboardJS ---
+
+    } // End check for improved renewal page elements
+    // --- End Improved Renewal Page Logic ---
 
 
 }); // End of the SINGLE, main DOMContentLoaded listener
 
 
 // --- Preloader ---
-// This runs when the entire page (including images, etc.) is fully loaded.
-// It should remain outside the DOMContentLoaded listener.
+// Runs when the entire page (including images) is loaded. Stays outside DOMContentLoaded.
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        // Wait briefly before starting the fade-out for a smoother effect
-        setTimeout(() => preloader.classList.add('hidden'), 150);
-
-        // Optional: Remove the preloader element entirely after it fades out
+        setTimeout(() => preloader.classList.add('hidden'), 150); // Fade out after delay
         preloader.addEventListener('transitionend', function handleTransitionEnd(event) {
-             // Make sure the transition that ended was opacity or visibility
              if (event.propertyName === 'opacity' || event.propertyName === 'visibility') {
                 if (preloader.classList.contains('hidden')) {
-                   // preloader.remove(); // Uncomment this line to remove the preloader element
-                   preloader.removeEventListener('transitionend', handleTransitionEnd); // Clean up the listener
+                   // preloader.remove(); // Optional: remove element after fade
+                   preloader.removeEventListener('transitionend', handleTransitionEnd); // Clean up
                 }
              }
         });
