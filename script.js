@@ -234,4 +234,113 @@ window.addEventListener('load', () => {
         });
     }
 });
+// --- Renewal Page Logic ---
+// Add this code inside your main DOMContentLoaded event listener in script.js
+// or wrap it in its own DOMContentLoaded listener if creating a separate renew.js
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Select elements specific to the renewal page
+    const serviceSelectionView = document.getElementById('service-selection');
+    const instructionsView = document.getElementById('instructions-view');
+    const serviceLogoCards = document.querySelectorAll('.service-logo-card');
+    const backButton = document.getElementById('back-to-selection');
+    const selectedServiceNameSpan = document.getElementById('selected-service-name');
+    const instructionTitle = document.querySelector('.instruction-title'); // To add class for color
+    const whatsappConfirmBtn = document.getElementById('whatsapp-confirm-btn');
+
+    // Check if we are on the renewal page by checking if a key element exists
+    if (serviceSelectionView && instructionsView && serviceLogoCards.length > 0) {
+
+        // Function to switch views
+        const showInstructionsView = (serviceName) => {
+            // Update instruction title and button data
+            selectedServiceNameSpan.textContent = serviceName;
+            whatsappConfirmBtn.setAttribute('data-service', serviceName);
+
+            // Optional: Add class to title for specific color styling
+            instructionTitle.className = 'instruction-title'; // Reset classes
+            if (serviceName.toLowerCase().includes('netflix')) {
+                instructionTitle.classList.add('netflix');
+            } else if (serviceName.toLowerCase().includes('spotify')) {
+                instructionTitle.classList.add('spotify');
+            } else if (serviceName.toLowerCase().includes('prime')) {
+                instructionTitle.classList.add('prime');
+            }
+
+
+            // Hide selection view, show instructions view
+            serviceSelectionView.classList.remove('active-view');
+            // Use a timeout to allow the fade-out transition before fading in the next view
+            setTimeout(() => {
+                serviceSelectionView.style.display = 'none'; // Hide completely after transition
+                instructionsView.style.display = 'block'; // Make it visible for transition
+                // Force reflow/repaint before adding class for transition
+                void instructionsView.offsetWidth;
+                instructionsView.classList.add('active-view');
+            }, 600); // Match transition duration in CSS
+        };
+
+        const showSelectionView = () => {
+             // Hide instructions view, show selection view
+            instructionsView.classList.remove('active-view');
+             setTimeout(() => {
+                instructionsView.style.display = 'none';
+                serviceSelectionView.style.display = 'block';
+                 void serviceSelectionView.offsetWidth;
+                serviceSelectionView.classList.add('active-view');
+            }, 600);
+        };
+
+        // Add click listeners to service logo cards
+        serviceLogoCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const service = card.getAttribute('data-service');
+                if (service) {
+                    showInstructionsView(service);
+                }
+            });
+        });
+
+        // Add click listener to back button
+        if (backButton) {
+            backButton.addEventListener('click', showSelectionView);
+        }
+
+        // Add click listener to WhatsApp confirmation button
+        if (whatsappConfirmBtn) {
+            whatsappConfirmBtn.addEventListener('click', () => {
+                const service = whatsappConfirmBtn.getAttribute('data-service');
+                if (service) {
+                    const whatsappNumber = "256762193386"; // Your WhatsApp Number
+                    const message = `Renewal complete for ${service}`;
+                    const encodedMessage = encodeURIComponent(message);
+                    const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+                    // Redirect to WhatsApp
+                    window.location.href = whatsappURL;
+                    // Or open in a new tab:
+                    // window.open(whatsappURL, '_blank');
+                } else {
+                    console.error("Could not determine service for WhatsApp confirmation.");
+                    alert("An error occurred. Please go back and select a service again.");
+                }
+            });
+        }
+
+        // Initially make the selection view visible if it exists
+        if(serviceSelectionView) {
+             serviceSelectionView.style.display = 'block';
+             // Add active class slightly delayed to trigger animation if JS loads fast
+             setTimeout(() => {
+                 serviceSelectionView.classList.add('active-view');
+             }, 50);
+        }
+
+
+    } // End check for renewal page elements
+
+}); // End DOMContentLoaded listener (ensure this closes the listener you added the code into)
+
+// --- End Renewal Page Logic ---
+
 // --- End Preloader ---
