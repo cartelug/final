@@ -1,392 +1,369 @@
-/* === Renewal Page Styles (renew.css) === */
+/* === Improved Renewal Page Styles (renew.css) === */
 
-/* Basic section setup */
-.renewal-section {
-    min-height: calc(100vh - 80px - 150px); /* Adjust based on header/footer height */
+/* Section Setup */
+.renewal-section-v2 {
+    min-height: calc(100vh - 80px - 150px); /* Adjust based on header/footer */
     display: flex;
+    flex-direction: column; /* Align items vertically */
     align-items: center;
-    justify-content: center;
-    padding: 80px 0;
-    background: var(--gradient-dark); /* Use a dark background or gradient from base.css */
+    justify-content: center; /* Center content vertically */
+    padding: 60px 0; /* Reduced top/bottom padding */
+    background: var(--dark-bg); /* Use dark background */
 }
 
-.renewal-section .container {
-    max-width: 800px; /* Control max width */
-    width: 100%; /* Ensure it takes width on smaller screens */
+.renewal-section-v2 .container {
+    max-width: 900px; /* Slightly wider container */
+    width: 100%;
     text-align: center;
 }
 
-/* --- View Containers & Transitions --- */
-.service-selection-view,
-.instructions-view {
-    background-color: var(--card-bg); /* Use card background from base.css */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 50px 40px;
-    border-radius: 20px;
-    border: 1px solid var(--card-border); /* Use card border from base.css */
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
-    opacity: 0; /* Start hidden for transition */
-    transform: translateY(20px); /* Start slightly lower for transition */
-    transition: opacity 0.6s ease-out, transform 0.6s ease-out; /* Smooth transition */
-    display: none; /* Hidden by default, JS controls visibility */
-}
-
-/* Class added by JS to make a view visible */
-.service-selection-view.active-view,
-.instructions-view.active-view {
-    display: block; /* Make visible */
-    opacity: 1; /* Fade in */
-    transform: translateY(0); /* Slide up */
-}
-
-/* --- Service Selection View Specifics --- */
-.renewal-title {
-    font-size: clamp(2rem, 5vw, 2.8rem); /* Responsive font size */
+/* Titles and Subtitles */
+.renewal-title-v2 {
+    font-size: clamp(2rem, 5vw, 2.6rem);
     color: #fff;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     font-weight: 700;
 }
 
-.renewal-subtitle {
-    font-size: 1.15rem;
-    color: var(--text-medium); /* Use medium text color from base.css */
-    margin-bottom: 50px;
+.renewal-subtitle-v2 {
+    font-size: 1.1rem;
+    color: var(--text-medium);
+    margin-bottom: 40px;
 }
 
-.service-logo-grid {
+/* Service Selection Grid */
+.service-selection-grid-v2 {
     display: grid;
-    /* Create responsive columns, min 150px wide, max 1fr */
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 35px;
-    justify-content: center; /* Center grid items if they don't fill the row */
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Adjust min width */
+    gap: 30px; /* Slightly reduced gap */
+    margin-bottom: 40px; /* Space before details section */
 }
 
-.service-logo-card {
-    background-color: rgba(255, 255, 255, 0.05); /* Subtle background */
-    border: 1px solid rgba(255, 255, 255, 0.1); /* Subtle border */
-    padding: 30px 20px;
-    border-radius: 15px;
+.service-card-v2 {
+    background-color: var(--card-bg);
+    border: 2px solid var(--card-border);
+    padding: 35px 25px;
+    border-radius: 18px; /* More rounded */
     cursor: pointer;
-    transition: all 0.3s ease; /* Transition for hover effects */
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smoother transition */
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px; /* Space between logo and text */
-    opacity: 0; /* Start hidden for pop-in animation */
-    transform: scale(0.9); /* Start smaller for pop-in animation */
-    animation: popIn 0.5s ease-out forwards; /* Apply pop-in animation */
+    gap: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
-/* Staggered animation delay for cards */
-.service-logo-card:nth-child(1) { animation-delay: 0.1s; }
-.service-logo-card:nth-child(2) { animation-delay: 0.2s; }
-.service-logo-card:nth-child(3) { animation-delay: 0.3s; }
-
-/* Pop-in animation keyframes */
-@keyframes popIn {
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-/* Hover effect for service cards */
-.service-logo-card:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+.service-card-v2:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
     border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-8px) scale(1.03); /* Lift and slightly enlarge */
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
 }
 
-.service-logo-card img {
-    max-height: 55px; /* Control logo size */
+/* Styling for the selected card */
+.service-card-v2.selected {
+    border-color: var(--cta-blue); /* Use accent color */
+    box-shadow: 0 0 25px rgba(0, 122, 255, 0.3); /* Glow effect */
+    transform: translateY(-5px) scale(1.02); /* Slight lift and scale */
+    background-color: rgba(0, 122, 255, 0.1); /* Tint background */
+}
+/* Use service color for border when selected */
+.service-card-v2.selected[data-color] {
+    border-color: var(--service-color); /* JS will set this variable */
+    box-shadow: 0 0 25px var(--service-shadow-color); /* JS will set this variable */
+    background-color: var(--service-bg-color); /* JS will set this variable */
+}
+
+
+.service-card-v2 img {
+    max-height: 60px; /* Slightly larger logos */
     width: auto;
     object-fit: contain;
-    margin-bottom: 10px;
+    margin-bottom: 5px;
+    filter: grayscale(30%); /* Slightly desaturate inactive logos */
+    transition: filter 0.3s ease;
 }
 
-.service-logo-card span {
+.service-card-v2:hover img,
+.service-card-v2.selected img {
+    filter: grayscale(0%); /* Full color on hover/select */
+}
+
+
+.service-card-v2 span {
     font-weight: 600;
-    color: var(--text-light); /* Use light text color from base.css */
-    font-size: 1.05rem;
-}
-
-/* --- Instructions View Specifics --- */
-.instructions-view {
-    text-align: left; /* Align content left */
-    position: relative; /* Needed for absolute positioning of back button */
-}
-
-/* Back button styling */
-.back-button {
-    position: absolute;
-    top: 20px;
-    left: 25px;
-    background: none;
-    border: 1px solid var(--text-medium);
-    color: var(--text-medium);
-    padding: 8px 15px;
-    border-radius: 20px; /* Pill shape */
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-    display: inline-flex; /* Align icon and text */
-    align-items: center;
-    gap: 8px;
-}
-
-.back-button:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    border-color: #fff;
-}
-
-/* Title in instructions view */
-.instruction-title {
-    text-align: center;
-    font-size: clamp(1.8rem, 4vw, 2.4rem);
-    color: #fff;
-    margin-bottom: 40px;
-    margin-top: 30px; /* Add space below back button */
-    font-weight: 700;
-}
-
-/* Span inside the title for service name */
-.instruction-title #selected-service-name {
-    color: var(--cta-blue); /* Default color, JS might override */
-}
-
-/* Service-specific title colors (add classes via JS) */
-.instruction-title.netflix #selected-service-name { color: var(--netflix-red); }
-.instruction-title.spotify #selected-service-name { color: var(--spotify-green); }
-.instruction-title.prime #selected-service-name { color: var(--prime-blue); }
-
-
-/* --- Pricing Section Styles --- */
-.renewal-pricing-section {
-    background-color: rgba(255, 255, 255, 0.04); /* Slightly different background */
-    padding: 25px 30px;
-    border-radius: 15px;
-    margin-bottom: 30px; /* Space before payment instructions */
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    text-align: left;
-}
-
-.renewal-pricing-section h3 {
-    font-size: 1.3rem;
     color: var(--text-light);
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 1.1rem;
 }
 
-#pricing-list {
+/* --- Details Section --- */
+.details-section-v2 {
+    background-color: rgba(28, 28, 28, 0.85); /* Slightly different bg */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    padding: 35px 40px;
+    margin-top: 20px; /* Space from selection grid */
+    text-align: left;
+    overflow: hidden; /* Contain elements */
+    /* Transition for smooth appearance */
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: max-height 0.7s ease-out, opacity 0.5s ease-out 0.1s, transform 0.5s ease-out 0.1s, padding 0.5s ease-out;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.details-section-v2.visible {
+    max-height: 1000px; /* Large enough to accommodate content */
+    opacity: 1;
+    transform: translateY(0);
+    padding: 35px 40px; /* Ensure padding is applied */
+}
+
+.details-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    color: var(--text-medium);
+    font-size: 1.1rem;
+    text-align: center;
+    border: 2px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+}
+.details-placeholder i {
+    margin-right: 10px;
+    color: var(--cta-blue);
+    font-size: 1.3rem;
+}
+
+
+.details-content {
+    /* Content initially hidden, JS shows it */
+}
+
+.details-title {
+    text-align: center;
+    font-size: clamp(1.6rem, 4vw, 2rem);
+    color: #fff;
+    margin-bottom: 35px;
+    font-weight: 700;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.details-title #details-service-name {
+    color: var(--cta-blue); /* Default, JS overrides */
+}
+/* Service-specific title colors */
+.details-title.netflix #details-service-name { color: var(--netflix-red); }
+.details-title.spotify #details-service-name { color: var(--spotify-green); }
+.details-title.prime #details-service-name { color: var(--prime-blue); }
+
+
+/* Sub-section styling */
+.details-pricing,
+.details-payment,
+.details-confirmation {
+    margin-bottom: 35px;
+}
+.details-confirmation {
+    margin-bottom: 10px; /* Less margin at the end */
+}
+
+
+.details-pricing h3,
+.details-payment h3,
+.details-confirmation h3 {
+    font-size: 1.2rem;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 600;
+}
+
+/* Pricing List */
+#details-pricing-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Space between price items */
-}
-
-#pricing-list li {
-    display: flex;
-    justify-content: space-between; /* Puts price on the right */
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.1); /* Separator line */
-    font-size: 1rem;
-}
-#pricing-list li:last-child {
-    border-bottom: none; /* No line for the last item */
-}
-
-#pricing-list .duration {
-    color: var(--text-medium);
-}
-
-#pricing-list .price {
-    font-weight: 700;
-    color: #fff; /* White price */
-    background-color: rgba(0,0,0,0.2); /* Subtle background for price */
-    padding: 3px 8px;
-    border-radius: 5px;
-    font-size: 0.95rem;
-}
-
-
-/* --- Payment Instructions Section --- */
-.payment-instructions {
-    background-color: rgba(0, 0, 0, 0.15); /* Slightly darker background */
-    padding: 30px;
-    border-radius: 15px;
-    margin-bottom: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.payment-instructions h3 {
-    font-size: 1.3rem;
-    color: var(--text-light);
-    margin-bottom: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.payment-instructions p {
-    color: var(--text-medium);
-    margin-bottom: 25px;
-    font-size: 1rem;
-}
-
-.payment-method {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background-color: rgba(255, 255, 255, 0.04); /* Match pricing bg */
-    padding: 15px 20px;
-    border-radius: 10px;
-    margin-bottom: 15px; /* Space between methods */
-}
-.payment-method:last-child {
-    margin-bottom: 0;
-}
-
-.payment-icon {
-    max-height: 30px;
-    width: auto;
-    flex-shrink: 0; /* Prevent icon shrinking */
-}
-
-.payment-details {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.4; /* Adjust line spacing */
-}
-
-.payment-network {
-    font-size: 0.9rem;
-    color: var(--text-medium);
-}
-
-.payment-number {
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #fff;
-    letter-spacing: 0.5px; /* Slight spacing for numbers */
-}
-
-.payment-name {
-    font-size: 0.9rem;
-    color: var(--text-medium);
-}
-
-/* --- Confirmation Section --- */
-.confirmation-section {
-    text-align: center;
-    margin-top: 30px; /* Space above */
-}
-
-.confirmation-section p {
-    color: var(--text-medium);
-    margin-bottom: 25px;
-    font-size: 1rem;
-}
-
-/* WhatsApp confirmation button */
-.whatsapp-button {
-    background-color: var(--whatsapp-green); /* Use WhatsApp color from base.css */
-    color: #fff;
-    border: none;
-    padding: 15px 40px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.25); /* Subtle shadow */
-    display: inline-flex; /* Align icon and text */
-    align-items: center;
     gap: 10px;
 }
 
-.whatsapp-button:hover {
-    background-color: #1fbc5d; /* Darker WhatsApp green */
-    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
-    transform: translateY(-3px); /* Lift effect */
+#details-pricing-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 1rem;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+}
+#details-pricing-list li:last-child { border-bottom: none; }
+
+#details-pricing-list .duration { color: var(--text-medium); }
+#details-pricing-list .price {
+    font-weight: 700;
+    color: #fff;
+    background-color: rgba(0,0,0,0.25);
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 0.95rem;
 }
 
-/* --- Renewal Page Responsiveness --- */
+/* Payment Methods */
+.payment-method-v2 {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    border: 1px solid transparent; /* Placeholder for potential highlight */
+}
+.payment-method-v2:last-child { margin-bottom: 0; }
+
+.payment-icon-v2 {
+    max-height: 30px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.payment-info-v2 {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+    flex-grow: 1; /* Take remaining space */
+}
+
+.payment-info-v2 span:first-child { /* Network name */
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+.payment-info-v2 small { /* Account name */
+    font-size: 0.85rem;
+    color: var(--text-medium);
+    margin-top: 2px;
+}
+
+/* Wrapper for number and copy button */
+.number-copy-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 2px 0;
+}
+
+.number-copy-wrapper strong { /* Phone number */
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+/* Copy Button */
+.copy-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-medium);
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+.copy-btn:active {
+    transform: scale(0.95);
+}
+.copy-btn .fa-check { /* Style for checkmark after copy */
+    color: var(--spotify-green);
+}
+
+
+/* Confirmation Section */
+.details-confirmation p {
+    color: var(--text-medium);
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.whatsapp-button-v2 {
+    background-color: var(--whatsapp-green);
+    width: 100%; /* Full width button */
+    max-width: 400px; /* Max width */
+    margin: 0 auto; /* Center */
+    display: flex; /* Use flex to center icon/text */
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 30px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
+    font-weight: 600;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-button-v2:hover {
+    background-color: #1fbc5d;
+    box-shadow: 0 7px 20px rgba(37, 211, 102, 0.3);
+    transform: translateY(-3px);
+}
+
+
+/* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
-    .service-selection-view,
-    .instructions-view {
-        padding: 40px 25px; /* Reduce padding */
+    .renewal-section-v2 { padding: 50px 0; }
+    .service-selection-grid-v2 {
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 25px;
     }
-    .service-logo-grid {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); /* Adjust min card width */
-        gap: 25px; /* Reduce gap */
-    }
-    .service-logo-card img { max-height: 45px; }
-    .service-logo-card span { font-size: 0.95rem; }
-
-    .instruction-title { font-size: 1.8rem; margin-top: 50px; } /* Adjust title size and top margin */
-
-    /* Responsive Pricing */
-    .renewal-pricing-section { padding: 20px 25px; }
-    .renewal-pricing-section h3 { font-size: 1.15rem; }
-    #pricing-list li { font-size: 0.95rem; }
-
-    .payment-instructions { padding: 25px; }
-    /* Stack payment method details on smaller screens */
-    .payment-method {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-        padding: 15px;
-    }
-    .payment-icon { margin-bottom: 5px; }
-
-    /* Make WhatsApp button full width */
-    .whatsapp-button {
-        width: 100%;
-        max-width: 350px; /* Optional max width */
-        justify-content: center; /* Center content */
-    }
+    .details-section-v2 { padding: 30px 25px; }
+    .details-title { font-size: 1.6rem; margin-bottom: 30px;}
+    .details-pricing h3, .details-payment h3, .details-confirmation h3 { font-size: 1.1rem; }
+    #details-pricing-list li { font-size: 0.95rem; }
+    .payment-method-v2 { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .payment-icon-v2 { margin-bottom: 5px; }
+    .number-copy-wrapper strong { font-size: 1.1rem; }
 }
 
 @media (max-width: 480px) {
-    .renewal-section { padding: 60px 0; } /* Further reduce section padding */
-    .service-selection-view,
-    .instructions-view {
-        padding: 30px 15px; /* Further reduce padding */
-    }
-    .renewal-title { font-size: 1.8rem; }
-    .renewal-subtitle { font-size: 1rem; margin-bottom: 40px; }
-    .service-logo-grid {
+    .renewal-section-v2 { padding: 40px 0; }
+    .renewal-title-v2 { font-size: 1.8rem; }
+    .renewal-subtitle-v2 { font-size: 1rem; margin-bottom: 30px; }
+    .service-selection-grid-v2 {
         grid-template-columns: 1fr 1fr; /* Force two columns */
-        gap: 20px;
+        gap: 15px;
     }
-    .service-logo-card { padding: 20px 10px; }
-    .service-logo-card img { max-height: 40px; }
-    .service-logo-card span { font-size: 0.9rem; }
+    .service-card-v2 { padding: 25px 15px; }
+    .service-card-v2 img { max-height: 50px; }
+    .service-card-v2 span { font-size: 1rem; }
 
-    .back-button { top: 15px; left: 15px; font-size: 0.85rem; padding: 6px 12px; }
-    .instruction-title { font-size: 1.6rem; margin-top: 45px; margin-bottom: 30px; }
-
-    /* Responsive Pricing */
-    .renewal-pricing-section { padding: 15px 20px; margin-bottom: 25px;}
-    .renewal-pricing-section h3 { font-size: 1.1rem; margin-bottom: 15px;}
-    /* Stack duration/price on smallest screens */
-    #pricing-list li {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-    #pricing-list .price { margin-top: 2px; font-size: 0.9rem;}
-
-    .payment-instructions { padding: 20px; }
-    .payment-instructions h3 { font-size: 1.15rem; }
-    .payment-instructions p { font-size: 0.95rem; }
-    .payment-number { font-size: 1rem; }
-    .whatsapp-button { font-size: 1rem; padding: 14px 30px; }
+    .details-section-v2 { padding: 25px 15px; margin-top: 30px;}
+    .details-title { font-size: 1.5rem; margin-bottom: 25px;}
+    .details-pricing h3, .details-payment h3, .details-confirmation h3 { font-size: 1.05rem; }
+    #details-pricing-list li { flex-direction: column; align-items: flex-start; gap: 4px; }
+    #details-pricing-list .price { margin-top: 2px; font-size: 0.9rem;}
+    .payment-method-v2 { padding: 12px 15px; }
+    .number-copy-wrapper strong { font-size: 1.05rem; }
+    .copy-btn { padding: 3px 6px; font-size: 0.75rem; }
+    .details-confirmation p { font-size: 0.9rem; }
+    .whatsapp-button-v2 { font-size: 1rem; padding: 12px 20px; }
 }
