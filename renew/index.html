@@ -8,7 +8,7 @@
     <link rel="icon" href="../logo.png" type="image/png">
     <link rel="apple-touch-icon" href="../logo.png">
     <meta name="description" content="Renew your Netflix, Prime Video, or Spotify Premium support package with Cartelug. Easy payment via MTN or Airtel Mobile Money.">
-    <link rel="stylesheet" href="../base.css">
+    <meta name="robots" content="noindex, nofollow"> <link rel="stylesheet" href="../base.css">
     <link rel="stylesheet" href="renew.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
@@ -26,9 +26,9 @@
                     <a href="/" class="logo-link">
                         <img src="../logo.png" alt="Cartelug Logo" id="logo">
                     </a>
-                    </div>
+                </div>
                 <nav id="main-nav" class="main-nav">
-                    <ul>
+                     <ul>
                         <li><a href="/">Home</a></li>
                         <li><a href="/#services">Services</a></li>
                         <li><a href="/#about">About</a></li>
@@ -45,8 +45,7 @@
             <section class="renewal-section section-padding">
                 <div class="container">
 
-                    <div id="service-selection" class="service-selection-view active-view">
-                        <h1 class="renewal-title">Renew Your Service</h1>
+                    <div id="service-selection" class="service-selection-view"> <h1 class="renewal-title">Renew Your Service</h1>
                         <p class="renewal-subtitle">Select the service you wish to renew:</p>
                         <div class="service-logo-grid">
                             <div class="service-logo-card" data-service="Netflix">
@@ -69,6 +68,12 @@
                             <i class="fas fa-arrow-left"></i> Change Service
                         </button>
                         <h2 class="instruction-title">Renew <span id="selected-service-name">Service</span></h2>
+
+                        <div id="renewal-pricing" class="renewal-pricing-section" style="display: none;"> <h3>Renewal Options:</h3>
+                            <ul id="pricing-list">
+                                </ul>
+                        </div>
+
                         <div class="payment-instructions">
                             <h3>Payment Details:</h3>
                             <p>Please send the renewal payment to either of the following:</p>
