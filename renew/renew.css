@@ -1,28 +1,28 @@
-/* === Multi-Step Renewal Page Styles (renew.css) - Compact V3 === */
+/* === Multi-Step Renewal Page Styles (renew.css) - Compact V3 Fixed === */
 
 /* Section Setup */
 .renewal-section-v3 {
     min-height: calc(100vh - 80px - 150px); /* Adjust based on header/footer */
     display: flex;
-    align-items: center; /* Center vertically */
+    align-items: center; /* Center container vertically */
     justify-content: center;
-    padding: 50px 0 60px 0; /* Slightly reduced padding */
+    padding: 50px 15px 60px 15px; /* Add horizontal padding for small screens */
     background: var(--dark-bg);
-    overflow: hidden; /* Prevent scrollbars during transitions */
+    overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
 .renewal-container {
-    max-width: 700px; /* Slightly narrower for better vertical fit */
+    max-width: 700px;
     width: 100%;
     background-color: var(--card-bg);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-radius: 25px;
-    /* Padding removed here, applied to steps instead */
     border: 1px solid var(--card-border);
     box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
     position: relative;
-    /* min-height removed - let content dictate height */
+    min-height: 520px; /* Restore minimum height to contain steps */
+    overflow: hidden; /* Hide overflowing steps */
 }
 
 /* Step Styling */
@@ -31,14 +31,15 @@
     top: 0;
     left: 0;
     width: 100%;
-    /* height: 100%; Removed - let content dictate height */
-    padding: 30px 35px; /* Adjusted padding */
+    height: 100%; /* Ensure step takes full container height */
+    padding: 30px 35px; /* Restore padding */
     opacity: 0;
     visibility: hidden;
     transform: translateX(30px);
     transition: opacity 0.5s ease-out, visibility 0s linear 0.5s, transform 0.5s ease-out;
-    display: flex;
+    display: flex; /* Use flexbox for vertical structure */
     flex-direction: column;
+    background-color: var(--card-bg); /* Ensure step has background */
 }
 
 .renewal-step.active-step {
@@ -62,10 +63,11 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    margin-bottom: 30px; /* Slightly reduced margin */
-    padding-bottom: 12px; /* Slightly reduced padding */
+    margin-bottom: 30px;
+    padding-bottom: 12px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
+    flex-shrink: 0; /* Prevent header from shrinking */
 }
 
 .step-number {
@@ -73,18 +75,18 @@
     color: #fff;
     font-weight: 700;
     border-radius: 50%;
-    width: 32px; /* Slightly smaller */
-    height: 32px; /* Slightly smaller */
+    width: 32px;
+    height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 0.95rem; /* Slightly smaller */
+    font-size: 0.95rem;
     flex-shrink: 0;
     box-shadow: 0 3px 8px rgba(0, 122, 255, 0.3);
 }
 
 .step-title {
-    font-size: clamp(1.3rem, 3.5vw, 1.6rem); /* Slightly smaller */
+    font-size: clamp(1.3rem, 3.5vw, 1.6rem);
     color: #fff;
     font-weight: 600;
     margin: 0;
@@ -100,11 +102,11 @@
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--text-medium);
-    width: 32px; /* Match step number */
-    height: 32px; /* Match step number */
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 0.9rem; /* Slightly smaller */
+    font-size: 0.9rem;
     transition: all 0.2s ease;
     display: flex;
     justify-content: center;
@@ -121,18 +123,35 @@
 
 /* Step Content Area */
 .step-content {
-    flex-grow: 1;
-    /* overflow-y: auto; Removed - content should fit */
+    flex-grow: 1; /* Allow content to fill available space */
+    overflow-y: auto; /* Add scrollbar ONLY if content overflows */
+    padding-bottom: 10px; /* Add some space at the bottom */
+    /* Add subtle scrollbar styling (optional) */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
+/* Webkit scrollbar styling */
+.step-content::-webkit-scrollbar {
+    width: 6px;
+}
+.step-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+.step-content::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+}
+
 
 /* Step Footer Area */
 .step-footer {
-    margin-top: 25px; /* Reduced space */
-    padding-top: 15px; /* Reduced space */
+    margin-top: 20px; /* Reduced space */
+    padding-top: 15px;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    flex-shrink: 0; /* Prevent footer from shrinking */
 }
 #step-3 .step-footer {
     justify-content: center;
@@ -143,21 +162,21 @@
 .service-selection-grid-v3 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 20px; /* Reduced gap */
+    gap: 20px;
     padding-top: 10px;
 }
 
 .service-card-v3 {
     background-color: rgba(255, 255, 255, 0.05);
     border: 2px solid rgba(255, 255, 255, 0.1);
-    padding: 25px 15px; /* Reduced padding */
+    padding: 25px 15px;
     border-radius: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px; /* Reduced gap */
+    gap: 12px;
     text-align: center;
 }
 
@@ -169,7 +188,7 @@
 }
 
 .service-card-v3 img {
-    max-height: 50px; /* Slightly smaller */
+    max-height: 50px;
     width: auto;
     object-fit: contain;
     margin-bottom: 5px;
@@ -178,14 +197,14 @@
 .service-card-v3 span {
     font-weight: 600;
     color: var(--text-light);
-    font-size: 1rem; /* Slightly smaller */
+    font-size: 1rem;
 }
 
 /* --- Step 2: Duration Selection --- */
 .duration-selection-options {
     display: flex;
     flex-direction: column;
-    gap: 12px; /* Reduced gap */
+    gap: 12px;
     padding-top: 10px;
 }
 .loading-text {
@@ -209,14 +228,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px; /* Reduced padding */
+    padding: 15px 20px;
     border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 10px; /* Smaller radius */
+    border-radius: 10px;
     cursor: pointer;
     transition: all 0.3s ease;
     background-color: rgba(255, 255, 255, 0.05);
     font-weight: 500;
-    font-size: 1rem; /* Slightly smaller */
+    font-size: 1rem;
 }
 .duration-option label .duration-text {
     color: var(--text-light);
@@ -225,9 +244,9 @@
     font-weight: 700;
     color: #fff;
     background-color: rgba(0,0,0,0.2);
-    padding: 3px 8px; /* Reduced padding */
+    padding: 3px 8px;
     border-radius: 5px;
-    font-size: 0.95rem; /* Slightly smaller */
+    font-size: 0.95rem;
 }
 
 .duration-option label:hover {
@@ -253,9 +272,9 @@
     background-color: var(--cta-blue);
     color: #fff;
     border: none;
-    padding: 10px 25px; /* Reduced padding */
+    padding: 10px 25px;
     border-radius: 8px;
-    font-size: 0.95rem; /* Slightly smaller */
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -286,12 +305,12 @@
     padding-top: 5px;
 }
 .payment-instruction-summary {
-    font-size: 1rem; /* Adjusted size */
+    font-size: 1rem;
     color: var(--text-light);
-    line-height: 1.45; /* Adjusted line height */
-    margin-bottom: 20px; /* Reduced margin */
+    line-height: 1.45;
+    margin-bottom: 20px;
     background-color: rgba(0, 122, 255, 0.1);
-    padding: 12px 18px; /* Adjusted padding */
+    padding: 12px 18px;
     border-radius: 10px;
     border: 1px solid rgba(0, 122, 255, 0.2);
     text-align: center;
@@ -302,10 +321,10 @@
 }
 
 .payment-methods-v3 {
-    margin-bottom: 20px; /* Reduced margin */
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Reduced gap */
+    gap: 10px;
 }
 
 .payment-method-v3 {
@@ -313,12 +332,12 @@
     align-items: center;
     gap: 12px;
     background-color: rgba(255, 255, 255, 0.05);
-    padding: 10px 15px; /* Reduced padding */
+    padding: 10px 15px;
     border-radius: 10px;
 }
 
 .payment-icon-v3 {
-    max-height: 26px; /* Smaller icon */
+    max-height: 26px;
     width: auto;
     flex-shrink: 0;
 }
@@ -326,15 +345,15 @@
 .payment-info-v3 {
     display: flex;
     flex-direction: column;
-    line-height: 1.3; /* Tighter line height */
+    line-height: 1.3;
     flex-grow: 1;
 }
 .payment-info-v3 span:first-child {
-    font-size: 0.8rem; /* Smaller */
+    font-size: 0.8rem;
     color: var(--text-medium);
 }
 .payment-info-v3 small {
-    font-size: 0.75rem; /* Smaller */
+    font-size: 0.75rem;
     color: var(--text-medium);
     margin-top: 1px;
 }
@@ -346,7 +365,7 @@
     margin: 1px 0;
 }
 .number-copy-wrapper-v3 strong {
-    font-size: 1.05rem; /* Smaller */
+    font-size: 1.05rem;
     font-weight: 700;
     color: #fff;
     letter-spacing: 0.5px;
@@ -380,12 +399,12 @@
 /* WhatsApp Confirmation */
 .whatsapp-confirmation-v3 {
     text-align: center;
-    margin-top: 20px; /* Reduced margin */
+    margin-top: 20px;
 }
 .whatsapp-confirmation-v3 p {
     color: var(--text-medium);
-    margin-bottom: 12px; /* Reduced margin */
-    font-size: 0.85rem; /* Smaller */
+    margin-bottom: 12px;
+    font-size: 0.85rem;
     line-height: 1.45;
 }
 
@@ -397,9 +416,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 8px; /* Reduced gap */
-    padding: 10px 20px; /* Reduced padding */
-    font-size: 0.95rem; /* Smaller */
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
     border-radius: 8px;
     box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
     font-weight: 600;
@@ -415,15 +434,15 @@
     background: none;
     border: 1px solid var(--text-medium);
     color: var(--text-medium);
-    padding: 8px 18px; /* Reduced padding */
+    padding: 8px 18px;
     border-radius: 8px;
-    font-size: 0.85rem; /* Smaller */
+    font-size: 0.85rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
     display: inline-flex;
     align-items: center;
-    gap: 6px; /* Reduced gap */
+    gap: 6px;
 }
 .step-start-over-btn:hover {
     background-color: rgba(255, 255, 255, 0.1);
@@ -440,27 +459,34 @@
 
 /* --- Responsive Adjustments --- */
 @media (max-width: 768px) {
+    .renewal-container {
+         min-height: 480px; /* Adjust min-height for tablets */
+    }
     .renewal-container, .renewal-step {
         padding: 25px 25px; /* Adjusted padding */
     }
-    .step-title { font-size: 1.4rem; } /* Adjusted size */
+    .step-title { font-size: 1.4rem; }
     .service-selection-grid-v3 {
         grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 15px; /* Adjusted gap */
+        gap: 15px;
     }
-    .duration-option label { padding: 14px 18px; font-size: 0.95rem; } /* Adjusted padding/size */
-    .payment-instruction-summary { font-size: 0.95rem; padding: 10px 15px;} /* Adjusted size/padding */
-    .payment-method-v3 { flex-direction: column; align-items: flex-start; gap: 6px; } /* Stack earlier */
+    .duration-option label { padding: 14px 18px; font-size: 0.95rem; }
+    .payment-instruction-summary { font-size: 0.95rem; padding: 10px 15px;}
+    .payment-method-v3 { flex-direction: column; align-items: flex-start; gap: 6px; }
 }
 
 @media (max-width: 480px) {
-    .renewal-section-v3 { padding: 40px 0 50px 0; }
+    .renewal-section-v3 { padding: 30px 0 40px 0; } /* Further adjust section padding */
+     .renewal-container {
+         min-height: 0; /* Allow container to shrink fully on mobile */
+         border-radius: 20px;
+         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    }
     .renewal-container, .renewal-step {
         padding: 20px 15px; /* Further reduced padding */
-        border-radius: 20px;
     }
-    .step-header { gap: 10px; margin-bottom: 20px; padding-bottom: 10px;} /* Reduced spacing */
-    .step-title { font-size: 1.15rem; } /* Further reduced size */
+    .step-header { gap: 10px; margin-bottom: 20px; padding-bottom: 10px;}
+    .step-title { font-size: 1.15rem; }
     .service-selection-grid-v3 { grid-template-columns: 1fr 1fr; gap: 12px; }
     .service-card-v3 { padding: 18px 10px; gap: 10px;}
     .service-card-v3 img { max-height: 40px; }
@@ -478,4 +504,3 @@
      .step-footer { margin-top: 18px; padding-top: 10px;}
      .step-start-over-btn { width: 100%; justify-content: center; font-size: 0.8rem; padding: 8px 15px;}
 }
-
