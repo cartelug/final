@@ -313,17 +313,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     c.style.removeProperty('--service-shadow-color');
                     c.style.removeProperty('--service-bg-color');
                 });
-
-                // Add 'selected' class to the clicked card
-                card.classList.add('selected');
-                // Apply dynamic styling using CSS variables
-                const shadowColor = serviceColor.replace(')', ', 0.3)').replace('rgb', 'rgba'); // Create shadow color
-                const bgColor = serviceColor.replace(')', ', 0.1)').replace('rgb', 'rgba'); // Create bg color
-                card.style.setProperty('--service-color', serviceColor);
-                card.style.setProperty('--service-shadow-color', shadowColor);
-                card.style.setProperty('--service-bg-color', bgColor);
-
-
                 // Update details section content
                 if (detailsServiceNameSpan) detailsServiceNameSpan.textContent = selectedService;
                 if (whatsappConfirmBtnV2) whatsappConfirmBtnV2.setAttribute('data-service', selectedService);
