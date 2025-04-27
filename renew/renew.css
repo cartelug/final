@@ -1,0 +1,288 @@
+/* === Renewal Page Styles (renew.css) === */
+
+.renewal-section {
+    min-height: calc(100vh - 80px - 150px); /* Adjust based on header/footer */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 0; /* Increased padding */
+    background: var(--gradient-dark); /* Use a gradient or dark bg */
+}
+
+.renewal-section .container {
+    max-width: 800px;
+    text-align: center;
+}
+
+/* --- Service Selection View --- */
+.service-selection-view,
+.instructions-view {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 50px 40px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    display: none; /* Hidden by default */
+}
+
+.service-selection-view.active-view,
+.instructions-view.active-view {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.renewal-title {
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    color: #fff;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.renewal-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-medium);
+    margin-bottom: 50px;
+}
+
+.service-logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 35px;
+    justify-content: center;
+}
+
+.service-logo-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 30px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    opacity: 0; /* For animation */
+    transform: scale(0.9); /* For animation */
+    animation: popIn 0.5s ease-out forwards;
+}
+
+/* Staggered animation */
+.service-logo-card:nth-child(1) { animation-delay: 0.1s; }
+.service-logo-card:nth-child(2) { animation-delay: 0.2s; }
+.service-logo-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes popIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.service-logo-card:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.service-logo-card img {
+    max-height: 55px;
+    width: auto;
+    object-fit: contain;
+    margin-bottom: 10px; /* Space between logo and text */
+}
+
+.service-logo-card span {
+    font-weight: 600;
+    color: var(--text-light);
+    font-size: 1.05rem;
+}
+
+/* --- Instructions View --- */
+.instructions-view {
+    text-align: left; /* Align content left */
+    position: relative; /* For back button positioning */
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 25px;
+    background: none;
+    border: 1px solid var(--text-medium);
+    color: var(--text-medium);
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.back-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: #fff;
+}
+
+.instruction-title {
+    text-align: center;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+    color: #fff;
+    margin-bottom: 40px;
+    margin-top: 30px; /* Space below back button */
+    font-weight: 700;
+}
+
+.instruction-title #selected-service-name {
+    /* Color based on service - can be added via JS if needed */
+    color: var(--cta-blue); /* Default */
+}
+/* Example Specific Service Colors (add more if needed) */
+.instruction-title.netflix #selected-service-name { color: var(--netflix-red); }
+.instruction-title.spotify #selected-service-name { color: var(--spotify-green); }
+.instruction-title.prime #selected-service-name { color: var(--prime-blue); }
+
+
+.payment-instructions {
+    background-color: rgba(0, 0, 0, 0.15);
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.payment-instructions h3 {
+    font-size: 1.3rem;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.payment-instructions p {
+    color: var(--text-medium);
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+.payment-method {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: rgba(255, 255, 255, 0.04);
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.payment-icon {
+    max-height: 30px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.payment-details {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.4;
+}
+
+.payment-network {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+.payment-number {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.payment-name {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+.confirmation-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.confirmation-section p {
+    color: var(--text-medium);
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+.whatsapp-button {
+    background-color: var(--whatsapp-green);
+    padding: 15px 40px; /* Larger padding */
+    font-size: 1.1rem;
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.25);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.whatsapp-button:hover {
+    background-color: #1fbc5d;
+    box-shadow: 0 8px 25px rgba(37, 211, 102, 0.35);
+    transform: translateY(-3px);
+}
+
+/* --- Renewal Page Responsiveness --- */
+@media (max-width: 768px) {
+    .service-selection-view,
+    .instructions-view {
+        padding: 40px 25px;
+    }
+    .service-logo-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 25px;
+    }
+    .service-logo-card img { max-height: 45px; }
+    .service-logo-card span { font-size: 0.95rem; }
+
+    .instruction-title { font-size: 1.8rem; margin-top: 50px; } /* Adjust for back button */
+    .payment-instructions { padding: 25px; }
+    .payment-method { flex-direction: column; align-items: flex-start; gap: 8px; padding: 15px; }
+    .payment-icon { margin-bottom: 5px; }
+    .whatsapp-button { width: 100%; max-width: 350px; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+    .renewal-section { padding: 60px 0; }
+    .service-selection-view,
+    .instructions-view {
+        padding: 30px 15px;
+    }
+    .renewal-title { font-size: 1.8rem; }
+    .renewal-subtitle { font-size: 1rem; margin-bottom: 40px; }
+    .service-logo-grid {
+        grid-template-columns: 1fr 1fr; /* Force two columns */
+        gap: 20px;
+    }
+    .service-logo-card { padding: 20px 10px; }
+    .service-logo-card img { max-height: 40px; }
+    .service-logo-card span { font-size: 0.9rem; }
+
+    .back-button { top: 15px; left: 15px; font-size: 0.85rem; padding: 6px 12px; }
+    .instruction-title { font-size: 1.6rem; margin-top: 45px; margin-bottom: 30px; }
+    .payment-instructions { padding: 20px; }
+    .payment-instructions h3 { font-size: 1.15rem; }
+    .payment-instructions p { font-size: 0.95rem; }
+    .payment-number { font-size: 1rem; }
+    .whatsapp-button { font-size: 1rem; padding: 14px 30px; }
+}
