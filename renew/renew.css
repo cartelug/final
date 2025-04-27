@@ -59,12 +59,23 @@
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Styling for the selected card */
+/* Styling for the selected card (Standard Highlight) */
 .service-card-v2.selected {
-    border-color: var(--cta-blue); /* Use accent color */
-    box-shadow: 0 0 25px rgba(0, 122, 255, 0.3); /* Glow effect */
-    transform: translateY(-5px) scale(1.02); /* Slight lift and scale */
-    background-color: rgba(0, 122, 255, 0.1); /* Tint background */
+    /* --- Use a standard highlight color --- */
+    /* Option 1: Use your site's primary CTA blue */
+    border-color: var(--cta-blue);
+    background-color: rgba(0, 122, 255, 0.1); /* Light blue tint */
+    box-shadow: 0 0 25px rgba(0, 122, 255, 0.3); /* Blue glow */
+
+    /* Option 2: Use a neutral grey highlight (uncomment below and comment Option 1) */
+    /*
+    border-color: #aaaaaa;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 20px rgba(200, 200, 200, 0.2);
+    */
+
+    /* --- Keep the transform effect --- */
+    transform: translateY(-5px) scale(1.02);
 }
 /* Use service color for border when selected */
 .service-card-v2.selected[data-color] {
