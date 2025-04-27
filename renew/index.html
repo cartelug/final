@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renew Your Service - Cartelug</title>
+
+    <link rel="icon" href="../logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="../logo.png">
+    <meta name="description" content="Renew your Netflix, Prime Video, or Spotify Premium support package with Cartelug. Easy payment via MTN or Airtel Mobile Money.">
+    <link rel="stylesheet" href="../base.css">
+    <link rel="stylesheet" href="renew.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <div id="preloader">
+        <img src="../logo.png" alt="Loading..." class="preloader-logo">
+    </div>
+
+    <div class="page-content">
+
+        <header class="main-header">
+            <div class="container">
+                <div class="header-content">
+                    <a href="/" class="logo-link">
+                        <img src="../logo.png" alt="Cartelug Logo" id="logo">
+                    </a>
+                    </div>
+                <nav id="main-nav" class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/#services">Services</a></li>
+                        <li><a href="/#about">About</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                        <li><a href="/renew/" class="active-nav">Renew</a></li> </ul>
+                </nav>
+                <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section class="renewal-section section-padding">
+                <div class="container">
+
+                    <div id="service-selection" class="service-selection-view active-view">
+                        <h1 class="renewal-title">Renew Your Service</h1>
+                        <p class="renewal-subtitle">Select the service you wish to renew:</p>
+                        <div class="service-logo-grid">
+                            <div class="service-logo-card" data-service="Netflix">
+                                <img src="../netflix.png" alt="Netflix Logo">
+                                <span>Netflix</span>
+                            </div>
+                            <div class="service-logo-card" data-service="Spotify">
+                                <img src="../spotify.png" alt="Spotify Logo">
+                                <span>Spotify</span>
+                            </div>
+                            <div class="service-logo-card" data-service="Prime Video">
+                                <img src="../prime-video.png" alt="Prime Video Logo">
+                                <span>Prime Video</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="instructions-view" class="instructions-view">
+                        <button id="back-to-selection" class="back-button" aria-label="Go back to service selection">
+                            <i class="fas fa-arrow-left"></i> Change Service
+                        </button>
+                        <h2 class="instruction-title">Renew <span id="selected-service-name">Service</span></h2>
+                        <div class="payment-instructions">
+                            <h3>Payment Details:</h3>
+                            <p>Please send the renewal payment to either of the following:</p>
+                            <div class="payment-method">
+                                <img src="../mtn.png" alt="MTN Mobile Money" class="payment-icon">
+                                <div class="payment-details">
+                                    <span class="payment-network">MTN Mobile Money:</span>
+                                    <strong class="payment-number">0762193386</strong>
+                                    <span class="payment-name">(Names: Alfred Opio)</span>
+                                </div>
+                            </div>
+                            <div class="payment-method">
+                                <img src="../airtel.png" alt="Airtel Money" class="payment-icon">
+                                <div class="payment-details">
+                                    <span class="payment-network">Airtel Money:</span>
+                                    <strong class="payment-number">0744688623</strong>
+                                    <span class="payment-name">(Names: Alfred Opio)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="confirmation-section">
+                            <p>After sending payment, click below to notify us via WhatsApp:</p>
+                            <button id="whatsapp-confirm-btn" class="cta-button whatsapp-button" data-service="">
+                                <i class="fab fa-whatsapp"></i> Confirm Renewal Payment
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+
+        <footer class="main-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <a href="/privacy-policy/">Privacy Policy</a> | <a href="/terms-of-service/">Terms of Service</a> | <a href="/contact/">Contact Us</a>
+                    </div>
+                    <div class="payment-info">
+                        <p>Secure Payments Accepted via Mobile Money:</p>
+                        <div class="payment-logos">
+                            <img src="../mtn.png" alt="MTN Mobile Money" class="payment-logo">
+                            <img src="../airtel.png" alt="Airtel Money" class="payment-logo">
+                        </div>
+                    </div>
+                    <p class="copyright">&copy; <span id="year"></span> Cartelug. All Rights Reserved.</p>
+                </div>
+            </div>
+        </footer>
+
+    </div> <script src="../script.js"></script>
+</body>
+</html>
