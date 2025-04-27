@@ -249,19 +249,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- Improved Renewal Page Logic (Single View) ---
-    // Get elements for the improved renewal page
-    const serviceCardsV2 = document.querySelectorAll('.service-card-v2');
-    const detailsSection = document.getElementById('details-section');
-    const detailsPlaceholder = detailsSection?.querySelector('.details-placeholder'); // Use optional chaining
-    const detailsContent = detailsSection?.querySelector('.details-content');
-    const detailsServiceNameSpan = document.getElementById('details-service-name');
-    const detailsPricingListUl = document.getElementById('details-pricing-list');
-    const whatsappConfirmBtnV2 = document.getElementById('whatsapp-confirm-btn-v2');
-    const detailsTitle = detailsSection?.querySelector('.details-title');
+    // --- Multi-Step Renewal Page Logic (V3) ---
+    // Select all relevant elements for the multi-step renewal process
+    const step1 = document.getElementById('step-1');
+    const step2 = document.getElementById('step-2');
+    const step3 = document.getElementById('step-3');
+    const serviceCardsV3 = document.querySelectorAll('.service-card-v3');
+    const durationOptionsContainer = document.getElementById('duration-options-container');
+    const durationNextBtn = document.getElementById('duration-next-btn');
+    const paymentAmountSpan = document.getElementById('payment-amount');
+    const paymentDurationSpan = document.getElementById('payment-duration');
+    const paymentServiceSpan = document.getElementById('payment-service');
+    const whatsappConfirmBtnV3 = document.getElementById('whatsapp-confirm-btn-v3');
+    const startOverBtn = document.getElementById('start-over-btn');
+    const backBtns = document.querySelectorAll('.step-back-btn');
+    const dynamicServiceNameSpans = document.querySelectorAll('.dynamic-service-name');
 
-    // Define renewal prices
-    const renewalPricesV2 = {
+    // Store the renewal price data
+    const renewalPricesV3 = {
         "Netflix": [
             { duration: "2 Months", price: "50,000 UGX" },
             { duration: "3 Months", price: "75,000 UGX" },
@@ -277,122 +282,200 @@ document.addEventListener('DOMContentLoaded', () => {
         ]
     };
 
-    // Check if we are on the improved renewal page
-    if (serviceCardsV2.length > 0 && detailsSection && detailsContent && detailsPricingListUl) {
+    // Store the currently selected service and duration/price details
+    let selectedService = null;
+    let selectedDuration = null;
+    let selectedPrice = null;
 
-        // Function to display prices in the details section
-        const displayPricesV2 = (serviceName) => {
-            detailsPricingListUl.innerHTML = ''; // Clear existing list
-            const prices = renewalPricesV2[serviceName];
-            if (prices && prices.length > 0) {
-                prices.forEach(item => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <span class="duration">${item.duration}</span>
-                        <span class="price">${item.price}</span>
-                    `;
-                    detailsPricingListUl.appendChild(li);
-                });
-            } else {
-                // Optionally display a message if no prices are found
-                detailsPricingListUl.innerHTML = '<li>No pricing available for this service.</li>';
-                console.warn(`No renewal prices found for service: ${serviceName}`);
-            }
-        };
-
-        // Add click listeners to service cards
-        serviceCardsV2.forEach(card => {
-            card.addEventListener('click', () => {
-                const selectedService = card.getAttribute('data-service');
-                const serviceColor = card.getAttribute('data-color') || 'var(--cta-blue)'; // Get color or default
-
-                // Remove 'selected' class from all cards
-                serviceCardsV2.forEach(c => {
-                    c.classList.remove('selected');
-                    c.style.removeProperty('--service-color'); // Remove custom properties
-                    c.style.removeProperty('--service-shadow-color');
-                    c.style.removeProperty('--service-bg-color');
-                });
-                // Update details section content
-                if (detailsServiceNameSpan) detailsServiceNameSpan.textContent = selectedService;
-                if (whatsappConfirmBtnV2) whatsappConfirmBtnV2.setAttribute('data-service', selectedService);
-
-                // Update title color (optional, using class)
-                if (detailsTitle) {
-                    detailsTitle.className = 'details-title'; // Reset
-                    if (selectedService.toLowerCase().includes('netflix')) detailsTitle.classList.add('netflix');
-                    else if (selectedService.toLowerCase().includes('spotify')) detailsTitle.classList.add('spotify');
-                    else if (selectedService.toLowerCase().includes('prime')) detailsTitle.classList.add('prime');
+    // Function to navigate between steps with animation
+    const goToStep = (stepToShow) => {
+        const steps = [step1, step2, step3];
+        steps.forEach(step => {
+            if (step) { // Check if step exists
+                if (step.id === `step-${stepToShow}`) {
+                    // Show the target step
+                    step.classList.remove('exiting-step');
+                    step.classList.add('active-step');
+                } else if (step.classList.contains('active-step')) {
+                    // Mark the current step as exiting
+                    step.classList.add('exiting-step');
+                    step.classList.remove('active-step');
+                } else {
+                     // Ensure other steps are hidden and reset
+                     step.classList.remove('exiting-step');
+                     step.classList.remove('active-step');
                 }
+            }
+        });
+    };
 
-                // Display prices
-                displayPricesV2(selectedService);
+    // Function to populate duration options for Step 2
+    const populateDurationOptions = (serviceName) => {
+        durationOptionsContainer.innerHTML = ''; // Clear previous options
+        const prices = renewalPricesV3[serviceName];
 
-                // Hide placeholder, show content, and reveal the details section
-                if (detailsPlaceholder) detailsPlaceholder.style.display = 'none';
-                if (detailsContent) detailsContent.style.display = 'block';
-                detailsSection.classList.add('visible'); // Trigger transition
+        if (prices && prices.length > 0) {
+            prices.forEach((item, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'duration-option';
 
-                 // Scroll the details section into view smoothly (optional)
-                 setTimeout(() => {
-                     detailsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                 }, 100); // Slight delay after transition starts
+                const inputId = `duration-${serviceName.replace(/\s+/g, '-')}-${index}`; // Unique ID
 
+                optionDiv.innerHTML = `
+                    <input type="radio" id="${inputId}" name="renewal_duration" value="${item.duration}" data-price="${item.price}">
+                    <label for="${inputId}">
+                        <span class="duration-text">${item.duration}</span>
+                        <span class="price-text">${item.price}</span>
+                    </label>
+                `;
+                durationOptionsContainer.appendChild(optionDiv);
+            });
+
+            // Add event listener to enable Next button when a duration is selected
+            const durationRadios = durationOptionsContainer.querySelectorAll('input[name="renewal_duration"]');
+            durationRadios.forEach(radio => {
+                radio.addEventListener('change', () => {
+                    if (durationNextBtn) durationNextBtn.disabled = false; // Enable Next button
+                    // Store selected details
+                    const selectedRadio = durationOptionsContainer.querySelector('input[name="renewal_duration"]:checked');
+                    if (selectedRadio) {
+                        selectedDuration = selectedRadio.value;
+                        selectedPrice = selectedRadio.getAttribute('data-price');
+                    }
+                });
+            });
+
+        } else {
+            durationOptionsContainer.innerHTML = '<p class="loading-text">No duration options available.</p>';
+            if (durationNextBtn) durationNextBtn.disabled = true; // Disable next if no options
+        }
+        // Update dynamic service name in the step title
+        dynamicServiceNameSpans.forEach(span => span.textContent = serviceName);
+        if (durationNextBtn) durationNextBtn.disabled = true; // Ensure Next is disabled initially
+    };
+
+    // Function to populate payment details for Step 3
+    const populatePaymentDetails = () => {
+        if (paymentAmountSpan) paymentAmountSpan.textContent = selectedPrice || 'Amount';
+        if (paymentDurationSpan) paymentDurationSpan.textContent = selectedDuration || 'Duration';
+        if (paymentServiceSpan) paymentServiceSpan.textContent = selectedService || 'Service';
+
+        // Set data attributes for the WhatsApp button
+        if (whatsappConfirmBtnV3) {
+            whatsappConfirmBtnV3.setAttribute('data-service', selectedService || '');
+            whatsappConfirmBtnV3.setAttribute('data-duration', selectedDuration || '');
+            whatsappConfirmBtnV3.setAttribute('data-price', selectedPrice || '');
+        }
+    };
+
+    // --- Event Listeners for Multi-Step Renewal ---
+    // Only run if Step 1 exists (i.e., we are on the renewal page)
+    if (step1) {
+        // Service Card Clicks (Go to Step 2)
+        serviceCardsV3.forEach(card => {
+            card.addEventListener('click', () => {
+                selectedService = card.getAttribute('data-service');
+                if (selectedService) {
+                    populateDurationOptions(selectedService);
+                    goToStep(2); // Go to duration selection
+                }
             });
         });
 
-        // WhatsApp Confirmation Button Logic
-        if (whatsappConfirmBtnV2) {
-            whatsappConfirmBtnV2.addEventListener('click', () => {
-                const service = whatsappConfirmBtnV2.getAttribute('data-service');
+        // Duration Next Button Click (Go to Step 3)
+        if (durationNextBtn) {
+            durationNextBtn.addEventListener('click', () => {
+                // Double check a duration was selected
+                 const selectedRadio = durationOptionsContainer.querySelector('input[name="renewal_duration"]:checked');
+                 if (selectedRadio) {
+                     selectedDuration = selectedRadio.value;
+                     selectedPrice = selectedRadio.getAttribute('data-price');
+                     populatePaymentDetails();
+                     goToStep(3); // Go to payment/confirmation
+                 } else {
+                     alert("Please select a duration."); // Should not happen if button is enabled correctly
+                 }
+            });
+        }
+
+        // Back Button Clicks
+        backBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetStep = btn.getAttribute('data-target-step');
+                if (targetStep) {
+                    goToStep(parseInt(targetStep));
+                }
+            });
+        });
+
+        // Start Over Button Click
+        if (startOverBtn) {
+            startOverBtn.addEventListener('click', () => {
+                // Reset stored selections
+                selectedService = null;
+                selectedDuration = null;
+                selectedPrice = null;
+                // Reset duration options
+                durationOptionsContainer.innerHTML = '<p class="loading-text">Loading options...</p>';
+                if (durationNextBtn) durationNextBtn.disabled = true;
+                // Go back to step 1
+                goToStep(1);
+            });
+        }
+
+        // WhatsApp Confirmation Button Click (Step 3)
+        if (whatsappConfirmBtnV3) {
+            whatsappConfirmBtnV3.addEventListener('click', () => {
+                // Get details from the button's data attributes (set when step 3 was populated)
+                const service = whatsappConfirmBtnV3.getAttribute('data-service');
+                // const duration = whatsappConfirmBtnV3.getAttribute('data-duration'); // Not needed for message
+                // const price = whatsappConfirmBtnV3.getAttribute('data-price'); // Not needed for message
+
                 if (service) {
                     const whatsappNumber = "256762193386";
-                    // Updated, more instructive message
-                    const message = `Hi Cartelug, I've renewed my ${service}. Please check and confirm.`;
+                    // Updated confirmation message
+                    const message = `Hi Cartelug, I've just paid for my ${service} renewal. Please check and confirm.`;
                     const encodedMessage = encodeURIComponent(message);
                     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
                     window.location.href = whatsappURL; // Redirect
                 } else {
-                    alert("Please select a service first before confirming payment."); // Guide user
+                    alert("An error occurred. Please start over."); // Fallback
                 }
             });
         }
 
-        // --- ClipboardJS Initialization ---
-        // Check if ClipboardJS is loaded
+        // --- ClipboardJS Initialization for Renewal Page ---
         if (typeof ClipboardJS !== 'undefined') {
-            const clipboard = new ClipboardJS('.copy-btn');
+            const clipboard = new ClipboardJS('.copy-btn-v3'); // Target new copy buttons
 
             clipboard.on('success', function(e) {
-                console.log('Copied:', e.text);
-                const originalText = e.trigger.innerHTML; // Store original button content
-                // Provide visual feedback
-                e.trigger.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                e.trigger.disabled = true; // Briefly disable button
+                const originalButtonHtml = e.trigger.innerHTML; // Store original icon + text
+                e.trigger.innerHTML = '<i class="fas fa-check"></i> Copied!'; // Change to checkmark
+                e.trigger.disabled = true; // Disable briefly
 
-                // Reset button text after a short delay
                 setTimeout(() => {
-                    e.trigger.innerHTML = originalText;
-                    e.trigger.disabled = false;
+                    e.trigger.innerHTML = originalButtonHtml; // Restore original content
+                    e.trigger.disabled = false; // Re-enable
                 }, 1500); // Reset after 1.5 seconds
 
-                e.clearSelection(); // Deselect text
+                e.clearSelection();
             });
 
             clipboard.on('error', function(e) {
-                console.error('Copy failed:', e.action);
-                // Optionally provide fallback feedback
-                alert('Failed to copy. Please copy manually.');
+                console.error('ClipboardJS error:', e.action, e.trigger);
+                alert('Failed to copy. Please copy the number manually.');
             });
         } else {
             console.warn("ClipboardJS library not loaded. Copy buttons will not work.");
-            // Hide copy buttons if library isn't loaded
-            document.querySelectorAll('.copy-btn').forEach(btn => btn.style.display = 'none');
+            document.querySelectorAll('.copy-btn-v3').forEach(btn => btn.style.display = 'none'); // Hide buttons
         }
         // --- End ClipboardJS ---
 
-    } // End check for improved renewal page elements
-    // --- End Improved Renewal Page Logic ---
+        // Initial state: Show Step 1 on page load
+        goToStep(1);
+
+    } // End check for renewal page elements
+    // --- End Multi-Step Renewal Page Logic ---
 
 
 }); // End of the SINGLE, main DOMContentLoaded listener
