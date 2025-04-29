@@ -95,17 +95,15 @@
                    </div>
 
                     <div class="issue-card-wrapper">
-                         <button class="issue-card type-netflix" data-service="Netflix" data-issue="Signed Out">
-                            <div class="issue-card-icon">
+                         <div class="issue-card type-netflix" id="netflix-signed-out-card"> <div class="issue-card-icon">
                                  <i class="fas fa-user-slash fa-fw"></i> </div>
                              <div class="issue-card-content">
                                 <h3>Netflix Signed Out</h3>
                                 <p>Suddenly logged out or can't log back in? Click here for help.</p>
                             </div>
-                             <span class="contact-prompt">
-                                 Contact Support <i class="fab fa-whatsapp fa-xs"></i>
+                             <span class="get-help-prompt"> GET HELP <i class="fas fa-arrow-right fa-xs"></i>
                              </span>
-                        </button>
+                        </div>
                     </div>
 
                     <div class="issue-card-wrapper">
@@ -132,7 +130,7 @@
                                  <small>Response within business hours</small>
                               </div>
                               <i class="fas fa-chevron-right arrow"></i> </a>
-                          </div>
+                     </div>
                  </div>
                  </div> </section>
     </main>
@@ -155,6 +153,67 @@
         </div>
     </footer>
 
-    <script src="../script.js"></script>
+    <div id="signed-out-modal" class="modal"> <div class="modal-overlay"></div>
+        <div class="modal-content signed-out-modal-content"> <button class="modal-close" aria-label="Close modal">&times;</button>
+
+            <div class="modal-step" id="modal-step-1">
+                <h3 class="modal-step-title"><i class="fas fa-envelope-open-text"></i> Select Your Email</h3>
+                <p class="modal-intro-text">No worries, signing back in is easy!</p>
+                <p>What Netflix email were you given? <br><strong>Please select carefully.</strong></p>
+                <div class="email-options-container">
+                    </div>
+                <div class="modal-nav">
+                    <button id="modal-step1-next" class="modal-button-next" disabled>Next <i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div class="modal-step" id="modal-step-2" style="display: none;">
+                <h3 class="modal-step-title"><i class="fas fa-question-circle"></i> Confirm Email</h3>
+                <p>Are you sure the Netflix email we gave you is:</p>
+                <p><strong id="modal-selected-email" class="selected-email-display"></strong>?</p>
+                <div class="modal-nav confirmation-nav">
+                    <button id="modal-confirm-no" class="modal-button-secondary"><i class="fas fa-arrow-left"></i> No, Choose Again</button>
+                    <button id="modal-confirm-yes" class="modal-button-primary">Yes, Confirm <i class="fas fa-check"></i></button>
+                </div>
+            </div>
+
+            <div class="modal-step" id="modal-step-3" style="display: none;">
+                <h3 class="modal-step-title"><i class="fas fa-mobile-alt"></i></i> Select Device</h3>
+                <p>Which device are you signing into?</p>
+                <div class="modal-nav device-nav">
+                    <button id="modal-select-tv" class="modal-button-choice"><i class="fas fa-tv"></i> TV</button>
+                    <button id="modal-select-phone" class="modal-button-choice"><i class="fas fa-mobile-alt"></i> Phone / Tablet</button>
+                </div>
+                 <button class="modal-back-button" data-target-step="2"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+
+            <div class="modal-step" id="modal-step-4-tv" style="display: none;">
+                 <h3 class="modal-step-title"><i class="fas fa-tv"></i> TV Sign-In Instructions</h3>
+                 <div class="instructions-content">
+                    <p>1. If it's a Smart TV, go to <strong class="highlight-url">netflix.com/tv2</strong> on your phone's web browser.</p>
+                    <p>2. Enter the email: <br><strong id="tv-instruction-email" class="instruction-value"></strong></p>
+                    <p>3. Enter the password: <br><strong class="instruction-value">thecartelug</strong></p>
+                 </div>
+                 <div class="modal-nav">
+                     <button class="modal-close-final modal-button-primary"><i class="fas fa-check-circle"></i> Done</button>
+                 </div>
+                  <button class="modal-back-button" data-target-step="3"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+
+            <div class="modal-step" id="modal-step-4-phone" style="display: none;">
+                 <h3 class="modal-step-title"><i class="fas fa-mobile-alt"></i> Phone/Tablet Sign-In</h3>
+                 <div class="instructions-content">
+                    <p>1. Open the Netflix app and sign back in.</p>
+                    <p>2. Use the email: <br><strong id="phone-instruction-email" class="instruction-value"></strong></p>
+                    <p>3. Use the password: <br><strong class="instruction-value">thecartelug</strong></p>
+                    <p>4. Remember to select the profile we assigned to you.</p>
+                 </div>
+                 <div class="modal-nav">
+                     <button class="modal-close-final modal-button-primary"><i class="fas fa-check-circle"></i> Done</button>
+                 </div>
+                  <button class="modal-back-button" data-target-step="3"><i class="fas fa-arrow-left"></i> Back</button>
+            </div>
+
+        </div> </div> <script src="../script.js"></script>
 </body>
 </html>
