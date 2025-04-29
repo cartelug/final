@@ -247,6 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Contact Page Issue Card WhatsApp Redirect Logic ---
     // Adds click listeners to specific issue cards on the contact page to open WhatsApp
+    // *** Excludes the Netflix Signed Out card ***
     const issueButtons = document.querySelectorAll('.issue-card[data-service][data-issue]'); // Select cards with specific data attributes
     issueButtons.forEach(button => {
          button.addEventListener('click', () => {
@@ -583,10 +584,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- End V2/V3 Renewal Page Logic --- //
 
 // --- Netflix Signed Out Modal Logic --- //
-    const signedOutCard = document.getElementById('netflix-signed-out-card');
+    const signedOutHelpBtn = document.getElementById('netflix-signed-out-help-btn'); // Get the button by its new ID
     const modal = document.getElementById('signed-out-modal');
 
-    if (signedOutCard && modal) {
+    if (signedOutHelpBtn && modal) { // Check if the button and modal exist
         const modalCloseBtns = modal.querySelectorAll('.modal-close, .modal-close-final');
         const modalOverlay = modal.querySelector('.modal-overlay');
         const modalContent = modal.querySelector('.signed-out-modal-content');
@@ -657,8 +658,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const resetModal = () => {
             selectedEmail = null;
             // Uncheck all radio buttons
-            const radios = emailOptionsContainer.querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => radio.checked = false);
+            if (emailOptionsContainer) { // Check if container exists
+                const radios = emailOptionsContainer.querySelectorAll('input[type="radio"]');
+                radios.forEach(radio => radio.checked = false);
+            }
             if (step1NextBtn) step1NextBtn.disabled = true; // Disable next button safely
             goToStep('1'); // Go back to the first step
         };
@@ -694,10 +697,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // --- Event Listeners ---
 
-        // Open modal when the card is clicked
-        if(signedOutCard) {
-            signedOutCard.addEventListener('click', openModal);
-        }
+        // Open modal when the "GET HELP" button is clicked
+        signedOutHelpBtn.addEventListener('click', openModal); // Attach listener to the button
 
         // Close modal listeners
         modalCloseBtns.forEach(btn => btn.addEventListener('click', closeModal));
@@ -763,10 +764,12 @@ document.addEventListener('DOMContentLoaded', () => {
         populateEmails(); // Create email radio buttons on load
 
     } else {
-         // Optional: Log if the trigger card or modal itself isn't found on the page
-         // console.log("Netflix Signed Out Card or Modal container not found on this page.");
+         // Optional: Log if the trigger button or modal itself isn't found on the page
+         // if (!signedOutHelpBtn) console.log("Netflix Signed Out 'GET HELP' button (#netflix-signed-out-help-btn) not found.");
+         // if (!modal) console.log("Netflix Signed Out Modal container (#signed-out-modal) not found.");
     }
     // --- End Netflix Signed Out Modal Logic --- //
+
 
 }); // End of the SINGLE, main DOMContentLoaded listener
 
