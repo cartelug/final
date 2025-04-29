@@ -1,4 +1,5 @@
 // Wrap ALL DOM-dependent code in a SINGLE DOMContentLoaded listener
+// This ensures the HTML is fully loaded before the script tries to find elements
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- Mobile Menu Toggle ---
@@ -7,92 +8,127 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainNav = document.getElementById('main-nav');
     if (menuButton && mainNav) {
         menuButton.addEventListener('click', () => {
-            mainNav.classList.toggle('active'); // Toggle visibility class
-            const icon = menuButton.querySelector('i'); // Get the icon (bars/times)
-            // Change icon and accessibility label based on menu state
+            mainNav.classList.toggle('active'); // Toggle the 'active' class to show/hide menu
+            const icon = menuButton.querySelector('i'); // Get the icon element (bars/times)
+
+            // Change the icon and accessibility label based on the menu's state
             if (mainNav.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
+                icon.classList.remove('fa-bars'); // Change to 'X' icon
                 icon.classList.add('fa-times');
-                menuButton.setAttribute('aria-label', 'Close Menu');
+                menuButton.setAttribute('aria-label', 'Close Menu'); // Update accessibility label
             } else {
-                icon.classList.remove('fa-times');
+                icon.classList.remove('fa-times'); // Change back to 'bars' icon
                 icon.classList.add('fa-bars');
-                menuButton.setAttribute('aria-label', 'Open Menu');
+                menuButton.setAttribute('aria-label', 'Open Menu'); // Update accessibility label
             }
         });
+
         // Optional: Close mobile menu when a navigation link is clicked
         const navLinks = mainNav.querySelectorAll('a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                // Only close if it's not an anchor link on the same page (or if it's a main page link)
-                if (!link.getAttribute('href').startsWith('#') || window.location.pathname === '/' || window.location.pathname === '/index.html') {
-                     if (mainNav.classList.contains('active')) { // Check if menu is open
-                        mainNav.classList.remove('active'); // Close menu
-                        // Reset icon and label
+                // Only close if it's not an anchor link on the same page (e.g., /#services)
+                // OR if it's a link navigating away from the homepage
+                const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
+                const isAnchorLink = link.getAttribute('href').startsWith('#');
+
+                if (!isAnchorLink || !isHomePage) {
+                     // Check if the menu is currently active/open
+                     if (mainNav.classList.contains('active')) {
+                        mainNav.classList.remove('active'); // Close the menu
+                        // Reset the menu button icon and label
                         const icon = menuButton.querySelector('i');
                         icon.classList.remove('fa-times');
                         icon.classList.add('fa-bars');
                         menuButton.setAttribute('aria-label', 'Open Menu');
                     }
                 }
+                // If it IS an anchor link on the homepage, let the default scroll happen without closing the menu immediately
             });
         });
-    }
+    } // End Mobile Menu Logic
 
-    // --- Generic Modal Open/Close Functionality (for index.html) ---
-    // Sets up event listeners for buttons that open modals and the modal's close mechanisms
+    // --- Generic Modal Open/Close Functionality (Used on index.html) ---
+    /**
+     * Sets up event listeners for a button to open a specific modal,
+     * and listeners for closing the modal (via close button or overlay click).
+     * @param {string} buttonId - The ID of the button that triggers the modal.
+     * @param {string} modalId - The ID of the modal element.
+     */
     const setupModal = (buttonId, modalId) => {
         const startButton = document.getElementById(buttonId); // Button that triggers the modal
         const modal = document.getElementById(modalId);       // The modal element itself
-        if (startButton && modal) { // Ensure both elements exist
-            const modalCloseButton = modal.querySelector('.modal-close'); // The 'x' button inside the modal
-            const modalOverlay = modal.querySelector('.modal-overlay');   // The background overlay
-            const modalContent = modal.querySelector('.modal-content');   // The modal content area
 
-            // Function to open the modal
+        // Ensure both the button and the modal exist in the HTML
+        if (startButton && modal) {
+            const modalCloseButton = modal.querySelector('.modal-close'); // The 'x' button inside the modal
+            const modalOverlay = modal.querySelector('.modal-overlay');   // The background overlay element
+            const modalContent = modal.querySelector('.modal-content');   // The modal's content area
+
+            // Function to open the modal by adding the 'active' class
             const openModal = () => modal.classList.add('active');
-            // Function to close the modal
+            // Function to close the modal by removing the 'active' class
             const closeModal = () => modal.classList.remove('active');
 
-            // Event listener for the trigger button
+            // Add listener to the button that opens the modal
             startButton.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent default action (like following a link if it's an <a> tag)
+                event.preventDefault(); // Prevent default link behavior if the button is an <a> tag
                 openModal();
             });
-            // Event listener for the close ('x') button
-            if (modalCloseButton) modalCloseButton.addEventListener('click', closeModal);
-            // Event listener for the overlay (clicking outside the modal content closes it)
-            if (modalOverlay) modalOverlay.addEventListener('click', closeModal);
-            // Prevent modal from closing if the user clicks *inside* the content area
-            if (modalContent) modalContent.addEventListener('click', (event) => event.stopPropagation());
+
+            // Add listener to the modal's close ('x') button
+            if (modalCloseButton) {
+                modalCloseButton.addEventListener('click', closeModal);
+            }
+
+            // Add listener to the overlay - clicking outside the content closes the modal
+            if (modalOverlay) {
+                modalOverlay.addEventListener('click', closeModal);
+            }
+
+            // Prevent the modal from closing if the user clicks *inside* the modal content area
+            // (stops the click event from bubbling up to the overlay)
+            if (modalContent) {
+                modalContent.addEventListener('click', (event) => event.stopPropagation());
+            }
         }
     };
-    // Initialize modals for each service on the homepage
+    // Initialize the modal functionality for each service on the homepage
     setupModal('netflix-start-btn', 'netflix-modal');
     setupModal('prime-start-btn', 'prime-modal');
     setupModal('spotify-start-btn', 'spotify-modal');
+    // End Modal Logic
 
     // --- Generic Order Form WhatsApp Redirect Function ---
-    // Handles submitting order forms and redirecting to WhatsApp with pre-filled info
+    /**
+     * Handles validation and submission of order forms, redirecting
+     * the user to WhatsApp with pre-filled order details.
+     * @param {string} formId - The ID of the order form element.
+     * @param {string} serviceName - The name of the service being ordered.
+     */
     const setupOrderFormRedirect = (formId, serviceName) => {
         const orderForm = document.getElementById(formId); // Get the specific order form
-        if (orderForm) { // Check if the form exists on the current page
-            orderForm.addEventListener('submit', function(event) {
-                event.preventDefault(); // Stop the default form submission
 
-                // Find checked radio buttons and input fields within this specific form
+        // Only proceed if the form exists on the current page
+        if (orderForm) {
+            orderForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent the browser's default form submission
+
+                // --- Find form elements within *this specific form* ---
                 const selectedPackageRadio = orderForm.querySelector('input[name="package"]:checked');
                 const clientNameInput = orderForm.querySelector('#clientName');
                 const selectedPaymentRadio = orderForm.querySelector('input[name="paymentMethod"]:checked');
-                const instaUsernameInput = orderForm.querySelector('#instaUsername'); // Specific to Instagram form
+                // Instagram username field is specific to one form
+                const instaUsernameInput = orderForm.querySelector('#instaUsername');
 
-                // --- Basic Form Validation ---
+                // --- Simple Form Validation ---
+                // Check if a package is selected
                 if (!selectedPackageRadio) {
-                    alert("Please select a package."); // Alert if no package is chosen
+                    alert("Please select a package.");
                     // Try to focus the first package radio for user convenience
                     const firstPackageRadio = orderForm.querySelector('input[name="package"]');
                     if(firstPackageRadio) firstPackageRadio.focus();
-                    return; // Stop processing
+                    return; // Stop processing if validation fails
                 }
                  // Check Instagram username only if the input exists and is required
                  if (instaUsernameInput && instaUsernameInput.required && instaUsernameInput.value.trim() === "") {
@@ -100,13 +136,13 @@ document.addEventListener('DOMContentLoaded', () => {
                      instaUsernameInput.focus();
                      return; // Stop processing
                  }
-                 // Check client name
+                 // Check if client name is entered
                  if (!clientNameInput || clientNameInput.value.trim() === "") {
                     alert("Please enter your name.");
                     if(clientNameInput) clientNameInput.focus(); // Focus the name field
                     return; // Stop processing
                 }
-                // Check payment method
+                // Check if a payment method is selected
                 if (!selectedPaymentRadio) {
                     alert("Please select a payment method.");
                      // Try to focus the first payment radio
@@ -116,37 +152,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 // --- End Validation ---
 
-                // Get the selected values from the form
+                // --- Gather selected data ---
                 const duration = selectedPackageRadio.value;
                 const price = selectedPackageRadio.getAttribute('data-price'); // Get price from data attribute
-                const clientName = clientNameInput ? clientNameInput.value.trim() : 'N/A';
+                const clientName = clientNameInput ? clientNameInput.value.trim() : 'N/A'; // Use trim() to remove whitespace
                 const paymentMethod = selectedPaymentRadio.value;
-                const instagramUsername = instaUsernameInput ? instaUsernameInput.value.trim() : null;
+                const instagramUsername = instaUsernameInput ? instaUsernameInput.value.trim() : null; // Get username if present
 
-                // Construct the WhatsApp message
-                const whatsappNumber = "256762193386"; // Your WhatsApp Number
-                let message = `Order for Cartelug:\n\n`; // Start message
+                // --- Construct WhatsApp message ---
+                const whatsappNumber = "256762193386"; // IMPORTANT: Replace with your actual WhatsApp number
+                let message = `Order for Cartelug:\n\n`; // Start message with double newline
                 message += `*Service:* ${serviceName}\n`; // Add service name
-                if (instagramUsername) { // Add Instagram username if provided
+                if (instagramUsername) { // Add Instagram username only if it was entered
                     message += `*Instagram Username:* ${instagramUsername}\n`;
                 }
-                message += `*Package:* ${duration}\n`; // Add selected package
-                if (price) { // Add price if available
+                message += `*Package:* ${duration}\n`; // Add selected package duration/name
+                if (price) { // Add price if available in the data attribute
                     message += `*Price:* ${price}\n`;
                 }
-                message += `*Payment Method:* ${paymentMethod}\n`; // Add payment method
+                message += `*Payment Method:* ${paymentMethod}\n`; // Add selected payment method
                 message += `*Name:* ${clientName}`; // Add client name
 
-                // Encode the message for use in a URL
-                const encodedMessage = encodeURIComponent(message);
-                // Create the WhatsApp URL
+                // --- Create WhatsApp URL and Redirect ---
+                const encodedMessage = encodeURIComponent(message); // Encode the message for the URL
                 const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-                // Redirect the user to the WhatsApp URL
+                // Redirect the user's browser to the WhatsApp URL
                  window.location.href = whatsappURL;
-                 // Alternative: Open in a new tab: window.open(whatsappURL, '_blank');
+                 // Alternative: Open WhatsApp in a new tab: window.open(whatsappURL, '_blank');
 
-                 // Optional: Reset the form after submission attempt
+                 // Optional: Reset the form after submission (might be confusing for user)
                  // orderForm.reset();
             });
         }
@@ -156,82 +191,93 @@ document.addEventListener('DOMContentLoaded', () => {
     setupOrderFormRedirect('prime-order-form', 'Prime Video');
     setupOrderFormRedirect('spotify-order-form', 'Spotify');
     setupOrderFormRedirect('instagram-boost-form', 'Instagram Likes Boost');
+    // End Order Form Logic
 
-    // --- Testimonial Swiper Initialization (for index.html) ---
-    // Checks if the Swiper library is loaded and the '.testimonial-swiper' element exists
+    // --- Testimonial Swiper Initialization (Used on index.html) ---
+    // Check if the Swiper library is loaded and if the swiper container element exists
     if (typeof Swiper !== 'undefined' && document.querySelector('.testimonial-swiper')) {
         try {
-            // Initialize Swiper with options
+            // Initialize Swiper with configuration options
             const testimonialSwiper = new Swiper('.testimonial-swiper', {
-                direction: 'horizontal', // Default, slides left/right
-                loop: true,              // Enable continuous looping
+                // Basic Swiper Options
+                direction: 'horizontal', // Slide horizontally (default)
+                loop: true,              // Enable continuous looping of slides
                 slidesPerView: 1,        // Show one slide at a time
-                spaceBetween: 30,        // Gap between slides (if slidesPerView > 1)
-                grabCursor: true,        // Show grab cursor on hover
-                autoHeight: true,        // Adjust slider height to fit the current slide's content
-                pagination: {            // Configure pagination dots
-                    el: '.swiper-pagination', // CSS selector for pagination container
-                    clickable: true,          // Allow clicking dots to navigate
+                spaceBetween: 30,        // Gap between slides (more relevant if slidesPerView > 1)
+                grabCursor: true,        // Show a "grab" cursor on hover
+                autoHeight: true,        // Adjust slider height automatically to fit the current slide's content
+
+                // Pagination (the dots)
+                pagination: {
+                    el: '.swiper-pagination', // CSS selector for the pagination container
+                    clickable: true,          // Allow clicking on dots to navigate to slides
                 },
-                navigation: {            // Configure navigation arrows
-                    nextEl: '.swiper-button-next', // CSS selector for next arrow
-                    prevEl: '.swiper-button-prev', // CSS selector for previous arrow
+
+                // Navigation (the arrows)
+                navigation: {
+                    nextEl: '.swiper-button-next', // CSS selector for the 'next' arrow
+                    prevEl: '.swiper-button-prev', // CSS selector for the 'previous' arrow
                 },
-                 a11y: {                  // Accessibility enhancements
-                     enabled: true,
-                     prevSlideMessage: 'Previous testimonial',
-                     nextSlideMessage: 'Next testimonial',
-                     paginationBulletMessage: 'Go to testimonial slide {{index}}',
+
+                 // Accessibility Features
+                 a11y: {
+                     enabled: true, // Enable accessibility features
+                     prevSlideMessage: 'Previous testimonial', // ARIA label for previous button
+                     nextSlideMessage: 'Next testimonial',     // ARIA label for next button
+                     paginationBulletMessage: 'Go to testimonial slide {{index}}', // ARIA label for pagination dots
                  },
-                 autoplay: {              // Configure autoplay
-                    delay: 5000,             // Time (ms) between slide transitions
-                    disableOnInteraction: false, // Don't stop autoplay if user interacts (swipes)
-                    pauseOnMouseEnter: true, // Pause autoplay when the mouse is over the slider
+
+                 // Autoplay Configuration
+                 autoplay: {
+                    delay: 5000,             // Time (in ms) between slide transitions (5 seconds)
+                    disableOnInteraction: false, // Keep autoplaying even if user interacts (swipes)
+                    pauseOnMouseEnter: true, // Pause autoplay when the mouse pointer is over the slider
                  },
             });
         } catch (error) {
-            // Log error if Swiper fails to initialize
+            // Log an error if Swiper initialization fails
             console.error("Swiper initialization failed:", error);
-            // Optional: Display a fallback message to the user
+            // Optional: Display a fallback message to the user if Swiper fails
             const swiperContainer = document.querySelector('.testimonial-swiper');
             if (swiperContainer) {
                 swiperContainer.innerHTML = '<p style="text-align: center; color: var(--text-medium);">Testimonials could not be loaded.</p>';
             }
         }
-    }
-
+    } // End Swiper Logic
 
     // --- Contact Page Issue Card WhatsApp Redirect Logic ---
-    // Adds click listeners to the specific issue cards on the contact page
-    const issueButtons = document.querySelectorAll('.issue-card[data-service][data-issue]');
+    // Adds click listeners to specific issue cards on the contact page to open WhatsApp
+    const issueButtons = document.querySelectorAll('.issue-card[data-service][data-issue]'); // Select cards with specific data attributes
     issueButtons.forEach(button => {
          button.addEventListener('click', () => {
             // Get service and issue details from the card's data attributes
             const service = button.getAttribute('data-service');
             const issue = button.getAttribute('data-issue');
             const whatsappNumber = "256762193386"; // Your WhatsApp Number
+
             // Prepare a pre-filled message for WhatsApp support
             let message = `Help Request for Cartelug:\n\n`;
             message += `*Service:* ${service}\n`;
             message += `*Issue:* ${issue}\n\n`;
-            message += `Please describe the problem in detail:`; // Prompt user for details
+            message += `Please describe the problem in detail:`; // Prompt user to add details
+
             const encodedMessage = encodeURIComponent(message);
             const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-            // Open WhatsApp in a new browser tab
+
+            // Open the WhatsApp link in a new browser tab
             window.open(whatsappURL, '_blank');
         });
-    });
+    }); // End Contact Issue Card Logic
 
-
-    // --- Netflix Payment Issue Card Logic (for contact.html) ---
-    // Handles the "Still can't watch?" button interaction on the contact page
+    // --- Netflix Payment Issue Card Logic (Used on contact.html) ---
+    // Handles the interaction for the specific Netflix payment issue card
     const paymentEscalateBtn = document.getElementById('payment-issue-escalate-btn');
-    const paymentInitialDiv = document.getElementById('payment-fix-initial'); // Initial instructions div
-    const paymentApologyDiv = document.getElementById('payment-issue-apology'); // Apology/resolution div
+    const paymentInitialDiv = document.getElementById('payment-fix-initial'); // Div with initial instructions
+    const paymentApologyDiv = document.getElementById('payment-issue-apology'); // Div shown after clicking button
 
-    // Check if all relevant elements exist on the page
+    // Check if all relevant elements exist on the current page
     if (paymentEscalateBtn && paymentInitialDiv && paymentApologyDiv) {
-        // Add click listener to the button
+        // Add click listener to the "Still can't watch?" button
         paymentEscalateBtn.addEventListener('click', () => {
             paymentInitialDiv.style.display = 'none';    // Hide the initial instructions
             paymentApologyDiv.classList.remove('hidden'); // Make the apology div visible (removes CSS class)
@@ -240,258 +286,307 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     // --- End of Netflix Payment Issue Card Logic ---
 
-
     // --- Footer Year Update ---
-    // Finds the element with ID 'year' and sets its text content to the current year
+    // Automatically updates the year in the footer copyright notice
     const yearSpan = document.getElementById('year');
     if (yearSpan) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
+        yearSpan.textContent = new Date().getFullYear(); // Set text to current year
+    } // End Footer Year Logic
 
 
-    // --- Multi-Step Renewal Page Logic (V3) ---
-    // Select all relevant elements for the multi-step renewal process
-    const step1 = document.getElementById('step-1');
-    const step2 = document.getElementById('step-2');
-    const step3 = document.getElementById('step-3');
-    const serviceCardsV3 = document.querySelectorAll('.service-card-v3');
-    const durationOptionsContainer = document.getElementById('duration-options-container');
-    const durationNextBtn = document.getElementById('duration-next-btn');
-    const paymentAmountSpan = document.getElementById('payment-amount');
-    const paymentDurationSpan = document.getElementById('payment-duration');
-    const paymentServiceSpan = document.getElementById('payment-service');
-    const whatsappConfirmBtnV3 = document.getElementById('whatsapp-confirm-btn-v3');
-    const startOverBtn = document.getElementById('start-over-btn');
-    const backBtns = document.querySelectorAll('.step-back-btn');
-    const dynamicServiceNameSpans = document.querySelectorAll('.dynamic-service-name');
+    // --- V2 Renewal Page Logic --- //
+    // This section handles the interactivity for the redesigned renewal page (renew/index.html with renew-v2.css)
 
-    // Store the renewal price data
-    const renewalPricesV3 = {
-        "Netflix": [
-            { duration: "2 Months", price: "50,000 UGX" },
-            { duration: "3 Months", price: "75,000 UGX" },
-            { duration: "6 Months", price: "150,000 UGX" }
-        ],
-        "Prime Video": [
-             { duration: "2 Months", price: "50,000 UGX" },
-             { duration: "3 Months", price: "75,000 UGX" }
-        ],
-        "Spotify": [
-            { duration: "6 Months", price: "70,000 UGX" },
-            { duration: "1 Year", price: "120,000 UGX" }
-        ]
-    };
+    const renewalSectionV2 = document.querySelector('.renewal-section-v2'); // Check if we are on the renewal page
 
-    // Store the currently selected service and duration/price details
-    let selectedService = null;
-    let selectedDuration = null;
-    let selectedPrice = null;
+    // Only run this logic if the main renewal section element exists
+    if (renewalSectionV2) {
 
-    // Function to navigate between steps with animation
-    const goToStep = (stepToShow) => {
-        const steps = [step1, step2, step3];
-        steps.forEach(step => {
-            if (step) { // Check if step exists
-                if (step.id === `step-${stepToShow}`) {
-                    // Show the target step
-                    step.classList.remove('exiting-step');
-                    step.classList.add('active-step');
-                } else if (step.classList.contains('active-step')) {
-                    // Mark the current step as exiting
-                    step.classList.add('exiting-step');
-                    step.classList.remove('active-step');
-                } else {
-                     // Ensure other steps are hidden and reset
-                     step.classList.remove('exiting-step');
-                     step.classList.remove('active-step');
-                }
+        // Get references to all interactive elements on the page
+        const serviceButtonsV2 = renewalSectionV2.querySelectorAll('.service-card-v2');
+        const durationBlockV2 = renewalSectionV2.querySelector('#duration-block-v2');
+        const durationOptionsContainerV2 = renewalSectionV2.querySelector('#duration-options-container-v2');
+        const dynamicServiceLabelV2 = durationBlockV2.querySelector('.dynamic-service-label');
+
+        // Summary Card Elements
+        const summaryCardV2 = renewalSectionV2.querySelector('#summary-card-v2');
+        const summaryServiceV2 = summaryCardV2?.querySelector('#summary-service-v2'); // Use optional chaining just in case
+        const summaryDurationV2 = summaryCardV2?.querySelector('#summary-duration-v2');
+        const summaryPriceV2 = summaryCardV2?.querySelector('#summary-price-v2');
+        const whatsappConfirmBtnV2 = summaryCardV2?.querySelector('#whatsapp-confirm-btn-v2');
+        const resetBtnV2 = summaryCardV2?.querySelector('#reset-renewal-btn-v2'); // Reset button inside summary
+
+        // Payment Copy Buttons
+        const copyBtnsV2 = renewalSectionV2.querySelectorAll('.copy-btn-v2');
+
+
+        // --- Data for Renewal Options ---
+        // Store prices and durations for each service. Update these if your prices change.
+        const renewalPricesV2 = {
+            "Netflix": [
+                { duration: "2 Months", price: "50,000 UGX" },
+                { duration: "3 Months", price: "75,000 UGX" },
+                { duration: "6 Months", price: "150,000 UGX" }
+            ],
+            "Prime Video": [
+                 { duration: "2 Months", price: "50,000 UGX" }, // Example prices
+                 { duration: "3 Months", price: "75,000 UGX" }
+            ],
+            "Spotify": [
+                { duration: "6 Months", price: "70,000 UGX" },
+                { duration: "1 Year", price: "120,000 UGX" }
+            ]
+            // Add other services here following the same structure if needed
+        };
+
+        // --- State Variables ---
+        // Keep track of the user's current selections
+        let currentServiceV2 = null;
+        let currentDurationV2 = null;
+        let currentPriceV2 = null;
+
+        // --- Functions ---
+
+        /**
+         * Updates the text content of the summary card based on current selections.
+         * Enables/disables the WhatsApp confirmation button.
+         */
+        const updateSummaryV2 = () => {
+            // Ensure summary elements exist before trying to update them
+            if (!summaryServiceV2 || !summaryDurationV2 || !summaryPriceV2 || !whatsappConfirmBtnV2) {
+                 console.error("Summary elements not found!");
+                 return;
             }
-        });
-    };
 
-    // Function to populate duration options for Step 2
-    const populateDurationOptions = (serviceName) => {
-        durationOptionsContainer.innerHTML = ''; // Clear previous options
-        const prices = renewalPricesV3[serviceName];
+            // Update text fields, showing defaults if nothing is selected
+            summaryServiceV2.textContent = currentServiceV2 ? currentServiceV2 : 'Please select';
+            summaryDurationV2.textContent = currentDurationV2 ? currentDurationV2 : 'Please select';
+            summaryPriceV2.textContent = currentPriceV2 ? currentPriceV2 : '--';
 
-        if (prices && prices.length > 0) {
-            prices.forEach((item, index) => {
-                const optionDiv = document.createElement('div');
-                optionDiv.className = 'duration-option';
+            // Enable the WhatsApp button only if service, duration, AND price are all selected (truthy)
+            whatsappConfirmBtnV2.disabled = !(currentServiceV2 && currentDurationV2 && currentPriceV2);
+        };
 
-                const inputId = `duration-${serviceName.replace(/\s+/g, '-')}-${index}`; // Unique ID
+        /**
+         * Clears and populates the duration options block based on the selected service.
+         * Adds event listeners to the newly created duration radio buttons.
+         * @param {string} serviceName - The name of the service selected (e.g., "Netflix").
+         */
+        const populateDurationOptionsV2 = (serviceName) => {
+            // Ensure the container and price data exist
+            if (!durationOptionsContainerV2 || !renewalPricesV2[serviceName]) {
+                 console.error("Duration container or price data missing for", serviceName);
+                 if(durationOptionsContainerV2) durationOptionsContainerV2.innerHTML = '<p class="loading-text-v2">Options not available.</p>';
+                 if(durationBlockV2) durationBlockV2.style.display = 'none'; // Hide block if no options
+                return;
+            }
 
-                optionDiv.innerHTML = `
-                    <input type="radio" id="${inputId}" name="renewal_duration" value="${item.duration}" data-price="${item.price}">
-                    <label for="${inputId}">
-                        <span class="duration-text">${item.duration}</span>
-                        <span class="price-text">${item.price}</span>
-                    </label>
-                `;
-                durationOptionsContainer.appendChild(optionDiv);
-            });
+            durationOptionsContainerV2.innerHTML = ''; // Clear any previous options
+            const prices = renewalPricesV2[serviceName]; // Get the price array for this service
 
-            // Add event listener to enable Next button when a duration is selected
-            const durationRadios = durationOptionsContainer.querySelectorAll('input[name="renewal_duration"]');
-            durationRadios.forEach(radio => {
-                radio.addEventListener('change', () => {
-                    if (durationNextBtn) durationNextBtn.disabled = false; // Enable Next button
-                    // Store selected details
-                    const selectedRadio = durationOptionsContainer.querySelector('input[name="renewal_duration"]:checked');
-                    if (selectedRadio) {
-                        selectedDuration = selectedRadio.value;
-                        selectedPrice = selectedRadio.getAttribute('data-price');
-                    }
+            // Check if there are any price options for this service
+            if (prices && prices.length > 0) {
+                // Create and append a radio button option for each price item
+                prices.forEach((item, index) => {
+                    const optionDiv = document.createElement('div');
+                    optionDiv.className = 'duration-option-v2'; // Apply CSS class
+                    // Create a unique ID for the radio input and its label
+                    const inputId = `duration-v2-${serviceName.replace(/\s+/g, '-')}-${index}`;
+
+                    // Set the inner HTML for the radio button and label
+                    optionDiv.innerHTML = `
+                        <input type="radio" id="${inputId}" name="renewal_duration_v2" value="${item.duration}" data-price="${item.price}">
+                        <label for="${inputId}">
+                            <span class="duration-text">${item.duration}</span>
+                            <span class="price-text">${item.price}</span>
+                        </label>
+                    `;
+                    durationOptionsContainerV2.appendChild(optionDiv); // Add the new option to the container
                 });
-            });
 
-        } else {
-            durationOptionsContainer.innerHTML = '<p class="loading-text">No duration options available.</p>';
-            if (durationNextBtn) durationNextBtn.disabled = true; // Disable next if no options
-        }
-        // Update dynamic service name in the step title
-        dynamicServiceNameSpans.forEach(span => span.textContent = serviceName);
-        if (durationNextBtn) durationNextBtn.disabled = true; // Ensure Next is disabled initially
-    };
+                 // IMPORTANT: Add event listeners *after* creating the radio buttons
+                 const durationRadios = durationOptionsContainerV2.querySelectorAll('input[name="renewal_duration_v2"]');
+                 durationRadios.forEach(radio => {
+                     radio.addEventListener('change', () => {
+                         if (radio.checked) { // When a duration is selected
+                             currentDurationV2 = radio.value; // Update state variable
+                             currentPriceV2 = radio.getAttribute('data-price'); // Update state variable
+                             updateSummaryV2(); // Update the summary card display
+                         }
+                     });
+                 });
 
-    // Function to populate payment details for Step 3
-    const populatePaymentDetails = () => {
-        if (paymentAmountSpan) paymentAmountSpan.textContent = selectedPrice || 'Amount';
-        if (paymentDurationSpan) paymentDurationSpan.textContent = selectedDuration || 'Duration';
-        if (paymentServiceSpan) paymentServiceSpan.textContent = selectedService || 'Service';
+                // Update the dynamic label in the heading (e.g., "for Netflix")
+                if (dynamicServiceLabelV2) dynamicServiceLabelV2.textContent = `for ${serviceName}`;
+                 // Make the duration block visible
+                 if(durationBlockV2) durationBlockV2.style.display = 'block';
 
-        // Set data attributes for the WhatsApp button
-        if (whatsappConfirmBtnV3) {
-            whatsappConfirmBtnV3.setAttribute('data-service', selectedService || '');
-            whatsappConfirmBtnV3.setAttribute('data-duration', selectedDuration || '');
-            whatsappConfirmBtnV3.setAttribute('data-price', selectedPrice || '');
-        }
-    };
+            } else {
+                // If no prices are found for the service
+                durationOptionsContainerV2.innerHTML = '<p class="loading-text-v2">No durations found for this service.</p>';
+                if(durationBlockV2) durationBlockV2.style.display = 'none'; // Hide the block
+            }
+        };
 
-    // --- Event Listeners for Multi-Step Renewal ---
-    // Only run if Step 1 exists (i.e., we are on the renewal page)
-    if (step1) {
-        // Service Card Clicks (Go to Step 2)
-        serviceCardsV3.forEach(card => {
-            card.addEventListener('click', () => {
-                selectedService = card.getAttribute('data-service');
-                if (selectedService) {
-                    populateDurationOptions(selectedService);
-                    goToStep(2); // Go to duration selection
-                }
-            });
-        });
+        /**
+         * Resets all selections and the UI back to the initial state.
+         */
+        const resetSelectionsV2 = () => {
+            // Clear state variables
+            currentServiceV2 = null;
+            currentDurationV2 = null;
+            currentPriceV2 = null;
 
-        // Duration Next Button Click (Go to Step 3)
-        if (durationNextBtn) {
-            durationNextBtn.addEventListener('click', () => {
-                // Double check a duration was selected
-                 const selectedRadio = durationOptionsContainer.querySelector('input[name="renewal_duration"]:checked');
-                 if (selectedRadio) {
-                     selectedDuration = selectedRadio.value;
-                     selectedPrice = selectedRadio.getAttribute('data-price');
-                     populatePaymentDetails();
-                     goToStep(3); // Go to payment/confirmation
-                 } else {
-                     alert("Please select a duration."); // Should not happen if button is enabled correctly
+            // Remove 'selected' class from all service buttons
+            serviceButtonsV2.forEach(btn => btn.classList.remove('selected'));
+
+            // Hide the duration block and clear its content
+            if (durationBlockV2) durationBlockV2.style.display = 'none';
+            if (durationOptionsContainerV2) durationOptionsContainerV2.innerHTML = ''; // Clear options
+            if (dynamicServiceLabelV2) dynamicServiceLabelV2.textContent = ''; // Clear dynamic label
+
+
+            // Update the summary card (this will reset text and disable the button)
+            updateSummaryV2();
+
+            // Optional: Scroll the user back to the top of the renewal section
+            // renewalSectionV2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        // --- Event Listeners Setup ---
+
+        // 1. Service Button Clicks
+        serviceButtonsV2.forEach(button => {
+            button.addEventListener('click', () => {
+                const selectedService = button.getAttribute('data-service');
+
+                // Optional: Prevent re-processing if the same button is clicked again
+                // if (selectedService === currentServiceV2) return;
+
+                // Update state
+                currentServiceV2 = selectedService;
+                currentDurationV2 = null; // Reset duration when service changes
+                currentPriceV2 = null;    // Reset price
+
+                // Update UI: Highlight the clicked button
+                serviceButtonsV2.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+
+                // Load the duration options for the selected service
+                populateDurationOptionsV2(currentServiceV2);
+
+                // Update summary (will show service, but reset duration/price)
+                updateSummaryV2();
+
+                 // Scroll the duration block into view smoothly if it became visible
+                if (durationBlockV2 && durationBlockV2.style.display !== 'none') {
+                    // Use a small timeout to ensure the block is rendered before scrolling
+                    setTimeout(() => {
+                        // Scroll so the center of the block is in the center of the viewport
+                        durationBlockV2.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 100); // 100ms delay
                  }
             });
-        }
-
-        // Back Button Clicks
-        backBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const targetStep = btn.getAttribute('data-target-step');
-                if (targetStep) {
-                    goToStep(parseInt(targetStep));
-                }
-            });
         });
 
-        // Start Over Button Click
-        if (startOverBtn) {
-            startOverBtn.addEventListener('click', () => {
-                // Reset stored selections
-                selectedService = null;
-                selectedDuration = null;
-                selectedPrice = null;
-                // Reset duration options
-                durationOptionsContainer.innerHTML = '<p class="loading-text">Loading options...</p>';
-                if (durationNextBtn) durationNextBtn.disabled = true;
-                // Go back to step 1
-                goToStep(1);
-            });
-        }
-
-        // WhatsApp Confirmation Button Click (Step 3)
-        if (whatsappConfirmBtnV3) {
-            whatsappConfirmBtnV3.addEventListener('click', () => {
-                // Get details from the button's data attributes (set when step 3 was populated)
-                const service = whatsappConfirmBtnV3.getAttribute('data-service');
-                // const duration = whatsappConfirmBtnV3.getAttribute('data-duration'); // Not needed for message
-                // const price = whatsappConfirmBtnV3.getAttribute('data-price'); // Not needed for message
-
-                if (service) {
-                    const whatsappNumber = "256762193386";
-                    // Updated confirmation message
-                    const message = `Hi , I've just renewed my ${service}. Please check and confirm.`;
-                    const encodedMessage = encodeURIComponent(message);
+        // 2. WhatsApp Confirmation Button Click
+        if (whatsappConfirmBtnV2) {
+            whatsappConfirmBtnV2.addEventListener('click', () => {
+                // Double-check that all necessary info is selected (although button should be disabled otherwise)
+                if (currentServiceV2 && currentDurationV2 && currentPriceV2) {
+                    const whatsappNumber = "256762193386"; // IMPORTANT: Replace with your actual WhatsApp number
+                    // Construct the pre-filled message
+                    const message = `Hi Cartelug, I've paid ${currentPriceV2} to renew my ${currentServiceV2} for ${currentDurationV2}. Please confirm my renewal.`;
+                    const encodedMessage = encodeURIComponent(message); // Encode for URL
                     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-                    window.location.href = whatsappURL; // Redirect
+
+                    // Redirect the user to WhatsApp
+                    window.location.href = whatsappURL;
+                    // Or open in a new tab: window.open(whatsappURL, '_blank');
                 } else {
-                    alert("An error occurred. Please start over."); // Fallback
+                    // Fallback alert if somehow clicked while disabled or state is inconsistent
+                    console.error("WhatsApp button clicked with incomplete selections:", { service: currentServiceV2, duration: currentDurationV2, price: currentPriceV2 });
+                    alert("Please complete your service and duration selection first.");
                 }
             });
+        } else {
+             console.error("WhatsApp confirmation button not found!");
         }
 
-        // --- ClipboardJS Initialization for Renewal Page ---
-        if (typeof ClipboardJS !== 'undefined') {
-            const clipboard = new ClipboardJS('.copy-btn-v3'); // Target new copy buttons
 
+        // 3. Reset Button Click
+        if (resetBtnV2) {
+            resetBtnV2.addEventListener('click', resetSelectionsV2);
+        } else {
+             console.error("Reset button not found!");
+        }
+
+
+        // 4. ClipboardJS Initialization (for copy buttons)
+        // Check if ClipboardJS library is loaded and if copy buttons exist
+        if (typeof ClipboardJS !== 'undefined' && copyBtnsV2.length > 0) {
+            // Initialize ClipboardJS on all elements with the class '.copy-btn-v2'
+            const clipboard = new ClipboardJS('.copy-btn-v2');
+
+            // On successful copy
             clipboard.on('success', function(e) {
-                const originalButtonHtml = e.trigger.innerHTML; // Store original icon + text
-                e.trigger.innerHTML = '<i class="fas fa-check"></i> Copied!'; // Change to checkmark
-                e.trigger.disabled = true; // Disable briefly
+                const originalText = e.trigger.innerHTML; // Store original button content (icon + text)
+                e.trigger.innerHTML = `<i class="fas fa-check"></i> Copied`; // Change text to "Copied" with check icon
+                e.trigger.disabled = true; // Temporarily disable button
 
+                // Set a timeout to revert the button text and enable it again
                 setTimeout(() => {
-                    e.trigger.innerHTML = originalButtonHtml; // Restore original content
-                    e.trigger.disabled = false; // Re-enable
-                }, 1500); // Reset after 1.5 seconds
+                    e.trigger.innerHTML = originalText; // Restore original text/icon
+                    e.trigger.disabled = false; // Re-enable button
+                }, 1500); // Revert after 1.5 seconds
 
-                e.clearSelection();
+                e.clearSelection(); // Deselect the copied text
             });
 
+            // On copy error
             clipboard.on('error', function(e) {
                 console.error('ClipboardJS error:', e.action, e.trigger);
-                alert('Failed to copy. Please copy the number manually.');
+                // Attempt to get the number to show in the alert for manual copying
+                const numberToCopy = e.trigger.closest('.number-copy-wrapper-v2')?.querySelector('strong')?.textContent;
+                alert(`Failed to copy automatically. Please copy manually${numberToCopy ? ': ' + numberToCopy : '.'}`);
             });
-        } else {
-            console.warn("ClipboardJS library not loaded. Copy buttons will not work.");
-            document.querySelectorAll('.copy-btn-v3').forEach(btn => btn.style.display = 'none'); // Hide buttons
+        } else if (copyBtnsV2.length > 0) {
+            // If buttons exist but ClipboardJS is not loaded, hide the buttons and log a warning
+             console.warn("ClipboardJS library not loaded or no copy buttons found. Hiding copy buttons.");
+             copyBtnsV2.forEach(btn => btn.style.display = 'none');
         }
-        // --- End ClipboardJS ---
 
-        // Initial state: Show Step 1 on page load
-        goToStep(1);
+        // --- Initial Page Setup ---
+        resetSelectionsV2(); // Ensure the form starts in a clean, reset state when the page loads
 
-    } // End check for renewal page elements
-    // --- End Multi-Step Renewal Page Logic ---
+    } // --- End of check for V2 renewal page elements ---
+
+    // --- End V2 Renewal Page Logic --- //
 
 
 }); // End of the SINGLE, main DOMContentLoaded listener
 
 
 // --- Preloader ---
-// Runs when the entire page (including images) is loaded. Stays outside DOMContentLoaded.
+// Runs when the entire page (including images, stylesheets etc.) is fully loaded.
+// Stays outside DOMContentLoaded because 'load' fires later.
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        setTimeout(() => preloader.classList.add('hidden'), 150); // Fade out after delay
+        // Start fade out slightly after the load event fires
+        setTimeout(() => {
+            preloader.classList.add('hidden'); // Add class to trigger CSS fade-out transition
+        }, 150); // 150ms delay
+
+        // Optional: Remove the preloader element from the DOM after the fade-out transition completes
         preloader.addEventListener('transitionend', function handleTransitionEnd(event) {
+             // Ensure the transition that ended was for opacity or visibility
              if (event.propertyName === 'opacity' || event.propertyName === 'visibility') {
+                // Double-check the class is still present (in case of multiple transitions)
                 if (preloader.classList.contains('hidden')) {
-                   // preloader.remove(); // Optional: remove element after fade
-                   preloader.removeEventListener('transitionend', handleTransitionEnd); // Clean up
+                   // preloader.remove(); // Uncomment this line if you want to remove the preloader element entirely
+                   // Clean up the event listener to prevent memory leaks
+                   preloader.removeEventListener('transitionend', handleTransitionEnd);
                 }
              }
         });
