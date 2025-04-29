@@ -312,3 +312,298 @@
     .direct-contact-button i:not(.arrow) { margin-bottom: 5px; width: auto; text-align: left;}
     .direct-contact-button .arrow { display: none; }
 }
+`css
+/* === Styles for Netflix Signed Out Modal === */
+
+/* Make the modal content slightly wider */
+.signed-out-modal-content {
+    max-width: 650px; /* Adjust as needed */
+    padding: 30px 40px; /* Adjust padding */
+    text-align: left; /* Align text left by default */
+}
+
+.modal-step {
+    /* Basic styling for each step container */
+    padding: 10px 0;
+    animation: fadeInStep 0.5s ease-in-out; /* Add fade-in */
+}
+
+@keyframes fadeInStep {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-step-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.modal-step-title i {
+    color: var(--netflix-red); /* Use Netflix red for icons */
+    font-size: 0.9em; /* Slightly smaller icon */
+}
+
+.modal-intro-text {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.modal-step p {
+    color: var(--text-medium);
+    line-height: 1.7;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+.modal-step p strong {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+/* Email Options Styling */
+.email-options-container {
+    max-height: 250px; /* Limit height and make scrollable */
+    overflow-y: auto;
+    padding: 10px;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background-color: rgba(0,0,0, 0.1);
+}
+.email-option {
+    display: block; /* Each option on its own line */
+    margin-bottom: 8px;
+}
+.email-option input[type="radio"] {
+    opacity: 0; /* Hide actual radio */
+    position: absolute;
+    width: 1px; height: 1px;
+}
+.email-option label {
+    display: block;
+    padding: 12px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.05);
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+.email-option label:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+.email-option input[type="radio"]:checked + label {
+    border-color: var(--netflix-red); /* Use Netflix red for selection */
+    background-color: rgba(229, 9, 20, 0.15);
+    color: #fff;
+    font-weight: 600;
+}
+.email-option input[type="radio"]:focus + label {
+    box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.4); /* Red focus outline */
+}
+.email-option label b { /* Style for the bold numbers */
+    font-weight: 800; /* Extra bold */
+    color: #fff; /* White color for emphasis */
+    margin: 0 1px; /* Tiny spacing around number */
+}
+
+/* Modal Navigation Buttons */
+.modal-nav {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: flex-end; /* Align buttons right by default */
+    gap: 15px;
+    flex-wrap: wrap; /* Allow wrapping */
+}
+.confirmation-nav {
+    justify-content: space-between; /* Space out Yes/No buttons */
+}
+.device-nav {
+    justify-content: center; /* Center device buttons */
+    gap: 25px;
+}
+
+/* General Modal Button Styles */
+.modal-button-next,
+.modal-button-primary,
+.modal-button-secondary,
+.modal-button-choice {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 3px 10px rgba(0,0,0, 0.2);
+}
+.modal-button-next i,
+.modal-button-primary i,
+.modal-button-secondary i,
+.modal-button-choice i {
+    transition: transform 0.3s ease;
+}
+
+/* Primary Button (Next, Yes, Done) */
+.modal-button-next,
+.modal-button-primary {
+    background-color: var(--netflix-red); /* Netflix Red */
+    color: #fff;
+}
+.modal-button-next:hover:not(:disabled),
+.modal-button-primary:hover {
+    background-color: #b80710; /* Darker Red */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(229, 9, 20, 0.3);
+}
+.modal-button-next:hover:not(:disabled) i.fa-arrow-right { transform: translateX(4px); }
+.modal-button-primary:hover i { transform: scale(1.1); }
+
+/* Secondary Button (No, Choose Again) */
+.modal-button-secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.modal-button-secondary:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+.modal-button-secondary:hover i.fa-arrow-left { transform: translateX(-4px); }
+
+/* Choice Button (TV, Phone) */
+.modal-button-choice {
+    background-color: var(--cta-blue); /* Use CTA blue */
+    color: #fff;
+    min-width: 150px; /* Give buttons some width */
+    justify-content: center;
+}
+.modal-button-choice:hover {
+    background-color: var(--cta-blue-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 122, 255, 0.3);
+}
+
+/* Disabled State */
+.modal-button-next:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+    transform: none;
+}
+
+/* Back Button */
+.modal-back-button {
+    background: none;
+    border: 1px solid var(--text-medium);
+    color: var(--text-medium);
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 20px; /* Space above back button */
+}
+.modal-back-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-color: #fff;
+}
+
+/* Specific Step Content Styling */
+#modal-selected-email { /* Display of selected email in step 2 */
+    display: block;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin: 10px 0 20px 0;
+    font-size: 1.1rem;
+    text-align: center;
+    color: #fff;
+    word-break: break-all;
+}
+.selected-email-display b { /* Bold numbers in confirmation */
+    font-weight: 800;
+    color: #fff;
+}
+
+.instructions-content {
+    background-color: rgba(0,0,0, 0.15);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.instructions-content p {
+    margin-bottom: 12px;
+    font-size: 1rem;
+}
+.instructions-content p:last-child {
+    margin-bottom: 0;
+}
+.instruction-value { /* Styling for email/password display */
+    color: #fff;
+    font-family: monospace; /* Monospace for clarity */
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 1.05em;
+    word-break: break-all;
+}
+.highlight-url {
+    color: var(--cta-blue);
+    font-weight: 600;
+}
+
+/* Responsive Adjustments for Modal */
+@media (max-width: 600px) {
+    .signed-out-modal-content {
+        padding: 25px 20px;
+        max-width: 95%;
+    }
+    .modal-step-title {
+        font-size: 1.4rem;
+        gap: 10px;
+    }
+    .modal-step p {
+        font-size: 0.95rem;
+    }
+    .email-options-container {
+        max-height: 200px; /* Adjust height */
+    }
+    .modal-nav {
+        flex-direction: column;
+        align-items: stretch; /* Make buttons full width */
+    }
+    .confirmation-nav {
+        flex-direction: column-reverse; /* Put Yes button on bottom */
+    }
+    .device-nav {
+        gap: 15px;
+    }
+    .modal-button-choice {
+        min-width: unset; /* Remove min-width */
+    }
+    .modal-back-button {
+        width: 100%;
+        justify-content: center;
+        margin-top: 15px;
+    }
+}
