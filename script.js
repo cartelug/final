@@ -616,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const tvInstructionEmail = step4TV.querySelector('#tv-instruction-email');
         const phoneInstructionEmail = step4Phone.querySelector('#phone-instruction-email');
 
-        // Back buttons
+        // Back buttons (selecting all with this class)
         const backButtons = modal.querySelectorAll('.modal-back-button');
 
         // State
@@ -644,13 +644,13 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(resetModal, 300);
         };
 
-        const goToStep = (stepNum) => {
+        const goToStep = (stepId) => { // Changed to accept step ID (e.g., '1', '2', '4-tv')
             steps.forEach(step => step.style.display = 'none'); // Hide all steps
-            const targetStep = modal.querySelector(`#modal-step-${stepNum}`);
+            const targetStep = modal.querySelector(`#modal-step-${stepId}`); // Use ID selector
             if (targetStep) {
                 targetStep.style.display = 'block'; // Show the target step
             } else {
-                console.error(`Modal step ${stepNum} not found!`);
+                console.error(`Modal step #modal-step-${stepId} not found!`);
             }
         };
 
@@ -659,19 +659,20 @@ document.addEventListener('DOMContentLoaded', () => {
             // Uncheck all radio buttons
             const radios = emailOptionsContainer.querySelectorAll('input[type="radio"]');
             radios.forEach(radio => radio.checked = false);
-            step1NextBtn.disabled = true; // Disable next button
-            goToStep(1); // Go back to the first step
+            if (step1NextBtn) step1NextBtn.disabled = true; // Disable next button safely
+            goToStep('1'); // Go back to the first step
         };
 
-        // Populate email options in Step 1
+        // Populate email options in Step 1 and add bold formatting
         const populateEmails = () => {
+            if (!emailOptionsContainer) return; // Exit if container not found
             emailOptionsContainer.innerHTML = ''; // Clear existing options
             emailList.forEach((email, index) => {
                 const optionDiv = document.createElement('div');
                 optionDiv.className = 'email-option';
                 const inputId = `email-option-${index}`;
 
-                // Format email with bold number
+                // Format email with bold number using regex replace
                 const formattedEmail = email.replace(/(\d+)/, '<b>$1</b>');
 
                 optionDiv.innerHTML = `
@@ -685,7 +686,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 radioInput.addEventListener('change', () => {
                     if (radioInput.checked) {
                         selectedEmail = radioInput.value;
-                        step1NextBtn.disabled = false; // Enable Next button
+                        if (step1NextBtn) step1NextBtn.disabled = false; // Enable Next button safely
                     }
                 });
             });
@@ -694,52 +695,66 @@ document.addEventListener('DOMContentLoaded', () => {
         // --- Event Listeners ---
 
         // Open modal when the card is clicked
-        signedOutCard.addEventListener('click', openModal);
+        if(signedOutCard) {
+            signedOutCard.addEventListener('click', openModal);
+        }
 
         // Close modal listeners
         modalCloseBtns.forEach(btn => btn.addEventListener('click', closeModal));
-        modalOverlay.addEventListener('click', closeModal);
-        modalContent.addEventListener('click', (e) => e.stopPropagation()); // Prevent closing when clicking inside content
+        if(modalOverlay) {
+            modalOverlay.addEventListener('click', closeModal);
+        }
+        if(modalContent) {
+            modalContent.addEventListener('click', (e) => e.stopPropagation()); // Prevent closing when clicking inside content
+        }
 
         // Step 1 Next Button
-        step1NextBtn.addEventListener('click', () => {
-            if (selectedEmail) {
-                // Display selected email in Step 2 (with bold numbers)
-                selectedEmailDisplay.innerHTML = selectedEmail.replace(/(\d+)/, '<b>$1</b>');
-                goToStep(2);
-            }
-        });
+        if (step1NextBtn) {
+            step1NextBtn.addEventListener('click', () => {
+                if (selectedEmail && selectedEmailDisplay) {
+                    // Display selected email in Step 2 (with bold numbers)
+                    selectedEmailDisplay.innerHTML = selectedEmail.replace(/(\d+)/, '<b>$1</b>');
+                    goToStep('2');
+                }
+            });
+        }
 
         // Step 2 Confirmation Buttons
-        confirmYesBtn.addEventListener('click', () => {
-            goToStep(3); // Go to device selection
-        });
-        confirmNoBtn.addEventListener('click', () => {
-            // Go back to step 1, keep email selected? Or clear? Let's clear for simplicity.
-             // selectedEmail = null; // Clear selection
-             // step1NextBtn.disabled = true;
-             // Uncheck radio (optional, might be better to leave it)
-             // const currentRadio = emailOptionsContainer.querySelector(`input[value="${selectedEmail}"]`);
-             // if(currentRadio) currentRadio.checked = false;
-            goToStep(1);
-        });
+        if (confirmYesBtn) {
+            confirmYesBtn.addEventListener('click', () => {
+                goToStep('3'); // Go to device selection
+            });
+        }
+        if (confirmNoBtn) {
+            confirmNoBtn.addEventListener('click', () => {
+                goToStep('1'); // Go back to email selection
+            });
+        }
 
         // Step 3 Device Selection Buttons
-        selectTVBtn.addEventListener('click', () => {
-            tvInstructionEmail.textContent = selectedEmail; // Show selected email
-            goToStep('4-tv');
-        });
-        selectPhoneBtn.addEventListener('click', () => {
-            phoneInstructionEmail.textContent = selectedEmail; // Show selected email
-            goToStep('4-phone');
-        });
+        if (selectTVBtn) {
+            selectTVBtn.addEventListener('click', () => {
+                if (tvInstructionEmail && selectedEmail) {
+                     tvInstructionEmail.textContent = selectedEmail; // Show selected email (plain text)
+                }
+                goToStep('4-tv');
+            });
+        }
+        if (selectPhoneBtn) {
+            selectPhoneBtn.addEventListener('click', () => {
+                if (phoneInstructionEmail && selectedEmail) {
+                     phoneInstructionEmail.textContent = selectedEmail; // Show selected email (plain text)
+                }
+                goToStep('4-phone');
+            });
+        }
 
-        // Back Buttons
+        // Back Buttons (Handles all buttons with the class)
         backButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const targetStepNum = button.getAttribute('data-target-step');
-                if (targetStepNum) {
-                    goToStep(targetStepNum);
+                const targetStepId = button.getAttribute('data-target-step'); // Get the target step ID (e.g., '2', '3')
+                if (targetStepId) {
+                    goToStep(targetStepId);
                 }
             });
         });
@@ -748,7 +763,8 @@ document.addEventListener('DOMContentLoaded', () => {
         populateEmails(); // Create email radio buttons on load
 
     } else {
-        // console.log("Signed out card or modal not found on this page.");
+         // Optional: Log if the trigger card or modal itself isn't found on the page
+         // console.log("Netflix Signed Out Card or Modal container not found on this page.");
     }
     // --- End Netflix Signed Out Modal Logic --- //
 
