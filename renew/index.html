@@ -7,11 +7,10 @@
 
     <link rel="icon" href="../logo.png" type="image/png">
     <link rel="apple-touch-icon" href="../logo.png">
-    <meta name="description" content="Renew your Netflix, Prime Video, or Spotify Premium support package with Cartelug. Step-by-step renewal process with easy Mobile Money payment.">
+    <meta name="description" content="Renew your Netflix, Prime Video, or Spotify Premium support package with Cartelug. Easy renewal process with Mobile Money payment for Uganda & South Sudan.">
     <meta name="robots" content="noindex, nofollow">
-
     <link rel="stylesheet" href="../base.css">
-    <link rel="stylesheet" href="renew.css">
+    <link rel="stylesheet" href="renew-v2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -36,7 +35,7 @@
                          <li><a href="/#about">About</a></li>
                          <li><a href="/contact/">Contact</a></li>
                          <li><a href="/renew/" class="active-nav">Renew</a></li>
-                     </ul>
+                      </ul>
                  </nav>
                  <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu">
                      <i class="fas fa-bars"></i>
@@ -44,100 +43,106 @@
              </div>
          </header>
 
-        <main>
-            <section class="renewal-section-v3 section-padding">
-                <div class="container renewal-container">
+        <main class="renewal-main-v2">
+            <section class="renewal-section-v2 section-padding">
+                <div class="container renewal-container-v2">
 
-                    <div id="step-1" class="renewal-step active-step">
-                        <div class="step-header">
-                            <span class="step-number">1</span>
-                            <h2 class="step-title">What would you like to renew?</h2>
-                        </div>
-                        <div class="step-content service-selection-grid-v3">
-                            <div class="service-card-v3" data-service="Netflix" data-color="var(--netflix-red)">
-                                <img src="../netflix.png" alt="Netflix Logo">
-                                <span>Netflix</span>
-                            </div>
-                            <div class="service-card-v3" data-service="Spotify" data-color="var(--spotify-green)">
-                                <img src="../spotify.png" alt="Spotify Logo">
-                                <span>Spotify</span>
-                            </div>
-                            <div class="service-card-v3" data-service="Prime Video" data-color="var(--prime-blue)">
-                                <img src="../prime-video.png" alt="Prime Video Logo">
-                                <span>Prime Video</span>
-                            </div>
-                        </div>
+                    <div class="renewal-header-v2">
+                        <h1>Renew Your Cartelug Service</h1>
+                        <p>Quickly renew your Netflix, Spotify, or Prime Video support.</p>
                     </div>
 
-                    <div id="step-2" class="renewal-step">
-                        <div class="step-header">
-                            <button class="step-back-btn" data-target-step="1" aria-label="Go back to service selection"><i class="fas fa-arrow-left"></i></button>
-                            <span class="step-number">2</span>
-                            <h2 class="step-title">Choose your <span class="dynamic-service-name">Service</span> duration:</h2>
-                        </div>
-                        <div class="step-content duration-selection-options" id="duration-options-container">
-                            <p class="loading-text">Loading options...</p>
-                        </div>
-                         <div class="step-footer">
-                             <button id="duration-next-btn" class="step-next-btn" disabled>Next <i class="fas fa-arrow-right"></i></button>
-                         </div>
-                    </div>
+                    <div class="renewal-layout-v2">
 
-                    <div id="step-3" class="renewal-step">
-                         <div class="step-header">
-                            <button class="step-back-btn" data-target-step="2" aria-label="Go back to duration selection"><i class="fas fa-arrow-left"></i></button>
-                            <span class="step-number">3</span>
-                            <h2 class="step-title">Payment & Confirmation</h2>
-                        </div>
-                        <div class="step-content payment-confirmation-content">
-                            <p class="payment-instruction-summary">
-                                Please send <strong id="payment-amount">Amount</strong> for your
-                                <strong id="payment-duration">Duration</strong>
-                                <strong id="payment-service">Service</strong> renewal to:
-                            </p>
+                        <div class="renewal-column-left">
 
-                            <div class="payment-methods-v3">
-                                <div class="payment-method-v3">
-                                    <img src="../mtn.png" alt="MTN" class="payment-icon-v3">
-                                    <div class="payment-info-v3">
-                                        <span>MTN Mobile Money:</span>
-                                        <div class="number-copy-wrapper-v3">
-                                            <strong id="mtn-number-v3">0762193386</strong>
-                                            <button class="copy-btn-v3" data-clipboard-target="#mtn-number-v3" aria-label="Copy MTN number">
-                                                <i class="far fa-copy"></i> Copy
-                                            </button>
-                                        </div>
-                                        <small>(Names: Alfred Opio)</small>
-                                    </div>
+                            <div class="renewal-block-v2">
+                                <h2><span class="step-num">1</span> Select Service</h2>
+                                <div class="service-selection-grid-v2">
+                                    <button class="service-card-v2" data-service="Netflix">
+                                        <img src="../netflix.png" alt="Netflix Logo">
+                                        <span>Netflix</span>
+                                    </button>
+                                    <button class="service-card-v2" data-service="Spotify">
+                                        <img src="../spotify.png" alt="Spotify Logo">
+                                        <span>Spotify</span>
+                                    </button>
+                                    <button class="service-card-v2" data-service="Prime Video">
+                                        <img src="../prime-video.png" alt="Prime Video Logo">
+                                        <span>Prime Video</span>
+                                    </button>
                                 </div>
-                                <div class="payment-method-v3">
-                                     <img src="../airtel.png" alt="Airtel" class="payment-icon-v3">
-                                     <div class="payment-info-v3">
-                                        <span>Airtel Money:</span>
-                                        <div class="number-copy-wrapper-v3">
-                                            <strong id="airtel-number-v3">0744688623</strong>
-                                             <button class="copy-btn-v3" data-clipboard-target="#airtel-number-v3" aria-label="Copy Airtel number">
-                                                <i class="far fa-copy"></i> Copy
-                                            </button>
+                            </div>
+
+                            <div class="renewal-block-v2" id="duration-block-v2" style="display: none;">
+                                <h2><span class="step-num">2</span> Select Duration <span class="dynamic-service-label"></span></h2>
+                                <div class="duration-options-v2" id="duration-options-container-v2">
+                                    <p class="loading-text-v2">Loading options...</p>
+                                </div>
+                            </div>
+
+                            <div class="renewal-block-v2">
+                                <h2><span class="step-num">3</span> Make Payment</h2>
+                                <div class="payment-methods-v2">
+                                    <p class="payment-instruction">Please send the required amount (shown in the summary) to one of these numbers:</p>
+                                    <div class="payment-method-v2">
+                                        <img src="../mtn.png" alt="MTN" class="payment-icon-v2">
+                                        <div class="payment-info-v2">
+                                            <span>MTN Mobile Money:</span>
+                                            <div class="number-copy-wrapper-v2">
+                                                <strong id="mtn-number-v2">0762193386</strong>
+                                                <button class="copy-btn-v2" data-clipboard-target="#mtn-number-v2" aria-label="Copy MTN number">
+                                                    <i class="far fa-copy"></i> Copy
+                                                </button>
+                                            </div>
+                                            <small>(Names: Alfred Opio)</small>
                                         </div>
-                                        <small>(Names: Alfred Opio)</small>
+                                    </div>
+                                    <div class="payment-method-v2">
+                                         <img src="../airtel.png" alt="Airtel" class="payment-icon-v2">
+                                         <div class="payment-info-v2">
+                                            <span>Airtel Money:</span>
+                                            <div class="number-copy-wrapper-v2">
+                                                <strong id="airtel-number-v2">0744688623</strong>
+                                                 <button class="copy-btn-v2" data-clipboard-target="#airtel-number-v2" aria-label="Copy Airtel number">
+                                                    <i class="far fa-copy"></i> Copy
+                                                </button>
+                                            </div>
+                                            <small>(Names: Alfred Opio)</small>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="whatsapp-confirmation-v3">
-                                <p>After sending payment, click below to notify us on WhatsApp.</p>
-                                <button id="whatsapp-confirm-btn-v3" class="cta-button whatsapp-button-v3" data-service="" data-duration="" data-price="">
-                                    <i class="fab fa-whatsapp"></i> Paid? Confirm via WhatsApp
+                        </div><div class="renewal-column-right">
+                            <div class="renewal-summary-card-v2" id="summary-card-v2">
+                                <h3><i class="fas fa-receipt"></i> Renewal Summary</h3>
+                                <div class="summary-item">
+                                    <span class="summary-label">Service:</span>
+                                    <span class="summary-value" id="summary-service-v2">Please select</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Duration:</span>
+                                    <span class="summary-value" id="summary-duration-v2">Please select</span>
+                                </div>
+                                <div class="summary-item price-item">
+                                    <span class="summary-label">Amount Due:</span>
+                                    <span class="summary-value price" id="summary-price-v2">--</span>
+                                </div>
+
+                                <div class="summary-confirmation">
+                                    <p>Paid? Notify us on WhatsApp for activation:</p>
+                                    <button id="whatsapp-confirm-btn-v2" class="whatsapp-button-v2" disabled>
+                                        <i class="fab fa-whatsapp"></i> Confirm Payment
+                                    </button>
+                                </div>
+
+                                <button id="reset-renewal-btn-v2" class="reset-button-v2" title="Start Over">
+                                    <i class="fas fa-redo"></i> Reset
                                 </button>
                             </div>
-                        </div>
-                         <div class="step-footer">
-                             <button id="start-over-btn" class="step-start-over-btn"><i class="fas fa-redo"></i> Start Over</button>
-                         </div>
-                    </div>
-
-                </div> </section>
+                        </div></div></div>
+            </section>
         </main>
 
         <footer class="main-footer">
@@ -158,7 +163,7 @@
             </div>
         </footer>
 
-    </div> <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+    </div><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
     <script src="../script.js"></script>
-</body>
+    </body>
 </html>
