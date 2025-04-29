@@ -582,7 +582,176 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- End V2/V3 Renewal Page Logic --- //
 
+// --- Netflix Signed Out Modal Logic --- //
+    const signedOutCard = document.getElementById('netflix-signed-out-card');
+    const modal = document.getElementById('signed-out-modal');
 
+    if (signedOutCard && modal) {
+        const modalCloseBtns = modal.querySelectorAll('.modal-close, .modal-close-final');
+        const modalOverlay = modal.querySelector('.modal-overlay');
+        const modalContent = modal.querySelector('.signed-out-modal-content');
+
+        // Step containers and elements
+        const steps = modal.querySelectorAll('.modal-step');
+        const step1 = modal.querySelector('#modal-step-1');
+        const step2 = modal.querySelector('#modal-step-2');
+        const step3 = modal.querySelector('#modal-step-3');
+        const step4TV = modal.querySelector('#modal-step-4-tv');
+        const step4Phone = modal.querySelector('#modal-step-4-phone');
+
+        // Step 1 elements
+        const emailOptionsContainer = step1.querySelector('.email-options-container');
+        const step1NextBtn = step1.querySelector('#modal-step1-next');
+
+        // Step 2 elements
+        const selectedEmailDisplay = step2.querySelector('#modal-selected-email');
+        const confirmYesBtn = step2.querySelector('#modal-confirm-yes');
+        const confirmNoBtn = step2.querySelector('#modal-confirm-no');
+
+        // Step 3 elements
+        const selectTVBtn = step3.querySelector('#modal-select-tv');
+        const selectPhoneBtn = step3.querySelector('#modal-select-phone');
+
+        // Step 4 elements
+        const tvInstructionEmail = step4TV.querySelector('#tv-instruction-email');
+        const phoneInstructionEmail = step4Phone.querySelector('#phone-instruction-email');
+
+        // Back buttons
+        const backButtons = modal.querySelectorAll('.modal-back-button');
+
+        // State
+        let selectedEmail = null;
+
+        // List of emails
+        const emailList = [
+            "carteluganda0@gmail.com", "carteluganda1@gmail.com", "carteluganda2@gmail.com",
+            "carteluganda3@gmail.com", "carteluganda4@gmail.com", "carteluganda5@gmail.com",
+            "carteluganda6@gmail.com", "carteluganda7@gmail.com", "carteluganda8@gmail.com",
+            "carteluganda9@gmail.com", "carteluganda10@gmail.com", "carteluganda11@gmail.com",
+            "carteluganda12@gmail.com", "carteluganda13@gmail.com", "carteluganda14@gmail.com",
+            "carteluganda15@gmail.com", "carteluganda16@gmail.com"
+        ];
+
+        // --- Functions ---
+        const openModal = () => {
+            resetModal(); // Reset to step 1 when opening
+            modal.classList.add('active');
+        };
+
+        const closeModal = () => {
+            modal.classList.remove('active');
+            // Optional: slight delay before reset to avoid visual glitch during fade-out
+            setTimeout(resetModal, 300);
+        };
+
+        const goToStep = (stepNum) => {
+            steps.forEach(step => step.style.display = 'none'); // Hide all steps
+            const targetStep = modal.querySelector(`#modal-step-${stepNum}`);
+            if (targetStep) {
+                targetStep.style.display = 'block'; // Show the target step
+            } else {
+                console.error(`Modal step ${stepNum} not found!`);
+            }
+        };
+
+        const resetModal = () => {
+            selectedEmail = null;
+            // Uncheck all radio buttons
+            const radios = emailOptionsContainer.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => radio.checked = false);
+            step1NextBtn.disabled = true; // Disable next button
+            goToStep(1); // Go back to the first step
+        };
+
+        // Populate email options in Step 1
+        const populateEmails = () => {
+            emailOptionsContainer.innerHTML = ''; // Clear existing options
+            emailList.forEach((email, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'email-option';
+                const inputId = `email-option-${index}`;
+
+                // Format email with bold number
+                const formattedEmail = email.replace(/(\d+)/, '<b>$1</b>');
+
+                optionDiv.innerHTML = `
+                    <input type="radio" id="${inputId}" name="netflix_email" value="${email}">
+                    <label for="${inputId}">${formattedEmail}</label>
+                `;
+                emailOptionsContainer.appendChild(optionDiv);
+
+                // Add event listener to each radio button
+                const radioInput = optionDiv.querySelector('input[type="radio"]');
+                radioInput.addEventListener('change', () => {
+                    if (radioInput.checked) {
+                        selectedEmail = radioInput.value;
+                        step1NextBtn.disabled = false; // Enable Next button
+                    }
+                });
+            });
+        };
+
+        // --- Event Listeners ---
+
+        // Open modal when the card is clicked
+        signedOutCard.addEventListener('click', openModal);
+
+        // Close modal listeners
+        modalCloseBtns.forEach(btn => btn.addEventListener('click', closeModal));
+        modalOverlay.addEventListener('click', closeModal);
+        modalContent.addEventListener('click', (e) => e.stopPropagation()); // Prevent closing when clicking inside content
+
+        // Step 1 Next Button
+        step1NextBtn.addEventListener('click', () => {
+            if (selectedEmail) {
+                // Display selected email in Step 2 (with bold numbers)
+                selectedEmailDisplay.innerHTML = selectedEmail.replace(/(\d+)/, '<b>$1</b>');
+                goToStep(2);
+            }
+        });
+
+        // Step 2 Confirmation Buttons
+        confirmYesBtn.addEventListener('click', () => {
+            goToStep(3); // Go to device selection
+        });
+        confirmNoBtn.addEventListener('click', () => {
+            // Go back to step 1, keep email selected? Or clear? Let's clear for simplicity.
+             // selectedEmail = null; // Clear selection
+             // step1NextBtn.disabled = true;
+             // Uncheck radio (optional, might be better to leave it)
+             // const currentRadio = emailOptionsContainer.querySelector(`input[value="${selectedEmail}"]`);
+             // if(currentRadio) currentRadio.checked = false;
+            goToStep(1);
+        });
+
+        // Step 3 Device Selection Buttons
+        selectTVBtn.addEventListener('click', () => {
+            tvInstructionEmail.textContent = selectedEmail; // Show selected email
+            goToStep('4-tv');
+        });
+        selectPhoneBtn.addEventListener('click', () => {
+            phoneInstructionEmail.textContent = selectedEmail; // Show selected email
+            goToStep('4-phone');
+        });
+
+        // Back Buttons
+        backButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const targetStepNum = button.getAttribute('data-target-step');
+                if (targetStepNum) {
+                    goToStep(targetStepNum);
+                }
+            });
+        });
+
+        // --- Initial Setup ---
+        populateEmails(); // Create email radio buttons on load
+
+    } else {
+        // console.log("Signed out card or modal not found on this page.");
+    }
+    // --- End Netflix Signed Out Modal Logic --- //
+```
 }); // End of the SINGLE, main DOMContentLoaded listener
 
 
