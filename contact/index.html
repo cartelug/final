@@ -19,7 +19,9 @@
     <meta name="twitter:description" content="Contact Cartelug for support with Netflix, Prime Video, Spotify, or other issues. Quick help via WhatsApp or Email for Uganda & South Sudan.">
     <meta name="twitter:image" content="https://cartelug.com/logo.png">
 
-    <link rel="stylesheet" href="../base.css"> <link rel="stylesheet" href="../contact.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../base.css">
+    <link rel="stylesheet" href="../contact.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 </head>
 <body>
@@ -39,7 +41,8 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/#services">Services</a></li>
                     <li><a href="/#about">About</a></li>
-                    <li><a href="/contact/" class="active-nav">Support</a></li> </ul>
+                    <li><a href="/contact/" class="active-nav">Support</a></li>
+                 </ul>
             </nav>
             <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu">
                 <i class="fas fa-bars"></i>
@@ -56,7 +59,8 @@
                     <a href="/netflix-fix/" class="issue-card-link">
                         <div class="issue-card type-netflix">
                             <div class="issue-card-icon">
-                                <i class="fas fa-house-lock fa-fw"></i> </div>
+                                <i class="fas fa-house-lock fa-fw"></i>
+                            </div>
                             <div class="issue-card-content">
                                 <h3>Netflix Household Issue</h3>
                                 <p>Seeing an error like this? Click for the fix.</p>
@@ -71,10 +75,11 @@
                         </div>
                     </a>
 
-                     <div class="issue-card-wrapper">
+                    <div class="issue-card-wrapper">
                         <div class="issue-card type-netflix">
                             <div class="issue-card-icon">
-                                <i class="fas fa-credit-card fa-fw"></i> </div>
+                                <i class="fas fa-credit-card fa-fw"></i>
+                            </div>
                            <div class="issue-card-content">
                                <h3>Netflix Payment Problem</h3>
                                <div id="payment-fix-initial">
@@ -95,13 +100,16 @@
                    </div>
 
                     <div class="issue-card-wrapper">
-                         <div class="issue-card type-netflix" id="netflix-signed-out-card"> <div class="issue-card-icon">
-                                 <i class="fas fa-user-slash fa-fw"></i> </div>
+                         <div class="issue-card type-netflix" id="netflix-signed-out-card">
+                             <div class="issue-card-icon">
+                                 <i class="fas fa-user-slash fa-fw"></i>
+                             </div>
                              <div class="issue-card-content">
                                 <h3>Netflix Signed Out</h3>
                                 <p>Suddenly logged out or can't log back in? Click here for help.</p>
                             </div>
-                             <span class="get-help-prompt"> GET HELP <i class="fas fa-arrow-right fa-xs"></i>
+                             <span class="get-help-prompt" id="netflix-signed-out-help-btn">
+                                 GET HELP <i class="fas fa-arrow-right fa-xs"></i>
                              </span>
                         </div>
                     </div>
@@ -109,29 +117,32 @@
                     <div class="issue-card-wrapper">
                          <button class="issue-card type-prime" data-service="Prime Video" data-issue="General Prime Video Issue">
                             <div class="issue-card-icon logo-icon">
-                                 <img src="../prime-video.png" alt="Prime Video"> </div>
+                                 <img src="../prime-video.png" alt="Prime Video">
+                            </div>
                              <div class="issue-card-content">
                                 <h3>Prime Video Issue</h3>
                                 <p>Trouble logging in, streaming, or other errors?</p>
                             </div>
-                             <span class="contact-prompt">
-                                 Contact Support <i class="fab fa-whatsapp fa-xs"></i>
+                             <span class="contact-prompt"> Contact Support <i class="fab fa-whatsapp fa-xs"></i>
                              </span>
                         </button>
                     </div>
 
-                </div> <div class="direct-contact-enhanced">
+                 </div> <div class="direct-contact-enhanced">
                      <h3 class="direct-contact-title">Need More Help?</h3>
                      <p class="direct-contact-subtitle">You can also reach out via email.</p>
                      <div class="direct-contact-methods">
                           <a href="mailto:carteluganda@gmail.com" class="direct-contact-button email">
-                             <i class="fas fa-envelope fa-2x"></i> <div class="contact-button-text">
+                             <i class="fas fa-envelope fa-2x"></i>
+                             <div class="contact-button-text">
                                  <span>Send an Email</span>
                                  <small>Response within business hours</small>
                               </div>
-                              <i class="fas fa-chevron-right arrow"></i> </a>
+                              <i class="fas fa-chevron-right arrow"></i>
+                          </a>
                      </div>
                  </div>
+
                  </div> </section>
     </main>
 
@@ -216,7 +227,6 @@
                   <button class="modal-back-button" data-target-step="3"><i class="fas fa-arrow-left"></i> Back</button>
             </div>
 
-        </div>
-    </div> </div> <script src="../script.js"></script>
+        </div> </div> <script src="../script.js"></script>
 </body>
 </html>
