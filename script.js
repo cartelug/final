@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } // End Footer Year Logic
 
 
-    // --- V2 Renewal Page Logic --- //
+    // --- V2/V3 Renewal Page Logic --- //
     // This section handles the interactivity for the redesigned renewal page (renew/index.html with renew-v2.css)
 
     const renewalSectionV2 = document.querySelector('.renewal-section-v2'); // Check if we are on the renewal page
@@ -302,15 +302,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Only run this logic if the main renewal section element exists
     if (renewalSectionV2) {
 
+        console.log("Renewal V2/V3 Script Initializing..."); // Debug log
+
         // Get references to all interactive elements on the page
         const serviceButtonsV2 = renewalSectionV2.querySelectorAll('.service-card-v2');
         const durationBlockV2 = renewalSectionV2.querySelector('#duration-block-v2');
         const durationOptionsContainerV2 = renewalSectionV2.querySelector('#duration-options-container-v2');
-        const dynamicServiceLabelV2 = durationBlockV2.querySelector('.dynamic-service-label');
+        const dynamicServiceLabelV2 = durationBlockV2?.querySelector('.dynamic-service-label'); // Use optional chaining
 
-        // Summary Card Elements
+        // Summary Card Elements - Use optional chaining for robustness
         const summaryCardV2 = renewalSectionV2.querySelector('#summary-card-v2');
-        const summaryServiceV2 = summaryCardV2?.querySelector('#summary-service-v2'); // Use optional chaining just in case
+        const summaryServiceV2 = summaryCardV2?.querySelector('#summary-service-v2');
         const summaryDurationV2 = summaryCardV2?.querySelector('#summary-duration-v2');
         const summaryPriceV2 = summaryCardV2?.querySelector('#summary-price-v2');
         const whatsappConfirmBtnV2 = summaryCardV2?.querySelector('#whatsapp-confirm-btn-v2');
@@ -318,7 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Payment Copy Buttons
         const copyBtnsV2 = renewalSectionV2.querySelectorAll('.copy-btn-v2');
-
 
         // --- Data for Renewal Options ---
         // Store prices and durations for each service. Update these if your prices change.
@@ -329,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 { duration: "6 Months", price: "150,000 UGX" }
             ],
             "Prime Video": [
-                 { duration: "2 Months", price: "50,000 UGX" }, // Example prices
+                 { duration: "2 Months", price: "50,000 UGX" },
                  { duration: "3 Months", price: "75,000 UGX" }
             ],
             "Spotify": [
@@ -354,9 +355,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const updateSummaryV2 = () => {
             // Ensure summary elements exist before trying to update them
             if (!summaryServiceV2 || !summaryDurationV2 || !summaryPriceV2 || !whatsappConfirmBtnV2) {
-                 console.error("Summary elements not found!");
+                 console.error("One or more summary elements not found!");
                  return;
             }
+            console.log("Updating Summary:", { service: currentServiceV2, duration: currentDurationV2, price: currentPriceV2 }); // Debug log
 
             // Update text fields, showing defaults if nothing is selected
             summaryServiceV2.textContent = currentServiceV2 ? currentServiceV2 : 'Please select';
@@ -364,7 +366,9 @@ document.addEventListener('DOMContentLoaded', () => {
             summaryPriceV2.textContent = currentPriceV2 ? currentPriceV2 : '--';
 
             // Enable the WhatsApp button only if service, duration, AND price are all selected (truthy)
-            whatsappConfirmBtnV2.disabled = !(currentServiceV2 && currentDurationV2 && currentPriceV2);
+            const isComplete = !!(currentServiceV2 && currentDurationV2 && currentPriceV2);
+            whatsappConfirmBtnV2.disabled = !isComplete;
+             console.log("WhatsApp button disabled:", !isComplete); // Debug log
         };
 
         /**
@@ -373,6 +377,7 @@ document.addEventListener('DOMContentLoaded', () => {
          * @param {string} serviceName - The name of the service selected (e.g., "Netflix").
          */
         const populateDurationOptionsV2 = (serviceName) => {
+            console.log("Populating durations for:", serviceName); // Debug log
             // Ensure the container and price data exist
             if (!durationOptionsContainerV2 || !renewalPricesV2[serviceName]) {
                  console.error("Duration container or price data missing for", serviceName);
@@ -406,8 +411,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
                  // IMPORTANT: Add event listeners *after* creating the radio buttons
                  const durationRadios = durationOptionsContainerV2.querySelectorAll('input[name="renewal_duration_v2"]');
+                 console.log(`Found ${durationRadios.length} duration radios to add listeners to.`); // Debug log
                  durationRadios.forEach(radio => {
                      radio.addEventListener('change', () => {
+                         console.log("Duration changed:", radio.value, radio.checked); // Debug log
                          if (radio.checked) { // When a duration is selected
                              currentDurationV2 = radio.value; // Update state variable
                              currentPriceV2 = radio.getAttribute('data-price'); // Update state variable
@@ -419,10 +426,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Update the dynamic label in the heading (e.g., "for Netflix")
                 if (dynamicServiceLabelV2) dynamicServiceLabelV2.textContent = `for ${serviceName}`;
                  // Make the duration block visible
-                 if(durationBlockV2) durationBlockV2.style.display = 'block';
+                 if(durationBlockV2) {
+                     console.log("Showing duration block"); // Debug log
+                     durationBlockV2.style.display = 'block';
+                 }
+
 
             } else {
                 // If no prices are found for the service
+                console.log("No durations found for", serviceName); // Debug log
                 durationOptionsContainerV2.innerHTML = '<p class="loading-text-v2">No durations found for this service.</p>';
                 if(durationBlockV2) durationBlockV2.style.display = 'none'; // Hide the block
             }
@@ -432,6 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
          * Resets all selections and the UI back to the initial state.
          */
         const resetSelectionsV2 = () => {
+            console.log("Resetting selections..."); // Debug log
             // Clear state variables
             currentServiceV2 = null;
             currentDurationV2 = null;
@@ -459,6 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
         serviceButtonsV2.forEach(button => {
             button.addEventListener('click', () => {
                 const selectedService = button.getAttribute('data-service');
+                console.log("Service selected:", selectedService); // Debug log
 
                 // Optional: Prevent re-processing if the same button is clicked again
                 // if (selectedService === currentServiceV2) return;
@@ -492,6 +506,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 2. WhatsApp Confirmation Button Click
         if (whatsappConfirmBtnV2) {
             whatsappConfirmBtnV2.addEventListener('click', () => {
+                console.log("WhatsApp button clicked. State:", { service: currentServiceV2, duration: currentDurationV2, price: currentPriceV2 }); // Debug log
                 // Double-check that all necessary info is selected (although button should be disabled otherwise)
                 if (currentServiceV2 && currentDurationV2 && currentPriceV2) {
                     const whatsappNumber = "256762193386"; // IMPORTANT: Replace with your actual WhatsApp number
@@ -505,12 +520,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Or open in a new tab: window.open(whatsappURL, '_blank');
                 } else {
                     // Fallback alert if somehow clicked while disabled or state is inconsistent
-                    console.error("WhatsApp button clicked with incomplete selections:", { service: currentServiceV2, duration: currentDurationV2, price: currentPriceV2 });
+                    console.error("WhatsApp button clicked with incomplete selections.");
                     alert("Please complete your service and duration selection first.");
                 }
             });
         } else {
-             console.error("WhatsApp confirmation button not found!");
+             console.error("WhatsApp confirmation button (#whatsapp-confirm-btn-v2) not found!");
         }
 
 
@@ -518,18 +533,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (resetBtnV2) {
             resetBtnV2.addEventListener('click', resetSelectionsV2);
         } else {
-             console.error("Reset button not found!");
+             console.error("Reset button (#reset-renewal-btn-v2) not found!");
         }
 
 
         // 4. ClipboardJS Initialization (for copy buttons)
         // Check if ClipboardJS library is loaded and if copy buttons exist
         if (typeof ClipboardJS !== 'undefined' && copyBtnsV2.length > 0) {
+             console.log("Initializing ClipboardJS..."); // Debug log
             // Initialize ClipboardJS on all elements with the class '.copy-btn-v2'
             const clipboard = new ClipboardJS('.copy-btn-v2');
 
             // On successful copy
             clipboard.on('success', function(e) {
+                console.log("Text copied successfully:", e.text); // Debug log
                 const originalText = e.trigger.innerHTML; // Store original button content (icon + text)
                 e.trigger.innerHTML = `<i class="fas fa-check"></i> Copied`; // Change text to "Copied" with check icon
                 e.trigger.disabled = true; // Temporarily disable button
@@ -554,14 +571,16 @@ document.addEventListener('DOMContentLoaded', () => {
             // If buttons exist but ClipboardJS is not loaded, hide the buttons and log a warning
              console.warn("ClipboardJS library not loaded or no copy buttons found. Hiding copy buttons.");
              copyBtnsV2.forEach(btn => btn.style.display = 'none');
+        } else {
+             console.log("No copy buttons found on this page."); // Debug log
         }
 
         // --- Initial Page Setup ---
         resetSelectionsV2(); // Ensure the form starts in a clean, reset state when the page loads
 
-    } // --- End of check for V2 renewal page elements ---
+    } // --- End of check for V2/V3 renewal page elements ---
 
-    // --- End V2 Renewal Page Logic --- //
+    // --- End V2/V3 Renewal Page Logic --- //
 
 
 }); // End of the SINGLE, main DOMContentLoaded listener
