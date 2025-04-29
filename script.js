@@ -751,33 +751,33 @@ document.addEventListener('DOMContentLoaded', () => {
         // console.log("Signed out card or modal not found on this page.");
     }
     // --- End Netflix Signed Out Modal Logic --- //
-```
+
 }); // End of the SINGLE, main DOMContentLoaded listener
 
 
 // --- Preloader ---
 // Runs when the entire page (including images, stylesheets etc.) is fully loaded.
-// Stays outside DOMContentLoaded because 'load' fires later.
+// ** MODIFIED CODE STARTS HERE **
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        // Start fade out slightly after the load event fires
-        setTimeout(() => {
-            preloader.classList.add('hidden'); // Add class to trigger CSS fade-out transition
-        }, 150); // 150ms delay
-
-        // Optional: Remove the preloader element from the DOM after the fade-out transition completes
-        preloader.addEventListener('transitionend', function handleTransitionEnd(event) {
-             // Ensure the transition that ended was for opacity or visibility
-             if (event.propertyName === 'opacity' || event.propertyName === 'visibility') {
-                // Double-check the class is still present (in case of multiple transitions)
-                if (preloader.classList.contains('hidden')) {
-                   // preloader.remove(); // Uncomment this line if you want to remove the preloader element entirely
-                   // Clean up the event listener to prevent memory leaks
-                   preloader.removeEventListener('transitionend', handleTransitionEnd);
-                }
-             }
-        });
+        try {
+            console.log("Window loaded. Attempting to hide preloader."); // Log message
+            // Apply the hidden class after a short delay to allow rendering
+            setTimeout(() => {
+                preloader.classList.add('hidden');
+                console.log("Applied 'hidden' class to preloader."); // Log success
+                // We keep the transition defined in base.css to handle the fade-out.
+                // The transitionend listener is removed as it's not essential for hiding.
+            }, 150); // 150ms delay
+        } catch (error) {
+            console.error("Error hiding preloader:", error); // Log any errors during this process
+            // Fallback: Force hide if there was an error applying the class smoothly
+            preloader.style.display = 'none';
+        }
+    } else {
+        console.warn("Preloader element not found."); // Log if preloader div is missing
     }
 });
+// ** MODIFIED CODE ENDS HERE **
 // --- End Preloader ---
