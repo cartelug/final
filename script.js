@@ -512,7 +512,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (currentServiceV2 && currentDurationV2 && currentPriceV2) {
                     const whatsappNumber = "256762193386"; // IMPORTANT: Replace with your actual WhatsApp number
                     // Construct the pre-filled message
-                    const message = `Hi Cartelug, I've paid ${currentPriceV2} to renew my ${currentServiceV2} for ${currentDurationV2}. Please confirm my renewal.`;
+                    const message = `Hi Cartelug, I've paid ${currentPriceV2} to renew my subscription for ${currentDurationV2}. Please confirm my renewal.`;
                     const encodedMessage = encodeURIComponent(message); // Encode for URL
                     const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
