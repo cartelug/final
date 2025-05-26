@@ -10,14 +10,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 30px; /* Reduce top padding to bring content up a bit */
+    padding-bottom: 30px;
 }
 
 .setup-container {
     max-width: 800px;
+    width: 95%; /* Ensure it doesn't touch edges on slightly larger mobile */
     background-color: var(--card-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    padding: 30px 40px;
+    padding: 30px 35px; /* Adjusted padding */
     border-radius: 18px;
     border: 1px solid var(--card-border);
     box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
@@ -35,14 +38,14 @@
 }
 
 .setup-subtitle {
-    font-size: 1.1rem;
+    font-size: 1.05rem; /* Slightly smaller subtitle */
     color: var(--text-medium);
-    margin-bottom: 40px;
+    margin-bottom: 35px; /* Adjusted margin */
 }
 
 .setup-step {
     display: none; /* Hidden by default, JS will show the active one */
-    padding: 20px 0;
+    padding: 15px 0; /* Reduced padding */
     animation: fadeInStep 0.5s ease-in-out;
     text-align: left;
 }
@@ -57,10 +60,10 @@
 }
 
 .step-heading {
-    font-size: 1.6rem;
+    font-size: 1.5rem; /* Adjusted heading size */
     font-weight: 600;
     color: var(--text-light);
-    margin-bottom: 25px;
+    margin-bottom: 20px; /* Adjusted margin */
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
     text-align: center;
@@ -68,34 +71,34 @@
 
 .setup-step > p { /* Paragraphs directly under setup-step */
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 20px; /* Adjusted margin */
     color: var(--text-medium);
-    font-size: 1.05rem;
+    font-size: 1rem;
 }
 
 .button-group {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px; /* Reduced gap */
     flex-wrap: wrap;
-    margin-top: 30px;
+    margin-top: 25px; /* Adjusted margin */
 }
 
 .choice-button {
     background-color: var(--cta-blue);
     color: #fff;
     border: none;
-    padding: 14px 28px;
+    padding: 12px 25px; /* Adjusted padding */
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1rem; /* Adjusted font size */
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    min-width: 200px;
+    gap: 8px; /* Reduced gap */
+    min-width: 180px; /* Adjusted min-width */
     justify-content: center;
 }
 
@@ -106,7 +109,7 @@
 }
 
 .choice-button i {
-    font-size: 1.2em;
+    font-size: 1.1em; /* Adjusted icon size */
 }
 
 .back-button {
@@ -121,7 +124,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    margin-bottom: 25px;
+    margin-bottom: 20px; /* Adjusted margin */
 }
 .back-button:hover {
     background: rgba(255, 255, 255, 0.15);
@@ -130,76 +133,85 @@
 
 .instructions-content {
     background-color: rgba(0,0,0, 0.1);
-    padding: 25px;
+    padding: 20px; /* Adjusted padding */
     border-radius: 12px;
-    margin-top: 15px;
+    margin-top: 10px; /* Adjusted margin */
 }
 
 .instruction-intro {
-    font-size: 1.2rem;
+    font-size: 1.15rem; /* Adjusted font size */
     font-weight: 600;
     color: var(--text-light);
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Adjusted margin */
 }
 
 .steps-list {
     list-style: none;
     padding-left: 0;
-    margin-bottom: 30px;
+    margin-bottom: 25px; /* Adjusted margin */
 }
 
 .steps-list li {
-    font-size: 1.05rem;
+    font-size: 1rem; /* Adjusted font size */
     color: var(--text-medium);
-    line-height: 1.8;
-    margin-bottom: 18px;
+    line-height: 1.7; /* Adjusted line-height */
+    margin-bottom: 15px; /* Adjusted margin */
     display: flex;
-    align-items: flex-start; /* Align emoji with first line of text */
+    align-items: flex-start;
 }
 .steps-list li .step-emoji {
-    font-size: 1.2em;
-    margin-right: 12px;
+    font-size: 1.1em; /* Adjusted emoji size */
+    margin-right: 10px; /* Adjusted margin */
     color: var(--text-light);
-    flex-shrink: 0; /* Prevent emoji from shrinking */
-    line-height: 1.5; /* Adjust if emoji alignment is off */
+    flex-shrink: 0;
+    line-height: 1.6; /* Match text line-height for better alignment */
 }
 
+.steps-list li > span:not(.step-emoji) { /* Target the text part of the list item */
+    flex-basis: calc(100% - 30px); /* Give it space to wrap properly */
+}
+
+
 .steps-list strong {
-    color: #fff; /* White for emphasis within steps */
+    color: #fff;
     font-weight: 600;
 }
 
 .credential-wrapper {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    flex-direction: column; /* Stack email/pass and copy button by default for mobile-first */
+    align-items: flex-start;
+    gap: 8px;
     background-color: rgba(255, 255, 255, 0.05);
-    padding: 8px 12px;
+    padding: 10px;
     border-radius: 6px;
-    margin-top: 5px;
-    flex-wrap: wrap;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 .credential-wrapper strong {
     font-family: 'Courier New', Courier, monospace;
-    font-size: 1.1em;
-    color: #E50914; /* Netflix Red for credentials */
+    font-size: 1em; /* Adjusted for mobile */
+    color: #E50914;
     word-break: break-all;
+    margin-bottom: 5px; /* Space between credential and button when stacked */
 }
 .copy-button {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--text-medium);
-    padding: 4px 8px;
+    padding: 6px 10px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     transition: all 0.2s ease;
+    flex-shrink: 0;
+    align-self: flex-start; /* Align button to the start of the flex container */
 }
 .copy-button:hover {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
 }
-.copy-button .fa-check {
+.copy-button .fa-check { /* Class for the checkmark when copied by JS */
     color: var(--spotify-green);
 }
 
@@ -208,19 +220,19 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: 10px; /* Adjusted gap */
     background-color: var(--whatsapp-green);
     color: #fff;
-    padding: 14px 25px;
+    padding: 12px 20px; /* Adjusted padding */
     border-radius: 10px;
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 1rem; /* Adjusted font size */
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
     width: 100%;
-    max-width: 400px;
-    margin: 20px auto 0 auto;
+    max-width: 350px; /* Adjusted max-width */
+    margin: 15px auto 0 auto; /* Adjusted margin */
     text-align: center;
 }
 .whatsapp-button-setup:hover {
@@ -229,87 +241,103 @@
     box-shadow: 0 7px 20px rgba(37, 211, 102, 0.3);
 }
 .whatsapp-button-setup i {
-    font-size: 1.3em;
+    font-size: 1.2em; /* Adjusted icon size */
 }
 
 .team-signature {
     text-align: center;
-    margin-top: 25px;
-    font-size: 0.95rem;
+    margin-top: 20px; /* Adjusted margin */
+    font-size: 0.9rem; /* Adjusted font size */
     color: var(--text-medium);
     font-weight: 500;
 }
 
 .tv-type-info {
     background-color: rgba(255,255,255,0.03);
-    padding: 15px 20px;
+    padding: 15px; /* Adjusted padding */
     border-radius: 8px;
-    margin-bottom: 30px;
+    margin-bottom: 25px; /* Adjusted margin */
     border: 1px solid rgba(255,255,255,0.08);
 }
 .tv-type-info h4 {
     color: var(--text-light);
-    font-size: 1.1rem;
-    margin-bottom: 10px;
+    font-size: 1.05rem; /* Adjusted font size */
+    margin-bottom: 8px; /* Adjusted margin */
 }
 .tv-type-info ul {
     list-style: disc;
     padding-left: 20px;
     color: var(--text-medium);
-    font-size: 0.95rem;
+    font-size: 0.9rem; /* Adjusted font size */
 }
 .tv-type-info ul li {
-    margin-bottom: 8px;
+    margin-bottom: 6px; /* Adjusted margin */
 }
 
 
-/* Responsive */
-@media (max-width: 768px) {
-    .setup-container {
-        padding: 25px 20px;
+/* Responsive adjustments for wider screens (if needed, revert some mobile-first stacking) */
+@media (min-width: 550px) { /* Adjust breakpoint as needed */
+    .credential-wrapper {
+        flex-direction: row; /* Side-by-side for email/pass and copy button */
+        align-items: center;
+        justify-content: space-between; /* Puts button to the right */
     }
-    .step-heading {
-        font-size: 1.4rem;
+    .credential-wrapper strong {
+        margin-bottom: 0; /* No bottom margin when side-by-side */
+        flex-grow: 1;
     }
-    .choice-button {
-        font-size: 1rem;
-        padding: 12px 20px;
-        min-width: 180px;
-    }
-    .instructions-content {
-        padding: 20px;
-    }
-    .steps-list li, .credential-wrapper strong {
-        font-size: 1rem;
+    .copy-button {
+        align-self: center; /* Ensure it's centered vertically */
     }
 }
 
+
+/* Specific mobile overrides (if defaults above are not enough) */
 @media (max-width: 480px) {
     .setup-container {
-        padding: 20px 15px;
+        padding: 20px 15px; /* Further reduce container padding */
+        width: 100%;
     }
     .setup-title {
         font-size: 1.6rem;
     }
     .setup-subtitle {
-        font-size: 1rem;
-        margin-bottom: 30px;
+        font-size: 0.95rem;
+        margin-bottom: 25px;
     }
     .step-heading {
-        font-size: 1.3rem;
+        font-size: 1.25rem; /* Smaller step headings */
     }
     .button-group {
         flex-direction: column;
-        gap: 15px;
+        gap: 12px; /* Tighter gap for stacked buttons */
     }
     .choice-button {
         width: 100%;
-    }
-    .steps-list li, .credential-wrapper strong {
         font-size: 0.95rem;
+        padding: 12px 15px;
+    }
+    .instructions-content {
+        padding: 15px;
+    }
+    .steps-list li {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+     .steps-list li .step-emoji {
+        font-size: 1em; /* Slightly smaller emoji */
     }
     .whatsapp-button-setup {
+        font-size: 0.9rem;
+        padding: 12px 15px;
+    }
+     .whatsapp-button-setup i {
+        font-size: 1.1em;
+    }
+    .tv-type-info h4 {
         font-size: 1rem;
-        padding: 12px 20px;
+    }
+    .tv-type-info ul {
+        font-size: 0.85rem;
     }
 }
