@@ -1,0 +1,315 @@
+/* === Netflix Setup Page Styles (netflix-setup/style.css) === */
+
+.setup-main {
+    flex-grow: 1;
+}
+
+.setup-section {
+    background-color: var(--dark-bg);
+    min-height: calc(100vh - 80px - 150px); /* Header and Footer approx heights */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.setup-container {
+    max-width: 800px;
+    background-color: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 30px 40px;
+    border-radius: 18px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.setup-title {
+    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    color: #fff;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+.setup-title::after { /* Remove underline from base.css if it has one */
+    display: none;
+}
+
+.setup-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-medium);
+    margin-bottom: 40px;
+}
+
+.setup-step {
+    display: none; /* Hidden by default, JS will show the active one */
+    padding: 20px 0;
+    animation: fadeInStep 0.5s ease-in-out;
+    text-align: left;
+}
+
+@keyframes fadeInStep {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.setup-step.active-step {
+    display: block;
+}
+
+.step-heading {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: center;
+}
+
+.setup-step > p { /* Paragraphs directly under setup-step */
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--text-medium);
+    font-size: 1.05rem;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.choice-button {
+    background-color: var(--cta-blue);
+    color: #fff;
+    border: none;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 200px;
+    justify-content: center;
+}
+
+.choice-button:hover {
+    background-color: var(--cta-blue-hover);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 122, 255, 0.3);
+}
+
+.choice-button i {
+    font-size: 1.2em;
+}
+
+.back-button {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-medium);
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 25px;
+}
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.instructions-content {
+    background-color: rgba(0,0,0, 0.1);
+    padding: 25px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.instruction-intro {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 20px;
+}
+
+.steps-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 30px;
+}
+
+.steps-list li {
+    font-size: 1.05rem;
+    color: var(--text-medium);
+    line-height: 1.8;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: flex-start; /* Align emoji with first line of text */
+}
+.steps-list li .step-emoji {
+    font-size: 1.2em;
+    margin-right: 12px;
+    color: var(--text-light);
+    flex-shrink: 0; /* Prevent emoji from shrinking */
+    line-height: 1.5; /* Adjust if emoji alignment is off */
+}
+
+.steps-list strong {
+    color: #fff; /* White for emphasis within steps */
+    font-weight: 600;
+}
+
+.credential-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+}
+.credential-wrapper strong {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1em;
+    color: #E50914; /* Netflix Red for credentials */
+    word-break: break-all;
+}
+.copy-button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-medium);
+    padding: 4px 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+.copy-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+}
+.copy-button .fa-check {
+    color: var(--spotify-green);
+}
+
+
+.whatsapp-button-setup {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background-color: var(--whatsapp-green);
+    color: #fff;
+    padding: 14px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto 0 auto;
+    text-align: center;
+}
+.whatsapp-button-setup:hover {
+    background-color: #1fbc5d;
+    transform: translateY(-2px);
+    box-shadow: 0 7px 20px rgba(37, 211, 102, 0.3);
+}
+.whatsapp-button-setup i {
+    font-size: 1.3em;
+}
+
+.team-signature {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.95rem;
+    color: var(--text-medium);
+    font-weight: 500;
+}
+
+.tv-type-info {
+    background-color: rgba(255,255,255,0.03);
+    padding: 15px 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+.tv-type-info h4 {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+.tv-type-info ul {
+    list-style: disc;
+    padding-left: 20px;
+    color: var(--text-medium);
+    font-size: 0.95rem;
+}
+.tv-type-info ul li {
+    margin-bottom: 8px;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .setup-container {
+        padding: 25px 20px;
+    }
+    .step-heading {
+        font-size: 1.4rem;
+    }
+    .choice-button {
+        font-size: 1rem;
+        padding: 12px 20px;
+        min-width: 180px;
+    }
+    .instructions-content {
+        padding: 20px;
+    }
+    .steps-list li, .credential-wrapper strong {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .setup-container {
+        padding: 20px 15px;
+    }
+    .setup-title {
+        font-size: 1.6rem;
+    }
+    .setup-subtitle {
+        font-size: 1rem;
+        margin-bottom: 30px;
+    }
+    .step-heading {
+        font-size: 1.3rem;
+    }
+    .button-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .choice-button {
+        width: 100%;
+    }
+    .steps-list li, .credential-wrapper strong {
+        font-size: 0.95rem;
+    }
+    .whatsapp-button-setup {
+        font-size: 1rem;
+        padding: 12px 20px;
+    }
+}
