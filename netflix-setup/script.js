@@ -44,16 +44,19 @@ document.addEventListener('DOMContentLoaded', () => {
         // Scroll to the top of the container smoothly
         const setupContainer = document.querySelector('.setup-container');
         if (setupContainer) {
-            setupContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            // Using a slight timeout to ensure the element is fully visible before scrolling
+            setTimeout(() => {
+                setupContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
         }
     }
 
     // Function to set credentials and WhatsApp links
     function initializeCredentialsAndLinks() {
-        // Display credentials
-        if (emailDisplayMobile) emailDisplayMobile.textContent = NETFLIX_EMAIL.replace('@', ' @');
+        // Display credentials (without the extra space before @)
+        if (emailDisplayMobile) emailDisplayMobile.textContent = NETFLIX_EMAIL;
         if (passwordDisplayMobile) passwordDisplayMobile.textContent = NETFLIX_PASSWORD;
-        if (emailDisplayNormalTV) emailDisplayNormalTV.textContent = NETFLIX_EMAIL.replace('@', ' @');
+        if (emailDisplayNormalTV) emailDisplayNormalTV.textContent = NETFLIX_EMAIL;
         if (passwordDisplayNormalTV) passwordDisplayNormalTV.textContent = NETFLIX_PASSWORD;
 
         // Set WhatsApp links
@@ -105,21 +108,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof ClipboardJS !== 'undefined') {
         const clipboard = new ClipboardJS('.copy-button');
         clipboard.on('success', function(e) {
-            const originalText = e.trigger.innerHTML;
-            e.trigger.innerHTML = `<i class="fas fa-check"></i> Copied!`;
-            e.trigger.disabled = true;
-            setTimeout(() => {
-                e.trigger.innerHTML = originalText;
-                e.trigger.disabled = false;
-            }, 1500);
+            const originalIconHTML = '<i class="far fa-copy"></i> Copy'; // Store original HTML
+            const copiedIconHTML = '<i class="fas fa-check"></i> Copied!';
+
+            // Change text only if it's not already "Copied!" to avoid re-triggering timeout on rapid clicks
+            if (e.trigger.innerHTML.includes('fa-copy')) {
+                e.trigger.innerHTML = copiedIconHTML;
+                e.trigger.disabled = true;
+                setTimeout(() => {
+                    e.trigger.innerHTML = originalIconHTML;
+                    e.trigger.disabled = false;
+                }, 1500);
+            }
             e.clearSelection();
         });
         clipboard.on('error', function(e) {
-            alert('Failed to copy. Please copy manually.');
+            // Fallback for users if copy fails (e.g. iOS)
+            const textToCopy = e.trigger.previousElementSibling.textContent;
+            prompt("Failed to copy automatically. Please copy manually:", textToCopy);
         });
     } else {
-        console.warn('ClipboardJS not loaded. Copy buttons will not work.');
-        document.querySelectorAll('.copy-button').forEach(btn => btn.style.display = 'none');
+        console.warn('ClipboardJS not loaded. Copy buttons may not work as expected.');
+        // Optionally hide copy buttons if ClipboardJS is essential and not loaded
+        // document.querySelectorAll('.copy-button').forEach(btn => btn.style.display = 'none');
     }
 
 
