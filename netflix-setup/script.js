@@ -1,141 +1,222 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- START: NETFLIX CREDENTIALS - UPDATE THESE VALUES AS NEEDED ---
-    const NETFLIX_EMAIL = "carteluganda10@gmail.com"; // Replace with the current email
-    const NETFLIX_PASSWORD = "thecartelug";         // Replace with the current password
-    // --- END: NETFLIX CREDENTIALS ---
+    // --- START: NETFLIX CREDENTIALS & WHATSAPP NUMBER ---
+    const NETFLIX_EMAIL = "carteluganda10@gmail.com";
+    const NETFLIX_PASSWORD = "thecartelug";
+    const WHATSAPP_NUMBER = "256762193386";
+    // --- END: CREDENTIALS ---
 
-    const WHATSAPP_NUMBER = "256762193386"; // Your WhatsApp number
+    const setupContainer = document.querySelector('.interactive-setup-container');
+    const steps = Array.from(document.querySelectorAll('.interactive-step'));
+    const progressBar = document.querySelector('.progress-bar');
+    const currentStepNumberDisplay = document.getElementById('current-step-number');
+    const totalStepNumberDisplay = document.getElementById('total-step-number');
+    
+    let currentPath = null; // 'mobile' or 'tv'
+    let currentGlobalStepIndex = 0;
+    let pathSteps = [];
 
-    // Get step containers
-    const steps = document.querySelectorAll('.setup-step');
-    const deviceChoiceStep = document.getElementById('deviceChoiceStep');
-    const mobilePCInstructionsStep = document.getElementById('mobilePCInstructionsStep');
-    const tvTypeChoiceStep = document.getElementById('tvTypeChoiceStep');
-    const normalTVInstructionsStep = document.getElementById('normalTVInstructionsStep');
-    const smartTVInstructionsStep = document.getElementById('smartTVInstructionsStep');
+    function updateProgress() {
+        const activeStepEl = steps.find(step => step.classList.contains('active'));
+        if (!activeStepEl) return;
 
-    // Get buttons
-    const btnMobilePC = document.getElementById('btnMobilePC');
-    const btnTV = document.getElementById('btnTV');
-    const btnSmartTV = document.getElementById('btnSmartTV');
-    const btnNormalTV = document.getElementById('btnNormalTV');
-    const backButtons = document.querySelectorAll('.back-button');
+        currentGlobalStepIndex = steps.indexOf(activeStepEl);
+        
+        let visibleStepIndexInPath = 0;
+        let totalVisibleStepsInPath = 0;
 
-    // Get display elements for credentials
-    const emailDisplayMobile = document.getElementById('netflixEmailDisplayMobile');
-    const passwordDisplayMobile = document.getElementById('netflixPasswordDisplayMobile');
-    const emailDisplayNormalTV = document.getElementById('netflixEmailDisplayNormalTV');
-    const passwordDisplayNormalTV = document.getElementById('netflixPasswordDisplayNormalTV');
+        if (currentPath) {
+            const pathFilteredSteps = steps.filter(step => {
+                const stepId = step.dataset.stepId;
+                if (stepId === 'initialDeviceChoice') return true; // Always part of paths implicitly
+                if (currentPath === 'mobile') return stepId.startsWith('mobilePcPath');
+                if (currentPath === 'tv') {
+                    if (stepId.startsWith('tvPath_typeChoice')) return true;
+                    // Further filter TV path based on Smart/Normal if a sub-selection is made
+                    const tvSubType = setupContainer.dataset.tvSubType; // e.g., 'smart' or 'normal'
+                    if (tvSubType === 'smart') return stepId.startsWith('smartTvPath');
+                    if (tvSubType === 'normal') return stepId.startsWith('normalTvPath');
+                    return stepId.startsWith('tvPath_'); // Before sub-selection
+                }
+                return false;
+            });
 
-    // Get WhatsApp link elements
-    const whatsappLinkMobile = document.getElementById('whatsappLinkMobile');
-    const whatsappLinkNormalTV = document.getElementById('whatsappLinkNormalTV');
-    const whatsappLinkSmartTV = document.getElementById('whatsappLinkSmartTV');
+            pathSteps = [steps[0], ...pathFilteredSteps.filter(s => s.dataset.stepId !== 'initialDeviceChoice')]; // Ensure unique steps
+            pathSteps = [...new Set(pathSteps)]; // Remove duplicates if any from filtering logic
 
-    // Function to show a specific step and hide others
-    function showStep(stepIdToShow) {
-        steps.forEach(step => {
-            if (step.id === stepIdToShow) {
-                step.classList.add('active-step');
-            } else {
-                step.classList.remove('active-step');
-            }
-        });
-        // Scroll to the top of the container smoothly
-        const setupContainer = document.querySelector('.setup-container');
-        if (setupContainer) {
-            // Using a slight timeout to ensure the element is fully visible before scrolling
-            setTimeout(() => {
-                setupContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 100);
+            visibleStepIndexInPath = pathSteps.indexOf(activeStepEl);
+            totalVisibleStepsInPath = pathSteps.length;
+        } else { // Initial device choice step
+            pathSteps = [steps[0]];
+            visibleStepIndexInPath = 0;
+            totalVisibleStepsInPath = 1; // Only this step is considered initially
+        }
+        
+        const progressPercentage = totalVisibleStepsInPath > 1 ? ((visibleStepIndexInPath) / (totalVisibleStepsInPath -1)) * 100 : 0;
+        if (progressBar) progressBar.style.width = `${progressPercentage}%`;
+        if (currentStepNumberDisplay) currentStepNumberDisplay.textContent = visibleStepIndexInPath + 1;
+        if (totalStepNumberDisplay) totalStepNumberDisplay.textContent = totalVisibleStepsInPath;
+
+         // Special handling for total steps if on initial choice page
+        if (activeStepEl.dataset.stepId === 'initialDeviceChoice' && totalStepNumberDisplay) {
+             totalStepNumberDisplay.textContent = pathSteps.length > 1 ? pathSteps.length : 'X'; // Show X or current if no path selected
         }
     }
 
-    // Function to set credentials and WhatsApp links
-    function initializeCredentialsAndLinks() {
-        // Display credentials (without the extra space before @)
-        if (emailDisplayMobile) emailDisplayMobile.textContent = NETFLIX_EMAIL;
-        if (passwordDisplayMobile) passwordDisplayMobile.textContent = NETFLIX_PASSWORD;
-        if (emailDisplayNormalTV) emailDisplayNormalTV.textContent = NETFLIX_EMAIL;
-        if (passwordDisplayNormalTV) passwordDisplayNormalTV.textContent = NETFLIX_PASSWORD;
 
-        // Set WhatsApp links
-        const pinRequestMessage = `Hi Accessug Team, I'm at the 'Who’s Watching?' screen for Netflix with email ${NETFLIX_EMAIL}. Please send my PIN.`;
-        const smartTVCodeMessage = `Hi Accessug Team, I'm signing into Netflix on my Smart TV and have a code on the screen. I'm sending a picture of it now.`;
-
-        if (whatsappLinkMobile) whatsappLinkMobile.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(pinRequestMessage)}`;
-        if (whatsappLinkNormalTV) whatsappLinkNormalTV.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(pinRequestMessage)}`;
-        if (whatsappLinkSmartTV) whatsappLinkSmartTV.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(smartTVCodeMessage)}`;
-    }
-
-    // Event Listeners for main choice buttons
-    if (btnMobilePC) {
-        btnMobilePC.addEventListener('click', () => {
-            showStep('mobilePCInstructionsStep');
+    function showStep(stepId) {
+        let foundStep = false;
+        steps.forEach(step => {
+            if (step.dataset.stepId === stepId) {
+                step.classList.add('active');
+                foundStep = true;
+            } else {
+                step.classList.remove('active');
+            }
         });
+        if (foundStep) {
+            updateProgress();
+            // Scroll to the top of the setup container
+            if (setupContainer) {
+                setupContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        } else {
+            console.warn(`Step with ID ${stepId} not found.`);
+        }
     }
 
-    if (btnTV) {
-        btnTV.addEventListener('click', () => {
-            showStep('tvTypeChoiceStep');
-        });
+    function initializeStaticCredentials() {
+        // Mobile/PC Path
+        const mpEmailEl = document.getElementById('mp_netflix_email_static');
+        const mpPasswordInputEl = document.getElementById('mp_netflix_password_static_input');
+        if (mpEmailEl) mpEmailEl.textContent = NETFLIX_EMAIL;
+        if (mpPasswordInputEl) mpPasswordInputEl.value = NETFLIX_PASSWORD;
+
+        // Normal TV Path
+        const ntEmailEl = document.getElementById('nt_netflix_email_static');
+        const ntPasswordEl = document.getElementById('nt_netflix_password_static');
+        if (ntEmailEl) ntEmailEl.textContent = NETFLIX_EMAIL;
+        if (ntPasswordEl) ntPasswordEl.textContent = NETFLIX_PASSWORD;
+        
+        // Setup WhatsApp links
+        const pinRequestMessage = `Hi Cartelug Team, I need my PIN for Netflix. My setup email is ${NETFLIX_EMAIL}.`;
+        const smartTVCodeMessage = `Hi Cartelug Team, I'm signing into Netflix on my Smart TV and have a code on screen.`;
+
+        const mpWhatsappLink = document.getElementById('mp_whatsappLink');
+        const ntWhatsappLink = document.getElementById('nt_whatsappLink');
+        const stWhatsappLink = document.getElementById('st_whatsappLink');
+
+        if (mpWhatsappLink) mpWhatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(pinRequestMessage)}`;
+        if (ntWhatsappLink) ntWhatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(pinRequestMessage)}`;
+        if (stWhatsappLink) stWhatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(smartTVCodeMessage)}`;
     }
 
-    // Event Listeners for TV type choice buttons
-    if (btnSmartTV) {
-        btnSmartTV.addEventListener('click', () => {
-            showStep('smartTVInstructionsStep');
-        });
-    }
+    setupContainer.addEventListener('click', (e) => {
+        const targetButton = e.target.closest('button');
+        if (!targetButton) return;
 
-    if (btnNormalTV) {
-        btnNormalTV.addEventListener('click', () => {
-            showStep('normalTVInstructionsStep');
-        });
-    }
+        if (targetButton.classList.contains('option-button') || targetButton.classList.contains('nav-button')) {
+            const nextStepId = targetButton.dataset.nextStep;
+            const prevStepId = targetButton.dataset.prevStep;
+            const path = targetButton.dataset.path;
+            
+            if (path) { // If it's an initial path selection button
+                currentPath = path;
+                // Reset tvSubType if a main path is chosen
+                if (path === 'mobile' || path === 'tv') {
+                    delete setupContainer.dataset.tvSubType;
+                }
+            }
+            
+            // Store TV sub-type if such a button is clicked
+            if (nextStepId && (nextStepId.startsWith('smartTvPath') || nextStepId.startsWith('normalTvPath'))) {
+                setupContainer.dataset.tvSubType = nextStepId.startsWith('smartTvPath') ? 'smart' : 'normal';
+            }
 
-    // Event Listeners for back buttons
-    backButtons.forEach(button => {
+
+            if (nextStepId) {
+                showStep(nextStepId);
+            } else if (prevStepId) {
+                 // If going back to initial choice, reset path and TV subtype
+                if (prevStepId === 'initialDeviceChoice') {
+                    currentPath = null;
+                    delete setupContainer.dataset.tvSubType;
+                }
+                // If going back from a specific TV type path to the TV type choice
+                else if ((currentPath === 'tv' && setupContainer.dataset.tvSubType) && prevStepId === 'tvPath_typeChoice') {
+                     delete setupContainer.dataset.tvSubType; // Reset subtype when going back to TV type choice
+                }
+                showStep(prevStepId);
+            }
+        }
+    });
+
+    // Toggle Password Visibility
+    document.querySelectorAll('.toggle-password').forEach(button => {
         button.addEventListener('click', () => {
-            const targetStepId = button.getAttribute('data-target');
-            if (targetStepId) {
-                showStep(targetStepId);
+            const passwordInput = button.previousElementSibling; // Assumes input is just before button
+            if (passwordInput && (passwordInput.type === 'password' || passwordInput.type === 'text')) {
+                const isPassword = passwordInput.type === 'password';
+                passwordInput.type = isPassword ? 'text' : 'password';
+                button.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
             }
         });
     });
-
+    
     // ClipboardJS Initialization
     if (typeof ClipboardJS !== 'undefined') {
-        const clipboard = new ClipboardJS('.copy-button');
-        clipboard.on('success', function(e) {
-            const originalIconHTML = '<i class="far fa-copy"></i> Copy'; // Store original HTML
-            const copiedIconHTML = '<i class="fas fa-check"></i> Copied!';
-
-            // Change text only if it's not already "Copied!" to avoid re-triggering timeout on rapid clicks
-            if (e.trigger.innerHTML.includes('fa-copy')) {
-                e.trigger.innerHTML = copiedIconHTML;
-                e.trigger.disabled = true;
-                setTimeout(() => {
-                    e.trigger.innerHTML = originalIconHTML;
-                    e.trigger.disabled = false;
-                }, 1500);
-            }
+        const clipboardButtons = new ClipboardJS('.copy-button-interactive');
+        clipboardButtons.on('success', function(e) {
+            const originalText = e.trigger.innerHTML;
+            e.trigger.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            e.trigger.disabled = true;
+            setTimeout(() => {
+                e.trigger.innerHTML = originalText;
+                e.trigger.disabled = false;
+            }, 1500);
             e.clearSelection();
         });
-        clipboard.on('error', function(e) {
-            // Fallback for users if copy fails (e.g. iOS)
-            const textToCopy = e.trigger.previousElementSibling.textContent;
-            prompt("Failed to copy automatically. Please copy manually:", textToCopy);
+
+        clipboardButtons.on('error', function(e) {
+            alert('Failed to copy. Please copy manually.');
         });
+        
+        // Special handler for copying from input (for password)
+        document.querySelectorAll('.copy-button-interactive[data-clipboard-text-from-input]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const inputSelector = btn.dataset.clipboardTextFromInput;
+                const inputElement = document.querySelector(inputSelector);
+                if (inputElement) {
+                    // Temporarily change to text to copy
+                    const originalType = inputElement.type;
+                    if (originalType === 'password') inputElement.type = 'text';
+                    
+                    inputElement.select();
+                    inputElement.setSelectionRange(0, 99999); // For mobile devices
+                    
+                    try {
+                        document.execCommand('copy');
+                        const originalHTML = btn.innerHTML;
+                        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        btn.disabled = true;
+                        setTimeout(() => {
+                            btn.innerHTML = originalHTML;
+                            btn.disabled = false;
+                        }, 1500);
+                    } catch (err) {
+                        alert('Failed to copy password. Please copy manually.');
+                    }
+                    
+                    if (originalType === 'password') inputElement.type = 'password'; // Revert type
+                    window.getSelection().removeAllRanges(); // Deselect
+                }
+            });
+        });
+
     } else {
-        console.warn('ClipboardJS not loaded. Copy buttons may not work as expected.');
-        // Optionally hide copy buttons if ClipboardJS is essential and not loaded
-        // document.querySelectorAll('.copy-button').forEach(btn => btn.style.display = 'none');
+        console.warn('ClipboardJS not loaded. Copy buttons will not work as expected.');
     }
 
-
     // Initial setup
-    initializeCredentialsAndLinks();
-    if(deviceChoiceStep) showStep('deviceChoiceStep'); // Show the first step initially
-
+    initializeStaticCredentials();
+    showStep('initialDeviceChoice'); // Show the first step
 });
