@@ -1,222 +1,222 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- START: NETFLIX CREDENTIALS & WHATSAPP NUMBER ---
-    const NETFLIX_EMAIL = "carteluganda10@gmail.com";
+    // --- CONFIGURATION ---
+    const CORRECT_ACCESS_CODE = "2022"; // Change this to update the access code
+    const NETFLIX_EMAIL = "carteluganda0@gmail.com";
     const NETFLIX_PASSWORD = "thecartelug";
-    const WHATSAPP_NUMBER = "256762193386";
-    // --- END: CREDENTIALS ---
+    const WHATSAPP_NUMBER = "256762193386"; // Your WhatsApp number
+    // --- END CONFIGURATION ---
 
-    const setupContainer = document.querySelector('.interactive-setup-container');
-    const steps = Array.from(document.querySelectorAll('.interactive-step'));
-    const progressBar = document.querySelector('.progress-bar');
-    const currentStepNumberDisplay = document.getElementById('current-step-number');
-    const totalStepNumberDisplay = document.getElementById('total-step-number');
-    
-    let currentPath = null; // 'mobile' or 'tv'
-    let currentGlobalStepIndex = 0;
-    let pathSteps = [];
+    const accessGate = document.getElementById('accessGate');
+    const gateForm = document.getElementById('gateForm');
+    const userNameInput = document.getElementById('userName');
+    const accessCodeInput = document.getElementById('accessCode');
+    const gateError = document.getElementById('gateError');
+    const netflixInstructionsContainer = document.getElementById('netflixInstructions');
+    const pageBody = document.body;
 
-    function updateProgress() {
-        const activeStepEl = steps.find(step => step.classList.contains('active'));
-        if (!activeStepEl) return;
+    let currentStepId = null;
+    let userName = "";
 
-        currentGlobalStepIndex = steps.indexOf(activeStepEl);
-        
-        let visibleStepIndexInPath = 0;
-        let totalVisibleStepsInPath = 0;
+    // --- ACCESS GATE LOGIC ---
+    if (gateForm) {
+        gateForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const enteredCode = accessCodeInput.value;
+            userName = userNameInput.value.trim();
 
-        if (currentPath) {
-            const pathFilteredSteps = steps.filter(step => {
-                const stepId = step.dataset.stepId;
-                if (stepId === 'initialDeviceChoice') return true; // Always part of paths implicitly
-                if (currentPath === 'mobile') return stepId.startsWith('mobilePcPath');
-                if (currentPath === 'tv') {
-                    if (stepId.startsWith('tvPath_typeChoice')) return true;
-                    // Further filter TV path based on Smart/Normal if a sub-selection is made
-                    const tvSubType = setupContainer.dataset.tvSubType; // e.g., 'smart' or 'normal'
-                    if (tvSubType === 'smart') return stepId.startsWith('smartTvPath');
-                    if (tvSubType === 'normal') return stepId.startsWith('normalTvPath');
-                    return stepId.startsWith('tvPath_'); // Before sub-selection
-                }
-                return false;
-            });
-
-            pathSteps = [steps[0], ...pathFilteredSteps.filter(s => s.dataset.stepId !== 'initialDeviceChoice')]; // Ensure unique steps
-            pathSteps = [...new Set(pathSteps)]; // Remove duplicates if any from filtering logic
-
-            visibleStepIndexInPath = pathSteps.indexOf(activeStepEl);
-            totalVisibleStepsInPath = pathSteps.length;
-        } else { // Initial device choice step
-            pathSteps = [steps[0]];
-            visibleStepIndexInPath = 0;
-            totalVisibleStepsInPath = 1; // Only this step is considered first
-        }
-        
-        const progressPercentage = totalVisibleStepsInPath > 1 ? ((visibleStepIndexInPath) / (totalVisibleStepsInPath -1)) * 100 : 0;
-        if (progressBar) progressBar.style.width = `${progressPercentage}%`;
-        if (currentStepNumberDisplay) currentStepNumberDisplay.textContent = visibleStepIndexInPath + 1;
-        if (totalStepNumberDisplay) totalStepNumberDisplay.textContent = totalVisibleStepsInPath;
-
-         // Special handling for total steps if on initial choice page
-        if (activeStepEl.dataset.stepId === 'initialDeviceChoice' && totalStepNumberDisplay) {
-             totalStepNumberDisplay.textContent = pathSteps.length > 1 ? pathSteps.length : 'X'; // Show X or current if no path selected
-        }
-    }
-
-
-    function showStep(stepId) {
-        let foundStep = false;
-        steps.forEach(step => {
-            if (step.dataset.stepId === stepId) {
-                step.classList.add('active');
-                foundStep = true;
+            if (enteredCode === CORRECT_ACCESS_CODE) {
+                accessGate.classList.remove('active');
+                accessGate.style.display = 'none'; // Hide after transition
+                
+                pageBody.classList.add('netflix-setup-active');
+                netflixInstructionsContainer.style.display = 'block';
+                setTimeout(() => netflixInstructionsContainer.classList.add('active'), 50); // For transition
+                
+                renderStep('initialDeviceChoice');
             } else {
-                step.classList.remove('active');
+                gateError.textContent = "Incorrect Accessug Code. Please try again.";
+                accessCodeInput.focus();
             }
         });
-        if (foundStep) {
-            updateProgress();
-            // Scroll to the top of the setup container
-            if (setupContainer) {
-                setupContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        } else {
-            console.warn(`Step with ID ${stepId} not found.`);
-        }
     }
 
-    function initializeStaticCredentials() {
-        // Mobile/PC Path
-        const mpEmailEl = document.getElementById('mp_netflix_email_static');
-        const mpPasswordInputEl = document.getElementById('mp_netflix_password_static_input');
-        if (mpEmailEl) mpEmailEl.textContent = NETFLIX_EMAIL;
-        if (mpPasswordInputEl) mpPasswordInputEl.value = NETFLIX_PASSWORD;
+    // --- INSTRUCTION RENDERING & NAVIGATION ---
+    function renderStep(stepId) {
+        currentStepId = stepId;
+        let html = '';
 
-        // Normal TV Path
-        const ntEmailEl = document.getElementById('nt_netflix_email_static');
-        const ntPasswordEl = document.getElementById('nt_netflix_password_static');
-        if (ntEmailEl) ntEmailEl.textContent = NETFLIX_EMAIL;
-        if (ntPasswordEl) ntPasswordEl.textContent = NETFLIX_PASSWORD;
-        
-        // Setup WhatsApp links
-        const pinRequestMessage = `Hi Cartelug Team, I need my PIN for Netflix. My setup email is ${NETFLIX_EMAIL}.`;
-        const smartTVCodeMessage = `Hi Cartelug Team, I'm signing into Netflix on my Smart TV and have a code on screen.`;
+        switch (stepId) {
+            case 'initialDeviceChoice':
+                html = `
+                    <div class="instruction-step active">
+                        <h2>Hi ${userName || 'there'}! Which device are you using?</h2>
+                        <div class="device-options">
+                            <button class="device-option-button" data-next="phonePcStep1"><i class="fas fa-mobile-alt"></i> Phone / PC</button>
+                            <button class="device-option-button" data-next="tvTypeChoice"><i class="fas fa-tv"></i> TV</button>
+                        </div>
+                    </div>`;
+                break;
 
-        const mpWhatsappLink = document.getElementById('mp_whatsappLink');
-        const ntWhatsappLink = document.getElementById('nt_whatsappLink');
-        const stWhatsappLink = document.getElementById('st_whatsappLink');
+            // Phone/PC Path
+            case 'phonePcStep1':
+                html = `
+                    <div class="instruction-step active">
+                        <h2>Open Netflix & Press SIGN IN</h2>
+                        <p>On your Phone or PC, open the Netflix app or go to netflix.com.</p>
+                        <p>Then, tap or click <strong>'Sign In'</strong>.</p>
+                        <button class="netflix-button" data-next="phonePcStep2">Next <i class="fas fa-arrow-right"></i></button>
+                        <button class="netflix-button secondary" data-back="initialDeviceChoice"><i class="fas fa-arrow-left"></i> Back</button>
+                    </div>`;
+                break;
+            case 'phonePcStep2':
+                html = `
+                    <div class="instruction-step active">
+                        <h2>Enter these details:</h2>
+                        <div class="netflix-input-group">
+                            <input type="text" id="phoneEmail" class="input-field has-value" value="${NETFLIX_EMAIL}" readonly>
+                            <label for="phoneEmail" class="input-label">Email</label>
+                        </div>
+                        <div class="credential-actions">
+                           <button class="copy-button-netflix" data-clipboard-text="${NETFLIX_EMAIL}"><i class="far fa-copy"></i> Copy Email</button>
+                        </div>
 
-        if (mpWhatsappLink) mpWhatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(pinRequestMessage)}`;
-        if (ntWhatsappLink) ntWhatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(pinRequestMessage)}`;
-        if (stWhatsappLink) stWhatsappLink.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(smartTVCodeMessage)}`;
+                        <div class="netflix-input-group">
+                            <input type="password" id="phonePassword" class="input-field has-value" value="${NETFLIX_PASSWORD}" readonly>
+                            <label for="phonePassword" class="input-label">Password</label>
+                        </div>
+                        <div class="credential-actions">
+                            <button class="toggle-password-netflix" data-target="phonePassword"><i class="fas fa-eye"></i> Show</button>
+                            <button class="copy-button-netflix" data-clipboard-text="${NETFLIX_PASSWORD}"><i class="far fa-copy"></i> Copy Password</button>
+                        </div>
+                        <button class="netflix-button" data-next="phonePcStep3">Next <i class="fas fa-arrow-right"></i></button>
+                        <button class="netflix-button secondary" data-back="phonePcStep1"><i class="fas fa-arrow-left"></i> Back</button>
+                    </div>`;
+                break;
+            case 'phonePcStep3':
+                const phonePinMessage = `Hi Cartelug, it's ${userName}. I'm at the 'Who’s Watching?' screen on my Phone/PC (Email: ${NETFLIX_EMAIL}). Please send my PIN.`;
+                html = `
+                    <div class="instruction-step active">
+                        <h2>You should now see "Who’s Watching?"</h2>
+                        <p>Great! Now, please message us on WhatsApp to get your personal PIN for your profile.</p>
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(phonePinMessage)}" target="_blank" class="whatsapp-link-netflix">
+                            <i class="fab fa-whatsapp"></i> Message Us for PIN
+                        </a>
+                        <button class="netflix-button secondary" data-back="phonePcStep2"><i class="fas fa-arrow-left"></i> Back</button>
+                    </div>`;
+                break;
+
+            // TV Path
+            case 'tvTypeChoice':
+                html = `
+                    <div class="instruction-step active">
+                        <h2>What type of TV setup?</h2>
+                        <div class="tv-type-info-netflix">
+                            <h4>How to tell the difference:</h4>
+                            <ul>
+                                <li><strong>Smart TV:</strong> Netflix app is directly on the TV. Has its own app store. Connects directly to internet (Wi-Fi/Cable).</li>
+                                <li><strong>Normal TV:</strong> Netflix app is on a device connected to your TV (e.g., Fire Stick, Mi Stick, Apple TV, PS5, Xbox, Decoder). You use that device's remote for Netflix.</li>
+                            </ul>
+                        </div>
+                        <div class="device-options">
+                            <button class="device-option-button" data-next="smartTvStep1"><i class="fas fa-brain"></i> Smart TV</button>
+                            <button class="device-option-button" data-next="normalTvStep1"><i class="fas fa-plug"></i> Normal TV (with connected device)</button>
+                        </div>
+                        <button class="netflix-button secondary" data-back="initialDeviceChoice"><i class="fas fa-arrow-left"></i> Back to Device Choice</button>
+                    </div>`;
+                break;
+
+            // Normal TV Path
+            case 'normalTvStep1':
+                 html = `
+                    <div class="instruction-step active">
+                        <h2>Normal TV: Sign In Steps</h2>
+                        <p>1. Open the Netflix app on your connected device (Fire Stick, Console, etc.).</p>
+                        <p>2. Select <strong>'Sign In'</strong>.</p>
+                        <p>3. Enter Email: <strong class="important-text">${NETFLIX_EMAIL}</strong></p>
+                        <p>4. Enter Password: <strong class="important-text">${NETFLIX_PASSWORD}</strong></p>
+                        <p>5. When you reach the <strong>"Who’s Watching?"</strong> screen, STOP and message us on WhatsApp for your PIN.</p>
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi Cartelug, it's ${userName}. I'm at 'Who’s Watching?' on my Normal TV (Email: ${NETFLIX_EMAIL}). PIN please.`)}" target="_blank" class="whatsapp-link-netflix">
+                            <i class="fab fa-whatsapp"></i> Message for PIN
+                        </a>
+                        <button class="netflix-button secondary" data-back="tvTypeChoice"><i class="fas fa-arrow-left"></i> Back to TV Type</button>
+                    </div>`;
+                break;
+
+            // Smart TV Path
+            case 'smartTvStep1':
+                const smartTvCodeMessage = `Hi Cartelug, it's ${userName}. I'm signing into Netflix on my Smart TV and have a code on screen. I'll send a picture.`;
+                html = `
+                    <div class="instruction-step active">
+                        <h2>Smart TV: Sign In with Code</h2>
+                        <p>1. On your Smart TV, open Netflix & select <strong>'Sign In'</strong>.</p>
+                        <p>2. Look for an option like <strong>"Use Phone"</strong>, <strong>"Sign in from Web"</strong>, or <strong>"Use Another Device"</strong>. This will display a <strong>CODE</strong> on your TV screen.</p>
+                        <p class="important-text"><strong>No code option?</strong> If your TV only shows fields for email/password, please go back and select "Normal TV" setup.</p>
+                        <p>3. If a CODE is displayed, take a clear picture of it.</p>
+                        <p>4. Send the picture of the code to us on WhatsApp. We'll help you complete the sign-in.</p>
+                        <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(smartTvCodeMessage)}" target="_blank" class="whatsapp-link-netflix">
+                            <i class="fab fa-whatsapp"></i> Send TV Code via WhatsApp
+                        </a>
+                        <button class="netflix-button secondary" data-back="tvTypeChoice"><i class="fas fa-arrow-left"></i> Back to TV Type</button>
+                    </div>`;
+                break;
+
+            default:
+                html = `<p>Error: Step not found.</p><button class="netflix-button secondary" data-back="initialDeviceChoice">Start Over</button>`;
+        }
+        netflixInstructionsContainer.innerHTML = html;
+        initializeStepInteractions(); // Re-initialize for new buttons
     }
 
-    setupContainer.addEventListener('click', (e) => {
-        const targetButton = e.target.closest('button');
-        if (!targetButton) return;
-
-        if (targetButton.classList.contains('option-button') || targetButton.classList.contains('nav-button')) {
-            const nextStepId = targetButton.dataset.nextStep;
-            const prevStepId = targetButton.dataset.prevStep;
-            const path = targetButton.dataset.path;
-            
-            if (path) { // If it's an initial path selection button
-                currentPath = path;
-                // Reset tvSubType if a main path is chosen
-                if (path === 'mobile' || path === 'tv') {
-                    delete setupContainer.dataset.tvSubType;
-                }
-            }
-            
-            // Store TV sub-type if such a button is clicked
-            if (nextStepId && (nextStepId.startsWith('smartTvPath') || nextStepId.startsWith('normalTvPath'))) {
-                setupContainer.dataset.tvSubType = nextStepId.startsWith('smartTvPath') ? 'smart' : 'normal';
-            }
-
-
-            if (nextStepId) {
-                showStep(nextStepId);
-            } else if (prevStepId) {
-                 // If going back to initial choice, reset path and TV subtype
-                if (prevStepId === 'initialDeviceChoice') {
-                    currentPath = null;
-                    delete setupContainer.dataset.tvSubType;
-                }
-                // If going back from a specific TV type path to the TV type choice
-                else if ((currentPath === 'tv' && setupContainer.dataset.tvSubType) && prevStepId === 'tvPath_typeChoice') {
-                     delete setupContainer.dataset.tvSubType; // Reset subtype when going back to TV type choice
-                }
-                showStep(prevStepId);
-            }
-        }
-    });
-
-    // Toggle Password Visibility
-    document.querySelectorAll('.toggle-password').forEach(button => {
-        button.addEventListener('click', () => {
-            const passwordInput = button.previousElementSibling; // Assumes input is just before button
-            if (passwordInput && (passwordInput.type === 'password' || passwordInput.type === 'text')) {
-                const isPassword = passwordInput.type === 'password';
-                passwordInput.type = isPassword ? 'text' : 'password';
-                button.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
-            }
+    function initializeStepInteractions() {
+        // Navigation buttons
+        netflixInstructionsContainer.querySelectorAll('[data-next]').forEach(button => {
+            button.addEventListener('click', () => renderStep(button.dataset.next));
         });
-    });
-    
-    // ClipboardJS Initialization
-    if (typeof ClipboardJS !== 'undefined') {
-        const clipboardButtons = new ClipboardJS('.copy-button-interactive');
-        clipboardButtons.on('success', function(e) {
-            const originalText = e.trigger.innerHTML;
-            e.trigger.innerHTML = '<i class="fas fa-check"></i> Copied!';
-            e.trigger.disabled = true;
-            setTimeout(() => {
-                e.trigger.innerHTML = originalText;
-                e.trigger.disabled = false;
-            }, 1500);
-            e.clearSelection();
+        netflixInstructionsContainer.querySelectorAll('[data-back]').forEach(button => {
+            button.addEventListener('click', () => renderStep(button.dataset.back));
         });
 
-        clipboardButtons.on('error', function(e) {
-            alert('Failed to copy. Please copy manually.');
-        });
-        
-        // Special handler for copying from input (for password)
-        document.querySelectorAll('.copy-button-interactive[data-clipboard-text-from-input]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const inputSelector = btn.dataset.clipboardTextFromInput;
-                const inputElement = document.querySelector(inputSelector);
-                if (inputElement) {
-                    // Temporarily change to text to copy
-                    const originalType = inputElement.type;
-                    if (originalType === 'password') inputElement.type = 'text';
-                    
-                    inputElement.select();
-                    inputElement.setSelectionRange(0, 99999); // For mobile devices
-                    
-                    try {
-                        document.execCommand('copy');
-                        const originalHTML = btn.innerHTML;
-                        btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                        btn.disabled = true;
-                        setTimeout(() => {
-                            btn.innerHTML = originalHTML;
-                            btn.disabled = false;
-                        }, 1500);
-                    } catch (err) {
-                        alert('Failed to copy password. Please copy manually.');
-                    }
-                    
-                    if (originalType === 'password') inputElement.type = 'password'; // Revert type
-                    window.getSelection().removeAllRanges(); // Deselect
+        // Toggle Password
+        netflixInstructionsContainer.querySelectorAll('.toggle-password-netflix').forEach(button => {
+            button.addEventListener('click', () => {
+                const targetInput = document.getElementById(button.dataset.target);
+                if (targetInput) {
+                    const isPassword = targetInput.type === 'password';
+                    targetInput.type = isPassword ? 'text' : 'password';
+                    button.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i> Hide' : '<i class="fas fa-eye"></i> Show';
                 }
             });
         });
 
-    } else {
-        console.warn('ClipboardJS not loaded. Copy buttons will not work as expected.');
+        // ClipboardJS for copy buttons within steps
+        if (typeof ClipboardJS !== 'undefined') {
+            const clipboardButtons = new ClipboardJS('.copy-button-netflix');
+            clipboardButtons.on('success', function(e) {
+                const originalText = e.trigger.innerHTML;
+                e.trigger.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                setTimeout(() => {
+                    e.trigger.innerHTML = originalText;
+                }, 1500);
+                e.clearSelection();
+            });
+            clipboardButtons.on('error', function(e) {
+                alert('Failed to copy. Please copy manually.');
+            });
+        }
     }
+    
+    // Handle floating labels for pre-filled inputs (if any in future steps)
+    // This is a simple check, more robust might be needed if dynamic
+    document.querySelectorAll('.input-field.has-value').forEach(input => {
+        const label = input.nextElementSibling;
+        if (label && label.classList.contains('input-label')) {
+            label.style.fontSize = '0.75rem';
+            label.style.top = '10px';
+            label.style.transform = 'translateY(0)';
+        }
+    });
 
-    // Initial setup
-    initializeStaticCredentials();
-    showStep('initialDeviceChoice'); // Show the first step
+
+    // Initial preloader and global script.js from base will handle their parts.
+    // This script is specific to netflix-setup page logic.
 });
