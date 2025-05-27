@@ -40,11 +40,14 @@
          </header>
 
         <main class="netflix-setup-main">
-            <div class="netflix-background"></div>
-            <div class="access-gate-container active" id="accessGate">
+            <video autoplay muted loop id="background-video">
+                <source src="background-video.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+            <div class="netflix-background"></div> <div class="access-gate-container active" id="accessGate">
                 <div class="access-gate-box">
                     <img src="../logo.png" alt="Cartelug Logo" class="gate-logo">
-                    <h2>Welcome to Cartelug Support</h2>
+                    <h2>Welcome to Access Cartelug</h2>
                     <p>Please enter your details to access the Netflix setup guide.</p>
                     <form id="gateForm">
                         <div class="gate-input-group">
