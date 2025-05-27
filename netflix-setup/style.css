@@ -1,351 +1,328 @@
-/* === Netflix Setup Page Styles (netflix-setup/style.css) === */
+/* === Interactive Netflix Setup Page Styles === */
 
-:root {
-    --dark-bg: #0e0e0e;
-    --card-bg: #1a1a1a;
-    --card-border: rgba(255, 255, 255, 0.1);
-    --text-light: #ffffff;
-    --text-medium: #bbbbbb;
-    --cta-blue: #007bff;
-    --cta-blue-hover: #0056d2;
-    --whatsapp-green: #25d366;
-    --spotify-green: #1db954;
-}
-
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: var(--dark-bg);
-}
-
-/* Layout Containers */
-.setup-main {
-    flex-grow: 1;
-}
-
-.setup-section {
-    background-color: var(--dark-bg);
-    min-height: calc(100vh - 80px - 150px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 30px 0;
-}
-
-.setup-container {
-    max-width: 800px;
-    width: 95%;
-    background-color: var(--card-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 30px 35px;
-    border-radius: 18px;
-    border: 1px solid var(--card-border);
-    box-shadow: 0 10px 35px rgba(0, 0, 0, 0.3);
+.interactive-setup-container {
+    background-color: var(--card-bg, #1c1c1e);
+    padding: 25px 20px; /* Mobile first padding */
+    border-radius: 20px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--card-border, rgba(255,255,255,0.1));
+    max-width: 700px; /* Max width of the container */
     text-align: center;
 }
 
-/* Titles */
-.setup-title {
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
-    color: #fff;
-    margin-bottom: 10px;
-    font-weight: 700;
+.interactive-setup-container .setup-title {
+    font-size: clamp(1.6rem, 5vw, 2.2rem);
+    margin-bottom: 8px;
 }
-.setup-title::after {
-    display: none;
-}
-.setup-subtitle {
-    font-size: 1.05rem;
-    color: var(--text-medium);
-    margin-bottom: 35px;
+.interactive-setup-container .setup-subtitle {
+    font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+    margin-bottom: 25px;
+    color: var(--text-medium, #b0b0b0);
 }
 
-/* Step Navigation */
-.setup-step {
-    display: none;
-    padding: 15px 0;
-    animation: fadeInStep 0.5s ease-in-out;
-    text-align: left;
+.progress-bar-container {
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    height: 10px;
+    margin-bottom: 8px;
+    overflow: hidden;
 }
-.setup-step.active-step {
+
+.progress-bar {
+    width: 0%; /* Will be updated by JS */
+    height: 100%;
+    background-color: var(--cta-blue, #007AFF);
+    border-radius: 5px;
+    transition: width 0.4s ease-in-out;
+}
+
+.step-counter {
+    font-size: 0.85rem;
+    color: var(--text-medium, #b0b0b0);
+    margin-bottom: 30px;
+    text-align: right;
+}
+
+.interactive-step {
+    display: none;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.15);
+    border-radius: 15px;
+    animation: fadeInStep 0.5s ease-out;
+    border: 1px solid rgba(255,255,255,0.08);
+}
+
+.interactive-step.active {
     display: block;
 }
+
 @keyframes fadeInStep {
-    from { opacity: 0; transform: translateY(15px); }
+    from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-.step-heading {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-light);
+.interactive-step-title {
+    font-size: clamp(1.3rem, 4vw, 1.6rem);
+    color: var(--text-light, #f5f5f7);
     margin-bottom: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
     padding-bottom: 10px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    text-align: center;
 }
 
-.setup-step > p {
-    text-align: center;
-    margin-bottom: 20px;
-    color: var(--text-medium);
+.interactive-step-description {
     font-size: 1rem;
-}
-
-/* Button Group */
-.button-group {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-    margin-top: 25px;
-}
-
-/* Buttons */
-.choice-button,
-.back-button,
-.whatsapp-button-setup {
-    border: none;
-    border-radius: 10px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.choice-button {
-    background-color: var(--cta-blue);
-    color: #fff;
-    padding: 12px 25px;
-    font-size: 1rem;
-    min-width: 180px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
-}
-.choice-button:hover {
-    background-color: var(--cta-blue-hover);
-    transform: translateY(-3px);
-}
-
-.back-button {
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--text-medium);
-    padding: 8px 15px;
-    font-size: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 20px;
-}
-.back-button:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: #fff;
-}
-
-.whatsapp-button-setup {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background-color: var(--whatsapp-green);
-    color: #fff;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-size: 1rem;
-    text-decoration: none;
-    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
-    width: 100%;
-    max-width: 350px;
-    margin: 15px auto 0;
-}
-.whatsapp-button-setup:hover {
-    background-color: #1fbc5d;
-    transform: translateY(-2px);
-}
-.whatsapp-button-setup i {
-    font-size: 1.2em;
-}
-
-/* Instructions */
-.instructions-content {
-    background-color: rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    border-radius: 12px;
-    margin-top: 10px;
-}
-
-.instruction-intro {
-    font-size: 1.15rem;
-    font-weight: 600;
-    color: var(--text-light);
-    margin-bottom: 15px;
-}
-
-.steps-list {
-    list-style: none;
-    padding-left: 0;
+    color: var(--text-medium, #b0b0b0);
     margin-bottom: 25px;
+    line-height: 1.6;
 }
 
-.steps-list li {
+.instruction-visual-placeholder {
+    background-color: rgba(255,255,255,0.05);
+    border-radius: 8px;
+    padding: 30px 15px;
+    margin: 15px auto 20px auto;
+    font-style: italic;
+    color: var(--text-medium, #aaa);
+    font-size: 0.9rem;
+    max-width: 80%;
+    min-height: 80px;
     display: flex;
-    align-items: flex-start;
-    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed rgba(255,255,255,0.2);
+}
+
+.interactive-step p {
+    color: var(--text-medium, #b0b0b0);
     font-size: 1rem;
     line-height: 1.7;
     margin-bottom: 15px;
-    color: var(--text-medium);
 }
-
-.step-emoji {
-    flex-shrink: 0;
-    font-size: 1.2rem;
-    margin-top: 3px;
-    color: var(--text-light);
-}
-
-.step-text {
-    flex: 1;
-    word-break: break-word;
-}
-
-.steps-list strong {
-    color: #fff;
+.interactive-step p strong {
+    color: var(--text-light, #f5f5f7);
     font-weight: 600;
 }
-
-/* Signature */
-.team-signature {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: var(--text-medium);
-    font-weight: 500;
+.important-note {
+    background-color: rgba(255, 224, 130, 0.1); /* Light yellow warning */
+    border-left: 4px solid #ffc107; /* Yellow border */
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin: 15px 0;
+    font-size: 0.95rem;
+}
+.important-note i {
+    margin-right: 8px;
+    color: #ffc107;
 }
 
-/* Credential Layout */
-.credential-wrapper {
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.option-button {
+    background-color: var(--cta-blue, #007AFF);
+    color: #fff;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
     gap: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+.option-button:hover {
+    background-color: var(--cta-blue-hover, #0056b3);
+    transform: translateY(-3px);
+}
+.option-button i {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+.option-button span {
+    font-size: 1.1rem;
+}
+.option-button small {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+.credential-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     background-color: rgba(255, 255, 255, 0.05);
-    padding: 10px;
-    border-radius: 6px;
-    margin: 8px 0;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin: 10px 0 20px 0;
+    border: 1px solid rgba(255,255,255,0.1);
 }
-.credential-wrapper strong {
-    font-family: 'Courier New', monospace;
-    font-size: 1em;
-    color: #E50914;
-    word-break: break-word;
+.credential-display span,
+.credential-display input[type="password"],
+.credential-display input[type="text"] {
+    flex-grow: 1;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.1rem;
+    color: #E50914; /* Netflix Red for credentials */
+    word-break: break-all;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 5px 0;
 }
-.copy-button {
+.credential-display input[type="password"]::placeholder,
+.credential-display input[type="text"]::placeholder {
+    color: rgba(229, 9, 20, 0.7);
+}
+
+.copy-button-interactive, .toggle-password {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    color: var(--text-medium);
-    padding: 6px 10px;
-    border-radius: 5px;
-    font-size: 0.85rem;
+    color: var(--text-medium, #b0b0b0);
+    padding: 8px 10px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
 }
-.copy-button:hover {
+.copy-button-interactive:hover, .toggle-password:hover {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
 }
-.copy-button .fa-check {
-    color: var(--spotify-green);
+.copy-button-interactive .fa-check {
+    color: var(--spotify-green, #1DB954);
 }
 
-/* TV Info Box */
-.tv-type-info {
+.whatsapp-button-interactive {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--whatsapp-green, #25D366);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.2);
+    margin-top: 15px;
+    border: none;
+    cursor: pointer;
+}
+.whatsapp-button-interactive:hover {
+    background-color: #1fbc5d; /* Darker WhatsApp green */
+    transform: translateY(-2px);
+}
+
+.step-navigation {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.nav-button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.nav-button.prev {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--text-light, #f5f5f7);
+    border-color: rgba(255,255,255,0.2);
+}
+.nav-button.prev:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+.nav-button.next {
+    background-color: var(--cta-blue, #007AFF);
+    color: #fff;
+}
+.nav-button.next:hover {
+    background-color: var(--cta-blue-hover, #0056b3);
+    transform: translateY(-2px);
+}
+.nav-button.finish {
+    background-color: var(--spotify-green, #1DB954);
+    color: #fff;
+}
+.nav-button.finish:hover {
+    background-color: #189945; /* Darker Spotify green */
+    transform: translateY(-2px);
+}
+.nav-button i {
+    transition: transform 0.2s ease-in-out;
+}
+.nav-button.next:hover i.fa-arrow-right { transform: translateX(3px); }
+.nav-button.prev:hover i.fa-arrow-left { transform: translateX(-3px); }
+
+
+.tv-type-info-interactive {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+.tv-type-column {
     background-color: rgba(255,255,255,0.03);
     padding: 15px;
     border-radius: 8px;
-    margin-bottom: 25px;
     border: 1px solid rgba(255,255,255,0.08);
 }
-.tv-type-info h4 {
-    color: var(--text-light);
-    font-size: 1.05rem;
+.tv-type-column h4 {
+    color: var(--text-light, #f5f5f7);
+    font-size: 1.1rem;
     margin-bottom: 8px;
+    font-weight: 600;
 }
-.tv-type-info ul {
-    list-style: disc;
-    padding-left: 20px;
-    color: var(--text-medium);
+.tv-type-column h4 i {
+    margin-right: 8px;
+    color: var(--cta-blue, #007AFF);
+}
+.tv-type-column p {
     font-size: 0.9rem;
-}
-.tv-type-info ul li {
-    margin-bottom: 6px;
-}
-
-/* Responsive Fixes */
-@media (min-width: 550px) {
-    .credential-wrapper {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-    }
-    .credential-wrapper strong {
-        margin-bottom: 0;
-        flex-grow: 1;
-    }
-    .copy-button {
-        align-self: center;
-    }
+    line-height: 1.5;
+    margin-bottom: 0;
 }
 
-@media (max-width: 480px) {
-    .setup-container {
-        padding: 20px 15px;
-        width: 100%;
+/* Responsive Adjustments */
+@media (min-width: 600px) {
+    .interactive-setup-container {
+        padding: 35px 40px;
     }
-    .setup-title {
-        font-size: 1.6rem;
+    .options-grid {
+        grid-template-columns: 1fr 1fr; /* Two columns for wider screens */
     }
-    .setup-subtitle {
-        font-size: 0.95rem;
-        margin-bottom: 25px;
+    .tv-type-info-interactive {
+        flex-direction: row; /* Side-by-side columns for TV type info */
     }
-    .step-heading {
-        font-size: 1.25rem;
-    }
-    .button-group {
-        flex-direction: column;
-        gap: 12px;
-    }
-    .choice-button {
-        width: 100%;
-        font-size: 0.95rem;
-        padding: 12px 15px;
-    }
-    .instructions-content {
-        padding: 15px;
-    }
-    .steps-list li {
-        font-size: 0.9rem;
-        margin-bottom: 12px;
-    }
-    .step-emoji {
-        font-size: 1em;
-    }
-    .whatsapp-button-setup {
-        font-size: 0.9rem;
-        padding: 12px 15px;
-    }
-    .whatsapp-button-setup i {
-        font-size: 1.1em;
-    }
-    .tv-type-info h4 {
+    .nav-button {
+        padding: 12px 25px;
         font-size: 1rem;
-    }
-    .tv-type-info ul {
-        font-size: 0.85rem;
     }
 }
