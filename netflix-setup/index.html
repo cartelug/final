@@ -1,186 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Connection Guide - Cartelug</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Netflix Connection Guide – Cartelug</title>
 
-    <link rel="icon" href="../logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="../logo.png">
-    <meta name="robots" content="noindex, nofollow"> <link rel="stylesheet" href="../base.css"> <link rel="stylesheet" href="style.css">   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Favicon / Manifest -->
+    <link rel="icon" href="assets/logo.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/logo.png" />
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Google Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Project Styles -->
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    <!-- ===== HEADER ===== -->
+    <header>
+        <div class="header-inner">
+            <a href="/" aria-label="Cartelug Home"><img src="assets/logo.png" alt="Cartelug logo" class="logo" /></a>
+            <nav aria-label="Primary" id="nav">
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/#services">Services</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                    <li><a href="/renew/">Renew</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-nav-btn" id="navToggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
 
-    <div id="preloader">
-        <img src="../logo.png" alt="Loading..." class="preloader-logo">
-    </div>
+    <!-- ===== MAIN ===== -->
+    <main>
+        <article class="card" id="setupCard" aria-live="polite">
+            <h1>Netflix Connection Guide</h1>
+            <p class="subtitle">Get connected in minutes – just follow the steps below.</p>
 
-    <div class="page-content">
-        <header class="main-header">
-             <div class="container">
-                 <div class="header-content">
-                     <a href="/" class="logo-link">
-                         <img src="../logo.png" alt="Cartelug Logo" id="logo">
-                     </a>
-                     <p class="tagline">Your Expert Streaming Support</p>
-                 </div>
-                 <nav id="main-nav" class="main-nav">
-                      <ul>
-                         <li><a href="/">Home</a></li>
-                         <li><a href="/#services">Services</a></li>
-                         <li><a href="/#about">About</a></li>
-                         <li><a href="/contact/">Contact</a></li>
-                         <li><a href="/renew/">Renew</a></li>
-                      </ul>
-                 </nav>
-                 <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu">
-                     <i class="fas fa-bars"></i>
-                 </button>
-             </div>
-         </header>
-
-        <main class="setup-main">
-            <section class="setup-section section-padding">
-                <div class="container setup-container">
-                    <h1 class="setup-title">Netflix Connection Guide</h1>
-                    <p class="setup-subtitle">Follow these steps to get connected to your Netflix account.</p>
-
-                    <div id="deviceChoiceStep" class="setup-step active-step">
-                        <h2 class="step-heading">Step 1: Select Your Device</h2>
-                        <p>Which device are you connecting Netflix on?</p>
-                        <div class="button-group">
-                            <button class="choice-button" id="btnMobilePC">
-                                <i class="fas fa-mobile-alt"></i> Mobile / PC
-                            </button>
-                            <button class="choice-button" id="btnTV">
-                                <i class="fas fa-tv"></i> TV
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="mobilePCInstructionsStep" class="setup-step">
-                        <button class="back-button" data-target="deviceChoiceStep"><i class="fas fa-arrow-left"></i> Back to Device Choice</button>
-                        <h2 class="step-heading">Mobile / PC Setup</h2>
-                        <div class="instructions-content">
-                            <p class="instruction-intro">How to Start:</p>
-                            <ol class="steps-list">
-                                <li><span class="step-emoji">1️⃣</span> Open the Netflix app or go to netflix.com on your PC.</li>
-                                <li><span class="step-emoji">2️⃣</span> Tap or Click 'Sign In'.</li>
-                                <li>
-                                    <span class="step-emoji">3️⃣</span> Enter Email:
-                                    <div class="credential-wrapper">
-                                        <strong id="netflixEmailDisplayMobile"></strong>
-                                        <button class="copy-button" data-clipboard-target="#netflixEmailDisplayMobile"><i class="far fa-copy"></i> Copy</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="step-emoji">4️⃣</span> Enter Password:
-                                    <div class="credential-wrapper">
-                                        <strong id="netflixPasswordDisplayMobile"></strong>
-                                        <button class="copy-button" data-clipboard-target="#netflixPasswordDisplayMobile"><i class="far fa-copy"></i> Copy</button>
-                                    </div>
-                                </li>
-                               <li><strong>SIGN IN</strong></li>
-                            </ol>
-                            <a href="#" id="whatsappLinkMobile" class="whatsapp-button-setup" target="_blank">
-                                <i class="fab fa-whatsapp"></i> Message Us on WhatsApp for your PROFILE& PIN.
-                            </a>
-                            <p class="team-signature">– Accessug Team ✅</p>
-                        </div>
-                    </div>
-
-                    <div id="tvTypeChoiceStep" class="setup-step">
-                        <button class="back-button" data-target="deviceChoiceStep"><i class="fas fa-arrow-left"></i> Back to Device Choice</button>
-                        <h2 class="step-heading">Step 2: Select Your TV Type</h2>
-                        <p>What type of TV setup do you have?</p>
-                        <div class="tv-type-info">
-                            <h4>How to tell the difference:</h4>
-                            <ul>
-                                <li><strong>Smart TV:</strong> Netflix app is directly on the TV. Has its own app store. Connects directly to internet (Wi-Fi/Cable).</li>
-                                <li><strong>Normal TV:</strong> Netflix app is on a device connected to your TV (e.g., Fire Stick, Mi Stick, Apple TV, PS5, Xbox, Decoder). You use that device's remote for Netflix.</li>
-                            </ul>
-                        </div>
-                        <div class="button-group">
-                            <button class="choice-button" id="btnSmartTV">
-                                <i class="fas fa-brain"></i> Smart TV
-                            </button>
-                            <button class="choice-button" id="btnNormalTV">
-                                <i class="fas fa-plug"></i> Normal TV (with connected device)
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="normalTVInstructionsStep" class="setup-step">
-                        <button class="back-button" data-target="tvTypeChoiceStep"><i class="fas fa-arrow-left"></i> Back to TV Type</button>
-                        <h2 class="step-heading">Normal TV (with connected device) Setup</h2>
-                        <div class="instructions-content">
-                            <p class="instruction-intro">How to Start:</p>
-                            <ol class="steps-list">
-                                <li><span class="step-emoji">1️⃣</span> Open the Netflix app on your connected device (e.g., Fire Stick, Console, Decoder).</li>
-                                <li><span class="step-emoji">2️⃣</span> Select 'Sign In'.</li>
-                                <li>
-                                    <span class="step-emoji">3️⃣</span> Enter Email:
-                                    <div class="credential-wrapper">
-                                        <strong id="netflixEmailDisplayNormalTV"></strong>
-                                        <button class="copy-button" data-clipboard-target="#netflixEmailDisplayNormalTV"><i class="far fa-copy"></i> Copy</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="step-emoji">4️⃣</span> Enter Password:
-                                    <div class="credential-wrapper">
-                                        <strong id="netflixPasswordDisplayNormalTV"></strong>
-                                        <button class="copy-button" data-clipboard-target="#netflixPasswordDisplayNormalTV"><i class="far fa-copy"></i> Copy</button>
-                                    </div>
-                                </li>
-                                <li><span class="step-emoji">5️⃣</span> When you reach the <b>"Who’s Watching?"</b> screen. Message us on WhatsApp for your PIN </li>
-                            </ol>
-                            <a href="#" id="whatsappLinkNormalTV" class="whatsapp-button-setup" target="_blank">
-                                <i class="fab fa-whatsapp"></i> Message Us on WhatsApp for PIN
-                            </a>
-                            <p class="team-signature">– Accessug Team ✅</p>
-                        </div>
-                    </div>
-
-<div id="smartTVInstructionsStep" class="setup-step">
-    <button class="back-button" data-target="tvTypeChoiceStep"><i class="fas fa-arrow-left"></i> Back to TV Type</button>
-    <h2 class="step-heading">Smart TV Setup</h2>
-    <div class="instructions-content">
-        <p class="instruction-intro">Easy Steps:</p>
-        <ol class="steps-list">
-            <li><span class="step-emoji">1️⃣</span> On your Smart TV, open Netflix & select <strong>'Sign In'</strong>.</li>
-            <li><span class="step-emoji">2️⃣</span> Look for an option like <strong> "Use Phone" </strong> This will display a <strong> CODE </strong> on your TV.</li>
-            <li><span class="step-emoji">3️⃣</span> <strong> Code Displayed? </strong> Take a clear picture of the numbers shown on your TV screen.</li>
-            <li><span class="step-emoji">4️⃣</span> Send the picture to us on WhatsApp. We’ll help you complete the sign-in.</li>
-        </ol>
-        <a href="#" id="whatsappLinkSmartTV" class="whatsapp-button-setup" target="_blank">
-            <i class="fab fa-whatsapp"></i> Send TV Code via WhatsApp
-        </a>
-        <p class="team-signature">– Accessug Team ✅</p>
-    </div>
-</div>
+            <!-- STEP 1 – DEVICE CHOICE -->
+            <section class="step active" id="step-device">
+                <h2 class="step-title">Step 1 – Choose Your Device</h2>
+                <div class="btn-row">
+                    <button class="btn" data-next="step-mobile"><i class="fas fa-mobile-alt"></i> Mobile / PC</button>
+                    <button class="btn" data-next="step-tv-type"><i class="fas fa-tv"></i> TV</button>
                 </div>
             </section>
-        </main>
 
-        <footer class="main-footer">
-             <div class="container">
-                 <div class="footer-content">
-                     <div class="footer-links">
-                         <a href="../privacy-policy/">Privacy Policy</a> | <a href="../terms-of-service/">Terms of Service</a> | <a href="../contact/">Contact Us</a>
-                    </div>
-                    <div class="payment-info">
-                        <p>Secure Payments Accepted via Mobile Money:</p>
-                        <div class="payment-logos">
-                            <img src="../mtn.png" alt="MTN Mobile Money" class="payment-logo">
-                            <img src="../airtel.png" alt="Airtel Money" class="payment-logo">
-                        </div>
-                    </div>
-                    <p class="copyright">&copy; <span id="year"></span> Cartelug. All Rights Reserved.</p>
-                 </div>
+            <!-- STEP 2A – MOBILE / PC -->
+            <section class="step" id="step-mobile">
+                <button class="back-btn" data-back="step-device"><i class="fas fa-arrow-left"></i> Back</button>
+                <h2 class="step-title">Mobile / PC Setup</h2>
+                <ol class="steps">
+                    <li><span class="emoji">1️⃣</span> Open Netflix (app or <strong>netflix.com</strong>).</li>
+                    <li><span class="emoji">2️⃣</span> Tap / click <strong>Sign In</strong>.</li>
+                    <li><span class="emoji">3️⃣</span> Email:
+                        <span class="cred"><code id="emailM"></code>
+                            <button class="copy" data-copy="emailM"><i class="far fa-copy"></i> Copy</button></span>
+                    </li>
+                    <li><span class="emoji">4️⃣</span> Password:
+                        <span class="cred"><code id="passM"></code>
+                            <button class="copy" data-copy="passM"><i class="far fa-copy"></i> Copy</button></span>
+                    </li>
+                    <li><span class="emoji">5️⃣</span> On <strong>“Who’s Watching?”</strong> hit the button below for your PIN.</li>
+                </ol>
+                <a class="wa-btn" id="waMobile" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Message us for PIN</a>
+                <p class="sig">– Accessug Team ✅</p>
+            </section>
+
+            <!-- STEP 2B – TV TYPE CHOICE -->
+            <section class="step" id="step-tv-type">
+                <button class="back-btn" data-back="step-device"><i class="fas fa-arrow-left"></i> Back</button>
+                <h2 class="step-title">Step 2 – Select Your TV Type</h2>
+                <div class="info-box">
+                    <h3>Need help deciding?</h3>
+                    <ul>
+                        <li><strong>Smart TV</strong> – Netflix app built‑in, connects to Wi‑Fi.</li>
+                        <li><strong>Normal TV</strong> – Uses a device (Fire Stick, console, decoder…).</li>
+                    </ul>
+                </div>
+                <div class="btn-row">
+                    <button class="btn" data-next="step-smart"><i class="fas fa-brain"></i> Smart TV</button>
+                    <button class="btn" data-next="step-normal"><i class="fas fa-plug"></i> Normal TV</button>
+                </div>
+            </section>
+
+            <!-- STEP 3A – NORMAL TV -->
+            <section class="step" id="step-normal">
+                <button class="back-btn" data-back="step-tv-type"><i class="fas fa-arrow-left"></i> Back</button>
+                <h2 class="step-title">Normal TV Setup</h2>
+                <ol class="steps">
+                    <li><span class="emoji">1️⃣</span> Open Netflix on your device (Fire Stick, console, decoder…).</li>
+                    <li><span class="emoji">2️⃣</span> Select <strong>Sign In</strong>.</li>
+                    <li><span class="emoji">3️⃣</span> Email:
+                        <span class="cred"><code id="emailN"></code>
+                            <button class="copy" data-copy="emailN"><i class="far fa-copy"></i> Copy</button></span>
+                    </li>
+                    <li><span class="emoji">4️⃣</span> Password:
+                        <span class="cred"><code id="passN"></code>
+                            <button class="copy" data-copy="passN"><i class="far fa-copy"></i> Copy</button></span>
+                    </li>
+                    <li><span class="emoji">5️⃣</span> On <strong>“Who’s Watching?”</strong> tap below for your PIN.</li>
+                </ol>
+                <a class="wa-btn" id="waNormal" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Message us for PIN</a>
+                <p class="sig">– Accessug Team ✅</p>
+            </section>
+
+            <!-- STEP 3B – SMART TV -->
+            <section class="step" id="step-smart">
+                <button class="back-btn" data-back="step-tv-type"><i class="fas fa-arrow-left"></i> Back</button>
+                <h2 class="step-title">Smart TV Setup</h2>
+                <ol class="steps">
+                    <li><span class="emoji">1️⃣</span> Open Netflix ➜ <strong>Sign In</strong>.</li>
+                    <li><span class="emoji">2️⃣</span> Select <strong>“Use Phone”</strong> (or similar). A code appears.</li>
+                    <li><span class="emoji">3️⃣</span> Take a clear photo of the code.</li>
+                    <li><span class="emoji">4️⃣</span> Send it to us via WhatsApp – we’ll finish setup for you.</li>
+                </ol>
+                <a class="wa-btn" id="waSmart" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Send TV code</a>
+                <p class="sig">– Accessug Team ✅</p>
+            </section>
+        </article>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-links">
+                <a href="/privacy-policy/">Privacy Policy</a> |
+                <a href="/terms-of-service/">Terms of Service</a> |
+                <a href="/contact/">Contact Us</a>
             </div>
-        </footer>
-    </div>
+            <div>
+                Secure payments via Mobile Money
+                <div class="pay-logos"><img src="assets/mtn.png" alt="MTN Mobile Money" /><img src="assets/airtel.png" alt="Airtel Money" /></div>
+            </div>
+            <small>© <span id="year"></span> Cartelug. All rights reserved.</small>
+        </div>
+    </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
-    <script src="../script.js"></script> <script src="script.js"></script>    </body>
+    <!-- Project JS -->
+    <script src="script.js" defer></script>
+</body>
 </html>
