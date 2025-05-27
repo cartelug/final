@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         } else { // Initial device choice step
             pathSteps = [steps[0]];
             visibleStepIndexInPath = 0;
-            totalVisibleStepsInPath = 1; // Only this step is considered initially
+            totalVisibleStepsInPath = 1; // Only this step is considered first
         }
         
         const progressPercentage = totalVisibleStepsInPath > 1 ? ((visibleStepIndexInPath) / (totalVisibleStepsInPath -1)) * 100 : 0;
