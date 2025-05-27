@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             case 'initialDeviceChoice':
                 html = `
                     <div class="instruction-step active">
-                        <h2>Hi ${userName || 'there'}! Which device are you using?</h2>
+                        <h2>Hi ${userName || 'there'}! Which device are you putting the Netflix on?</h2>
                         <div class="device-options">
                             <button class="device-option-button" data-next="phonePcStep1"><i class="fas fa-mobile-alt"></i> Phone / PC</button>
                             <button class="device-option-button" data-next="tvTypeChoice"><i class="fas fa-tv"></i> TV</button>
@@ -149,10 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="instruction-step active">
                         <h2>Smart TV: Sign In with Code</h2>
                         <p>1. On your Smart TV, open Netflix & select <strong>'Sign In'</strong>.</p>
-                        <p>2. Look for an option like <strong>"Use Phone"</strong>, <strong>"Sign in from Web"</strong>, or <strong>"Use Another Device"</strong>. This will display a <strong>CODE</strong> on your TV screen.</p>
+                        <p>2. Look for an option like <strong>"Use Phone"</strong>. This will display a <strong>CODE</strong> on your TV screen.</p>
                         <p class="important-text"><strong>No code option?</strong> If your TV only shows fields for email/password, please go back and select "Normal TV" setup.</p>
-                        <p>3. If a CODE is displayed, take a clear picture of it.</p>
-                        <p>4. Send the picture of the code to us on WhatsApp. We'll help you complete the sign-in.</p>
+                        <p>3. If a <strong>CODE</strong> is displayed, take a clear picture of it.</p>
+                        <p>4. Send the picture of the numbers to us on WhatsApp. We'll help you complete the sign-in.</p>
                         <a href="https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(smartTvCodeMessage)}" target="_blank" class="whatsapp-link-netflix">
                             <i class="fab fa-whatsapp"></i> Send TV Code via WhatsApp
                         </a>
