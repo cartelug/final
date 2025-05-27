@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Connection Guide - Cartelug</title>
-
+    <title>Netflix Connection Portal - Cartelug</title>
     <link rel="icon" href="../logo.png" type="image/png">
     <link rel="apple-touch-icon" href="../logo.png">
-    <meta name="robots" content="noindex, nofollow"> <link rel="stylesheet" href="../base.css"> <link rel="stylesheet" href="style.css">   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../base.css"> <link rel="stylesheet" href="style.css">   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&display=swap" rel="stylesheet"> </head>
 <body>
 
     <div id="preloader">
         <img src="../logo.png" alt="Loading..." class="preloader-logo">
     </div>
 
-    <div class="page-content">
+    <div class="page-content-netflix-setup">
         <header class="main-header">
              <div class="container">
                  <div class="header-content">
@@ -39,217 +39,31 @@
              </div>
          </header>
 
-  <main class="setup-main">
-    <section class="setup-section section-padding">
-        <div class="container setup-container interactive-setup-container">
-            <h1 class="setup-title">Netflix Connection Guide</h1>
-            <p class="setup-subtitle">Let's get you connected! Follow these interactive steps.</p>
-
-            <div class="progress-bar-container">
-                <div class="progress-bar"></div>
-            </div>
-            <div class="step-counter">Step <span id="current-step-number">1</span> of <span id="total-step-number">X</span></div>
-
-            <div class="interactive-step active" data-step-id="initialDeviceChoice">
-                <h2 class="interactive-step-title">What are you using?</h2>
-                <p class="interactive-step-description">Select the type of device you're setting up Netflix on.</p>
-                <div class="options-grid">
-                    <button class="option-button" data-next-step="mobilePcPath_step1" data-path="mobile">
-                        <i class="fas fa-mobile-alt"></i>
-                        <span>Mobile / PC</span>
-                        <small>Phone, Tablet, PC </small>
-                    </button>
-                    <button class="option-button" data-next-step="tvPath_typeChoice" data-path="tv">
-                        <i class="fas fa-tv"></i>
-                        <span>Television (TV)</span>
-                        <small>Smart TV or TV with a connected device</small>
-                    </button>
+        <main class="netflix-setup-main">
+            <div class="netflix-background"></div>
+            <div class="access-gate-container active" id="accessGate">
+                <div class="access-gate-box">
+                    <img src="../logo.png" alt="Cartelug Logo" class="gate-logo">
+                    <h2>Welcome to Cartelug Support</h2>
+                    <p>Please enter your details to access the Netflix setup guide.</p>
+                    <form id="gateForm">
+                        <div class="gate-input-group">
+                            <input type="text" id="userName" placeholder="Your Name" required>
+                            <label for="userName">Your Name</label>
+                        </div>
+                        <div class="gate-input-group">
+                            <input type="password" id="accessCode" placeholder="Accessug Code" required>
+                            <label for="accessCode">Accessug Code</label>
+                        </div>
+                        <button type="submit" class="gate-button">Enter Guide</button>
+                        <p id="gateError" class="gate-error-message"></p>
+                    </form>
                 </div>
             </div>
 
-            <div class="interactive-step" data-step-id="mobilePcPath_step1">
-                <h2 class="interactive-step-title">Mobile/PC: Open Netflix</h2>
-                <div class="instruction-visual-placeholder">[Optional: Image/GIF of Netflix app icon or website]</div>
-                <p>Open the Netflix app on your device, or go to <strong>netflix.com</strong> in your web browser.</p>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="initialDeviceChoice"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="mobilePcPath_step2">Next <i class="fas fa-arrow-right"></i></button>
+            <div class="netflix-instructions-container" id="netflixInstructions" style="display: none;">
                 </div>
-            </div>
-
-            <div class="interactive-step" data-step-id="mobilePcPath_step2">
-                <h2 class="interactive-step-title">Mobile/PC: Sign In</h2>
-                <div class="instruction-visual-placeholder">[Optional: Image/GIF of Sign In button]</div>
-                <p>Tap or click the <strong>'Sign In'</strong> button.</p>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="mobilePcPath_step1"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="mobilePcPath_step3_email">Next <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-
-            <div class="interactive-step" data-step-id="mobilePcPath_step3_email">
-                <h2 class="interactive-step-title">Mobile/PC: Enter Email</h2>
-                <p>Enter the following email address:</p>
-                <div class="credential-display">
-                    <span id="mp_netflix_email_static"></span>
-                    <button class="copy-button-interactive" data-clipboard-target="#mp_netflix_email_static"><i class="far fa-copy"></i> Copy</button>
-                </div>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="mobilePcPath_step2"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="mobilePcPath_step4_password">Next <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-
-            <div class="interactive-step" data-step-id="mobilePcPath_step4_password">
-                <h2 class="interactive-step-title">Mobile/PC: Enter Password</h2>
-                <p>Now, enter the password:</p>
-                <div class="credential-display">
-                    <input type="password" id="mp_netflix_password_static_input" value="" readonly>
-                    <button class="toggle-password"><i class="fas fa-eye"></i></button>
-                    <button class="copy-button-interactive" data-clipboard-text-from-input="#mp_netflix_password_static_input"><i class="far fa-copy"></i> Copy</button>
-                </div>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="mobilePcPath_step3_email"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="mobilePcPath_step5_pin">Next <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-            
-            <div class="interactive-step" data-step-id="mobilePcPath_step5_pin">
-                <h2 class="interactive-step-title">Mobile/PC: Get Your PIN</h2>
-                <div class="instruction-visual-placeholder">[Optional: Image/GIF of "Who's Watching?" screen]</div>
-                <p>You should now see the "Who's Watching?" screen. <strong>STOP HERE!</strong></p>
-                <p>You need a PIN to select your profile and start watching. Message us on WhatsApp to get your unique PIN.</p>
-                <a href="#" id="mp_whatsappLink" class="whatsapp-button-interactive" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Message for PIN
-                </a>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="mobilePcPath_step4_password"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button finish" data-next-step="initialDeviceChoice"><i class="fas fa-check-circle"></i> Start Over / Done</button>
-                </div>
-            </div>
-
-            <div class="interactive-step" data-step-id="tvPath_typeChoice">
-                <h2 class="interactive-step-title">TV Setup: What type of TV?</h2>
-                <div class="tv-type-info-interactive">
-                    <div class="tv-type-column">
-                        <h4><i class="fas fa-brain"></i> Smart TV</h4>
-                        <p>Netflix app is directly on the TV. Has an app store. Connects directly to the internet.</p>
-                    </div>
-                    <div class="tv-type-column">
-                        <h4><i class="fas fa-plug"></i> Normal TV</h4>
-                        <p>Netflix is on a device connected to your TV (e.g., Fire Stick, Console, Decoder).</p>
-                    </div>
-                </div>
-                <div class="options-grid">
-                    <button class="option-button" data-next-step="smartTvPath_step1">
-                        <i class="fas fa-brain"></i>
-                        <span>I have a Smart TV</span>
-                    </button>
-                    <button class="option-button" data-next-step="normalTvPath_step1">
-                        <i class="fas fa-plug"></i>
-                        <span>I have a Normal TV</span>
-                        <small>(with a connected device)</small>
-                    </button>
-                </div>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="initialDeviceChoice"><i class="fas fa-arrow-left"></i> Back to Device Choice</button>
-                </div>
-            </div>
-
-            <div class="interactive-step" data-step-id="normalTvPath_step1">
-                <h2 class="interactive-step-title">Normal TV: Open Netflix</h2>
-                <p>On your connected device (e.g., Fire Stick, Console), open the Netflix app.</p>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="tvPath_typeChoice"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="normalTvPath_step2">Next <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-            <div class="interactive-step" data-step-id="normalTvPath_step2">
-                <h2 class="interactive-step-title">Normal TV: Sign In</h2>
-                <p>Select the <strong>'Sign In'</strong> option.</p>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="normalTvPath_step1"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="normalTvPath_step3_email">Next <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-             <div class="interactive-step" data-step-id="normalTvPath_step3_email">
-                <h2 class="interactive-step-title">Normal TV: Enter Email</h2>
-                <p>Use your remote to enter this email:</p>
-                <div class="credential-display">
-                    <span id="nt_netflix_email_static"></span>
-                    <button class="copy-button-interactive" data-clipboard-target="#nt_netflix_email_static"><i class="far fa-copy"></i> Copy (for reference)</button>
-                </div>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="normalTvPath_step2"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="normalTvPath_step4_password">Next <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-            <div class="interactive-step" data-step-id="normalTvPath_step4_password">
-                <h2 class="interactive-step-title">Normal TV: Enter Password</h2>
-                <p>Now, enter the password:</p>
-                 <div class="credential-display">
-                    <span id="nt_netflix_password_static"></span>
-                     <button class="copy-button-interactive" data-clipboard-target="#nt_netflix_password_static"><i class="far fa-copy"></i> Copy (for reference)</button>
-                </div>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="normalTvPath_step3_email"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="normalTvPath_step5_pin">Next <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-            <div class="interactive-step" data-step-id="normalTvPath_step5_pin">
-                <h2 class="interactive-step-title">Normal TV: Get Your PIN</h2>
-                <p>When you reach the <strong>"Who’s Watching?"</strong> screen, <strong>STOP!</strong> Message us on WhatsApp for your PIN to continue.</p>
-                <a href="#" id="nt_whatsappLink" class="whatsapp-button-interactive" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Message for PIN
-                </a>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="normalTvPath_step4_password"><i class="fas fa-arrow-left"></i> Back</button>
-                     <button class="nav-button finish" data-next-step="initialDeviceChoice"><i class="fas fa-check-circle"></i> Start Over / Done</button>
-                </div>
-            </div>
-
-            <div class="interactive-step" data-step-id="smartTvPath_step1">
-                <h2 class="interactive-step-title">Smart TV: Open Netflix & Sign In</h2>
-                <div class="instruction-visual-placeholder">[Optional: Image/GIF of Smart TV Netflix app and Sign In button]</div>
-                <p>On your Smart TV, open the Netflix app and select <strong>'Sign In'</strong>.</p>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="tvPath_typeChoice"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="smartTvPath_step2">Next <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-            <div class="interactive-step" data-step-id="smartTvPath_step2">
-                <h2 class="interactive-step-title">Smart TV: Look for Code Option</h2>
-                <div class="instruction-visual-placeholder">[Optional: Image/GIF of "Use Phone" or "Sign in from Web" option]</div>
-                <p>Look for an option like <strong>"Use Phone"</strong>, <strong>"Sign in from Web"</strong>, or <strong>"Use Another Device"</strong>. Selecting this should display a <strong>CODE</strong> on your TV screen.</p>
-                <p class="important-note"><i class="fas fa-exclamation-triangle"></i> <strong>No code option?</strong> If your TV only shows fields to type an email and password directly, use the 'Back' button above, then choose "Normal TV" setup.</p>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="smartTvPath_step1"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="smartTvPath_step3_picture">Next (if code shows) <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-             <div class="interactive-step" data-step-id="smartTvPath_step3_picture">
-                <h2 class="interactive-step-title">Smart TV: Picture Time!</h2>
-                <div class="instruction-visual-placeholder">[Optional: Image/GIF of a TV screen with a code]</div>
-                <p>If a <strong>CODE</strong> (numbers or letters) is displayed on your TV, take a clear picture of it.</p>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="smartTvPath_step2"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button next" data-next-step="smartTvPath_step4_whatsapp">Next <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </div>
-            <div class="interactive-step" data-step-id="smartTvPath_step4_whatsapp">
-                <h2 class="interactive-step-title">Smart TV: Send Code via WhatsApp</h2>
-                <p>Send the picture of the code to us on WhatsApp. We'll help you complete the sign-in.</p>
-                 <a href="#" id="st_whatsappLink" class="whatsapp-button-interactive" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Send TV Code
-                </a>
-                <div class="step-navigation">
-                    <button class="nav-button prev" data-prev-step="smartTvPath_step3_picture"><i class="fas fa-arrow-left"></i> Back</button>
-                    <button class="nav-button finish" data-next-step="initialDeviceChoice"><i class="fas fa-check-circle"></i> Start Over / Done</button>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
+        </main>
 
         <footer class="main-footer">
              <div class="container">
@@ -271,5 +85,5 @@
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
-    <script src="../script.js"></script> <script src="script.js"></script>    </body>
+    <script src="../script.js"></script> <script src="script.js"></script>   </body>
 </html>
