@@ -7,9 +7,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const backToOptionsButton = document.getElementById('backToOptionsButton');
     const whatsappHelpLink = document.getElementById('whatsappHelpLink');
 
-    const YOUR_WHATSAPP_NUMBER = "256762193386"; // Your WhatsApp number here
+    // Log if elements are found
+    console.log("emailOptionButtons:", emailOptionButtons.length > 0 ? emailOptionButtons : "NOT FOUND");
+    console.log("instructionDetailsContainer:", instructionDetailsContainer || "NOT FOUND");
+    console.log("emailOptionSelectionContainer:", emailOptionSelectionContainer || "NOT FOUND");
+    console.log("instructionTitle:", instructionTitle || "NOT FOUND");
+    console.log("gmailAppInstructionsList:", gmailAppInstructionsList || "NOT FOUND");
+    console.log("backToOptionsButton:", backToOptionsButton || "NOT FOUND");
+    console.log("whatsappHelpLink:", whatsappHelpLink || "NOT FOUND");
+
+
+    const YOUR_WHATSAPP_NUMBER = "256762193386"; 
     if (whatsappHelpLink) {
         whatsappHelpLink.href = `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=I%20need%20help%20with%20the%20Netflix%20email%20viewer%20setup.`;
+        console.log("WhatsApp link updated.");
+    } else {
+        console.error("WhatsApp help link element not found!");
     }
 
     const instructionsData = {
@@ -29,68 +42,98 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function populateInstructions(emailAddress) {
         if (!gmailAppInstructionsList) {
-            console.error("gmailAppInstructionsList element not found!");
+            console.error("CRITICAL: gmailAppInstructionsList element not found in populateInstructions!");
             return;
         }
+        console.log(`Populating instructions for: ${emailAddress}`);
         gmailAppInstructionsList.innerHTML = '';
         instructionsData.gmailApp.forEach(step => {
             const li = document.createElement('li');
             li.innerHTML = step.replace(/{EMAIL}/g, emailAddress);
             gmailAppInstructionsList.appendChild(li);
         });
+        console.log("Instructions populated.");
     }
 
-    // Check if all critical elements are found
-    if (!emailOptionSelectionContainer) console.error("Element with ID 'emailOptionSelection' not found.");
-    if (!instructionDetailsContainer) console.error("Element with ID 'instructionDetails' not found.");
-    if (!instructionTitle) console.error("Element with ID 'instructionTitle' not found.");
-    if (emailOptionButtons.length === 0) console.error("No elements with class 'email-option-button' found.");
+    if (emailOptionButtons.length > 0) {
+        emailOptionButtons.forEach((button, index) => {
+            console.log(`Attaching listener to 'Email Source' button ${index + 1}`);
+            button.addEventListener('click', () => {
+                console.log(`'Email Source' button ${button.dataset.option} clicked. Email: ${button.dataset.email}`);
 
+                if (!instructionDetailsContainer || !emailOptionSelectionContainer || !instructionTitle) {
+                    console.error("CRITICAL: Essential container elements missing in button click handler.");
+                    alert("Page error: UI elements missing. Please contact support.");
+                    return;
+                }
+                console.log("Containers verified in click handler.");
 
-    emailOptionButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            if (!instructionDetailsContainer || !emailOptionSelectionContainer || !instructionTitle) {
-                console.error("One or more essential containers for switching views are missing.");
-                return;
-            }
+                emailOptionButtons.forEach(btn => btn.classList.remove('active-option'));
+                button.classList.add('active-option');
 
-            emailOptionButtons.forEach(btn => btn.classList.remove('active-option'));
-            button.classList.add('active-option');
+                const selectedEmail = button.dataset.email;
+                const selectedOption = button.dataset.option;
 
-            const selectedEmail = button.dataset.email;
-            const selectedOption = button.dataset.option;
+                instructionTitle.textContent = `Setup for: ${selectedEmail}`;
+                populateInstructions(selectedEmail);
 
-            instructionTitle.textContent = `Setup for: ${selectedEmail}`;
-            populateInstructions(selectedEmail);
-
-            emailOptionSelectionContainer.style.display = 'none';
-            instructionDetailsContainer.style.display = 'block';
-            
-            // Scroll into view smoothly
-            instructionDetailsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
-
-    if (backToOptionsButton) {
-        backToOptionsButton.addEventListener('click', () => {
-            if (!instructionDetailsContainer || !emailOptionSelectionContainer) {
-                console.error("One or more essential containers for switching views are missing for 'back' button.");
-                return;
-            }
-            instructionDetailsContainer.style.display = 'none';
-            emailOptionSelectionContainer.style.display = 'grid'; // Assuming it was grid
-            emailOptionButtons.forEach(btn => btn.classList.remove('active-option'));
-            emailOptionSelectionContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                console.log("Attempting to show instructionDetailsContainer and hide emailOptionSelectionContainer.");
+                emailOptionSelectionContainer.style.display = 'none';
+                instructionDetailsContainer.style.display = 'block';
+                
+                // For animations (ensure classes are defined in CSS)
+                emailOptionSelectionContainer.classList.remove('fade-in-slide-up');
+                emailOptionSelectionContainer.classList.add('fade-out-rýchlo');
+                instructionDetailsContainer.classList.remove('fade-out-rýchlo');
+                instructionDetailsContainer.classList.add('fade-in-slide-up');
+                
+                console.log(`emailOptionSelectionContainer display: ${getComputedStyle(emailOptionSelectionContainer).display}`);
+                console.log(`instructionDetailsContainer display: ${getComputedStyle(instructionDetailsContainer).display}`);
+                
+                if (instructionDetailsContainer.style.display === 'block') {
+                    console.log("Scrolling instructionDetailsContainer into view.");
+                    instructionDetailsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                     console.warn("instructionDetailsContainer not 'block' after trying to set it; scroll might not work as expected.");
+                }
+            });
         });
     } else {
-        console.error("Element with ID 'backToOptionsButton' not found.");
+        console.error("No 'email-option-button' elements found to attach listeners.");
     }
 
-    // The animation styles previously injected via JS should be in your style.css
-    // If you want the fade/slide animations, ensure these classes and @keyframes are in your style.css:
-    // .fade-in-slide-up { animation: fadeInSlideUp 0.5s ease-out forwards; }
-    // .fade-out-rýchlo { animation: fadeOutRýchlo 0.25s ease-out forwards !important; }
-    // @keyframes fadeInSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    // @keyframes fadeOutRýchlo { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
-    // .email-option-button.active-option { transform: translateY(-5px) scale(1.05); /* ... existing shadow */ }
+    if (backToOptionsButton) {
+        console.log("Attaching listener to backToOptionsButton.");
+        backToOptionsButton.addEventListener('click', () => {
+            console.log("'Back To Options' button clicked.");
+            if (!instructionDetailsContainer || !emailOptionSelectionContainer) {
+                console.error("CRITICAL: Essential container elements missing for 'back' button handler.");
+                alert("Page error: UI elements missing for back navigation. Please contact support.");
+                return;
+            }
+            console.log("Containers verified for back button.");
+
+            instructionDetailsContainer.style.display = 'none';
+            emailOptionSelectionContainer.style.display = 'grid'; // Or 'block' if that's your intended default
+            
+            // For animations
+            instructionDetailsContainer.classList.remove('fade-in-slide-up');
+            instructionDetailsContainer.classList.add('fade-out-rýchlo');
+            emailOptionSelectionContainer.classList.remove('fade-out-rýchlo');
+            emailOptionSelectionContainer.classList.add('fade-in-slide-up');
+
+            console.log(`instructionDetailsContainer display (after back): ${getComputedStyle(instructionDetailsContainer).display}`);
+            console.log(`emailOptionSelectionContainer display (after back): ${getComputedStyle(emailOptionSelectionContainer).display}`);
+
+            emailOptionButtons.forEach(btn => btn.classList.remove('active-option'));
+            if (emailOptionSelectionContainer.style.display === 'grid' || emailOptionSelectionContainer.style.display === 'block') {
+                console.log("Scrolling emailOptionSelectionContainer into view.");
+                emailOptionSelectionContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                console.warn("emailOptionSelectionContainer not visible after trying to set it; scroll might not work.");
+            }
+        });
+    } else {
+        console.error("Element with ID 'backToOptionsButton' not found. Back functionality will be unavailable.");
+    }
 });
