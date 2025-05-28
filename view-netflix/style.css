@@ -48,7 +48,7 @@ body {
 
 .view-emails-title {
     text-align: center;
-    font-size: clamp(1.8rem, 6vw, 2.6rem); /* Slightly adjusted clamp for mobile */
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
     color: var(--theme-light);
     margin-bottom: 15px;
     font-weight: 700;
@@ -57,9 +57,9 @@ body {
 
 .view-emails-subtitle {
     text-align: center;
-    font-size: clamp(0.95rem, 3vw, 1.15rem); /* Slightly adjusted clamp for mobile */
+    font-size: clamp(0.95rem, 3vw, 1.15rem);
     color: var(--theme-text-muted);
-    margin-bottom: 35px; /* Adjusted margin for mobile */
+    margin-bottom: 35px; 
     line-height: 1.6;
     max-width: 700px;
     margin-left: auto;
@@ -68,8 +68,8 @@ body {
 
 .email-options-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Min width for buttons */
-    gap: 20px; /* Adjusted gap */
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); 
+    gap: 20px; 
     margin-bottom: 35px;
     perspective: 1000px; 
 }
@@ -78,7 +78,7 @@ body {
     background: linear-gradient(135deg, var(--theme-primary), var(--theme-primary-hover));
     color: #fff;
     border: none;
-    padding: 20px 22px; /* Adjusted padding */
+    padding: 20px 22px; 
     border-radius: var(--border-radius-sm);
     font-weight: 600;
     cursor: pointer;
@@ -98,7 +98,7 @@ body {
 }
 
 .email-option-button i {
-    font-size: clamp(1.8rem, 5vw, 2.2rem); /* Responsive icon size */
+    font-size: clamp(1.8rem, 5vw, 2.2rem); 
     margin-bottom: 10px;
     background: -webkit-linear-gradient(var(--gradient-start), var(--gradient-end));
     -webkit-background-clip: text;
@@ -107,13 +107,13 @@ body {
 }
 
 .email-option-button span {
-    font-size: clamp(1.1rem, 3.5vw, 1.25rem); /* Responsive text size */
+    font-size: clamp(1.1rem, 3.5vw, 1.25rem); 
     display: block;
     letter-spacing: 0.5px;
 }
 
 .email-option-button small {
-    font-size: clamp(0.8rem, 2.5vw, 0.85rem); /* Responsive small text */
+    font-size: clamp(0.8rem, 2.5vw, 0.85rem); 
     opacity: 0.9;
     margin-top: 6px;
     font-weight: 400;
@@ -148,7 +148,7 @@ body {
 .modern-button { 
     border: none;
     border-radius: var(--border-radius-sm);
-    padding: 10px 18px; /* Adjusted padding */
+    padding: 10px 18px; 
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition-smooth);
@@ -156,7 +156,7 @@ body {
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    font-size: 0.9rem; /* Adjusted font size */
+    font-size: 0.9rem; 
     box-shadow: 0 3px 8px rgba(0,0,0,0.1);
 }
 .modern-button:hover {
@@ -166,17 +166,17 @@ body {
 .instruction-details-container .back-button.modern-button {
     background: var(--theme-secondary);
     color: var(--theme-light);
-    margin-bottom: 25px; /* Adjusted margin */
+    margin-bottom: 25px; 
 }
 .instruction-details-container .back-button.modern-button:hover {
     background: #5a6268;
 }
 
 .instruction-main-title {
-    font-size: clamp(1.5rem, 5vw, 2rem); /* Adjusted clamp */
+    font-size: clamp(1.5rem, 5vw, 2rem); 
     color: var(--theme-light);
     margin-bottom: 20px;
-    padding-bottom: 12px; /* Adjusted padding */
+    padding-bottom: 12px; 
     border-bottom: 1px solid rgba(255,255,255,0.1);
     text-align: center;
     font-weight: 700;
@@ -185,15 +185,15 @@ body {
 .modern-note { 
     background-color: rgba(255, 255, 255, 0.03);
     border-left: 4px solid; 
-    padding: 15px; /* Adjusted padding */
+    padding: 15px; 
     border-radius: var(--border-radius-sm);
-    margin-bottom: 20px; /* Adjusted margin */
+    margin-bottom: 20px; 
     display: flex;
     align-items: flex-start; 
-    gap: 10px; /* Adjusted gap */
+    gap: 10px; 
 }
 .modern-note i.icon-gradient {
-    font-size: 1.5rem; /* Adjusted icon size */
+    font-size: 1.5rem; 
     margin-top: 2px; 
     background: -webkit-linear-gradient(var(--gradient-start), var(--gradient-end));
     -webkit-background-clip: text;
@@ -202,7 +202,7 @@ body {
 .modern-note p {
     margin: 0;
     color: var(--theme-text-muted);
-    font-size: clamp(0.9rem, 2.5vw, 0.95rem); /* Responsive text */
+    font-size: clamp(0.9rem, 2.5vw, 0.95rem); 
     line-height: 1.6;
 }
 .modern-note strong {
@@ -211,31 +211,32 @@ body {
 }
 
 .important-password-note.modern-note {
-    border-left-color: #ffc107; 
+    border-left-color: #ffc107; /* Yellow for general important notes */
 }
-.important-password-note i.fa-key { 
-    background: none; 
+/* Specific icon color for the exclamation to override gradient if needed */
+.important-password-note i.fa-exclamation-circle {
+    background: none;
     -webkit-background-clip: unset;
-    -webkit-text-fill-color: #ffc107;
-    font-size: 1.5rem; 
+    -webkit-text-fill-color: #ffc107; /* Match border */
+    font-size: 1.5rem;
     margin-top: 2px;
 }
 
 
 .instruction-section {
-    margin-bottom: 30px; /* Adjusted margin */
+    margin-bottom: 30px; 
 }
 .instruction-section h3 {
-    font-size: clamp(1.2rem, 4vw, 1.35rem); /* Adjusted clamp */
+    font-size: clamp(1.2rem, 4vw, 1.35rem); 
     color: var(--theme-light);
-    margin-bottom: 15px; /* Adjusted margin */
+    margin-bottom: 15px; 
     display: flex;
     align-items: center;
     gap: 10px;
     font-weight: 600;
 }
 .instruction-section h3 i.icon-gradient {
-    font-size: 1.2em; /* Relative to h3 font size */
+    font-size: 1.2em; 
 }
 
 ol.modern-steps {
@@ -245,39 +246,39 @@ ol.modern-steps {
 }
 ol.modern-steps li {
     background-color: rgba(255,255,255,0.02);
-    padding: 12px 15px; /* Adjusted padding */
+    padding: 12px 15px; 
     border-radius: var(--border-radius-sm);
-    margin-bottom: 10px; /* Adjusted margin */
+    margin-bottom: 10px; 
     color: var(--theme-text-muted);
-    font-size: clamp(0.9rem, 2.8vw, 1rem); /* Responsive text */
-    line-height: 1.6; /* Adjusted line-height */
+    font-size: clamp(0.9rem, 2.8vw, 1rem); 
+    line-height: 1.6; 
     border: 1px solid rgba(255,255,255,0.05);
     position: relative;
-    padding-left: 45px; /* Space for custom counter */
+    padding-left: 45px; 
     transition: var(--transition-smooth);
 }
 ol.modern-steps li:hover {
     background-color: rgba(255,255,255,0.05);
     border-color: rgba(255,255,255,0.1);
-    transform: translateX(3px); /* Subtle hover */
+    transform: translateX(3px); 
 }
 
 ol.modern-steps li::before {
     counter-increment: modern-step-counter;
     content: counter(modern-step-counter);
     position: absolute;
-    left: 12px; /* Adjusted position */
-    top: 12px; /* Adjusted position */
+    left: 12px; 
+    top: 12px; 
     font-weight: 700;
     background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
     color: white;
-    width: 24px; /* Adjusted size */
-    height: 24px; /* Adjusted size */
+    width: 24px; 
+    height: 24px; 
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85em; /* Adjusted size */
+    font-size: 0.85em; 
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
@@ -294,42 +295,26 @@ ol.modern-steps li a.app-link:hover {
     text-decoration: underline;
     color: var(--theme-primary-hover);
 }
-ol.modern-steps li .highlight-email {
+ol.modern-steps li .highlight-email,
+ol.modern-steps li .highlight-password { /* Added style for password */
     color: var(--netflix-red, #E50914); 
     font-weight: bold;
     background-color: rgba(229, 9, 20, 0.1);
     padding: 2px 5px;
     border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace; /* Monospace for credentials */
 }
 
-
-.final-notes-section.modern-note {
-    margin-top: 30px; /* Adjusted margin */
-    padding-top: 20px; /* Adjusted padding */
-    border-top: 1px solid rgba(255,255,255,0.08);
-    border-left-color: var(--theme-primary); 
-}
-.final-notes-section h4 {
-    font-size: clamp(1rem, 3vw, 1.1rem); /* Responsive text */
-    color: var(--theme-light);
-    margin-bottom: 8px; /* Adjusted margin */
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-}
-.final-notes-section p {
-    font-size: clamp(0.85rem, 2.5vw, 0.9rem); /* Responsive text */
-}
+/* Removed .final-notes-section styles as the HTML section is removed */
 
 .whatsapp-help-button.modern-button.cta-button {
     background: var(--whatsapp-green, #25D366);
     color: #fff;
-    font-size: clamp(0.95rem, 3vw, 1.05rem); /* Responsive text */
-    padding: 12px 20px; /* Adjusted padding */
-    margin-top: 20px; /* Adjusted margin */
+    font-size: clamp(0.95rem, 3vw, 1.05rem); 
+    padding: 12px 20px; 
+    margin-top: 20px; 
     width: 100%;
-    max-width: 300px; /* Adjusted max-width */
+    max-width: 300px; 
     display: flex; 
     justify-content: center;
     margin-left: auto;
@@ -341,33 +326,31 @@ ol.modern-steps li .highlight-email {
 }
 
 /* --- Further Responsive Adjustments for Mobile Perfection --- */
-
-/* Targeting typical mobile breakpoints */
 @media (max-width: 768px) {
     .view-emails-container {
-        padding: clamp(15px, 4vw, 25px); /* Use clamp for smoother scaling */
+        padding: clamp(15px, 4vw, 25px); 
     }
     .email-options-container {
-        gap: 15px; /* Tighter gap for stacked buttons on mobile */
+        gap: 15px; 
     }
     .email-option-button {
-        padding: 18px 15px; /* Adjust button padding */
+        padding: 18px 15px; 
     }
     .instruction-details-container .back-button.modern-button {
-        font-size: 0.85rem; /* Slightly smaller back button text */
+        font-size: 0.85rem; 
         padding: 8px 15px;
         margin-bottom: 20px;
     }
     ol.modern-steps li { 
-        padding-left: 40px; /* More space for smaller counter */
-        font-size: 0.9rem; /* Slightly smaller step text */
+        padding-left: 40px; 
+        font-size: 0.9rem; 
     }
     ol.modern-steps li::before { 
         width: 22px; 
         height: 22px; 
         font-size: 0.8em;
         left: 10px;
-        top: 13px; /* Fine-tune vertical alignment */
+        top: 13px; 
     }
 }
 
@@ -376,7 +359,7 @@ ol.modern-steps li .highlight-email {
     .view-emails-subtitle { font-size: clamp(0.85rem, 3vw, 1rem); margin-bottom: 30px; }
     
     .email-options-container {
-        grid-template-columns: 1fr; /* Ensure single column */
+        grid-template-columns: 1fr; 
     }
     .email-option-button { padding: 15px; }
     .email-option-button i { font-size: 2rem; margin-bottom: 8px;}
@@ -389,7 +372,7 @@ ol.modern-steps li .highlight-email {
     
     .modern-note { padding: 12px; gap: 8px; }
     .modern-note i.icon-gradient { font-size: 1.3rem; }
-    .important-password-note i.fa-key { font-size: 1.3rem; }
+    .important-password-note i.fa-exclamation-circle { font-size: 1.3rem; } /* Adjusted icon */
     .modern-note p { font-size: 0.85rem;}
 
     ol.modern-steps li { 
@@ -401,14 +384,11 @@ ol.modern-steps li .highlight-email {
         width: 20px; 
         height: 20px; 
         font-size: 0.75em;
-        top: 11px; /* Fine-tune for very small screens */
+        top: 11px; 
     }
-    .final-notes-section h4 { font-size: 0.95rem; }
-    .final-notes-section p { font-size: 0.8rem; }
 
     .whatsapp-help-button.modern-button.cta-button {
         font-size: 0.9rem;
         padding: 10px 18px;
     }
 }
-```
