@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gmailAppInstructionsList = document.getElementById('gmailAppInstructions');
     const backToOptionsButton = document.getElementById('backToOptionsButton');
     const whatsappHelpLink = document.getElementById('whatsappHelpLink');
+    const householdErrorNoteDiv = document.getElementById('householdErrorNote'); // Get the new note div
 
     // Log if elements are found
     console.log("emailOptionButtons:", emailOptionButtons.length > 0 ? emailOptionButtons : "NOT FOUND");
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log("gmailAppInstructionsList:", gmailAppInstructionsList || "NOT FOUND");
     console.log("backToOptionsButton:", backToOptionsButton || "NOT FOUND");
     console.log("whatsappHelpLink:", whatsappHelpLink || "NOT FOUND");
+    console.log("householdErrorNoteDiv:", householdErrorNoteDiv || "NOT FOUND");
 
 
     const YOUR_WHATSAPP_NUMBER = "256762193386"; 
@@ -32,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "Tap '<strong>Add another account</strong>'.",
             "Select '<strong>Google</strong>' from the list.",
             "Enter Email: <strong class='highlight-email'>{EMAIL}</strong> then tap <strong>Next</strong>.",
-            "Enter the <strong>Password</strong> (provided by Cartelug Support) then tap <strong>Next</strong>.",
+            "Enter the Password: <strong class='highlight-password'>thecartelug</strong> then tap <strong>Next</strong>.", // Password hardcoded here
             "Follow any on-screen prompts to complete adding the account.",
             "Once successfully added, open the <strong>{EMAIL}</strong> inbox by selecting it from your list of accounts in Gmail.",
             "Look for the latest email from Netflix with a subject like '<strong>Your temporary access code</strong>'.",
@@ -81,7 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 emailOptionSelectionContainer.style.display = 'none';
                 instructionDetailsContainer.style.display = 'block';
                 
-                // For animations (ensure classes are defined in CSS)
                 emailOptionSelectionContainer.classList.remove('fade-in-slide-up');
                 emailOptionSelectionContainer.classList.add('fade-out-rýchlo');
                 instructionDetailsContainer.classList.remove('fade-out-rýchlo');
@@ -114,9 +115,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("Containers verified for back button.");
 
             instructionDetailsContainer.style.display = 'none';
-            emailOptionSelectionContainer.style.display = 'grid'; // Or 'block' if that's your intended default
+            emailOptionSelectionContainer.style.display = 'grid'; 
             
-            // For animations
             instructionDetailsContainer.classList.remove('fade-in-slide-up');
             instructionDetailsContainer.classList.add('fade-out-rýchlo');
             emailOptionSelectionContainer.classList.remove('fade-out-rýchlo');
