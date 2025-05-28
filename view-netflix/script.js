@@ -4,84 +4,95 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailOptionSelectionContainer = document.getElementById('emailOptionSelection');
     const instructionTitle = document.getElementById('instructionTitle');
     const gmailAppInstructionsList = document.getElementById('gmailAppInstructions');
-    const gmailWebInstructionsList = document.getElementById('gmailWebInstructions');
+    // const gmailWebInstructionsList = document.getElementById('gmailWebInstructions'); // Removed
     const backToOptionsButton = document.getElementById('backToOptionsButton');
-    const whatsappHelpButton = document.querySelector('.whatsapp-help-button'); // Assuming only one
+    const whatsappHelpLink = document.getElementById('whatsappHelpLink');
 
-    // Replace with your actual WhatsApp number
-    const YOUR_WHATSAPP_NUMBER = "256762193386"; 
-    if (whatsappHelpButton) {
-        whatsappHelpButton.href = `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=I%20need%20help%20with%20the%20Netflix%20email%20viewer%20setup.`;
+    const YOUR_WHATSAPP_NUMBER = "256762193386"; // Your WhatsApp number here
+    if (whatsappHelpLink) {
+        whatsappHelpLink.href = `https://wa.me/${YOUR_WHATSAPP_NUMBER}?text=I%20need%20help%20with%20the%20Netflix%20email%20viewer%20setup.`;
     }
-
 
     const instructionsData = {
         gmailApp: [
-            "Open your Gmail App.",
-            "Tap on your profile picture (usually top right).",
+            "Open your Gmail App. <a href='googlegmail:///' class='app-link' target='_blank' rel='noopener noreferrer'>(Tap here to try opening Gmail App)</a> If it doesn't open, please find and open it manually on your phone.",
+            "In Gmail, tap your <strong>Profile Picture</strong> (usually top right).",
             "Tap '<strong>Add another account</strong>'.",
-            "Choose '<strong>Google</strong>'.",
-            "Enter the email address: <strong>{EMAIL}</strong> and tap Next.",
-            "Enter the password provided by Cartelug Support and tap Next.",
+            "Select '<strong>Google</strong>' from the list.",
+            "Enter Email: <strong class='highlight-email'>{EMAIL}</strong> then tap <strong>Next</strong>.",
+            "Enter the <strong>Password</strong> (provided by Cartelug Support) then tap <strong>Next</strong>.",
             "Follow any on-screen prompts to complete adding the account.",
-            "Once added, switch to the <strong>{EMAIL}</strong> inbox within your Gmail app.",
-            "Look for recent emails from Netflix with a subject like '<strong>Your temporary access code</strong>'.",
-            "Open the latest relevant email and click the '<strong>Get Code</strong>' button inside it to see your Netflix code."
-        ],
-        gmailWeb: [
-            "Open your web browser (like Chrome, Safari, Firefox).",
-            `Go to <a href="https://mail.google.com" target="_blank" rel="noopener noreferrer">https://mail.google.com</a> (opens in a new tab).`,
-            "If you're already signed into a Gmail account, click your profile picture (usually top right).",
-            "Click '<strong>Add another account</strong>'. (If not signed in, just proceed to enter email).",
-            "Enter the email address: <strong>{EMAIL}</strong> and click Next.",
-            "Enter the password provided by Cartelug Support and click Next.",
-            "Follow any on-screen prompts to sign in.",
-            "Once signed in, you'll be in the <strong>{EMAIL}</strong> inbox.",
-            "Look for recent emails from Netflix with a subject like '<strong>Your temporary access code</strong>'.",
-            "Open the latest relevant email and click the '<strong>Get Code</strong>' button inside it to see your Netflix code."
+            "Once successfully added, open the <strong>{EMAIL}</strong> inbox by selecting it from your list of accounts in Gmail.",
+            "Look for the latest email from Netflix with a subject like '<strong>Your temporary access code</strong>'.",
+            "Open that email and click the '<strong>Get Code</strong>' button found inside it. This will show you the Netflix code."
         ]
+        // gmailWeb instructions removed
     };
 
     function populateInstructions(emailAddress) {
+        if (!gmailAppInstructionsList) return; 
+
         gmailAppInstructionsList.innerHTML = '';
-        gmailWebInstructionsList.innerHTML = '';
+        // gmailWebInstructionsList.innerHTML = ''; // Removed
 
         instructionsData.gmailApp.forEach(step => {
             const li = document.createElement('li');
             li.innerHTML = step.replace(/{EMAIL}/g, emailAddress);
             gmailAppInstructionsList.appendChild(li);
         });
+    }
 
-        instructionsData.gmailWeb.forEach(step => {
-            const li = document.createElement('li');
-            li.innerHTML = step.replace(/{EMAIL}/g, emailAddress);
-            gmailWebInstructionsList.appendChild(li);
+    if (emailOptionButtons.length > 0 && instructionDetailsContainer && emailOptionSelectionContainer && instructionTitle) {
+        emailOptionButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                // Add a class to the clicked button for 'active' state
+                emailOptionButtons.forEach(btn => btn.classList.remove('active-option'));
+                button.classList.add('active-option');
+
+                const selectedEmail = button.dataset.email;
+                const selectedOption = button.dataset.option;
+
+                instructionTitle.textContent = `Setup for: ${selectedEmail}`;
+                populateInstructions(selectedEmail);
+
+                emailOptionSelectionContainer.classList.add('fade-out- rýchlo'); // Custom class for quick fade
+                instructionDetailsContainer.classList.remove('fade-out-rýchlo'); // Ensure it's not fading out
+                
+                setTimeout(() => {
+                    emailOptionSelectionContainer.style.display = 'none';
+                    instructionDetailsContainer.style.display = 'block';
+                    instructionDetailsContainer.classList.add('fade-in-slide-up'); // Custom class for entry
+                    instructionDetailsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 250); // Match CSS transition time for fade-out
+            });
         });
     }
 
-    emailOptionButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const selectedEmail = button.dataset.email;
-            const selectedOption = button.dataset.option;
-
-            instructionTitle.textContent = `Instructions for Source ${selectedOption} (${selectedEmail})`;
-            populateInstructions(selectedEmail);
-
-            emailOptionSelectionContainer.style.display = 'none';
-            instructionDetailsContainer.style.display = 'block';
-            instructionDetailsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
-
-    if (backToOptionsButton) {
+    if (backToOptionsButton && instructionDetailsContainer && emailOptionSelectionContainer) {
         backToOptionsButton.addEventListener('click', () => {
-            instructionDetailsContainer.style.display = 'none';
-            emailOptionSelectionContainer.style.display = 'block';
-            emailOptionSelectionContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            instructionDetailsContainer.classList.remove('fade-in-slide-up');
+            instructionDetailsContainer.classList.add('fade-out-rýchlo');
+            
+            setTimeout(() => {
+                instructionDetailsContainer.style.display = 'none';
+                emailOptionSelectionContainer.style.display = 'grid'; // Assuming it was grid
+                emailOptionSelectionContainer.classList.remove('fade-out-rýchlo');
+                emailOptionSelectionContainer.classList.add('fade-in-slide-up');
+                emailOptionButtons.forEach(btn => btn.classList.remove('active-option')); // Reset active button
+                emailOptionSelectionContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 250);
         });
     }
 
-    // Preloader (if you have one in base.css and global script.js)
-    // The global script.js should handle the preloader if it's the same ID.
-    // If you need specific preloader logic for this page, add it here.
+    // Add fade-in classes to CSS for smoother transitions
+    const styleSheet = document.createElement("style");
+    styleSheet.type = "text/css";
+    styleSheet.innerText = `
+        .fade-in-slide-up { animation: fadeInSlideUp 0.5s ease-out forwards; }
+        .fade-out-rýchlo { animation: fadeOutRýchlo 0.25s ease-out forwards !important; }
+        @keyframes fadeInSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeOutRýchlo { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(-10px); } }
+        .email-option-button.active-option { transform: translateY(-5px) scale(1.05); box-shadow: 0 12px 25px rgba(var(--theme-primary), 0.4); }
+    `;
+    document.head.appendChild(styleSheet);
 });
