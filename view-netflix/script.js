@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "Tap '<strong>Add another account</strong>'.",
             "Select '<strong>Google</strong>' from the list.",
             "Enter Email: <strong class='highlight-email'>{EMAIL}</strong> then tap <strong>Next</strong>.",
-            "Enter the Password: <strong class='highlight-password'>thecartelug</strong> then tap <strong>Next</strong>.", // Password hardcoded here
+            "Enter the Password: <strong class='highlight-password'>thecartelug</strong> then tap <strong>Next</strong>.", // Password hardcoded here.
             "Follow any on-screen prompts to complete adding the account.",
             "Once successfully added, open the <strong>{EMAIL}</strong> inbox by selecting it from your list of accounts in Gmail.",
             "Look for the latest email from Netflix with a subject like '<strong>Your temporary access code</strong>'.",
