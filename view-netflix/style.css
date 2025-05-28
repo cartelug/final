@@ -88,7 +88,7 @@ body {
     align-items: center;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    transform-style: preserve-3d; /* For 3D hover effect */
+    transform-style: preserve-3d; /* 3D hover effect */
 }
 
 .email-option-button:hover {
