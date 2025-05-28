@@ -88,13 +88,13 @@ body {
     align-items: center;
     text-align: center;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
-    transform-style: preserve-3d; /* 3D hover effect */
+    transform-style: preserve-3d; /* For 3D hover effect */
 }
 
 .email-option-button:hover {
     background: linear-gradient(135deg, var(--theme-primary-hover), var(--theme-primary));
     transform: translateY(-5px) scale(1.03); /* Slightly more lift */
-    box-shadow: 0 12px 25px rgba(var(--theme-primary), 0.3);
+    box-shadow: 0 12px 25px rgba(0, 122, 255, 0.3); /* Use var or direct color */
 }
 
 .email-option-button i {
@@ -125,14 +125,27 @@ body {
     padding: clamp(20px, 4vw, 30px);
     border-radius: var(--border-radius-md);
     border: 1px solid rgba(255,255,255,0.08);
-    animation: fadeInSlideUp 0.6s ease-out;
+    /* animation: fadeInSlideUp 0.6s ease-out; */ /* Let JS handle initial fade/slide */
     margin-top: 20px;
 }
 
-@keyframes fadeInSlideUp {
-    from { opacity: 0; transform: translateY(25px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Added animation classes, JS will toggle them */
+.fade-in-slide-up { animation: fadeInSlideUpAnimation 0.5s ease-out forwards; }
+.fade-out-rýchlo { animation: fadeOutRýchloAnimation 0.25s ease-out forwards !important; }
+
+@keyframes fadeInSlideUpAnimation { 
+    from { opacity: 0; transform: translateY(20px); } 
+    to { opacity: 1; transform: translateY(0); } 
 }
+@keyframes fadeOutRýchloAnimation { 
+    from { opacity: 1; transform: translateY(0); } 
+    to { opacity: 0; transform: translateY(-10px); } 
+}
+.email-option-button.active-option { 
+    transform: translateY(-5px) scale(1.05); 
+    box-shadow: 0 12px 25px rgba(0, 122, 255, 0.4); /* Using var(--theme-primary) for shadow color */
+}
+
 
 .modern-button { /* General class for styled buttons */
     border: none;
@@ -202,9 +215,12 @@ body {
 .important-password-note.modern-note {
     border-left-color: #ffc107; /* Yellow */
 }
-.important-password-note i.fa-key {
-    color: #ffc107; /* Keep specific icon color if not gradient */
-     -webkit-text-fill-color: #ffc107; /* Override gradient */
+.important-password-note i.fa-key { /* Specific icon color if not gradient */
+    background: none; /* Reset gradient if applied by icon-gradient class */
+    -webkit-background-clip: unset;
+    -webkit-text-fill-color: #ffc107;
+    font-size: 1.6rem; /* Ensure size consistency */
+    margin-top: 2px;
 }
 
 
@@ -280,75 +296,4 @@ ol.modern-steps li a.app-link:hover {
     text-decoration: underline;
     color: var(--theme-primary-hover);
 }
-ol.modern-steps li .highlight-email {
-    color: var(--netflix-red, #E50914); /* Use Netflix red for emphasis */
-    font-weight: bold;
-    background-color: rgba(229, 9, 20, 0.1);
-    padding: 2px 5px;
-    border-radius: 4px;
-}
-
-
-.final-notes-section.modern-note {
-    margin-top: 35px;
-    padding-top: 25px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-    border-left-color: var(--theme-primary); /* Match primary theme */
-}
-.final-notes-section h4 {
-    font-size: 1.15rem;
-    color: var(--theme-light);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 600;
-}
-.final-notes-section p {
-    font-size: 0.95rem;
-}
-
-.whatsapp-help-button.modern-button.cta-button {
-    background: var(--whatsapp-green, #25D366);
-    color: #fff;
-    font-size: 1.05rem;
-    padding: 12px 25px;
-    margin-top: 25px;
-    width: 100%;
-    max-width: 320px;
-    display: flex; /* To center text and icon if block */
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-}
-.whatsapp-help-button.modern-button.cta-button:hover {
-    background: #1fbc5d; /* Darker WhatsApp green */
-    box-shadow: 0 8px 18px rgba(37, 211, 102, 0.25);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 768px) {
-    .view-emails-container {
-        padding: clamp(15px, 4vw, 25px);
-    }
-    .view-emails-title { font-size: clamp(1.6rem, 5vw, 2.2rem); }
-    .view-emails-subtitle { font-size: clamp(0.9rem, 2.5vw, 1.1rem); }
-    
-    .email-option-button span { font-size: 1.15rem; }
-    .email-option-button small { font-size: 0.8rem; }
-
-    .instruction-main-title { font-size: clamp(1.4rem, 4vw, 1.8rem); }
-    .instruction-section h3 { font-size: 1.2rem; }
-    ol.modern-steps li { font-size: 0.95rem; padding-left: 45px; }
-    ol.modern-steps li::before { width: 24px; height: 24px; left: 10px; top: 12px; }
-}
-
-@media (max-width: 480px) {
-    .email-options-container { gap: 15px; }
-    .email-option-button { padding: 20px 15px; }
-    .email-option-button i { font-size: 2rem; }
-    .email-option-button span { font-size: 1.1rem; }
-    
-    ol.modern-steps li { padding-top: 12px; padding-bottom: 12px; } /* Adjust padding for step number alignment */
-    ol.modern-steps li::before { top: 12px; } /* Fine tune for smaller text */
-}
+ol.modern-steps li .highlight-
