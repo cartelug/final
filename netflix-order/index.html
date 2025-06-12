@@ -49,32 +49,36 @@
                     </div>
                      <fieldset class="form-fieldset">
                         <legend class="form-legend">Choose Your Package:</legend>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="pkg2" name="package" value="2 Months" data-price="50,000 UGX / $14 USD" required>
-                                <label for="pkg2">
-                                    2 Months - <del>100,000 UGX</del> 50,000 UGX / $14 USD
-                                </label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="pkg3" name="package" value="3 Months" data-price="75,000 UGX / $21 USD">
-                                <label for="pkg3">
-                                    3 Months - <del>150,000 UGX</del> 75,000 UGX / $21 USD
-                                </label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="pkg6" name="package" value="6 Months" data-price="150,000 UGX / $42 USD">
-                                <label for="pkg6">
-                                    6 Months - <del>300,000 UGX</del> 150,000 UGX / $42 USD
-                                </label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="pkg12" name="package" value="1 Year" data-price="250,000 UGX / $70 USD">
-                                <label for="pkg12">
-                                    1 Year - <del>500,000 UGX</del> 250,000 UGX / $70 USD
-                                </label>
-                            </div>
-                        </div>
+<div class="radio-group">
+    <div class="radio-option">
+        <input type="radio" id="pkg2" name="package" value="2 Months" data-price="50,000 UGX / $14 USD" required>
+        <label for="pkg2">
+            <span class="package-duration">2 Months <del>100,000 UGX</del></span>
+            <span class="package-price">50,000 UGX / $14 USD</span>
+        </label>
+    </div>
+    <div class="radio-option">
+        <input type="radio" id="pkg3" name="package" value="3 Months" data-price="75,000 UGX / $21 USD">
+        <label for="pkg3">
+            <span class="package-duration">3 Months <del>150,000 UGX</del></span>
+            <span class="package-price">75,000 UGX / $21 USD</span>
+        </label>
+    </div>
+    <div class="radio-option">
+        <input type="radio" id="pkg6" name="package" value="6 Months" data-price="150,000 UGX / $42 USD">
+        <label for="pkg6">
+            <span class="package-duration">6 Months <del>300,000 UGX</del></span>
+            <span class="package-price">150,000 UGX / $42 USD</span>
+        </label>
+    </div>
+    <div class="radio-option">
+        <input type="radio" id="pkg12" name="package" value="1 Year" data-price="250,000 UGX / $70 USD">
+        <label for="pkg12">
+            <span class="package-duration">1 Year <del>500,000 UGX</del></span>
+            <span class="package-price">250,000 UGX / $70 USD</span>
+        </label>
+    </div>
+</div>
                     </fieldset>
                      <div class="form-field">
                         <label for="clientName" class="form-label">Your Name:</label>
