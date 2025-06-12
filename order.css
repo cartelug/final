@@ -95,6 +95,7 @@
 .radio-option label {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* ADDED: This separates the content to left and right */
     padding: 15px 20px;
     border: 1px solid rgba(255, 255, 255, 0.25);
     border-radius: 10px;
@@ -104,12 +105,26 @@
     font-weight: 600;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
+
+/* --- ADDED: NEW RULES FOR PACKAGE LAYOUT --- */
+.package-duration {
+    flex-grow: 1; 
+    text-align: left;
+    white-space: nowrap; 
+}
+.package-price {
+    flex-shrink: 0;
+    text-align: right;
+    margin-left: 10px;
+}
+/* ------------------------------------------- */
+
 .radio-option label:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-color: rgba(255, 255, 255, 0.4);
 }
 .radio-option input[type="radio"]:checked + label {
-    background-color: var(--cta-blue); /* Default check color, will be overridden below */
+    background-color: var(--cta-blue); 
     border-color: var(--cta-blue);
     color: #fff;
     box-shadow: 0 4px 15px rgba(0, 122, 255, 0.25);
@@ -130,11 +145,12 @@
 .payment-option label {
     gap: 10px;
 }
+
 /* Style for <del> tag in radio options */
 .radio-option label del {
     opacity: 0.6;
     font-weight: 400;
-    margin-right: 8px;
+    margin-left: 8px; /* CHANGED: from margin-right */
     font-size: 0.9em;
     color: #ffcdd2;
 }
