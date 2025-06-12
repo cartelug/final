@@ -1,24 +1,43 @@
 /* === Homepage Specific Styles (index.html) === */
 
-/* === New Background Image Style === */
+/* === New Background Image Style (With Mobile Fixes) === */
 body {
     background-image: url('background1.png');
     background-size: cover;
-    background-position: center center; /* We will adjust this in the next step */
     background-repeat: no-repeat;
     
-    /* On desktop, the background stays fixed */
+    /* THIS IS THE FIX for the "zoomed" and cropping issue.
+      It aligns the image to the LEFT side instead of the center,
+      so the person on the left will always be visible.
+    */
+    background-position: left center;
+    
+    /* This makes the background stay fixed on DESKTOP for the cool parallax effect.
+    */
     background-attachment: fixed;
 }
 
-/* Media query for mobile devices */
+/* THIS IS THE FIX for the "disgusting" scroll glitch on MOBILE.
+  It tells mobile browsers (screens 768px wide or less) to let the background
+  scroll normally with the page, which is much smoother.
+*/
 @media (max-width: 768px) {
     body {
-        /* On mobile, the background scrolls normally to prevent glitches */
         background-attachment: scroll;
     }
 }
 
+/* This is the dark overlay you already have, to keep text readable */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.55);
+    z-index: -1;
+}
 body::before {
     content: '';
     position: fixed;
