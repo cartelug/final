@@ -168,7 +168,7 @@ main { padding-top: 80px; /* Approximate height of header */ flex-grow: 1; displ
     align-items: center;
     opacity: 1;
     visibility: visible;
-    transition: opacity 0.75s ease-out, visibility 0.75s ease-out; /* Smooth fade-out */
+    transition: opacity 0.2s ease-out, visibility 0.2s ease-out; /* Smooth fade-out */
 }
 
 #preloader.hidden {
