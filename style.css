@@ -1,33 +1,39 @@
 /* === Homepage Specific Styles (index.html) === */
 
-/* === New Background Image Style (With Mobile Fixes) === */
+/* === Responsive Background Image Style === */
+
+/* 1. Default style for MOBILE devices */
 body {
-    background-image: url('background1.png');
+    /* This loads your new vertical mobile image by default */
+    background-image: url('background-mobile.png');
     background-size: cover;
+    background-position: center center;
     background-repeat: no-repeat;
     
-    /* THIS IS THE FIX for the "zoomed" and cropping issue.
-      It aligns the image to the LEFT side instead of the center,
-      so the person on the left will always be visible.
-    */
-    background-position: left center;
-    
-    /* This makes the background stay fixed on DESKTOP for the cool parallax effect.
-    */
-    background-attachment: fixed;
+    /* The background scrolls normally on mobile to prevent glitches */
+    background-attachment: scroll;
 }
 
-/* THIS IS THE FIX for the "disgusting" scroll glitch on MOBILE.
-  It tells mobile browsers (screens 768px wide or less) to let the background
-  scroll normally with the page, which is much smoother.
-*/
-@media (max-width: 768px) {
+/* 2. Style for TABLETS and bigger (screens 768px wide and up) */
+@media (min-width: 768px) {
     body {
-        background-attachment: scroll;
+        /* Replaces the mobile image with your square tablet image */
+        background-image: url('background-tablet.png');
     }
 }
 
-/* This is the dark overlay you already have, to keep text readable */
+/* 3. Style for large DESKTOPS (screens 1200px wide and up) */
+@media (min-width: 1200px) {
+    body {
+        /* Replaces the tablet image with your full landscape desktop image */
+        background-image: url('background-desktop.png');
+        
+        /* The parallax effect is re-enabled only for desktops where it works well */
+        background-attachment: fixed;
+    }
+}
+
+/* This dark overlay code creates the dark filter over the background */
 body::before {
     content: '';
     position: fixed;
@@ -38,16 +44,7 @@ body::before {
     background-color: rgba(0, 0, 0, 0.55);
     z-index: -1;
 }
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.55);
-    z-index: -1; 
-}
+
 /* --- Platform Selection --- */
 /* .platform-selection uses .section-padding from base.css */
 .platform-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; justify-items: center; }
