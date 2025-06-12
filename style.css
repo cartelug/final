@@ -1,49 +1,34 @@
-/* === Homepage Styles (index.html) === */
+/* === Homepage Specific Styles (index.html) === */
 
-/* === Responsive Background Image Style === */
-
-/* 1. Default style for MOBILE devices */
+/* === Animated Aurora Gradient Background === */
 body {
-    /* This loads your new vertical mobile image by default */
-    background-image: url('background-mobile.png');
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    /* Define a dark base color and a huge gradient using your site's color variables */
+    background-color: var(--dark-bg);
+    background: linear-gradient(-45deg, #330e00, #200a3a, #002b3a, #200a3a);
+    background-size: 400% 400%;
     
-    /* The background scrolls normally on mobile to prevent glitches */
-    background-attachment: scroll;
+    /* Apply the animation */
+    animation: gradientShift 15s ease infinite;
 }
 
-/* 2. Style for TABLETS and bigger (screens 768px wide and up) */
-@media (min-width: 768px) {
-    body {
-        /* Replaces the mobile image with your square tablet image */
-        background-image: url('background-tablet.png');
+/* The Keyframes that define the animation */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
     }
 }
 
-/* 3. Style for large DESKTOPS (screens 1200px wide and up) */
-@media (min-width: 1200px) {
-    body {
-        /* Replaces the tablet image with your full landscape desktop image */
-        background-image: url('background-desktop.png');
-        
-        /* The parallax effect is re-enabled only for desktops where it works well */
-        background-attachment: fixed;
-    }
-}
-
-/* This dark overlay code creates the dark filter over the background */
+/* The dark overlay is no longer needed with this background */
 body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.55);
-    z-index: -1;
+    content: none;
 }
+
 
 /* --- Platform Selection --- */
 /* .platform-selection uses .section-padding from base.css */
