@@ -1,3 +1,10 @@
+Of course. I will add a 1-year option and include the prices in USD.
+
+Based on the current exchange rate, I've calculated the prices in USD and updated the HTML for the Netflix order page.
+
+Here is the updated code for the `netflix-order/index.html` file. You can replace the existing file with this code.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,13 +12,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netflix Support Order - Cartelug</title>
 
-    <link rel="icon" href="../logo.png" type="image/png"> <link rel="apple-touch-icon" href="../logo.png"> <meta name="description" content="Order your Netflix support package from Cartelug. Fast activation for Uganda & South Sudan. Pay with MTN or Airtel Money. 2, 3, or 6 month options.">
+    <link rel="icon" href="../logo.png" type="image/png"> <link rel="apple-touch-icon" href="../logo.png"> <meta name="description" content="Order your Netflix support package from Cartelug. Fast activation for Uganda & South Sudan. Pay with MTN or Airtel Money. 2, 3, 6, or 12 month options.">
     <meta property="og:title" content="Netflix Support Order - Cartelug">
-    <meta property="og:description" content="Order your Netflix support package from Cartelug. Fast activation for Uganda & South Sudan. Pay with MTN or Airtel Money. 2, 3, or 6 month options.">
+    <meta property="og:description" content="Order your Netflix support package from Cartelug. Fast activation for Uganda & South Sudan. Pay with MTN or Airtel Money. 2, 3, 6, or 12 month options.">
     <meta property="og:image" content="https://cartelug.com/logo.png"> <meta property="og:url" content="https://cartelug.com/netflix-order/"> <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Netflix Support Order - Cartelug">
-    <meta name="twitter:description" content="Order your Netflix support package from Cartelug. Fast activation for Uganda & South Sudan. Pay with MTN or Airtel Money. 2, 3, or 6 month options.">
+    <meta name="twitter:description" content="Order your Netflix support package from Cartelug. Fast activation for Uganda & South Sudan. Pay with MTN or Airtel Money. 2, 3, 6, or 12 month options.">
     <meta name="twitter:image" content="https://cartelug.com/logo.png"> <link rel="stylesheet" href="../base.css"> <link rel="stylesheet" href="../order.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -51,21 +58,27 @@
                         <legend class="form-legend">Choose Your Package:</legend>
                         <div class="radio-group">
                             <div class="radio-option">
-                                <input type="radio" id="pkg2" name="package" value="2 Months" data-price="50,000 UGX" required>
+                                <input type="radio" id="pkg2" name="package" value="2 Months" data-price="50,000 UGX / $14 USD" required>
                                 <label for="pkg2">
-                                    2 Months - <del>100,000 UGX</del> 50,000 UGX
+                                    2 Months - <del>100,000 UGX</del> 50,000 UGX / $14 USD
                                 </label>
                             </div>
                             <div class="radio-option">
-                                <input type="radio" id="pkg3" name="package" value="3 Months" data-price="75,000 UGX">
+                                <input type="radio" id="pkg3" name="package" value="3 Months" data-price="75,000 UGX / $21 USD">
                                 <label for="pkg3">
-                                    3 Months - <del>150,000 UGX</del> 75,000 UGX
+                                    3 Months - <del>150,000 UGX</del> 75,000 UGX / $21 USD
                                 </label>
                             </div>
                             <div class="radio-option">
-                                <input type="radio" id="pkg6" name="package" value="6 Months" data-price="150,000 UGX">
+                                <input type="radio" id="pkg6" name="package" value="6 Months" data-price="150,000 UGX / $42 USD">
                                 <label for="pkg6">
-                                    6 Months - <del>300,000 UGX</del> 150,000 UGX
+                                    6 Months - <del>300,000 UGX</del> 150,000 UGX / $42 USD
+                                </label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="pkg12" name="package" value="1 Year" data-price="250,000 UGX / $70 USD">
+                                <label for="pkg12">
+                                    1 Year - <del>500,000 UGX</del> 250,000 UGX / $70 USD
                                 </label>
                             </div>
                         </div>
@@ -121,3 +134,4 @@
 
     <script src="../script.js"></script> </body>
 </html>
+```
