@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
                  // Scroll the duration block into view smoothly if it became visible
                 if (durationBlockV2 && durationBlockV2.style.display !== 'none') {
                     // Use a small timeout to ensure the block is rendered before scrolling
-                    setTimeout(() => {
+                    (() => {
                         // Scroll so the center of the block is in the center of the viewport
                         durationBlockV2.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }, 100); // 100ms delay
@@ -788,7 +788,7 @@ window.addEventListener('load', () => {
                 console.log("Applied 'hidden' class to preloader."); // Log success
                 // We keep the transition defined in base.css to handle the fade-out.
                 // The transitionend listener is removed as it's not essential for hiding.
-            }, 150); // 150ms delay
+            }, 50); // 150ms delay
         } catch (error) {
             console.error("Error hiding preloader:", error); // Log any errors during this process
             // Fallback: Force hide if there was an error applying the class smoothly
