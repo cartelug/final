@@ -1,0 +1,372 @@
+/* order-pass.css */
+
+:root {
+    --prime-blue: #00A8E1;
+    --prime-dark-blue: #0286b3;
+    --background-color: #0c0c1e;
+    --card-background: #1a1a3a;
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0c0;
+    --accent-color: #4d4dff;
+    --glow-color: rgba(77, 77, 255, 0.7);
+    --popular-color: #ffc107;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-primary);
+}
+
+.order-pass-main {
+    padding: 4rem 0;
+    min-height: 100vh;
+}
+
+.order-pass-layout {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+/* Controls Styling */
+.order-controls {
+    flex: 1;
+    max-width: 500px;
+}
+
+.controls-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.controls-header .service-logo {
+    max-height: 50px;
+    margin-bottom: 1rem;
+}
+
+.controls-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.controls-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.control-step {
+    border: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
+    opacity: 0.3;
+    transition: opacity 0.4s ease;
+}
+
+.control-step.active {
+    opacity: 1;
+}
+
+.control-step legend {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+/* Plan Options */
+.plan-options {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.plan-option {
+    background: var(--card-background);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.plan-option.popular::before {
+    content: 'POPULAR';
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    background: var(--popular-color);
+    color: #000;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 0.3rem 1rem;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.plan-option:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+}
+
+.plan-option.selected {
+    border-color: var(--prime-blue);
+    box-shadow: 0 0 20px rgba(0, 168, 225, 0.5);
+}
+
+.plan-duration {
+    font-size: 1.2rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.plan-price {
+    color: var(--text-secondary);
+}
+
+/* Input Fields */
+#clientName {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1rem;
+    background: var(--card-background);
+    border: 1px solid var(--text-secondary);
+    border-radius: 8px;
+    color: var(--text-primary);
+    transition: border-color 0.3s ease;
+}
+
+#clientName:focus {
+    outline: none;
+    border-color: var(--prime-blue);
+}
+
+.micro-copy {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+
+/* Payment Options */
+.payment-options {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.payment-option {
+    background: var(--card-background);
+    padding: 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    height: 80px;
+    display: flex;
+    align-items: center;
+}
+
+.payment-option img {
+    max-height: 40px;
+    filter: grayscale(1);
+    transition: filter 0.3s ease;
+}
+
+.payment-option:hover img {
+    filter: grayscale(0);
+}
+
+.payment-option.selected {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px var(--glow-color);
+}
+.payment-option.selected img {
+    filter: grayscale(0);
+}
+
+
+/* CTA Button */
+#submit-button {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#submit-button:disabled {
+    background-color: #333;
+    cursor: not-allowed;
+    color: #777;
+}
+
+#submit-button:not(:disabled):hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px var(--glow-color);
+}
+#submit-button.ready {
+    background: linear-gradient(45deg, var(--prime-blue), var(--accent-color));
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 var(--glow-color); }
+    70% { box-shadow: 0 0 10px 15px rgba(77, 77, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(77, 77, 255, 0); }
+}
+
+
+/* Access Pass Visualizer Styling */
+.order-pass-visualizer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1500px;
+}
+
+.access-pass {
+    width: 350px;
+    height: 550px;
+    background: linear-gradient(135deg, #1e1e48, #3a3a7a);
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    transform-style: preserve-3d;
+    transform: rotateY(-10deg) rotateX(5deg);
+}
+.access-pass:hover {
+    transform: rotateY(0) rotateX(0);
+}
+.access-pass.complete {
+    box-shadow: 0 0 30px var(--glow-color), 0 0 50px var(--prime-blue);
+}
+
+
+.pass-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 1rem;
+}
+.pass-brand {
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+.pass-service-logo {
+    max-height: 30px;
+}
+
+.pass-body {
+    flex-grow: 1;
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.pass-field {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+}
+.pass-field.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.pass-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.pass-value {
+    font-size: 1.5rem;
+    font-weight: 600;
+    min-height: 2rem; /* prevent layout shift */
+}
+
+#pass-price-value {
+    font-size: 2rem;
+    color: var(--popular-color);
+}
+
+.pass-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.pass-payment-stamp {
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.5);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* stamp effect */
+}
+.pass-payment-stamp.stamped {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.pass-qr-code {
+    text-align: center;
+    color: var(--text-secondary);
+}
+.pass-qr-code .fa-qrcode {
+    font-size: 4rem;
+}
+.pass-qr-code span {
+    font-size: 0.8rem;
+    display: block;
+    margin-top: 0.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .order-pass-layout {
+        flex-direction: column;
+        align-items: center;
+    }
+    .order-controls {
+        max-width: 100%;
+        order: 2;
+    }
+    .order-pass-visualizer {
+        order: 1;
+        margin-bottom: 3rem;
+        width: 100%;
+    }
+    .access-pass {
+        transform: rotateY(0) rotateX(0);
+        width: 100%;
+        max-width: 380px;
+    }
+}
+@media (max-width: 768px) {
+    .controls-header h1 {
+        font-size: 2rem;
+    }
+}
