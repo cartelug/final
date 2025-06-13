@@ -1,131 +1,134 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Netflix - Cartel UG</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../base.css">
-    <link rel="stylesheet" href="../order-v2.css">
+    <title>Netflix Support Order - Cartelug</title>
+
+    <link rel="icon" href="../logo.png" type="image/png"> <link rel="apple-touch-icon" href="../logo.png"> <meta name="description" content="Order your Netflix support package from Cartelug. Fast activation for Uganda & South Sudan. Pay with MTN or Airtel Money. 2, 3, 6, or 12 month options.">
+    <meta property="og:title" content="Netflix Support Order - Cartelug">
+    <meta property="og:description" content="Order your Netflix support package from Cartelug. Fast activation for Uganda & South Sudan. Pay with MTN or Airtel Money. 2, 3, 6, or 12 month options.">
+    <meta property="og:image" content="https://cartelug.com/logo.png"> <meta property="og:url" content="https://cartelug.com/netflix-order/"> <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Netflix Support Order - Cartelug">
+    <meta name="twitter:description" content="Order your Netflix support package from Cartelug. Fast activation for Uganda & South Sudan. Pay with MTN or Airtel Money. 2, 3, 6, or 12 month options.">
+    <meta name="twitter:image" content="https://cartelug.com/logo.png"> <link rel="stylesheet" href="../base.css"> <link rel="stylesheet" href="../order.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <div class="video-background">
-        <video autoplay muted loop playsinline>
-            <source src="../assets/videos/netflix-bg.mp4" type="video/mp4">
-        </video>
-    </div>
 
-    <header class="header">
-        <div class="container">
-            <div class="logo">
-                <a href="../index.html">Cartel<span>UG</span></a>
+    <div id="preloader">
+        <img src="../logo.png" alt="Loading..." class="preloader-logo"> </div>
+    <header class="main-header">
+         <div class="container">
+            <div class="header-content">
+                <a href="/" class="logo-link"> <img src="../logo.png" alt="Cartelug Logo" id="logo"> </a>
+                <p class="tagline">Your Expert Streaming Support</p>
             </div>
-            <nav class="nav">
-                <a href="../renew/index.html">Renew</a>
-                <a href="../contact/index.html">Contact Us</a>
+            <nav id="main-nav" class="main-nav">
+                 <ul>
+                    <li><a href="/">Home</a></li> <li><a href="/#services">Services</a></li> <li><a href="/#about">About</a></li> <li><a href="/contact/">Contact</a></li> </ul>
             </nav>
+            <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
 
     <main>
-        <div class="order-container">
-            <div class="order-main">
-                <div class="order-card">
-                    <h1 class="order-title">Unlock Endless Entertainment</h1>
-                    <p class="order-subtitle">Complete your order to start streaming.</p>
-
-                    <form id="netflix-order-form">
-                        <input type="hidden" name="service" value="Netflix">
-
-                        <h2 class="step-title">1. Choose Your Plan</h2>
-                        <div class="plan-grid">
-                            <label class="plan-card">
-                                <input type="radio" name="package" value="3 Months" data-price="75,000">
-                                <span class="plan-duration">3 Months</span>
-                                <span class="plan-price">75,000<span class="ugx"> UGX</span></span>
-                                <span class="plan-old-price"><del>90,000 UGX</del></span>
-                            </label>
-                            <label class="plan-card" id="best-value">
-                                <div class="badge">Best Value</div>
-                                <input type="radio" name="package" value="6 Months" data-price="150,000">
-                                <span class="plan-duration">6 Months</span>
-                                <span class="plan-price">150,000<span class="ugx"> UGX</span></span>
-                                <span class="plan-old-price"><del>180,000 UGX</del></span>
-                            </label>
-                            <label class="plan-card">
-                                <input type="radio" name="package" value="12 Months" data-price="300,000">
-                                <span class="plan-duration">12 Months</span>
-                                <span class="plan-price">300,000<span class="ugx"> UGX</span></span>
-                                <span class="plan-old-price"><del>360,000 UGX</del></span>
-                            </label>
-                        </div>
-
-                        <h2 class="step-title">2. Your Details</h2>
-                        <div class="form-group">
-                            <input type="text" id="client-name" name="client-name" required autocomplete="name">
-                            <label for="client-name">Your Full Name</label>
-                        </div>
-
-                        <h2 class="step-title">3. Payment Method</h2>
-                        <div class="payment-methods">
-                            <label class="payment-option">
-                                <input type="radio" name="payment-method" value="MTN" checked>
-                                <img src="../assets/images/mtn-momo.png" alt="MTN Mobile Money">
-                            </label>
-                            <label class="payment-option">
-                                <input type="radio" name="payment-method" value="Airtel">
-                                <img src="../assets/images/airtel-money.png" alt="Airtel Money">
-                            </label>
-                        </div>
-                    </form>
-
-                    <div class="trust-signals">
-                        <div class="signal">
-                            <i class="fas fa-bolt"></i>
-                            <span>Instant Activation</span>
-                        </div>
-                        <div class="signal">
-                            <i class="fas fa-headset"></i>
-                            <span>24/7 Support</span>
-                        </div>
-                        <div class="signal">
-                            <i class="fas fa-shield-alt"></i>
-                            <span>Secure & Reliable</span>
-                        </div>
-                    </div>
+        <section class="order-form-section section-padding">
+            <div class="container">
+                <div class="order-page-logo">
+                     <img src="../netflix.png" alt="Netflix Order">
                 </div>
+                <p class="form-intro">Select your package and provide details to proceed.</p>
+
+                <form id="netflix-order-form" class="order-form">
+                     <div class="form-field hidden">
+                         <label for="service">Service</label>
+                         <input type="text" id="service" name="service" value="Netflix" readonly>
+                    </div>
+                     <fieldset class="form-fieldset">
+                        <legend class="form-legend">Choose Your Package:</legend>
+<div class="radio-group">
+    <div class="radio-option">
+        <input type="radio" id="pkg2" name="package" value="2 Months" data-price="50,000 UGX / $14 USD" required>
+        <label for="pkg2">
+            <span class="package-duration">2 Months <del>100,000 UGX</del></span>
+            <span class="package-price">50,000 UGX / $14 USD</span>
+        </label>
+    </div>
+    <div class="radio-option">
+        <input type="radio" id="pkg3" name="package" value="3 Months" data-price="75,000 UGX / $21 USD">
+        <label for="pkg3">
+            <span class="package-duration">3 Months <del>150,000 UGX</del></span>
+            <span class="package-price">75,000 UGX / $21 USD</span>
+        </label>
+    </div>
+    <div class="radio-option">
+        <input type="radio" id="pkg6" name="package" value="6 Months" data-price="150,000 UGX / $42 USD">
+        <label for="pkg6">
+            <span class="package-duration">6 Months <del>300,000 UGX</del></span>
+            <span class="package-price">150,000 UGX / $42 USD</span>
+        </label>
+    </div>
+    <div class="radio-option">
+        <input type="radio" id="pkg12" name="package" value="1 Year" data-price="250,000 UGX / $70 USD">
+        <label for="pkg12">
+            <span class="package-duration">1 Year <del>500,000 UGX</del></span>
+            <span class="package-price">250,000 UGX / $70 USD</span>
+        </label>
+    </div>
+</div>
+                    </fieldset>
+                     <div class="form-field">
+                        <label for="clientName" class="form-label">Your Name:</label>
+                         <input type="text" id="clientName" name="clientName" class="form-input" placeholder="Enter your full name" required>
+                    </div>
+                     <fieldset class="form-fieldset">
+                        <legend class="form-legend">Select Payment Method:</legend>
+                         <div class="radio-group payment-method-group">
+                            <div class="radio-option payment-option">
+                                <input type="radio" id="payMTN" name="paymentMethod" value="MTN" required>
+                                <label for="payMTN">
+                                    <img src="../mtn.png" alt="MTN Mobile Money" class="payment-option-logo">
+                                    <span>MTN Mobile Money</span>
+                                </label>
+                            </div>
+                             <div class="radio-option payment-option">
+                                <input type="radio" id="payAirtel" name="paymentMethod" value="Airtel">
+                                <label for="payAirtel">
+                                    <img src="../airtel.png" alt="Airtel Money" class="payment-option-logo">
+                                    <span>Airtel Money</span>
+                                 </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                     <div class="form-field form-submit-field">
+                        <button type="submit" class="cta-button form-submit-button">Proceed to WhatsApp</button>
+                    </div>
+                </form>
             </div>
-
-            <div class="order-sidebar">
-                <div class="sticky-summary">
-                    <h3>Order Summary</h3>
-                    <div class="summary-item">
-                        <span>Service:</span>
-                        <span id="summary-service">Netflix</span>
-                    </div>
-                    <div class="summary-item">
-                        <span>Plan:</span>
-                        <span id="summary-plan">Not Selected</span>
-                    </div>
-                    <hr>
-                    <div class="summary-total">
-                        <span>Amount Due:</span>
-                        <span id="summary-price">0 UGX</span>
-                    </div>
-
-                    <div class="social-proof">
-                        <p class="testimonial">"The best and most reliable service in UG! Fast and friendly."</p>
-                        <span class="testimonial-author">- Sarah K.</span>
-                    </div>
-
-                    <a href="#" id="whatsapp-button" class="cta-button disabled">
-                        <i class="fab fa-whatsapp"></i> Proceed to WhatsApp
-                    </a>
-                </div>
-            </div>
-        </div>
+        </section>
     </main>
 
-    <script src="order-v2.js"></script>
-</body>
+    <footer class="main-footer">
+        <div class="container">
+             <div class="footer-content">
+                <div class="footer-links">
+                     <a href="/privacy-policy/">Privacy Policy</a> | <a href="/terms-of-service/">Terms of Service</a> | <a href="/contact/">Contact Us</a>
+                </div>
+                <div class="payment-info">
+                    <p>Secure Payments Accepted via Mobile Money:</p>
+                    <div class="payment-logos">
+                         <img src="../mtn.png" alt="MTN Mobile Money" class="payment-logo">
+                        <img src="../airtel.png" alt="Airtel Money" class="payment-logo">
+                    </div>
+                </div>
+                <p class="copyright">&copy; <span id="year"></span> Cartelug. All Rights Reserved.</p>
+             </div>
+        </div>
+    </footer>
+
+    <script src="../script.js"></script> </body>
 </html>
