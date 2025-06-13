@@ -1,4 +1,4 @@
-/* order-pass.css - UPDATED FOR FLOW */
+/* order-pass.css - UPDATED FOR AURORA FLOW (Revision) */
 :root {
     --prime-blue: #00A8E1;
     --text-light: #ffffff;
@@ -83,6 +83,9 @@ body {
     transform: scale(0.95);
     transition: var(--transition-slow);
     pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .flow-step.active {
@@ -91,20 +94,22 @@ body {
     pointer-events: auto;
 }
 
-.service-logo-main {
-    max-height: 50px;
+/* Intro Screen Styles */
+.intro-logo {
+    max-height: 80px;
+    margin-bottom: 2rem;
     animation: float-in 1s forwards;
 }
 
-.flow-title {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-    margin: 1rem 0;
+.intro-title {
+    font-size: clamp(3rem, 7vw, 4rem);
+    margin-bottom: 1rem;
     animation: float-in 1s forwards 0.2s;
     opacity: 0;
 }
 
-.flow-subtitle {
-    font-size: 1.2rem;
+.intro-subtitle {
+    font-size: 1.3rem;
     color: var(--text-muted);
     opacity: 0;
     animation: float-in 1s forwards 0.4s;
@@ -115,8 +120,19 @@ body {
     to { opacity: 1; transform: translateY(0); }
 }
 
+.flow-title {
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
+    margin-bottom: 1rem;
+}
+
+.flow-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+}
+
 /* Glass UI Elements */
-.package-card, .glass-input, .payment-card, .cta-button {
+.package-card, .glass-input, .payment-card, .cta-button, .next-button {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
@@ -129,13 +145,15 @@ body {
 .package-options {
     display: flex;
     gap: 1.5rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .package-card {
     padding: 2rem 2.5rem;
     cursor: pointer;
+    min-width: 180px;
 }
 
 .package-card:hover {
@@ -148,11 +166,18 @@ body {
 .package-card.popular { border-top: 3px solid var(--prime-blue); }
 
 /* Name Input */
-#name-form { margin-top: 3rem; }
+#name-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 450px;
+}
 
 .glass-input {
     width: 100%;
-    max-width: 450px;
     padding: 1.2rem;
     font-size: 1.5rem;
     color: var(--text-light);
@@ -166,18 +191,42 @@ body {
     box-shadow: 0 0 20px rgba(0, 168, 225, 0.3);
 }
 
+.next-button {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-light);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.next-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-5px);
+}
+
 /* Payment Options */
 .payment-options {
     display: flex;
     gap: 2rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.payment-options.centered {
+    justify-content: center;
 }
 .payment-card {
     padding: 2rem;
     cursor: pointer;
+    min-width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .payment-card:hover { transform: scale(1.1); }
-.payment-card img { max-height: 50px; }
+.payment-card img { max-height: 60px; }
 
 /* Final Step */
 .final-icon {
@@ -207,5 +256,10 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-    .package-options { flex-direction: column; }
+    .package-options { flex-direction: column; align-items: center; }
+    .payment-options { flex-direction: column; align-items: center; }
+    .package-card { min-width: auto; width: 80%; }
+    .payment-card { min-width: auto; width: 60%; }
+    .intro-title { font-size: 3rem; }
+    .flow-title { font-size: 2.5rem; }
 }
