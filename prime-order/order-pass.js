@@ -1,4 +1,4 @@
-// order-pass.js - UPDATED FOR AURORA FLOW
+// order-pass.js - UPDATED FOR FLOW
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- STATE MANAGEMENT ---
