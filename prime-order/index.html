@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime Order - Cartelug</title>
+    <title>Prime Video Order - Cartelug</title>
     <link rel="icon" href="../logo.png" type="image/png">
     <link rel="apple-touch-icon" href="../logo.png">
-    <meta name="description" content="An interactive and dynamic ordering experience for your Prime Video package. Fast, beautiful, and easy to use.">
+    <meta name="description" content="A beautiful and seamless ordering experience for your Prime Video package.">
 
     <link rel="stylesheet" href="../base.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -14,7 +14,13 @@
     <link rel="stylesheet" href="order-pass.css">
 </head>
 <body>
-    <header class="main-header">
+    <div class="aurora-background">
+        <div class="aurora-shape shape1"></div>
+        <div class="aurora-shape shape2"></div>
+        <div class="aurora-shape shape3"></div>
+    </div>
+    
+    <header class="main-header transparent">
         <div class="container">
            <div class="header-content">
                <a href="/" class="logo-link"><img src="../logo.png" alt="Cartelug Logo" id="logo"></a>
@@ -22,71 +28,57 @@
        </div>
    </header>
 
-   <main class="dynamic-main">
-        <aside id="order-summary" class="order-summary">
-            <h4>Your Order</h4>
-            <div class="summary-item">
-                <span>Plan:</span>
-                <strong id="summary-plan">--</strong>
+   <main class="flow-container">
+        <div id="step-intro" class="flow-step active">
+            <img src="../prime-video.png" alt="Prime Video Logo" class="service-logo-main">
+            <h1 class="flow-title">Unlock Prime Video</h1>
+            <p class="flow-subtitle">Choose your plan to begin the experience.</p>
+        </div>
+
+        <div id="step-packages" class="flow-step">
+            <h2 class="flow-title">Choose Your Plan</h2>
+            <div class="package-options">
+                <div class="package-card" data-plan="3 Months" data-price="75,000 UGX">
+                    <h3>3 Months</h3>
+                    <span>75,000 UGX</span>
+                </div>
+                <div class="package-card popular" data-plan="6 Months" data-price="140,000 UGX">
+                    <h3>6 Months</h3>
+                    <span>140,000 UGX</span>
+                </div>
+                <div class="package-card" data-plan="1 Year" data-price="250,000 UGX">
+                    <h3>1 Year</h3>
+                    <span>250,000 UGX</span>
+                </div>
             </div>
-            <div class="summary-item price">
-                <span>Price:</span>
-                <strong id="summary-price">--</strong>
+        </div>
+
+        <div id="step-name" class="flow-step">
+            <h2 class="flow-title">What's your name?</h2>
+            <form id="name-form">
+                <input type="text" id="clientName" class="glass-input" placeholder="Enter your full name here" required>
+            </form>
+        </div>
+
+        <div id="step-payment" class="flow-step">
+            <h2 class="flow-title">How would you like to pay?</h2>
+            <div class="payment-options">
+                <div class="payment-card" data-method="MTN">
+                    <img src="../mtn.png" alt="MTN Mobile Money">
+                </div>
+                <div class="payment-card" data-method="Airtel">
+                    <img src="../airtel.png" alt="Airtel Money">
+                </div>
             </div>
-        </aside>
+        </div>
 
-        <div class="dynamic-content">
-            <section id="step-1" class="order-step">
-                <div class="step-intro">
-                    <img src="../prime-video.png" alt="Prime Video" class="service-logo">
-                    <h1>Your Prime Video Access Starts Here.</h1>
-                    <p>Choose your plan to begin. Full setup and support included.</p>
-                </div>
-                <div class="package-grid">
-                    <div class="package-card" data-plan="3 Months" data-price="75,000 UGX">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>3 Months</h3>
-                        <span>75,000 UGX</span>
-                    </div>
-                    <div class="package-card popular" data-plan="6 Months" data-price="140,000 UGX">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>6 Months</h3>
-                        <span>140,000 UGX</span>
-                    </div>
-                    <div class="package-card" data-plan="1 Year" data-price="250,000 UGX">
-                        <i class="fas fa-check-circle"></i>
-                        <h3>1 Year</h3>
-                        <span>250,000 UGX</span>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="step-2" class="order-step">
-                <h2>Perfect. Now, what's your name?</h2>
-                <p>This is just for our records and to personalize your account.</p>
-                <input type="text" id="clientName" class="text-input" placeholder="Enter your full name">
-            </section>
-
-            <section id="step-3" class="order-step">
-                <h2>Last step. How would you like to pay?</h2>
-                <p>All payments are processed securely via Mobile Money.</p>
-                <div class="payment-grid">
-                    <div class="payment-card" data-method="MTN">
-                        <img src="../mtn.png" alt="MTN Mobile Money">
-                    </div>
-                    <div class="payment-card" data-method="Airtel">
-                        <img src="../airtel.png" alt="Airtel Money">
-                    </div>
-                </div>
-            </section>
-
-            <section id="step-4" class="order-step">
-                <h2>All Set!</h2>
-                <p>Click below to confirm your order details on WhatsApp.</p>
-                <button id="cta-button" class="cta-button" disabled>
-                    <i class="fab fa-whatsapp"></i> Proceed
-                </button>
-            </section>
+        <div id="step-final" class="flow-step">
+            <i class="fas fa-check-circle final-icon"></i>
+            <h2 class="flow-title" id="final-title">Your order is ready.</h2>
+            <p class="flow-subtitle">Click below to confirm on WhatsApp.</p>
+            <button id="cta-button" class="cta-button">
+                Proceed
+            </button>
         </div>
    </main>
 
