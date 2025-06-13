@@ -1,4 +1,4 @@
-// order-pass.js - UPDATED FOR FLOW
+// order-pass.js - UPDATED FOR AURORA FLOW (Revision)
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- STATE MANAGEMENT ---
@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const paymentCards = document.querySelectorAll('.payment-card');
     const ctaButton = document.getElementById('cta-button');
     const finalTitle = document.getElementById('final-title');
+    const nextButton = nameForm.querySelector('.next-button');
 
     let currentStep = steps.intro;
 
@@ -42,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial animation to start the flow
     setTimeout(() => {
         goToStep(steps.packages);
-    }, 3000); // Wait 3 seconds on intro screen
+    }, 2500); // Slightly shorter delay
 
     // 1. Package Selection
     packageCards.forEach(card => {
@@ -54,13 +55,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Name Input
+    // 2. Name Input "Next" Button
     nameForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const name = clientNameInput.value.trim();
         if (name) {
             order.clientName = name;
             goToStep(steps.payment);
+        } else {
+            clientNameInput.classList.add('error'); // Example: Add a visual cue for empty input
+            setTimeout(() => clientNameInput.classList.remove('error'), 1000);
         }
     });
 
@@ -68,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     paymentCards.forEach(card => {
         card.addEventListener('click', () => {
             order.paymentMethod = card.dataset.method;
-            finalTitle.textContent = `Your ${order.plan} pass is ready.`;
+            finalTitle.textContent = `Your ${order.plan} access is ready.`;
             goToStep(steps.final);
         });
     });
@@ -77,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ctaButton.addEventListener('click', () => {
         const message = `Hi Cartelug, I'd like to order the following package:\n\n*Service:* ${order.service}\n*Plan:* ${order.plan}\n*Price:* ${order.price}\n\n*My Name:* ${order.clientName}\n*Payment Method:* ${order.paymentMethod}`;
         const whatsappNumber = "256762193386";
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+        const whatsappUrl = `https://wa.me/<span class="math-inline">\{whatsappNumber\}?text\=</span>{encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
     });
 
