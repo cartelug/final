@@ -3,122 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prime Video Support Order - Cartelug</title>
+    <title>Build Your Prime Video Pass - Cartelug</title>
 
-    <link rel="icon" href="../logo.png" type="image/png"> <link rel="apple-touch-icon" href="../logo.png"> <meta name="description" content="Order your Prime Video support package from Cartelug. 3, 6, or 12 month options available for Uganda & South Sudan. Pay easily with Mobile Money.">
-    <meta property="og:title" content="Prime Video Support Order - Cartelug">
-    <meta property="og:description" content="Order your Prime Video package from Cartelug. 3, 6, or 12 month options available for Uganda & South Sudan. Pay easily with Mobile Money.">
-    <meta property="og:image" content="https://cartelug.com/logo.png"> <meta property="og:url" content="https://cartelug.com/prime-order/"> <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Prime Video Support Order - Cartelug">
-    <meta name="twitter:description" content="Order your Prime Video support package from Cartelug. 3, 6, or 12 month options available for Uganda & South Sudan. Pay easily with Mobile Money.">
-    <meta name="twitter:image" content="https://cartelug.com/logo.png"> <link rel="stylesheet" href="../base.css"> <link rel="stylesheet" href="../order.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="icon" href="../logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="../logo.png">
+    <meta name="description" content="Visually build and customize your Prime Video access pass. A fast, interactive, and secure way to order your plan with Mobile Money in Uganda & South Sudan.">
+    <meta property="og:title" content="Build Your Prime Video Pass - Cartelug">
+    <meta property="og:description" content="Visually build and customize your Prime Video access pass. A fast, interactive, and secure way to order your plan.">
+    <meta property="og:image" content="https://cartelug.com/prime-video-pass-og.png"> <meta property="og:url" content="https://cartelug.com/prime-order/">
+    <meta property="og:type" content="website">
+
+    <link rel="stylesheet" href="../base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="order-pass.css">
 </head>
 <body>
 
-    <div id="preloader">
-        <img src="../logo.png" alt="Loading..." class="preloader-logo"> </div>
     <header class="main-header">
-         <div class="container">
-            <div class="header-content">
-                <a href="/" class="logo-link"> <img src="../logo.png" alt="Cartelug Logo" id="logo"> </a>
-                <p class="tagline">Your Expert Streaming Support</p>
-            </div>
-            <nav id="main-nav" class="main-nav">
-                 <ul>
-                    <li><a href="/">Home</a></li> <li><a href="/#services">Services</a></li> <li><a href="/#about">About</a></li> <li><a href="/contact/">Contact</a></li> </ul>
-            </nav>
-            <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
-    </header>
+        <div class="container">
+           <div class="header-content">
+               <a href="/" class="logo-link"> <img src="../logo.png" alt="Cartelug Logo" id="logo"> </a>
+               <p class="tagline">Your Expert Streaming Support</p>
+           </div>
+       </div>
+   </header>
 
-    <main>
-        <section class="order-form-section section-padding">
-            <div class="container">
-                <div class="order-page-logo">
-                    <img src="../prime-video.png" alt="Prime Video Order">
+    <main class="order-pass-main">
+        <div class="container">
+            <div class="order-pass-layout">
+
+                <div class="order-controls">
+                    <div class="controls-header">
+                        <img src="../prime-video.png" alt="Prime Video" class="service-logo">
+                        <h1>Build Your Access Pass</h1>
+                        <p>Select your options to see your pass update in real-time.</p>
+                    </div>
+
+                    <fieldset id="step-1" class="control-step active">
+                        <legend>1. Choose Your Plan</legend>
+                        <div class="plan-options">
+                            <div class="plan-option" data-plan="3 Months" data-price-ugx="75,000" data-price-usd="21">
+                                <span class="plan-duration">3 Months</span>
+                                <span class="plan-price">75,000 UGX</span>
+                            </div>
+                            <div class="plan-option popular" data-plan="6 Months" data-price-ugx="140,000" data-price-usd="39">
+                                <span class="plan-duration">6 Months</span>
+                                <span class="plan-price">140,000 UGX</span>
+                            </div>
+                            <div class="plan-option" data-plan="1 Year" data-price-ugx="250,000" data-price-usd="70">
+                                <span class="plan-duration">1 Year</span>
+                                <span class="plan-price">250,000 UGX</span>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset id="step-2" class="control-step">
+                        <legend>2. Enter Your Name</legend>
+                        <input type="text" id="clientName" name="clientName" placeholder="Enter your full name" required>
+                        <p class="micro-copy">This will be used to identify your account.</p>
+                    </fieldset>
+
+                    <fieldset id="step-3" class="control-step">
+                        <legend>3. Select Payment Method</legend>
+                        <div class="payment-options">
+                            <div class="payment-option" data-method="MTN">
+                                <img src="../mtn.png" alt="MTN Mobile Money">
+                            </div>
+                            <div class="payment-option" data-method="Airtel">
+                                <img src="../airtel.png" alt="Airtel Money">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                     <div id="step-4" class="control-step">
+                        <button id="submit-button" class="cta-button" disabled>
+                            Complete Your Pass
+                        </button>
+                     </div>
                 </div>
 
-                <p class="form-intro">Select your package and provide details to proceed.</p>
+                <div class="order-pass-visualizer">
+                    <div id="access-pass" class="access-pass">
+                        <div class="pass-header">
+                            <span class="pass-brand">CARTELUG</span>
+                            <img src="../prime-video.png" alt="Prime Video Logo" class="pass-service-logo">
+                        </div>
+                        <div class="pass-body">
+                            <div class="pass-field" id="pass-name-field">
+                                <span class="pass-label">ISSUED TO</span>
+                                <span class="pass-value" id="pass-name-value">Your Name</span>
+                            </div>
+                            <div class="pass-field" id="pass-plan-field">
+                                <span class="pass-label">PLAN</span>
+                                <span class="pass-value" id="pass-plan-value">- - -</span>
+                            </div>
+                            <div class="pass-field price" id="pass-price-field">
+                                <span class="pass-label">TOTAL PRICE</span>
+                                <span class="pass-value" id="pass-price-value">0 UGX</span>
+                            </div>
+                        </div>
+                        <div class="pass-footer">
+                            <div id="pass-payment-stamp" class="pass-payment-stamp"></div>
+                            <div class="pass-qr-code">
+                                <i class="fas fa-qrcode"></i>
+                                <span>VALID</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <form id="prime-order-form" class="order-form">
-                    <div class="form-field hidden">
-                         <label for="service">Service</label>
-                         <input type="text" id="service" name="service" value="Prime Video" readonly>
-                    </div>
-                     <fieldset class="form-fieldset">
-                        <legend class="form-legend">Choose Your Package:</legend>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="pkgP3" name="package" value="3 Months" data-price="75,000 UGX / $21 USD" required>
-                                <label for="pkgP3">
-                                    3 Months - 75,000 UGX / $21 USD
-                                </label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="pkgP6" name="package" value="6 Months" data-price="140,000 UGX / $39 USD">
-                                <label for="pkgP6">
-                                    6 Months - 140,000 UGX / $39 USD
-                                </label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="pkgP12" name="package" value="1 Year" data-price="250,000 UGX / $70 USD">
-                                <label for="pkgP12">
-                                    1 Year - 250,000 UGX / $70 USD
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                     <div class="form-field">
-                        <label for="clientName" class="form-label">Your Name:</label>
-                        <input type="text" id="clientName" name="clientName" class="form-input" placeholder="Enter your full name" required>
-                    </div>
-                     <fieldset class="form-fieldset">
-                        <legend class="form-legend">Select Payment Method:</legend>
-                         <div class="radio-group payment-method-group">
-                            <div class="radio-option payment-option">
-                                <input type="radio" id="payMTN" name="paymentMethod" value="MTN" required>
-                                <label for="payMTN">
-                                     <img src="../mtn.png" alt="MTN Mobile Money" class="payment-option-logo">
-                                    <span>MTN Mobile Money</span>
-                                </label>
-                            </div>
-                             <div class="radio-option payment-option">
-                                <input type="radio" id="payAirtel" name="paymentMethod" value="Airtel">
-                                <label for="payAirtel">
-                                     <img src="../airtel.png" alt="Airtel Money" class="payment-option-logo">
-                                    <span>Airtel Money</span>
-                                 </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                     <div class="form-field form-submit-field">
-                         <button type="submit" class="cta-button form-submit-button prime-btn">Proceed to WhatsApp</button>
-                    </div>
-                </form>
             </div>
-        </section>
+        </div>
     </main>
-
-    <footer class="main-footer">
-         <div class="container">
-             <div class="footer-content">
-                <div class="footer-links">
-                     <a href="/privacy-policy/">Privacy Policy</a> | <a href="/terms-of-service/">Terms of Service</a> | <a href="/contact/">Contact Us</a>
-                </div>
-                <div class="payment-info">
-                    <p>Secure Payments Accepted via Mobile Money:</p>
-                    <div class="payment-logos">
-                         <img src="../mtn.png" alt="MTN Mobile Money" class="payment-logo">
-                        <img src="../airtel.png" alt="Airtel Money" class="payment-logo">
-                    </div>
-                </div>
-                <p class="copyright">&copy; <span id="year"></span> Cartelug. All Rights Reserved.</p>
-             </div>
-        </div>
-    </footer>
-
-    <script src="../script.js"></script> </body>
+    
+    <script src="order-pass.js"></script>
+</body>
 </html>
