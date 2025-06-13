@@ -1,133 +1,118 @@
-// order-pass.js
+// order-pass.js - UPDATED FOR DYNAMIC STORY OPTION
 
 document.addEventListener('DOMContentLoaded', () => {
+
     // --- STATE MANAGEMENT ---
     const order = {
         service: 'Prime Video',
         plan: null,
-        priceUGX: null,
-        priceUSD: null,
+        price: null,
         clientName: null,
         paymentMethod: null
     };
 
     // --- DOM ELEMENT SELECTORS ---
-    const steps = {
-        step1: document.getElementById('step-1'),
-        step2: document.getElementById('step-2'),
-        step3: document.getElementById('step-3'),
-        step4: document.getElementById('step-4'),
-    };
-    const pass = {
-        element: document.getElementById('access-pass'),
-        nameValue: document.getElementById('pass-name-value'),
-        planValue: document.getElementById('pass-plan-value'),
-        priceValue: document.getElementById('pass-price-value'),
-        paymentStamp: document.getElementById('pass-payment-stamp'),
-        nameField: document.getElementById('pass-name-field'),
-        planField: document.getElementById('pass-plan-field'),
-        priceField: document.getElementById('pass-price-field')
-    };
-    const controls = {
-        planOptions: document.querySelectorAll('.plan-option'),
+    const elements = {
+        steps: document.querySelectorAll('.order-step'),
+        summary: {
+            container: document.getElementById('order-summary'),
+            plan: document.getElementById('summary-plan'),
+            price: document.getElementById('summary-price')
+        },
+        packageCards: document.querySelectorAll('.package-card'),
         clientNameInput: document.getElementById('clientName'),
-        paymentOptions: document.querySelectorAll('.payment-option'),
-        submitButton: document.getElementById('submit-button')
+        paymentCards: document.querySelectorAll('.payment-card'),
+        ctaButton: document.getElementById('cta-button')
     };
     
-    // --- UI UPDATE FUNCTIONS ---
-
-    function updatePassUI() {
-        // Update Plan
-        if (order.plan) {
-            pass.planValue.textContent = order.plan;
-            pass.priceValue.textContent = `${Number(order.priceUGX).toLocaleString()} UGX`;
-            pass.planField.classList.add('visible');
-            pass.priceField.classList.add('visible');
-        }
-        
-        // Update Name
-        pass.nameValue.textContent = order.clientName || 'Your Name';
-        if (order.clientName) {
-            pass.nameField.classList.add('visible');
-        }
-
-        // Update Payment Stamp
-        pass.paymentStamp.classList.remove('stamped');
-        if (order.paymentMethod) {
-            pass.paymentStamp.style.backgroundImage = `url('../${order.paymentMethod.toLowerCase()}.png')`;
-            // Timeout for stamp animation effect
-            setTimeout(() => pass.paymentStamp.classList.add('stamped'), 10);
-        }
-    }
+    // --- FUNCTIONS ---
     
+    function updateSummary() {
+        elements.summary.plan.textContent = order.plan || '--';
+        elements.summary.price.textContent = order.price || '--';
+    }
+
+    function revealStep(stepElement) {
+        if (!stepElement) return;
+        
+        // Use a short timeout to ensure smooth scroll works after element is visible
+        setTimeout(() => {
+            stepElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            stepElement.classList.add('visible');
+        }, 100);
+    }
+
     function checkCompletion() {
         const isComplete = order.plan && order.clientName && order.paymentMethod;
         if (isComplete) {
-            controls.submitButton.disabled = false;
-            controls.submitButton.textContent = 'Activate My Access';
-            controls.submitButton.classList.add('ready');
-            pass.element.classList.add('complete');
+            elements.ctaButton.disabled = false;
+            elements.ctaButton.classList.add('ready');
         } else {
-            controls.submitButton.disabled = true;
-            controls.submitButton.textContent = 'Complete Your Pass';
-            controls.submitButton.classList.remove('ready');
-            pass.element.classList.remove('complete');
+            elements.ctaButton.disabled = true;
+            elements.ctaButton.classList.remove('ready');
         }
     }
-    
+
     // --- EVENT LISTENERS ---
 
-    // 1. Plan Selection
-    controls.planOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            controls.planOptions.forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
+    // 1. Package Selection
+    elements.packageCards.forEach(card => {
+        card.addEventListener('click', () => {
+            elements.packageCards.forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+
+            order.plan = card.dataset.plan;
+            order.price = card.dataset.price;
             
-            order.plan = option.dataset.plan;
-            order.priceUGX = option.dataset.priceUgx;
-            order.priceUSD = option.dataset.priceUsd;
-            
-            steps.step2.classList.add('active');
-            controls.clientNameInput.focus();
-            updatePassUI();
+            elements.summary.container.classList.add('visible');
+            updateSummary();
+            revealStep(document.getElementById('step-2'));
             checkCompletion();
         });
     });
 
-    // 2. The Name Input
-    controls.clientNameInput.addEventListener('input', (e) => {
-        order.clientName = e.target.value.trim();
-        if (order.clientName) {
-            steps.step3.classList.add('active');
-        }
-        updatePassUI();
-        checkCompletion();
+    // 2. Client Name Input
+    elements.clientNameInput.addEventListener('input', () => {
+        // Use a debounce to prevent revealing step while user is still typing
+        clearTimeout(elements.clientNameInput.timer);
+        elements.clientNameInput.timer = setTimeout(() => {
+            order.clientName = elements.clientNameInput.value.trim();
+            if (order.clientName) {
+                revealStep(document.getElementById('step-3'));
+            }
+            checkCompletion();
+        }, 500);
     });
 
     // 3. Payment Method Selection
-    controls.paymentOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            controls.paymentOptions.forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
+    elements.paymentCards.forEach(card => {
+        card.addEventListener('click', () => {
+            elements.paymentCards.forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
             
-            order.paymentMethod = option.dataset.method;
-            steps.step4.classList.add('active');
-            updatePassUI();
+            order.paymentMethod = card.dataset.method;
+            revealStep(document.getElementById('step-4'));
             checkCompletion();
         });
     });
 
-    // 4. Form Submission
-    controls.submitButton.addEventListener('click', () => {
-        if (!controls.submitButton.disabled) {
-            const message = `Hi Cartelug, I'd like to order the following package:\n\n*Service:* ${order.service}\n*Plan:* ${order.plan}\n*Price:* ${Number(order.priceUGX).toLocaleString()} UGX / $${order.priceUSD} USD\n\n*My Name:* ${order.clientName}\n*Payment Method:* ${order.paymentMethod}`;
+
+
+    // 4. Final CTA Button
+    elements.ctaButton.addEventListener('click', () => {
+        if (!elements.ctaButton.disabled) {
+            const message = `Hi Cartelug, I'd like to order the following package:\n\n*Service:* ${order.service}\n*Plan:* ${order.plan}\n*Price:* ${order.price}\n\n*My Name:* ${order.clientName}\n*Payment Method:* ${order.paymentMethod}`;
             
-            const whatsappUrl = `https://wa.me/YOUR_PHONE_NUMBER?text=${encodeURIComponent(message)}`;
+            // Correct WhatsApp Number
+            const whatsappNumber = "256762193386";
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
             
-            // **IMPORTANT**: Replace YOUR_PHONE_NUMBER with your actual WhatsApp number including country code (e.g., 2567...)
-            window.open(whatsappUrl.replace('YOUR_PHONE_NUMBER', '256742367554'), '_blank');
+            window.open(whatsappUrl, '_blank');
         }
     });
+
+    // --- INITIALIZATION ---
+    // Reveal the first step on load
+    document.getElementById('step-1').classList.add('visible');
 
 });
