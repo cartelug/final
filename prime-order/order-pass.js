@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 2. Name Input
+    // 2. The Name Input
     controls.clientNameInput.addEventListener('input', (e) => {
         order.clientName = e.target.value.trim();
         if (order.clientName) {
