@@ -78,10 +78,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Final CTA Button
+    // 4. Final CTA Button with a custom message format
     ctaButton.addEventListener('click', () => {
-        const message = `Hi Cartelug, I'd like to order the following package:\n\n*Service:* ${order.service}\n*Plan:* ${order.plan}\n*Price:* ${order.price}\n\n*My Name:* ${order.clientName}\n*Payment Method:* ${order.paymentMethod}`;
         const whatsappNumber = "256762193386";
+        
+        // Using your preferred message format
+        let message = `Order for Cartelug:\n\n`;
+        message += `*Service:* ${order.service}\n`;
+        message += `*Package:* ${order.plan}\n`; // "Package" as per your format's structure
+        message += `*Name:* ${order.clientName}\n`;
+        message += `*Payment Method:* ${order.paymentMethod}`;
+        
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
         window.open(whatsappUrl, '_blank');
     });
