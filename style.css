@@ -149,3 +149,100 @@ body::before {
     .testimonial-cite { font-size: 0.8rem; }
     .testimonial-swiper .swiper-button-next::after, .testimonial-swiper .swiper-button-prev::after { font-size: 1.5rem; }
 }
+/* === New Text-Based Testimonial Styles === */
+
+/* Remove old card styles to avoid conflicts */
+.testimonial-card-new {
+    display: none;
+}
+
+/* New card container */
+.testimonial-card-text {
+    background-color: var(--testimonial-card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 40px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 8px 35px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden; /* Important for the background quote */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 280px; /* Give cards a consistent height */
+}
+
+/* Giant background quotation mark for aesthetic */
+.testimonial-bg-quote {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    font-size: 8rem;
+    color: var(--cta-blue);
+    opacity: 0.05;
+    z-index: 1;
+    line-height: 1;
+}
+
+/* Star rating styles */
+.testimonial-rating {
+    margin-bottom: 20px;
+    color: #ffc107; /* Gold color for stars */
+    font-size: 1.1rem;
+    z-index: 2;
+    position: relative;
+}
+
+/* The actual quote text */
+.testimonial-quote-text {
+    margin: 0 0 25px 0;
+    color: var(--text-light);
+    font-size: 1.1rem;
+    line-height: 1.8;
+    font-style: italic;
+    flex-grow: 1;
+    z-index: 2;
+    position: relative;
+}
+
+/* The citation (client name) */
+.testimonial-cite-text {
+    font-style: normal;
+    font-weight: 700;
+    color: var(--text-medium);
+    font-size: 0.95rem;
+    display: block;
+    margin-top: auto; /* Pushes the cite to the bottom */
+    padding-top: 20px;
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 2;
+    position: relative;
+}
+
+/* Responsive adjustments for the new cards */
+@media (max-width: 768px) {
+    .testimonial-card-text {
+        padding: 30px;
+        min-height: 300px;
+    }
+    .testimonial-quote-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .testimonial-card-text {
+        padding: 25px 20px;
+        min-height: 320px; /* Allow more height on small screens */
+    }
+    .testimonial-bg-quote {
+        font-size: 6rem;
+    }
+}
