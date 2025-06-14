@@ -1,6 +1,6 @@
-/* order-pass.css - UPDATED FOR GLASS CARD FLOW */
+/* order-pass.css - UPDATED FOR GLASS CARD FLOW (PRIME VIDEO) */
 :root {
-    --prime-blue: #00A8E1;
+    --brand-blue: #00A8E1; /* Prime Video Blue */
     --whatsapp-green: #25D366;
     --discount-red: #ff5252;
     --text-light: #ffffff;
@@ -50,7 +50,7 @@ body {
     height: 70vw;
     max-width: 700px;
     max-height: 700px;
-    background-color: var(--prime-blue);
+    background-color: var(--brand-blue);
     bottom: -20%;
     right: -20%;
     animation: move2 35s infinite alternate;
@@ -126,7 +126,7 @@ body {
     padding: 1.5rem;
 }
 
-/* Package Options with Discount */
+/* Package Options with Discount & USD */
 .package-options {
     display: flex;
     flex-direction: column;
@@ -148,7 +148,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap; /* Allow wrapping on small screens */
+    flex-wrap: wrap;
     gap: 10px;
 }
 .plan-duration {
@@ -157,27 +157,38 @@ body {
 }
 .price-wrapper {
     display: flex;
-    align-items: baseline;
+    align-items: center; 
     gap: 0.75rem;
 }
 .original-price {
     color: var(--discount-red);
-    font-size: 0.9rem;
-    font-weight: 500;
+    font-size: 1rem;
     text-decoration-thickness: 1.5px;
+    opacity: 0.8;
+}
+.final-price-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+    line-height: 1.2;
 }
 .plan-price {
     font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-light);
 }
+.plan-price-usd {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
 
 .option-button:hover {
     background-color: rgba(255,255,255,0.1);
 }
 .option-button.selected {
-    background-color: var(--prime-blue);
-    border-color: var(--prime-blue);
+    background-color: var(--brand-blue);
+    border-color: var(--brand-blue);
 }
 .option-button.selected .plan-price {
     color: #fff;
@@ -187,7 +198,7 @@ body {
     position: absolute;
     top: -10px;
     right: 20px;
-    background-color: var(--prime-blue);
+    background-color: var(--brand-blue);
     color: #fff;
     font-size: 0.6rem;
     font-weight: 700;
@@ -211,14 +222,14 @@ body {
 }
 .glass-input:focus {
     outline: none;
-    border-color: var(--prime-blue);
+    border-color: var(--brand-blue);
 }
 .next-button {
     flex-shrink: 0;
     width: 54px;
     height: 54px;
     border-radius: 12px;
-    background-color: var(--prime-blue);
+    background-color: var(--brand-blue);
     color: #fff;
     border: none;
     font-size: 1.5rem;
@@ -244,7 +255,7 @@ body {
     transition: border-color 0.3s;
 }
 .payment-card.selected {
-    border-color: var(--prime-blue);
+    border-color: var(--brand-blue);
 }
 .payment-card img {
     max-height: 50px;
