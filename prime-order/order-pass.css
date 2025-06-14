@@ -2,6 +2,7 @@
 :root {
     --prime-blue: #00A8E1;
     --whatsapp-green: #25D366;
+    --discount-red: #ff5252;
     --text-light: #ffffff;
     --text-muted: #d1d5db;
     --bg-color: #030413;
@@ -125,7 +126,7 @@ body {
     padding: 1.5rem;
 }
 
-/* Package Options */
+/* Package Options with Discount */
 .package-options {
     display: flex;
     flex-direction: column;
@@ -147,25 +148,39 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 10px;
 }
 .plan-duration {
     font-size: 1.1rem;
     font-weight: 600;
 }
-.plan-price {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text-muted);
-    background-color: rgba(0,0,0,0.2);
-    padding: 0.25rem 0.75rem;
-    border-radius: 8px;
+.price-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
 }
+.original-price {
+    color: var(--discount-red);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration-thickness: 1.5px;
+}
+.plan-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
 .option-button:hover {
     background-color: rgba(255,255,255,0.1);
 }
 .option-button.selected {
     background-color: var(--prime-blue);
     border-color: var(--prime-blue);
+}
+.option-button.selected .plan-price {
+    color: #fff;
 }
 .option-button.popular::after {
     content: 'MOST POPULAR';
