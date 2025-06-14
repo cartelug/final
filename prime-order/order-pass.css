@@ -1,6 +1,7 @@
 /* order-pass.css - UPDATED FOR GLASS CARD FLOW */
 :root {
     --prime-blue: #00A8E1;
+    --whatsapp-green: #25D366;
     --text-light: #ffffff;
     --text-muted: #d1d5db;
     --bg-color: #030413;
@@ -133,8 +134,6 @@ body {
 .option-button {
     width: 100%;
     padding: 1rem;
-    font-size: 1.1rem;
-    font-weight: 600;
     background-color: rgba(255,255,255,0.05);
     border: 1px solid var(--glass-border);
     color: var(--text-light);
@@ -142,6 +141,24 @@ body {
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
     position: relative;
+    text-align: left;
+}
+.option-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.plan-duration {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.plan-price {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    background-color: rgba(0,0,0,0.2);
+    padding: 0.25rem 0.75rem;
+    border-radius: 8px;
 }
 .option-button:hover {
     background-color: rgba(255,255,255,0.1);
@@ -237,7 +254,7 @@ body {
     padding: 1rem;
     font-size: 1.2rem;
     font-weight: 700;
-    background-color: var(--prime-blue);
+    background-color: var(--whatsapp-green);
     color: #fff;
     border: none;
     border-radius: 12px;
@@ -246,4 +263,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
+    transition: background-color 0.3s;
+}
+.cta-button:hover {
+    background-color: #1EBE57; /* A slightly darker green for hover */
 }
