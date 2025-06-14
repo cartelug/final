@@ -6,20 +6,19 @@
     <title>Prime Video Order - Cartelug</title>
     <link rel="icon" href="../logo.png" type="image/png">
     <link rel="apple-touch-icon" href="../logo.png">
-    <meta name="description" content="Get Prime Video Cheap and Easy with Cartelug. A beautiful and seamless ordering experience.">
+    <meta name="description" content="A premium, simple, and fast way to order your Prime Video package.">
 
     <link rel="stylesheet" href="../base.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+    
     <link rel="stylesheet" href="order-pass.css">
 </head>
 <body>
     <div class="aurora-background">
         <div class="aurora-shape shape1"></div>
         <div class="aurora-shape shape2"></div>
-        <div class="aurora-shape shape3"></div>
     </div>
-
+    
     <header class="main-header transparent">
         <div class="container">
            <div class="header-content">
@@ -28,59 +27,65 @@
        </div>
    </header>
 
-   <main class="flow-container">
-        <div id="step-intro" class="flow-step active">
-            <img src="../prime-video.png" alt="Prime Video Logo" class="service-logo-main intro-logo">
-            <h1 class="flow-title intro-title">Get Prime Video Cheap and Easy.</h1>
-            <p class="flow-subtitle intro-subtitle">Choose your plan to begin.</p>
+   <main class="card-flow-container">
+        <div class="page-header">
+            <img src="../prime-video.png" alt="Prime Video Logo" class="service-logo">
+            <h1>Order Your Prime Video</h1>
+            <p>Complete the steps below. It takes less than a minute.</p>
         </div>
-
-        <div id="step-packages" class="flow-step">
-            <h2 class="flow-title">Choose Your Plan</h2>
-            <div class="package-options">
-                <div class="package-card" data-plan="3 Months" data-price="75,000 UGX">
-                    <h3>3 Months</h3>
-                    <span>75,000 UGX</span>
-                </div>
-                <div class="package-card popular" data-plan="6 Months" data-price="140,000 UGX">
-                    <h3>6 Months</h3>
-                    <span>140,000 UGX</span>
-                </div>
-                <div class="package-card" data-plan="1 Year" data-price="250,000 UGX">
-                    <h3>1 Year</h3>
-                    <span>250,000 UGX</span>
+        
+        <section id="step-1" class="step-card active">
+            <div class="card-header">
+                <span class="card-step-number">1</span>
+                <h3>Choose Your Plan</h3>
+            </div>
+            <div class="card-content">
+                <div class="package-options">
+                    <button class="option-button" data-plan="3 Months" data-price="75,000 UGX">3 Months</button>
+                    <button class="option-button popular" data-plan="6 Months" data-price="140,000 UGX">6 Months</button>
+                    <button class="option-button" data-plan="1 Year" data-price="250,000 UGX">1 Year</button>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="step-name" class="flow-step">
-            <h2 class="flow-title">What's your name?</h2>
-            <form id="name-form">
-                <input type="text" id="clientName" class="glass-input" placeholder="Enter your full name here" required>
-                <button type="submit" class="next-button">Next <i class="fas fa-arrow-right"></i></button>
-            </form>
-        </div>
+        <section id="step-2" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">2</span>
+                <h3>Enter Your Name</h3>
+            </div>
+            <div class="card-content">
+                <form id="name-form" class="name-form">
+                    <input type="text" id="clientName" class="glass-input" placeholder="Enter your full name" required>
+                    <button type="submit" class="next-button"><i class="fas fa-arrow-down"></i></button>
+                </form>
+            </div>
+        </section>
 
-        <div id="step-payment" class="flow-step">
-            <h2 class="flow-title">How would you like to pay?</h2>
-            <div class="payment-options centered">
-                <div class="payment-card" data-method="MTN">
-                    <img src="../mtn.png" alt="MTN Mobile Money">
-                </div>
-                <div class="payment-card" data-method="Airtel">
-                    <img src="../airtel.png" alt="Airtel Money">
+        <section id="step-3" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">3</span>
+                <h3>Select Payment</h3>
+            </div>
+            <div class="card-content">
+                <div class="payment-options">
+                    <div class="payment-card" data-method="MTN">
+                        <img src="../mtn.png" alt="MTN Mobile Money">
+                    </div>
+                    <div class="payment-card" data-method="Airtel">
+                        <img src="../airtel.png" alt="Airtel Money">
+                    </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div id="step-final" class="flow-step">
-            <i class="fas fa-check-circle final-icon"></i>
-            <h2 class="flow-title" id="final-title">Your order is ready.</h2>
-            <p class="flow-subtitle">Click below to proceed to WhatsApp.</p>
+        <section id="step-final" class="final-cta-area locked">
+            <h4>Ready to go?</h4>
+            <p>You're all set. Proceed to WhatsApp to finalize your order.</p>
             <button id="cta-button" class="cta-button">
-                Proceed
+                <i class="fab fa-whatsapp"></i> Proceed to WhatsApp
             </button>
-        </div>
+        </section>
+
    </main>
 
    <script src="order-pass.js"></script>
