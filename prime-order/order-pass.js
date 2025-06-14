@@ -82,10 +82,11 @@ document.addEventListener('DOMContentLoaded', () => {
     ctaButton.addEventListener('click', () => {
         const whatsappNumber = "256762193386";
         
-        // Using your preferred message format
+        // Using your preferred message format with Price now included
         let message = `Order for Cartelug:\n\n`;
         message += `*Service:* ${order.service}\n`;
-        message += `*Package:* ${order.plan}\n`; // "Package" as per your format's structure
+        message += `*Package:* ${order.plan}\n`;
+        message += `*Price:* ${order.price}\n`; // <-- PRICE ADDED HERE
         message += `*Name:* ${order.clientName}\n`;
         message += `*Payment Method:* ${order.paymentMethod}`;
         
