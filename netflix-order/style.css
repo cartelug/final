@@ -1,1 +1,257 @@
+/* netflix-order/style.css */
+:root {
+    --brand-red: #E50914; /* Netflix Red */
+    --whatsapp-green: #25D366;
+    --discount-red: #ff5252;
+    --text-light: #ffffff;
+    --text-muted: #d1d5db;
+    --bg-color: #000000; /* Netflix Black Background */
+    --glass-bg: rgba(22, 22, 22, 0.5);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
+body {
+    background-color: var(--bg-color);
+    color: var(--text-light);
+    font-family: 'Inter', 'Poppins', sans-serif;
+}
+
+.transparent { background: transparent !important; box-shadow: none !important; }
+
+.aurora-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+    background: radial-gradient(circle at 10% 20%, rgba(229, 9, 20, 0.2), transparent 40%),
+                radial-gradient(circle at 80% 90%, rgba(109, 109, 110, 0.2), transparent 50%);
+}
+
+/* Main Container & Header */
+.card-flow-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem 10rem 1rem;
+}
+
+.page-header {
+    text-align: center;
+    padding: 2rem 0 4rem 0;
+}
+.page-header .service-logo {
+    max-height: 50px;
+}
+.page-header h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    margin: 1rem 0 0.5rem 0;
+}
+.page-header p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+/* Step Card Styling */
+.step-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    margin-bottom: 2rem;
+    transition: var(--transition-smooth);
+}
+
+.step-card.locked {
+    opacity: 0.3;
+    transform: translateY(20px);
+    pointer-events: none;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.card-step-number {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--text-light);
+    font-weight: 700;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.card-header h3 { font-size: 1.25rem; }
+
+.card-content {
+    padding: 1.5rem;
+}
+
+/* Package Options with Discount */
+.package-options {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.option-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-light);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    position: relative;
+    text-align: left;
+}
+.option-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.plan-duration {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+.price-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+}
+.original-price {
+    color: var(--discount-red);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration-thickness: 1.5px;
+}
+.plan-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-light);
+}
+
+.option-button:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+.option-button.selected {
+    background-color: var(--brand-red);
+    border-color: var(--brand-red);
+}
+.option-button.selected .plan-price {
+    color: #fff;
+}
+.option-button.popular::after {
+    content: 'MOST POPULAR';
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background-color: var(--brand-red);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+}
+
+/* Name Input */
+.name-form {
+    display: flex;
+    gap: 1rem;
+}
+.glass-input {
+    flex-grow: 1;
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+.glass-input:focus {
+    outline: none;
+    border-color: var(--brand-red);
+}
+.next-button {
+    flex-shrink: 0;
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    background-color: var(--brand-red);
+    color: #fff;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Payment Options */
+.payment-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+.payment-card {
+    background-color: rgba(0,0,0,0.2);
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+.payment-card.selected {
+    border-color: var(--brand-red);
+}
+.payment-card img {
+    max-height: 50px;
+}
+
+/* Final CTA Area */
+.final-cta-area {
+    text-align: center;
+    padding: 2rem;
+    transition: var(--transition-smooth);
+}
+.final-cta-area.locked {
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    display: none;
+}
+.final-cta-area h4 { font-size: 1.5rem; }
+.final-cta-area p { color: var(--text-muted); margin-top: 0.5rem; margin-bottom: 1.5rem; }
+.cta-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background-color: var(--whatsapp-green);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: background-color 0.3s;
+}
+.cta-button:hover {
+    background-color: #1EBE57; /* A slightly darker green for hover */
+}
