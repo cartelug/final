@@ -3,116 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Support Order - Cartelug</title>
+    <title>Spotify Premium Order - Cartelug</title>
+    <link rel="icon" href="../logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="../logo.png">
+    <meta name="description" content="A premium, simple, and fast way to order your Spotify Premium package.">
 
-    <link rel="icon" href="../logo.png" type="image/png"> <link rel="apple-touch-icon" href="../logo.png"> <meta name="description" content="Get Spotify Premium support from Cartelug. 6 month or 1 year packages for Uganda & South Sudan. Use your own account! Pay via Mobile Money.">
-    <meta property="og:title" content="Spotify Support Order - Cartelug">
-    <meta property="og:description" content="Get Spotify Premium support from Cartelug. 6 month or 1 year packages for Uganda & South Sudan. Use your own account! Pay via Mobile Money.">
-    <meta property="og:image" content="https://cartelug.com/logo.png"> <meta property="og:url" content="https://cartelug.com/spotify-order/"> <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Spotify Support Order - Cartelug">
-    <meta name="twitter:description" content="Get Spotify Premium support from Cartelug. 6 month or 1 year packages for Uganda & South Sudan. Use your own account! Pay via Mobile Money.">
-    <meta name="twitter:image" content="https://cartelug.com/logo.png"> <link rel="stylesheet" href="../base.css"> <link rel="stylesheet" href="../order.css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <div id="preloader">
-        <img src="../logo.png" alt="Loading..." class="preloader-logo"> </div>
-    <header class="main-header">
+    <div class="aurora-background">
+        <div class="aurora-shape shape1"></div>
+        <div class="aurora-shape shape2"></div>
+    </div>
+    
+    <header class="main-header transparent">
         <div class="container">
-            <div class="header-content">
-                <a href="/" class="logo-link"> <img src="../logo.png" alt="Cartelug Logo" id="logo"> </a>
-                <p class="tagline">Your Expert Streaming Support</p>
-            </div>
-            <nav id="main-nav" class="main-nav">
-                 <ul>
-                    <li><a href="/">Home</a></li> <li><a href="/#services">Services</a></li> <li><a href="/#about">About</a></li> <li><a href="/contact/">Contact</a></li> </ul>
-            </nav>
-            <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu">
-                <i class="fas fa-bars"></i>
-            </button>
+           <div class="header-content">
+               <a href="/" class="logo-link"><img src="../logo.png" alt="Cartelug Logo" id="logo"></a>
+           </div>
+       </div>
+   </header>
+
+   <main class="card-flow-container">
+        <div class="page-header">
+            <img src="../spotify.png" alt="Spotify Logo" class="service-logo">
+            <h1>Order Your Spotify Premium</h1>
+            <p>Complete the steps below. It takes less than a minute.</p>
         </div>
-    </header>
-
-    <main>
-        <section class="order-form-section section-padding">
-            <div class="container">
-                 <div class="order-page-logo">
-                     <img src="../spotify.png" alt="Spotify Order">
-                 </div>
-
-                <p class="form-intro">Select your package and provide details to proceed.</p>
-
-                <form id="spotify-order-form" class="order-form">
-                     <div class="form-field hidden">
-                         <label for="service">Service</label>
-                         <input type="text" id="service" name="service" value="Spotify" readonly>
-                     </div>
-                     <fieldset class="form-fieldset">
-                        <legend class="form-legend">Choose Your Package:</legend>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="pkgS6" name="package" value="6 Months" data-price="70,000 UGX" required>
-                                <label for="pkgS6">
-                                    6 Months - 70,000 UGX
-                                </label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="pkgS1Y" name="package" value="1 Year" data-price="120,000 UGX">
-                                <label for="pkgS1Y">
-                                    1 Year - 120,000 UGX
-                                </label>
+        
+        <section id="step-1" class="step-card active">
+            <div class="card-header">
+                <span class="card-step-number">1</span>
+                <h3>Choose Your Plan</h3>
+            </div>
+            <div class="card-content">
+                <div class="package-options">
+                    <button class="option-button" data-plan="6 Months" data-price="70,000 UGX / $20 USD">
+                        <div class="option-text">
+                            <span class="plan-duration">6 Months</span>
+                            <div class="price-wrapper">
+                                <del class="original-price">140,000</del>
+                                <div class="final-price-container">
+                                    <span class="plan-price">70,000 UGX</span>
+                                    <span class="plan-price-usd">$20 USD</span>
+                                </div>
                             </div>
                         </div>
-                    </fieldset>
-                     <div class="form-field">
-                        <label for="clientName" class="form-label">Your Name:</label>
-                        <input type="text" id="clientName" name="clientName" class="form-input" placeholder="Enter your full name" required>
-                    </div>
-                     <fieldset class="form-fieldset">
-                        <legend class="form-legend">Select Payment Method:</legend>
-                         <div class="radio-group payment-method-group">
-                            <div class="radio-option payment-option">
-                                <input type="radio" id="payMTN" name="paymentMethod" value="MTN" required>
-                                <label for="payMTN">
-                                     <img src="../mtn.png" alt="MTN Mobile Money" class="payment-option-logo">
-                                    <span>MTN Mobile Money</span>
-                                </label>
-                            </div>
-                             <div class="radio-option payment-option">
-                                <input type="radio" id="payAirtel" name="paymentMethod" value="Airtel">
-                                <label for="payAirtel">
-                                     <img src="../airtel.png" alt="Airtel Money" class="payment-option-logo">
-                                    <span>Airtel Money</span>
-                                 </label>
+                    </button>
+                    <button class="option-button popular" data-plan="8 Months" data-price="80,000 UGX / $23 USD">
+                        <div class="option-text">
+                            <span class="plan-duration">8 Months</span>
+                            <div class="price-wrapper">
+                                <del class="original-price">160,000</del>
+                                <div class="final-price-container">
+                                    <span class="plan-price">80,000 UGX</span>
+                                    <span class="plan-price-usd">$23 USD</span>
+                                </div>
                             </div>
                         </div>
-                    </fieldset>
-                     <div class="form-field form-submit-field">
-                          <button type="submit" class="cta-button form-submit-button spotify-btn">Proceed to WhatsApp</button>
-                    </div>
+                    </button>
+                    <button class="option-button" data-plan="1 Year" data-price="110,000 UGX / $31 USD">
+                        <div class="option-text">
+                            <span class="plan-duration">1 Year</span>
+                            <div class="price-wrapper">
+                                <del class="original-price">220,000</del>
+                                <div class="final-price-container">
+                                    <span class="plan-price">110,000 UGX</span>
+                                    <span class="plan-price-usd">$31 USD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="step-2" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">2</span>
+                <h3>Enter Your Name</h3>
+            </div>
+            <div class="card-content">
+                <form id="name-form" class="name-form">
+                    <input type="text" id="clientName" class="glass-input" placeholder="Enter your full name" required>
+                    <button type="submit" class="next-button"><i class="fas fa-arrow-down"></i></button>
                 </form>
             </div>
         </section>
-    </main>
 
-   <footer class="main-footer">
-         <div class="container">
-             <div class="footer-content">
-                <div class="footer-links">
-                     <a href="/privacy-policy/">Privacy Policy</a> | <a href="/terms-of-service/">Terms of Service</a> | <a href="/contact/">Contact Us</a>
-                </div>
-                <div class="payment-info">
-                    <p>Secure Payments Accepted via Mobile Money:</p>
-                    <div class="payment-logos">
-                         <img src="../mtn.png" alt="MTN Mobile Money" class="payment-logo">
-                        <img src="../airtel.png" alt="Airtel Money" class="payment-logo">
+        <section id="step-3" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">3</span>
+                <h3>Select Payment</h3>
+            </div>
+            <div class="card-content">
+                <div class="payment-options">
+                    <div class="payment-card" data-method="MTN">
+                        <img src="../mtn.png" alt="MTN Mobile Money">
+                    </div>
+                    <div class="payment-card" data-method="Airtel">
+                        <img src="../airtel.png" alt="Airtel Money">
                     </div>
                 </div>
-                <p class="copyright">&copy; <span id="year"></span> Cartelug. All Rights Reserved.</p>
-             </div>
-        </div>
-    </footer>
+            </div>
+        </section>
 
-    <script src="../script.js"></script> </body>
+        <section id="step-final" class="final-cta-area locked">
+            <h4>Ready to go?</h4>
+            <p>You're all set. Proceed to WhatsApp to finalize your order.</p>
+            <button id="cta-button" class="cta-button">
+                <i class="fab fa-whatsapp"></i> Proceed to WhatsApp
+            </button>
+        </section>
+
+   </main>
+
+   <script src="script.js"></script>
+</body>
 </html>
