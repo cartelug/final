@@ -11,9 +11,11 @@
     <link rel="stylesheet" href="../base.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
+    <!-- We are updating this stylesheet -->
     <link rel="stylesheet" href="order-pass.css">
 </head>
 <body>
+    <!-- The animated background -->
     <div class="aurora-background">
         <div class="aurora-shape shape1"></div>
         <div class="aurora-shape shape2"></div>
@@ -34,6 +36,7 @@
             <p>Complete the steps below. It takes less than a minute.</p>
         </div>
         
+        <!-- Card 1: Package Selection -->
         <section id="step-1" class="step-card active">
             <div class="card-header">
                 <span class="card-step-number">1</span>
@@ -41,13 +44,29 @@
             </div>
             <div class="card-content">
                 <div class="package-options">
-                    <button class="option-button" data-plan="3 Months" data-price="75,000 UGX">3 Months</button>
-                    <button class="option-button popular" data-plan="6 Months" data-price="140,000 UGX">6 Months</button>
-                    <button class="option-button" data-plan="1 Year" data-price="250,000 UGX">1 Year</button>
+                    <button class="option-button" data-plan="3 Months" data-price="75,000 UGX">
+                        <div class="option-text">
+                            <span class="plan-duration">3 Months</span>
+                            <span class="plan-price">75,000 UGX</span>
+                        </div>
+                    </button>
+                    <button class="option-button popular" data-plan="6 Months" data-price="140,000 UGX">
+                        <div class="option-text">
+                            <span class="plan-duration">6 Months</span>
+                            <span class="plan-price">140,000 UGX</span>
+                        </div>
+                    </button>
+                    <button class="option-button" data-plan="1 Year" data-price="250,000 UGX">
+                        <div class="option-text">
+                            <span class="plan-duration">1 Year</span>
+                            <span class="plan-price">250,000 UGX</span>
+                        </div>
+                    </button>
                 </div>
             </div>
         </section>
 
+        <!-- Card 2: Your Name -->
         <section id="step-2" class="step-card locked">
             <div class="card-header">
                 <span class="card-step-number">2</span>
@@ -61,6 +80,7 @@
             </div>
         </section>
 
+        <!-- Card 3: Payment Method -->
         <section id="step-3" class="step-card locked">
             <div class="card-header">
                 <span class="card-step-number">3</span>
@@ -78,6 +98,7 @@
             </div>
         </section>
 
+        <!-- Final CTA Area -->
         <section id="step-final" class="final-cta-area locked">
             <h4>Ready to go?</h4>
             <p>You're all set. Proceed to WhatsApp to finalize your order.</p>
@@ -88,6 +109,7 @@
 
    </main>
 
+   <!-- We are updating this script -->
    <script src="order-pass.js"></script>
 </body>
 </html>
