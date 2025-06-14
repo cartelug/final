@@ -1,9 +1,9 @@
-// order-pass.js - UPDATED FOR GLASS CARD FLOW
+// order-pass.js - UPDATED FOR GLASS CARD FLOW (PRIME VIDEO)
 document.addEventListener('DOMContentLoaded', () => {
 
     // --- STATE MANAGEMENT ---
     const order = {
-        service: 'Prime Video',
+        service: 'Prime Video', // Changed to Prime Video
         plan: null,
         price: null,
         clientName: null,
@@ -78,15 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Final CTA Button with a custom message format
+    // 4. Final CTA Button
     ctaButton.addEventListener('click', () => {
         const whatsappNumber = "256762193386";
         
-        // Using your preferred message format with Price now included
         let message = `Order for Cartelug:\n\n`;
         message += `*Service:* ${order.service}\n`;
         message += `*Package:* ${order.plan}\n`;
-        message += `*Price:* ${order.price}\n`; // <-- PRICE ADDED HERE
+        message += `*Price:* ${order.price}\n`;
         message += `*Name:* ${order.clientName}\n`;
         message += `*Payment Method:* ${order.paymentMethod}`;
         
