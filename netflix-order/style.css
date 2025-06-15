@@ -33,9 +33,13 @@ body {
 
 /* Main Container & Header */
 .card-flow-container {
-    max-width: 600px;
+    /* --- FIX STARTS HERE --- */
+    width: 100%; /* Make the container take up the full width of its parent */
+    max-width: 600px; /* Ensure it doesn't get wider than 600px on large screens */
+    /* --- FIX ENDS HERE --- */
     margin: 0 auto;
     padding: 2rem 1rem 10rem 1rem;
+    box-sizing: border-box; /* Ensures padding is included in the width calculation */
 }
 
 .page-header {
