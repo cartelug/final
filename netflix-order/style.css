@@ -4,8 +4,8 @@
     --whatsapp-green: #25D366;
     --discount-red: #ff5252;
     --text-light: #ffffff;
-    --text-muted: #b3b3b3; /* Slightly brighter muted text for Netflix theme */
-    --bg-color: #000000; /* Netflix Black Background */
+    --text-muted: #b3b3b3;
+    --bg-color: #000000;
     --glass-bg: rgba(22, 22, 22, 0.5);
     --glass-border: rgba(255, 255, 255, 0.15);
     --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -33,13 +33,11 @@ body {
 
 /* Main Container & Header */
 .card-flow-container {
-    /* --- FIX STARTS HERE --- */
-    width: 100%; /* Make the container take up the full width of its parent */
-    max-width: 600px; /* Ensure it doesn't get wider than 600px on large screens */
-    /* --- FIX ENDS HERE --- */
+    width: 100%;
+    max-width: 600px;
     margin: 0 auto;
     padding: 2rem 1rem 10rem 1rem;
-    box-sizing: border-box; /* Ensures padding is included in the width calculation */
+    box-sizing: border-box; 
 }
 
 .page-header {
@@ -133,7 +131,7 @@ body {
 }
 .price-wrapper {
     display: flex;
-    align-items: center; /* Align strikethrough with price container */
+    align-items: center;
     gap: 0.75rem;
 }
 .original-price {
@@ -145,7 +143,7 @@ body {
 .final-price-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-end; /* Align prices to the right */
+    align-items: flex-end;
     line-height: 1.2;
 }
 .plan-price {
@@ -186,9 +184,13 @@ body {
 .name-form {
     display: flex;
     gap: 1rem;
+    /* --- FIX STARTS HERE --- */
+    flex-wrap: wrap; /* This is the key! Allows items to wrap to the next line on small screens */
+    /* --- FIX ENDS HERE --- */
 }
 .glass-input {
-    flex-grow: 1;
+    flex-grow: 1; /* Allows the input to take up available space */
+    min-width: 150px; /* Prevents the input from becoming too small before wrapping */
     background: rgba(0,0,0,0.2);
     border: 1px solid var(--glass-border);
     border-radius: 12px;
@@ -235,6 +237,7 @@ body {
 }
 .payment-card img {
     max-height: 50px;
+    max-width: 100%; /* Ensure logos also scale down if needed */
 }
 
 /* Final CTA Area */
