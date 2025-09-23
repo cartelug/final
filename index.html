@@ -5,110 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cartelug - Premium Streaming | Uganda & South Sudan</title>
     <link rel="icon" href="logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="style.min.css">
 </head>
 <body>
-    <div id="preloader"><img src="logo.png" alt="Loading..." class="preloader-logo"></div>
-    <div class="page-content">
-        <header class="main-header">
+    <header class="main-header">
+        <div class="container">
+            <a href="/" class="logo-link"><img src="logo.png" alt="Cartelug Logo" id="logo"></a>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="/" class="active-nav">Home</a></li>
+                    <li><a href="/#services">Services</a></li>
+                    <li><a href="/#about">About</a></li>
+                    <li><a href="/contact/">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
+        </div>
+    </header>
+
+    <main>
+        <section id="services" class="platform-selection section-padding">
             <div class="container">
-                <div class="header-content">
-                    <a href="/" class="logo-link"><img src="logo.png" alt="Cartelug Logo" id="logo"></a>
-                    <p class="tagline">AVAILABLE IN UGANDA AND SOUTH SUDAN</p>
-                </div>
-                <nav id="main-nav" class="main-nav">
-                    <ul>
-                        <li><a href="/">Home</a></li>
-                        <li><a href="/#services">Services</a></li>
-                        <li><a href="/#about">About</a></li>
-                        <li><a href="/contact/">Contact</a></li>
-                    </ul>
-                </nav>
-                <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
-            </div>
-        </header>
-        <main>
-            <section id="services" class="platform-selection section-padding">
-                <div class="container">
-                    <h2 class="section-title">Choose Your Service</h2>
-                    <div class="platform-grid">
-                        <div class="platform-card netflix"><img src="netflix.png" alt="Netflix Logo" class="platform-logo-img"><a href="#" id="netflix-start-btn" class="get-started-btn netflix-btn">Get Started</a></div>
-                        <div class="platform-card prime"><img src="prime-video.png" alt="Prime Video Logo" class="platform-logo-img"><a href="#" id="prime-start-btn" class="get-started-btn prime-btn">Get Started</a></div>
-                        <div class="platform-card spotify"><img src="spotify.png" alt="Spotify Logo" class="platform-logo-img"><a href="#" id="spotify-start-btn" class="get-started-btn spotify-btn">Get Started</a></div>
-                        <div class="platform-card social-boost-card"><img src="instagram.png" alt="Instagram Logo" class="platform-logo-img insta-boost-logo"><h3 class="service-title-text">Boost Instagram Likes</h3><a href="/instagram-boost/" class="get-started-btn purple-btn">Get Started</a></div>
-                    </div>
-                </div>
-            </section>
-            <section id="contact-cta" class="cta-section section-padding alt-bg">
-                <div class="container">
-                    <h2 class="section-title">Need Assistance?</h2>
-                    <p class="cta-text">Click below for fast support from our expert team.</p>
-                    <a href="/contact/" class="cta-button">Get Help Now</a>
-                </div>
-            </section>
-            <section id="about" class="why-choose-us section-padding">
-                <div class="container">
-                    <h2 class="section-title">Why Choose <b>CartelUG?</b></h2>
-                    <div class="features-grid">
-                        <div class="feature-item"><i class="fas fa-headset feature-icon"></i><h3>24/7 Customer Support</h3><p>Always available to assist with your streaming needs, day or night.</p></div>
-                        <div class="feature-item"><p class="trust-text">Trusted by over <strong>1500</strong> Ugandans and <strong>300+</strong> South Sudanese.</p><div class="feature-flags"><img src="uganda-flag.png" alt="Uganda Flag" class="country-flag" loading="lazy"><img src="south-sudan-flag.png" alt="South Sudan Flag" class="country-flag" loading="lazy"></div></div>
-                        <div class="feature-item"><div class="payment-feature-logos"><img src="mtn.png" alt="MTN Mobile Money" class="payment-logo-small" loading="lazy"><img src="airtel.png" alt="Airtel Money" class="payment-logo-small" loading="lazy"></div><h3>Easy Payments</h3><p>Convenient Mobile Money options (MTN & Airtel).</p></div>
-                    </div>
-                </div>
-            </section>
-            <section class="trust-hub-dashboard">
-                <div class="trust-hub-container">
-                    <div class="trust-hub-title">
-                        <h2>Trusted by over 3,000 users</h2>
-                        <p>See the proof.</p>
-                    </div>
-                    <div class="command-center-grid">
-                        <div class="cc-social-stats">
-                            <div class="stat-card"><a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" target="_blank" class="stat-card-link"><div><div class="stat-card-header"><i class="fab fa-whatsapp" style="color:#25D366;"></i><h3>WhatsApp</h3></div><p class="stat-card-value">200+</p><span class="stat-card-label">Members in our Support & Deals Group</span></div><span class="stat-card-button">Join Now</span></a></div>
-                            <div class="stat-card"><a href="https://www.instagram.com/thecartelug?igsh=MTNzNnA5YzA1a2sxZg%3D%3D&utm_source=qr" target="_blank" class="stat-card-link"><div><div class="stat-card-header"><i class="fab fa-instagram" style="color:#E4405F;"></i><h3>Instagram</h3></div><p class="stat-card-value">30k+</p><span class="stat-card-label">Followers Getting Daily Updates</span></div><span class="stat-card-button">Join Now</span></a></div>
-                            <div class="stat-card"><a href="https://t.me/cartelugaccess" target="_blank" class="stat-card-link"><div><div class="stat-card-header"><i class="fab fa-telegram" style="color:#229ED9;"></i><h3>Telegram</h3></div><p class="stat-card-value">100+</p><span class="stat-card-label">Subscribers in our Announcement Channel</span></div><span class="stat-card-button">Join Now</span></a></div>
-                            <div class="stat-card"><a href="https://www.facebook.com/share/1L1HfybCym/?mibextid=wwXIfr" target="_blank" class="stat-card-link"><div><div class="stat-card-header"><i class="fab fa-facebook" style="color:#1877F2;"></i><h3>Facebook</h3></div><p class="stat-card-value">300+</p><span class="stat-card-label">Likes and Community Reviews</span></div><span class="stat-card-button">Join Now</span></a></div>
-                        </div>
-                        <div class="cc-testimonials">
-                            <div class="testimonial-item"><p>"Finally, an easy way to pay for Netflix without a bank card. The service was instant. Thank you Cartelug!"</p><span>- Aisha K. | Netflix 4K</span></div>
-                            <div class="testimonial-item"><p>"My own Spotify account was upgraded in less than 10 minutes. Super legit and professional."</p><span>- Brian M. | Spotify Premium</span></div>
-                            <div class="testimonial-item"><p>"The Netflix household fix worked perfectly! I thought I'd have to create a new account, but Cartelug solved it for me in an hour."</p><span>- Joanita, Kampala | Netflix Fix</span></div>
-                            <div class="testimonial-item"><p>"Was skeptical at first but they are legit. My whole family is enjoying Prime Video now, thanks to them."</p><span>- Kevin T. | Prime Video</span></div>
-                            <div class="testimonial-item"><p>"I recommend their Prime Video service. Paid with MTN Momo from Juba and it was easy."</p><span>- David Wani. | Prime Video</span></div>
-                            <div class="testimonial-item"><p>"Super fast boost for my business IG page. The likes came in steady and looked good. Will use again."</p><span>- Sandra A. | Instagram Boost</span></div>
-                            <div class="testimonial-item"><p>"10/10 service. I paid with MTN MoMo and got my Netflix details in minutes. Very impressive."</p><span>- Brenda W. | Netflix HD</span></div>
-                            <div class="testimonial-item"><p>"I love that I can pay for a whole year of Spotify at once. So convenient."</p><span>- Benon K. | Spotify Annual</span></div>
-                            <div class="testimonial-item"><p>"It is working now, thank you so much... Wow, wonderful. Thank you."</p><span>- Grace N. | Netflix Support</span></div>
-                            <div class="testimonial-item"><p>"This is great, especially for some of us who don't have credit cards to pay for these services... It is a gift"</p><span>- Hitesh P. | General Feedback</span></div>
-                            <div class="testimonial-item"><p>"Legit and trustworthy. Will renew soon for sure."</p><span>- Samuel Paul. | Spotify Premium</span></div>
-                            <div class="testimonial-item"><p>"Best service ever. So convenient to pay for Spotify for 6 months."</p><span>- Innocent Olelo | Spotify 6-Months</span></div>
-                            <div class="testimonial-item"><p>"My kids are so happy with the Netflix. No more payment issues."</p><span>- Mariam Aloyo, Gulu | Netflix</span></div>
-                            <div class="testimonial-item"><p>"Fast, reliable, and they actually reply on WhatsApp. Good customer service."</p><span>- Richard | General Feedback</span></div>
-                            <div class="testimonial-item"><p>"The price for Prime Video is very fair. Cheaper than other places I checked."</p><span>- Frank M. | Prime Video</span></div>
-                            <div class="testimonial-item"><p>"Signed up for the Instagram boost and saw results within the hour. Amazing."</p><span>- DJ Fizzy | Instagram Boost</span></div>
-                            <div class="testimonial-item"><p>"A friend recommended me, and I'm not disappointed. Solid service."</p><span>- Esther | Netflix</span></div>
-                            <div class="testimonial-item"><p>"I like their step by-step order process on the website. Very clear."</p><span>- Isaac | Website Feedback</span></div>
-                            <div class="testimonial-item"><p>"They helped me recover my Spotify playlist after I messed up. Lifesavers!"</p><span>- Cynthia | Spotify </span></div>
-                            <div class="testimonial-item"><p>"From South Sudan, and it's hard to find services like this. Cartelug is the real deal. Thank you."</p><span>- Deng Arop. | General Feedback</span></div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-        <footer class="main-footer">
-            <div class="container">
-                <div class="footer-content">
-                    <div class="footer-links"><a href="/privacy-policy/">Privacy Policy</a> | <a href="/terms-of-service/">Terms of Service</a> | <a href="/contact/">Contact Us</a></div>
-                    <div class="payment-info"><p>Secure Payments Accepted via Mobile Money:</p><div class="payment-logos"><img src="mtn.png" alt="MTN Mobile Money" class="payment-logo" loading="lazy"><img src="airtel.png" alt="Airtel Money" class="payment-logo" loading="lazy"></div></div>
-                    <p class="copyright">&copy; <span id="year"></span> Cartelug. All Rights Reserved.</p>
+                <h1 class="section-title">Your Entertainment, Simplified.</h1>
+                <p class="section-subtitle">Get instant access to Netflix, Prime Video, Spotify, and more. Easy payments with Mobile Money in Uganda & South Sudan.</p>
+                <div class="platform-grid">
+                    <div class="platform-card"><img src="netflix.png" alt="Netflix Logo" class="platform-logo-img"><a href="/netflix-order/" class="get-started-btn netflix-btn">Get Netflix</a></div>
+                    <div class="platform-card"><img src="prime-video.png" alt="Prime Video Logo" class="platform-logo-img"><a href="/prime-order/" class="get-started-btn prime-btn">Get Prime Video</a></div>
+                    <div class="platform-card"><img src="spotify.png" alt="Spotify Logo" class="platform-logo-img"><a href="/spotify-order/" class="get-started-btn spotify-btn">Get Spotify</a></div>
+                    <div class="platform-card"><img src="instagram.png" alt="Instagram Logo" class="platform-logo-img"><a href="/instagram-boost/" class="get-started-btn purple-btn">Boost Likes</a></div>
                 </div>
             </div>
-        </footer>
-        <div id="netflix-modal" class="modal"><div class="modal-overlay"></div><div class="modal-content"><button class="modal-close" aria-label="Close modal">&times;</button><img src="netflix.png" alt="Netflix" class="modal-logo"><h2>Netflix Package Features</h2><ul class="features-list"><li><i class="fas fa-desktop"></i> 2 Devices Access</li><li><i class="fas fa-user-clock"></i> 1 Device at a Time</li><li><i class="fas fa-video"></i> 4K UHD Quality</li><li><i class="fas fa-download"></i> Downloads Available</li></ul><a href="/netflix-order/" class="modal-button netflix-btn">Get Now</a></div></div>
-        <div id="prime-modal" class="modal"><div class="modal-overlay"></div><div class="modal-content"><button class="modal-close" aria-label="Close modal">&times;</button><img src="prime-video.png" alt="Prime Video" class="modal-logo"><h2>Prime Video Features</h2><ul class="features-list"><li><i class="fas fa-download"></i> Downloads Available</li><li><i class="fas fa-desktop"></i> 2 Devices Access</li><li><i class="fas fa-video"></i> 4K UHD Quality</li></ul><a href="/prime-order/" class="modal-button prime-btn">Get Now</a></div></div>
-        <div id="spotify-modal" class="modal"><div class="modal-overlay"></div><div class="modal-content"><button class="modal-close" aria-label="Close modal">&times;</button><img src="spotify.png" alt="Spotify" class="modal-logo"><h2>Spotify Premium Features</h2><ul class="features-list"><li><i class="fas fa-user-check"></i> Use Your Own Account</li><li><i class="fas fa-music"></i> Unlimited Music Streaming</li><li><i class="fas fa-download"></i> Downloads for Offline Use</li><li><i class="fas fa-headphones"></i> Ad-Free Listening</li></ul><a href="/spotify-order/" class="modal-button spotify-btn">Get Now</a></div></div>
-        <script src="script.min.js"></script>
-    </div>
+        </section>
+
+        <section id="about" class="why-choose-us section-padding">
+            <div class="container">
+                <h2 class="section-title">Why Choose CartelUG?</h2>
+                <div class="features-grid">
+                    <div class="feature-item"><i class="fas fa-headset feature-icon"></i><h3>24/7 Support</h3><p>Our team is always available to assist with any of your needs, day or night.</p></div>
+                    <div class="feature-item"><div class="feature-flags"><img src="uganda-flag.png" alt="Uganda Flag" class="country-flag" loading="lazy"><img src="south-sudan-flag.png" alt="South Sudan Flag" class="country-flag" loading="lazy"></div><h3>Trusted Locally</h3><p>Serving over 1,800 satisfied customers across Uganda and South Sudan.</p></div>
+                    <div class="feature-item"><div class="payment-feature-logos"><img src="mtn.png" alt="MTN" class="payment-logo-small" loading="lazy"><img src="airtel.png" alt="Airtel" class="payment-logo-small" loading="lazy"></div><h3>Easy Payments</h3><p>Pay securely and conveniently with MTN or Airtel Mobile Money.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="trust-hub-dashboard section-padding">
+            <div class="container trust-hub-container">
+                <div>
+                    <h2 class="section-title">Trusted by Thousands</h2>
+                    <p class="section-subtitle">Don't just take our word for it. See what our community is saying and join our channels for exclusive deals.</p>
+                </div>
+                <div class="command-center-grid">
+                    <div class="cc-social-stats">
+                        <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" target="_blank" class="stat-card"><div><div class="stat-card-header"><i class="fab fa-whatsapp" style="color:#25D366;"></i><h3>WhatsApp</h3></div><p class="stat-card-value">200+</p><span class="stat-card-label">Group Members</span></div><span class="stat-card-button">Join Now &rarr;</span></a>
+                        <a href="https://www.instagram.com/thecartelug" target="_blank" class="stat-card"><div><div class="stat-card-header"><i class="fab fa-instagram" style="color:#E4405F;"></i><h3>Instagram</h3></div><p class="stat-card-value">30k+</p><span class="stat-card-label">Followers</span></div><span class="stat-card-button">Follow Us &rarr;</span></a>
+                        <a href="https://t.me/cartelugaccess" target="_blank" class="stat-card"><div><div class="stat-card-header"><i class="fab fa-telegram" style="color:#229ED9;"></i><h3>Telegram</h3></div><p class="stat-card-value">100+</p><span class="stat-card-label">Subscribers</span></div><span class="stat-card-button">Join Now &rarr;</span></a>
+                        <a href="https://www.facebook.com/share/1L1HfybCym/" target="_blank" class="stat-card"><div><div class="stat-card-header"><i class="fab fa-facebook" style="color:#1877F2;"></i><h3>Facebook</h3></div><p class="stat-card-value">300+</p><span class="stat-card-label">Likes & Reviews</span></div><span class="stat-card-button">See More &rarr;</span></a>
+                    </div>
+                    <div class="cc-testimonials">
+                        <div class="testimonial-item"><p>"Finally, an easy way to pay for Netflix without a bank card. The service was instant. Thank you Cartelug!"</p><span>- Aisha K. | Netflix 4K</span></div>
+                        <div class="testimonial-item"><p>"My own Spotify account was upgraded in less than 10 minutes. Super legit and professional."</p><span>- Brian M. | Spotify Premium</span></div>
+                        <div class="testimonial-item"><p>"The Netflix household fix worked perfectly! I thought I'd have to create a new account, but Cartelug solved it."</p><span>- Joanita, Kampala | Netflix Fix</span></div>
+                        <div class="testimonial-item"><p>"From South Sudan, and it's hard to find services like this. Cartelug is the real deal. Thank you."</p><span>- Deng A. | General Feedback</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section section-padding">
+            <div class="container">
+                <h2 class="section-title">Ready to Get Started?</h2>
+                <p class="section-subtitle">Join thousands of happy customers today.</p>
+                <a href="/#services" class="cta-button">Choose Your Service</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="payment-logos">
+                    <img src="mtn.png" alt="MTN Mobile Money" class="payment-logo" loading="lazy">
+                    <img src="airtel.png" alt="Airtel Money" class="payment-logo" loading="lazy">
+                </div>
+                <div class="footer-links">
+                    <a href="/privacy-policy/">Privacy Policy</a> | <a href="/terms-of-service/">Terms of Service</a> | <a href="/contact/">Contact Us</a>
+                </div>
+                <p class="copyright">&copy; <span id="year"></span> Cartelug. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.min.js"></script>
 </body>
 </html>
