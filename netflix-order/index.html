@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Netflix Plan - Cartelug</title>
+    <title>Netflix Premium Plan - Cartelug</title>
     <link rel="icon" href="../logo.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="../style.min.css">
 </head>
-<body class="order-page-v3-body">
+<body class="aurora-body">
 
-    <div class="order-page-bg"></div>
+    <div id="aurora-background">
+        <div class="aurora-shape" id="aurora-shape-1"></div>
+        <div class="aurora-shape" id="aurora-shape-2"></div>
+        <div class="aurora-shape" id="aurora-shape-3"></div>
+    </div>
 
     <header class="main-header main-header-transparent">
         <div class="container">
@@ -29,47 +33,67 @@
         <div class="container">
             <div class="netflix-ui-layout">
                 <div class="plan-details">
-                    <p class="plan-subtitle">CARTELUG EXCLUSIVE</p>
-                    <h1 class="plan-title">Premium Plan</h1>
-                    <div class="plan-metadata">
-                        <span class="metadata-item">2025</span>
-                        <span class="metadata-item quality-tag">4K ULTRA HD</span>
-                        <span class="metadata-item"><i class="fas fa-mobile-alt"></i> 2 Devices</span>
-                    </div>
+                    <h1 class="plan-title">Netflix Premium Plan</h1>
                     <p class="plan-description">
-                        Get everything Netflix has to offer. Watch your favorite shows and movies in the highest quality on your TV, laptop, or phone. This plan is fully supported by our team for the entire duration.
+                        All plans include <strong>4K Ultra HD quality</strong>, access on <strong>2 devices</strong>, offline downloads, and our full support guarantee. Choose your duration below to get started.
                     </p>
-                    <div class="plan-features-grid">
-                        <div class="feature"><i class="fas fa-check-circle"></i> Instant Activation</div>
-                        <div class="feature"><i class="fas fa-check-circle"></i> Offline Downloads</div>
-                        <div class="feature"><i class="fas fa-check-circle"></i> No Ad Interruptions</div>
-                        <div class="feature"><i class="fas fa-check-circle"></i> Full Support</div>
+                    
+                    <div class="package-selection-container">
+                        <h3>Choose Your Plan Duration</h3>
+                        <div class="package-options-grid">
+                            <div class="package-option-v3">
+                                <input type="radio" id="pkg-2m" name="package" data-price="50,000">
+                                <label for="pkg-2m">
+                                    <span class="duration">2 Months</span>
+                                    <span class="price-per-month">25,000 / month</span>
+                                </label>
+                            </div>
+                            <div class="package-option-v3">
+                                <input type="radio" id="pkg-3m" name="package" data-price="75,000">
+                                <label for="pkg-3m">
+                                    <span class="duration">3 Months</span>
+                                    <span class="price-per-month">25,000 / month</span>
+                                </label>
+                            </div>
+                            <div class="package-option-v3">
+                                <input type="radio" id="pkg-6m" name="package" data-price="150,000">
+                                <label for="pkg-6m">
+                                    <span class="saving-tag">SAVE 10%</span>
+                                    <span class="duration">6 Months</span>
+                                    <span class="price-per-month">25,000 / month</span>
+                                </label>
+                            </div>
+                             <div class="package-option-v3">
+                                <input type="radio" id="pkg-1y" name="package" data-price="300,000">
+                                <label for="pkg-1y">
+                                    <span class="saving-tag">SAVE 20%</span>
+                                    <span class="duration">1 Year</span>
+                                    <span class="price-per-month">25,000 / month</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <button id="start-order-btn" class="cta-button-netflix">
-                        <i class="fas fa-play"></i>
-                        Start Your Plan
-                    </button>
                 </div>
 
                 <div id="order-form-container" class="order-form-wrapper">
                      <form id="netflix-order-form-v3" class="order-form-v3">
-                        <h2>Your Details</h2>
-                        <div class="price-tag">
-                            <span class="old-price">UGX 35,000</span>
-                            <span class="new-price">UGX 25,000 / Month</span>
+                        <h2>Your Order</h2>
+                        <div class="price-summary">
+                            <div id="summary-total-price" class="total-price">--</div>
+                            <div id="summary-selected-package" class="selected-package">Select a plan to start</div>
                         </div>
                         <div class="input-group">
                             <label for="clientName">Your Name</label>
-                            <input type="text" id="clientName" required>
+                            <input type="text" id="clientName" required placeholder="Enter your full name">
                         </div>
                         <div class="input-group">
                             <label>Payment Method</label>
-                            <div class="payment-options">
-                                <div class="payment-option">
+                            <div class="payment-options-v3">
+                                <div class="payment-option-v3">
                                     <input type="radio" id="mtn" name="paymentMethod" value="MTN Mobile Money" required>
                                     <label for="mtn"><img src="../mtn.png" alt="MTN"> MTN</label>
                                 </div>
-                                <div class="payment-option">
+                                <div class="payment-option-v3">
                                     <input type="radio" id="airtel" name="paymentMethod" value="Airtel Money">
                                     <label for="airtel"><img src="../airtel.png" alt="Airtel"> Airtel</label>
                                 </div>
