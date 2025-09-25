@@ -1,48 +1,70 @@
-document.addEventListener("DOMContentLoaded", () => {
-    // --- Mobile Menu Toggle ---
-    const mobileMenuButton = document.getElementById("mobile-menu-button");
-    const mainNav = document.getElementById("main-nav");
-    if (mobileMenuButton && mainNav) {
-        mobileMenuButton.addEventListener("click", () => {
-            mainNav.classList.toggle("mobile-active");
+document.addEventListener('DOMContentLoaded', () => {
+
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mainNav = document.getElementById('main-nav');
+    if (menuButton && mainNav) {
+        menuButton.addEventListener('click', () => {
+            mainNav.classList.toggle('active');
+            const icon = menuButton.querySelector('i');
+            if (mainNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
     }
 
-    // --- Smooth Scrolling for Anchor Links ---
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth'
-                });
-                // Close mobile menu on click
-                if (mainNav.classList.contains('mobile-active')) {
-                    mainNav.classList.remove('mobile-active');
+    const setupOrderFormRedirect = (formId, serviceName) => {
+        const orderForm = document.getElementById(formId);
+        if (orderForm) {
+            orderForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const selectedPackageRadio = orderForm.querySelector('input[name="package"]:checked');
+                const clientNameInput = orderForm.querySelector('#clientName');
+                const selectedPaymentRadio = orderForm.querySelector('input[name="paymentMethod"]:checked');
+
+                if (!selectedPackageRadio) {
+                    alert("Please select a package.");
+                    return;
                 }
-            }
-        });
-    });
+                if (!clientNameInput || clientNameInput.value.trim() === "") {
+                    alert("Please enter your name.");
+                    return;
+                }
+                if (!selectedPaymentRadio) {
+                    alert("Please select a payment method.");
+                    return;
+                }
 
-    // --- Intersection Observer for Scroll Animations ---
-    const animatedElements = document.querySelectorAll('.services-section, .how-it-works-section, .trust-section, .community-section');
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = 1;
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, {
-        threshold: 0.1
-    });
+                const duration = selectedPackageRadio.value;
+                const price = selectedPackageRadio.getAttribute('data-price');
+                const clientName = clientNameInput.value.trim();
+                const paymentMethod = selectedPaymentRadio.value;
 
-    animatedElements.forEach(el => {
-        el.style.opacity = 0;
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-        observer.observe(el);
-    });
+                const whatsappNumber = "256762193386";
+                let message = `Order for Cartelug:\n\n`;
+                message += `*Service:* ${serviceName}\n`;
+                message += `*Package:* ${duration}\n`;
+                if (price) {
+                    message += `*Price:* ${price}\n`;
+                }
+                message += `*Payment Method:* ${paymentMethod}\n`;
+                message += `*Name:* ${clientName}`;
+
+                const encodedMessage = encodeURIComponent(message);
+                window.location.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+            });
+        }
+    };
+    
+    setupOrderFormRedirect('netflix-order-form', 'Netflix');
+    setupOrderFormRedirect('prime-order-form', 'Prime Video');
+    setupOrderFormRedirect('spotify-order-form', 'Spotify');
+
+    const yearSpan = document.getElementById('year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
 });
