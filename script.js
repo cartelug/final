@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // --- Intersection Observer for Scroll Animations ---
-    const animatedElements = document.querySelectorAll('.services-section, .how-it-works-section, .trust-section');
+    const animatedElements = document.querySelectorAll('.services-section, .how-it-works-section, .trust-section, .community-section');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
