@@ -1,9 +1,7 @@
-// spotify-order/script.js
 document.addEventListener('DOMContentLoaded', () => {
-
-    // --- STATE MANAGEMENT ---
+    // --- STATE MANAGEMENT: Object to hold order details ---
     const order = {
-        service: 'Spotify Premium', // Changed to Spotify
+        service: 'Spotify Premium',
         plan: null,
         price: null,
         clientName: null,
@@ -21,21 +19,45 @@ document.addEventListener('DOMContentLoaded', () => {
     const nameForm = document.getElementById('name-form');
     const clientNameInput = document.getElementById('clientName');
     const paymentCards = document.querySelectorAll('.payment-card');
-    const ctaButton = document.getElementById('cta-button');
+    const ctaButtonLink = document.getElementById('cta-button-link');
 
-    // --- FLOW CONTROL ---
+    // --- FLOW CONTROL FUNCTIONS ---
+    
+    // Function to remove the 'locked' class, making a step visible and animated
     function unlockStep(stepElement) {
-        if (stepElement.classList.contains('locked')) {
+        if (stepElement && stepElement.classList.contains('locked')) {
             stepElement.classList.remove('locked');
-            // Scroll to the newly unlocked element
+            stepElement.classList.add('animate-in'); // Add animation class
+            
+            // Scroll the newly unlocked step into view for a smooth user experience
             setTimeout(() => {
                 stepElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
+            }, 150);
+        }
+    }
+
+    // Function to generate and set the WhatsApp URL
+    function updateWhatsAppLink() {
+        if (order.plan && order.clientName && order.paymentMethod) {
+            const whatsappNumber = "256762193386";
+            
+            // Construct the pre-filled WhatsApp message
+            let message = `Order for Cartelug:\n\n`;
+            message += `*Service:* ${order.service}\n`;
+            message += `*Package:* ${order.plan}\n`;
+            message += `*Price:* ${order.price}\n`;
+            message += `*Name:* ${order.clientName}\n`;
+            message += `*Payment Method:* ${order.paymentMethod}`;
+            
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            ctaButtonLink.href = whatsappUrl;
         }
     }
     
+    // Function to check if all required order details have been provided
     function checkCompletion() {
         if (order.plan && order.clientName && order.paymentMethod) {
+            updateWhatsAppLink();
             unlockStep(steps.final);
         }
     }
@@ -52,13 +74,14 @@ document.addEventListener('DOMContentLoaded', () => {
             order.price = button.dataset.price;
             
             unlockStep(steps.step2);
+            clientNameInput.focus(); // Auto-focus on the name input
             checkCompletion();
         });
     });
 
     // 2. Name Input Form
     nameForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+        e.preventDefault(); // Prevent default form submission
         const name = clientNameInput.value.trim();
         if (name) {
             order.clientName = name;
@@ -77,20 +100,4 @@ document.addEventListener('DOMContentLoaded', () => {
             checkCompletion();
         });
     });
-
-    // 4. Final CTA Button
-    ctaButton.addEventListener('click', () => {
-        const whatsappNumber = "256762193386";
-        
-        let message = `Order for Cartelug:\n\n`;
-        message += `*Service:* ${order.service}\n`;
-        message += `*Package:* ${order.plan}\n`;
-        message += `*Price:* ${order.price}\n`;
-        message += `*Name:* ${order.clientName}\n`;
-        message += `*Payment Method:* ${order.paymentMethod}`;
-        
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
-    });
-
 });
