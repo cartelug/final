@@ -5,25 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netflix Premium Plan - AccessUG</title>
     <link rel="icon" href="../logo.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="../style.min.css?v=2.0"> </head>
+    <link rel="stylesheet" href="../style.min.css?v=3.1">
+</head>
 <body class="order-page-body">
 
     <div id="country-popup" class="modal-overlay">
         <div class="modal-content">
             <h2>Welcome! Where are you located?</h2>
             <div class="country-selection-grid">
-                <div id="uganda-btn" class="country-btn">
-                    <img src="../uganda-flag.png" alt="Uganda Flag">
-                    <span>Uganda</span>
-                </div>
-                <div id="south-sudan-btn" class="country-btn">
-                    <img src="../south-sudan-flag.png" alt="South Sudan Flag">
-                    <span>South Sudan</span>
-                </div>
+                <div id="uganda-btn" class="country-btn"><img src="../uganda-flag.png" alt="Uganda Flag"><span>Uganda</span></div>
+                <div id="south-sudan-btn" class="country-btn"><img src="../south-sudan-flag.png" alt="South Sudan Flag"><span>South Sudan</span></div>
             </div>
         </div>
     </div>
@@ -32,22 +25,10 @@
         <div class="modal-content">
             <h2>What You Get with Every Plan</h2>
             <div class="features-grid">
-                <div class="feature-card">
-                    <i class="fas fa-satellite-dish"></i>
-                    <h3>4K UHD Streaming</h3>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Watch on 2-3 Devices</h3>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-cloud-download-alt"></i>
-                    <h3>Download & Watch Offline</h3>
-                </div>
-                <div class="feature-card">
-                    <i class="fas fa-headset"></i>
-                    <h3>24/7 Support</h3>
-                </div>
+                <div class="feature-card"><i class="fas fa-satellite-dish"></i><h3>4K UHD Streaming</h3></div>
+                <div class="feature-card"><i class="fas fa-mobile-alt"></i><h3>Watch on 2-3 Devices</h3></div>
+                <div class="feature-card"><i class="fas fa-cloud-download-alt"></i><h3>Download & Watch Offline</h3></div>
+                <div class="feature-card"><i class="fas fa-headset"></i><h3>24/7 Support</h3></div>
             </div>
             <button id="features-next-btn" class="cta-button" style="margin-top: 30px;">Next &rarr;</button>
         </div>
@@ -56,83 +37,36 @@
     <div id="trust-popup" class="modal-overlay">
         <div class="modal-content">
             <h2>100% Safe & Trusted</h2>
-            <p id="trust-message-ug" class="trust-message hidden">
-                We know people worry about online services. At AccessUG, we connect you first, then you pay later via Mobile Money. 100% safe & trusted in Uganda.
-            </p>
-            <p id="trust-message-ss" class="trust-message hidden">
-                We’ll send you logins first. You login, confirm it works, and once satisfied, you can pay or deposit via agent. 100% safe & trusted in South Sudan.
-            </p>
+            <p id="trust-message-ug" class="trust-message hidden">We connect you first, then you pay later via Mobile Money. 100% safe & trusted in Uganda.</p>
+            <p id="trust-message-ss" class="trust-message hidden">We’ll send you logins first. You confirm it works, and once satisfied, you can pay. 100% safe & trusted in South Sudan.</p>
+            <div class="name-input-group">
+                <label for="customer-name">Please enter your full name to continue</label>
+                <input type="text" id="customer-name" placeholder="e.g. John Doe" required>
+            </div>
             <button id="trust-next-btn" class="cta-button">Proceed to See Plans</button>
         </div>
     </div>
 
     <div id="main-content" class="main-content">
         <div class="progress-indicator">
-            <span class="progress-step">Country</span>
-            <span class="progress-separator">&rarr;</span>
-            <span class="progress-step">Features</span>
-            <span class="progress-separator">&rarr;</span>
-            <span class="progress-step">Trust</span>
-            <span class="progress-separator">&rarr;</span>
-            <span class="progress-step">Order</span>
+            <span class="progress-step">Country</span><span class="progress-separator">&rarr;</span><span class="progress-step">Features</span><span class="progress-separator">&rarr;</span><span class="progress-step">Trust</span><span class="progress-separator">&rarr;</span><span class="progress-step">Order</span>
         </div>
-        
         <h1 class="page-title">Choose Your Netflix Plan</h1>
 
         <div id="pricing-uganda" class="pricing-grid hidden">
-            <div class="price-card">
-                <h3>1 Year Plan</h3>
-                <div class="price-display"><span class="old-price">480k UGX</span><span class="new-price">240k UGX</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
-            <div class="price-card">
-                <h3>9 Months Plan</h3>
-                <div class="price-display"><span class="old-price">360k UGX</span><span class="new-price">180k UGX</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
-            <div class="price-card">
-                <h3>6 Months Plan</h3>
-                <div class="price-display"><span class="old-price">240k UGX</span><span class="new-price">120k UGX</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
-            <div class="price-card">
-                <h3>3 Months Plan</h3>
-                <div class="price-display"><span class="old-price">150k UGX</span><span class="new-price">75k UGX</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
-            <div class="price-card">
-                <h3>2 Months Plan</h3>
-                <div class="price-display"><span class="old-price">120k UGX</span><span class="new-price">60k UGX</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
+            <div class="price-card"><h3>1 Year</h3><div class="price-display"><span class="old-price">480k UGX</span><span class="new-price">240k UGX</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
+            <div class="price-card"><h3>9 Months</h3><div class="price-display"><span class="old-price">360k UGX</span><span class="new-price">180k UGX</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
+            <div class="price-card"><h3>6 Months</h3><div class="price-display"><span class="old-price">240k UGX</span><span class="new-price">120k UGX</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
+            <div class="price-card"><h3>3 Months</h3><div class="price-display"><span class="old-price">150k UGX</span><span class="new-price">75k UGX</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
+            <div class="price-card"><h3>2 Months</h3><div class="price-display"><span class="old-price">120k UGX</span><span class="new-price">60k UGX</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
         </div>
 
         <div id="pricing-south-sudan" class="pricing-grid hidden">
-            <div class="price-card">
-                <h3>1 Year Plan</h3>
-                <div class="price-display"><span class="old-price">672k SSP</span><span class="new-price">336k SSP / $280</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
-             <div class="price-card">
-                <h3>9 Months Plan</h3>
-                <div class="price-display"><span class="old-price">504k SSP</span><span class="new-price">252k SSP / $210</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
-            <div class="price-card">
-                <h3>6 Months Plan</h3>
-                <div class="price-display"><span class="old-price">336k SSP</span><span class="new-price">168k SSP / $140</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
-            <div class="price-card">
-                <h3>3 Months Plan</h3>
-                <div class="price-display"><span class="old-price">210k SSP</span><span class="new-price">115k SSP / $95</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
-            <div class="price-card">
-                <h3>2 Months Plan</h3>
-                <div class="price-display"><span class="old-price">168k SSP</span><span class="new-price">90k SSP / $75</span></div>
-                <button class="cta-button">Proceed to WhatsApp</button>
-            </div>
+            <div class="price-card"><h3>1 Year</h3><div class="price-display"><span class="old-price">672k SSP</span><span class="new-price">336k SSP / $280</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
+            <div class="price-card"><h3>9 Months</h3><div class="price-display"><span class="old-price">504k SSP</span><span class="new-price">252k SSP / $210</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
+            <div class="price-card"><h3>6 Months</h3><div class="price-display"><span class="old-price">336k SSP</span><span class="new-price">168k SSP / $140</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
+            <div class="price-card"><h3>3 Months</h3><div class="price-display"><span class="old-price">210k SSP</span><span class="new-price">115k SSP / $95</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
+            <div class="price-card"><h3>2 Months</h3><div class="price-display"><span class="old-price">168k SSP</span><span class="new-price">90k SSP / $75</span></div><button class="cta-button">Proceed to WhatsApp</button></div>
         </div>
         
         <div class="trust-badges-footer">
@@ -142,5 +76,6 @@
         </div>
     </div>
 
-    <script src="../script.min.js?v=2.0"></script> </body>
+    <script src="../script.min.js?v=3.1"></script>
+</body>
 </html>
