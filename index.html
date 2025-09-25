@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=1.1"> </head>
+    <link rel="stylesheet" href="style.css?v=1.2"> </head>
 <body>
 
     <div id="background-animation"></div>
@@ -19,9 +19,10 @@
             <a href="/" class="logo-link"><img src="logo.png" alt="AccessUG Logo" id="logo"></a>
             <nav id="main-nav">
                 <ul>
+                    <li><a href="/">Home</a></li>
                     <li><a href="#services">Services</a></li>
-                    <li><a href="#community">Community</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="/contact/">Contact</a></li>
                 </ul>
             </nav>
             <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
@@ -47,17 +48,17 @@
                         <p>4K UHD Streaming</p>
                         <a href="/netflix-order/" class="card-cta-button">Get Now</a>
                     </div>
-                    <div class="service-card" id="prime-card">
-                        <img src="prime-video.png" alt="Prime Video">
-                        <h3>Prime Video</h3>
-                        <p>Movies & Originals</p>
-                        <a href="/prime-order/" class="card-cta-button">Get Now</a>
-                    </div>
                     <div class="service-card" id="spotify-card">
                         <img src="spotify.png" alt="Spotify">
                         <h3>Spotify Premium</h3>
                         <p>Ad-Free Music</p>
                         <a href="/spotify-order/" class="card-cta-button">Get Now</a>
+                    </div>
+                    <div class="service-card" id="prime-card">
+                        <img src="prime-video.png" alt="Prime Video">
+                        <h3>Prime Video</h3>
+                        <p>Movies & Originals</p>
+                        <a href="/prime-order/" class="card-cta-button">Get Now</a>
                     </div>
                     <div class="service-card" id="instagram-card">
                         <img src="instagram.png" alt="Instagram">
@@ -73,31 +74,43 @@
             <div class="container">
                 <h2 class="section-title">Join Our Community</h2>
                 <div class="community-grid">
-                    <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" target="_blank" class="community-card">
+                    <div class="community-card" id="whatsapp-card">
                         <i class="fab fa-whatsapp"></i>
-                        <h3>WhatsApp Group</h3>
-                        <p>200+ Members in our Support & Deals Group</p>
-                    </a>
-                    <a href="https://www.instagram.com/thecartelug" target="_blank" class="community-card">
+                        <div class="community-card-content">
+                            <h3>WhatsApp Group</h3>
+                            <p>200+ Members for Support & Deals</p>
+                        </div>
+                        <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" target="_blank" class="community-cta">Join Now</a>
+                    </div>
+                    <div class="community-card" id="instagram-card-community">
                         <i class="fab fa-instagram"></i>
-                        <h3>Instagram</h3>
-                        <p>30k+ Followers Getting Daily Updates</p>
-                    </a>
-                    <a href="https://t.me/cartelugaccess" target="_blank" class="community-card">
+                        <div class="community-card-content">
+                            <h3>Instagram</h3>
+                            <p>30k+ Followers for Daily Updates</p>
+                        </div>
+                        <a href="https://www.instagram.com/thecartelug" target="_blank" class="community-cta">Follow Us</a>
+                    </div>
+                    <div class="community-card" id="telegram-card">
                         <i class="fab fa-telegram"></i>
-                        <h3>Telegram Channel</h3>
-                        <p>100+ Subscribers for Announcements</p>
-                    </a>
-                    <a href="https://www.facebook.com/share/1L1HfybCym/" target="_blank" class="community-card">
+                        <div class="community-card-content">
+                            <h3>Telegram Channel</h3>
+                            <p>100+ Subscribers for Announcements</p>
+                        </div>
+                        <a href="https://t.me/cartelugaccess" target="_blank" class="community-cta">Subscribe</a>
+                    </div>
+                    <div class="community-card" id="facebook-card">
                         <i class="fab fa-facebook"></i>
-                        <h3>Facebook</h3>
-                        <p>300+ Likes and Community Reviews</p>
-                    </a>
+                        <div class="community-card-content">
+                            <h3>Facebook</h3>
+                            <p>300+ Likes and Community Reviews</p>
+                        </div>
+                        <a href="https://www.facebook.com/share/1L1HfybCym/" target="_blank" class="community-cta">See Reviews</a>
+                    </div>
                 </div>
             </div>
         </section>
         
-        <section id="how-it-works" class="how-it-works-section section-padding">
+        <section id="about" class="how-it-works-section section-padding">
             <div class="container">
                 <h2 class="section-title">Get Started in 3 Simple Steps</h2>
                 <div class="steps-grid">
@@ -156,6 +169,5 @@
         </div>
     </footer>
 
-    <script src="script.js?v=1.1"></script> </body>
+    <script src="script.js?v=1.2"></script> </body>
 </html>
-
