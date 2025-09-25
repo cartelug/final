@@ -11,16 +11,9 @@
     --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ====================================
-  GUARANTEED RESPONSIVENESS FIX #1
-  This is the most important rule. It tells the browser to include padding
-  and borders in an element's total width, preventing overflow.
-  ====================================
-*/
 *, *::before, *::after {
     box-sizing: border-box;
 }
-
 
 body {
     background-color: var(--bg-color);
@@ -42,7 +35,6 @@ body {
                 radial-gradient(circle at 80% 90%, rgba(109, 109, 110, 0.2), transparent 50%);
 }
 
-/* Main Container & Header */
 .card-flow-container {
     width: 100%;
     max-width: 600px;
@@ -66,7 +58,6 @@ body {
     color: var(--text-muted);
 }
 
-/* Step Card Styling */
 .step-card {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);
@@ -87,7 +78,7 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
-    padding: 1rem 1.25rem; /* Adjusted padding slightly */
+    padding: 1rem 1.25rem;
     border-bottom: 1px solid var(--glass-border);
 }
 
@@ -107,15 +98,9 @@ body {
 .card-header h3 { font-size: 1.25rem; }
 
 .card-content {
-    /* ====================================
-      GUARANTEED RESPONSIVENESS FIX #2
-      Reduced padding slightly to give content more room on narrow screens.
-      ====================================
-    */
     padding: 1.25rem;
 }
 
-/* Package Options with Discount & USD */
 .package-options {
     display: flex;
     flex-direction: column;
@@ -146,7 +131,7 @@ body {
 }
 .price-wrapper {
     display: flex;
-    align-items: center;
+    align-items: center; 
     gap: 0.75rem;
 }
 .original-price {
@@ -158,7 +143,7 @@ body {
 .final-price-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: flex-end; 
     line-height: 1.2;
 }
 .plan-price {
@@ -182,6 +167,7 @@ body {
 .option-button.selected .plan-price {
     color: #fff;
 }
+
 .option-button.popular::after {
     content: 'MOST POPULAR';
     position: absolute;
@@ -195,7 +181,6 @@ body {
     border-radius: 6px;
 }
 
-/* Name Input */
 .name-form {
     display: flex;
     gap: 1rem;
@@ -228,7 +213,6 @@ body {
     transition: background-color 0.3s;
 }
 
-/* Payment Options */
 .payment-options {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -253,10 +237,9 @@ body {
     max-width: 100%;
 }
 
-/* Final CTA Area */
 .final-cta-area {
     text-align: center;
-    padding: 2rem 0; /* Adjusted padding */
+    padding: 2rem 0;
     transition: var(--transition-smooth);
 }
 .final-cta-area.locked {
@@ -284,5 +267,5 @@ body {
     transition: background-color 0.3s;
 }
 .cta-button:hover {
-    background-color: #1EBE57; /* A slightly darker green for hover */
+    background-color: #1EBE57;
 }
