@@ -27,3 +27,45 @@ body{font-family:var(--font-primary);background-color:var(--bg-dark);color:var(-
 .page-title{text-align:center;margin-bottom:20px;font-size:1.8rem}@media(min-width:600px){.page-title{font-size:2.2rem}}.pricing-grid{display:grid;grid-template-columns:1fr;gap:25px}@media(min-width:768px){.pricing-grid{grid-template-columns:1fr 1fr}}@media(min-width:1200px){.pricing-grid{grid-template-columns:1fr 1fr 1fr}}.price-card{background-color:var(--bg-card);border:1px solid var(--border-color);border-radius:16px;padding:30px;text-align:center;transition:all .3s ease}.price-card:hover{transform:translateY(-8px);box-shadow:0 15px 40px rgba(0,0,0,.4);border-color:var(--accent-green)}.price-card h3{font-size:1.8rem;font-weight:700;margin-bottom:15px}.price-display{margin-bottom:25px}.price-display .old-price{font-size:1.1rem;color:var(--accent-red);text-decoration:line-through;margin-right:10px}.price-display .new-price{font-size:1.8rem;font-weight:700;color:var(--accent-green)}.price-card .cta-button{font-size:1rem;padding:15px}
 /* --- TRUST BADGES --- */
 .trust-badges-footer{display:flex;flex-direction:column;align-items:center;gap:15px;text-align:center;margin-top:50px;color:var(--text-medium);font-size:.9rem}@media(min-width:768px){.trust-badges-footer{flex-direction:row;justify-content:center;gap:25px}}.trust-badge i{color:var(--accent-green);margin-right:8px}
+/* Add to your existing style.min.css */
+
+/* Hero Section */
+.hero-section {
+    padding: 120px 0;
+    text-align: center;
+    background: linear-gradient(rgba(11, 11, 15, 0.7), rgba(11, 11, 15, 0.7)), url('background-desktop.png') no-repeat center center/cover;
+    color: var(--text-light);
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-medium);
+    margin-bottom: 30px;
+}
+
+.hero-cta {
+    font-size: 1.2rem;
+    padding: 15px 30px;
+}
+
+/* Responsive Adjustments for Homepage */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .hero-cta {
+        font-size: 1.1rem;
+        padding: 12px 25px;
+    }
+}
