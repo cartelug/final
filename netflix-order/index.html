@@ -3,16 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Netflix Order - Cartelug</title>
+    <title>Netflix Premium Order - Cartelug</title>
+    
+    <!-- SEO and Social Media Meta Tags -->
+    <meta name="description" content="A premium, simple, and fast way to order your Netflix Premium package with Cartelug. Pay with Mobile Money in Uganda & South Sudan.">
+    <meta property="og:title" content="Netflix Premium Order - Cartelug">
+    <meta property="og:description" content="A premium, simple, and fast way to order your Netflix Premium package.">
+    <meta property="og:image" content="../logo.png">
+    <meta property="og:url" content="https://cartelug.com/netflix-order/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon -->
     <link rel="icon" href="../logo.png" type="image/png">
     <link rel="apple-touch-icon" href="../logo.png">
-    <meta name="description" content="A premium, simple, and fast way to order your Netflix package.">
-    <link rel="stylesheet" href="../base.css">
-    <link rel="stylesheet" href="../order.css">
+
+    <!-- Fonts and Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="main-header">
+    <!-- Animated background element -->
+    <div class="background-animation"></div>
+    
+    <!-- Simple header, not part of the main flow -->
+    <header class="main-header transparent">
         <div class="container">
            <div class="header-content">
                <a href="/" class="logo-link"><img src="../logo.png" alt="Cartelug Logo" id="logo"></a>
@@ -20,77 +40,123 @@
        </div>
    </header>
 
-   <main>
-        <section class="order-form-section section-padding">
-            <div class="container">
-                <div class="order-page-logo">
-                    <img src="../netflix.png" alt="Netflix Order">
+   <!-- Main container for the multi-step form -->
+   <main class="card-flow-container">
+        <!-- Page Title and Description -->
+        <div class="page-header animate-in">
+            <img src="../netflix.png" alt="Netflix Logo" class="service-logo">
+            <h1>Order Your Netflix Premium</h1>
+            <p>Complete the steps below. It takes less than a minute.</p>
+        </div>
+        
+        <!-- Step 1: Choose Plan -->
+        <section id="step-1" class="step-card active animate-in">
+            <div class="card-header">
+                <span class="card-step-number">1</span>
+                <h3>Choose Your Plan</h3>
+            </div>
+            <div class="card-content">
+                <div class="package-options">
+                    <!-- 2 Months Option -->
+                    <button class="option-button" data-plan="2 Months" data-price="50,000 UGX / $14 USD">
+                        <div class="option-text">
+                            <span class="plan-duration">2 Months</span>
+                            <div class="price-wrapper">
+                                <del class="original-price">100,000</del>
+                                <div class="final-price-container">
+                                    <span class="plan-price">50,000 UGX</span>
+                                    <span class="plan-price-usd">$14 USD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                    <!-- 3 Months Option - Most Popular -->
+                    <button class="option-button popular" data-plan="3 Months" data-price="75,000 UGX / $21 USD">
+                        <div class="option-text">
+                            <span class="plan-duration">3 Months</span>
+                            <div class="price-wrapper">
+                                <del class="original-price">150,000</del>
+                                <div class="final-price-container">
+                                    <span class="plan-price">75,000 UGX</span>
+                                    <span class="plan-price-usd">$21 USD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                    <!-- 6 Months Option -->
+                    <button class="option-button" data-plan="6 Months" data-price="150,000 UGX / $42 USD">
+                        <div class="option-text">
+                            <span class="plan-duration">6 Months</span>
+                            <div class="price-wrapper">
+                                <del class="original-price">300,000</del>
+                                <div class="final-price-container">
+                                    <span class="plan-price">150,000 UGX</span>
+                                    <span class="plan-price-usd">$42 USD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                    <!-- 1 Year Option -->
+                    <button class="option-button" data-plan="1 Year" data-price="250,000 UGX / $70 USD">
+                        <div class="option-text">
+                            <span class="plan-duration">1 Year</span>
+                            <div class="price-wrapper">
+                                <del class="original-price">500,000</del>
+                                <div class="final-price-container">
+                                    <span class="plan-price">250,000 UGX</span>
+                                    <span class="plan-price-usd">$70 USD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
                 </div>
-                <p class="form-intro">Select your package and provide your details:</p>
-                <form id="netflix-order-form" class="order-form">
-                    <fieldset class="form-fieldset">
-                        <legend class="form-legend">Choose Your Plan</legend>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="pkg-2m" name="package" value="2 Months" data-price="50,000 UGX / $14 USD" required>
-                                <label for="pkg-2m"><span class="package-duration">2 Months</span> <span class="package-price">50,000 UGX / $14 USD</span></label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="pkg-3m" name="package" value="3 Months" data-price="75,000 UGX / $21 USD">
-                                <label for="pkg-3m"><span class="package-duration">3 Months</span> <span class="package-price">75,000 UGX / $21 USD</span></label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="pkg-6m" name="package" value="6 Months" data-price="150,000 UGX / $42 USD">
-                                <label for="pkg-6m"><span class="package-duration">6 Months</span> <span class="package-price">150,000 UGX / $42 USD</span></label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="pkg-1y" name="package" value="1 Year" data-price="250,000 UGX / $70 USD">
-                                <label for="pkg-1y"><span class="package-duration">1 Year</span> <span class="package-price">250,000 UGX / $70 USD</span></label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <div class="form-field">
-                        <label for="clientName" class="form-label">Your Name:</label>
-                        <input type="text" id="clientName" name="clientName" class="form-input" placeholder="Enter your name" required>
-                    </div>
-                    <fieldset class="form-fieldset">
-                        <legend class="form-legend">Select Payment Method:</legend>
-                        <div class="radio-group payment-method-group">
-                            <div class="radio-option payment-option">
-                                <input type="radio" id="payMTN" name="paymentMethod" value="MTN Mobile Money" required>
-                                <label for="payMTN">
-                                    <img src="../mtn.png" alt="MTN Mobile Money" class="payment-option-logo">
-                                    <span>MTN Mobile Money</span>
-                                </label>
-                            </div>
-                            <div class="radio-option payment-option">
-                                <input type="radio" id="payAirtel" name="paymentMethod" value="Airtel Money">
-                                <label for="payAirtel">
-                                    <img src="../airtel.png" alt="Airtel Money" class="payment-option-logo">
-                                    <span>Airtel Money</span>
-                                </label>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <div class="form-field form-submit-field">
-                        <button type="submit" class="cta-button form-submit-button">Proceed to WhatsApp</button>
-                    </div>
+            </div>
+        </section>
+
+        <!-- Step 2: Enter Name -->
+        <section id="step-2" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">2</span>
+                <h3>Enter Your Name</h3>
+            </div>
+            <div class="card-content">
+                <form id="name-form" class="name-form">
+                    <input type="text" id="clientName" class="glass-input" placeholder="Enter your full name" required>
+                    <button type="submit" class="next-button" aria-label="Next Step"><i class="fas fa-arrow-down"></i></button>
                 </form>
             </div>
         </section>
-    </main>
 
-   <footer class="main-footer">
-         <div class="container">
-             <div class="footer-content">
-                <div class="footer-links">
-                     <a href="/privacy-policy/">Privacy Policy</a> | <a href="/terms-of-service/">Terms of Service</a> | <a href="/contact/">Contact Us</a>
+        <!-- Step 3: Select Payment Method -->
+        <section id="step-3" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">3</span>
+                <h3>Select Payment</h3>
+            </div>
+            <div class="card-content">
+                <div class="payment-options">
+                    <div class="payment-card" data-method="MTN">
+                        <img src="../mtn.png" alt="MTN Mobile Money">
+                    </div>
+                    <div class="payment-card" data-method="Airtel">
+                        <img src="../airtel.png" alt="Airtel Money">
+                    </div>
                 </div>
-                <p class="copyright">&copy; <span id="year"></span> Cartelug. All Rights Reserved.</p>
-             </div>
-        </div>
-    </footer>
+            </div>
+        </section>
 
-    <script src="../script.js"></script>
+        <!-- Final Step: Proceed to WhatsApp -->
+        <section id="step-final" class="final-cta-area locked">
+            <h4>Ready to go?</h4>
+            <p>You're all set. Proceed to WhatsApp to finalize your order.</p>
+            <a id="cta-button-link" href="#" target="_blank" class="cta-button">
+                <i class="fab fa-whatsapp"></i> Proceed to WhatsApp
+            </a>
+        </section>
+   </main>
+
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
+
