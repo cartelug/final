@@ -1,4 +1,4 @@
-/* === ULTIMATE HOMEPAGE STYLESHEET (MOBILE SIZING FIXED) === */
+/* === ULTIMATE HOMEPAGE STYLESHEET (V2 - WITH STATIC PAGE STYLES) === */
 :root {
     --bg-dark: #0A0A10;
     --bg-card: rgba(20, 20, 25, 0.5);
@@ -63,7 +63,6 @@ body {
 }
 .mobile-menu-button { display: block; background: none; border: none; color: var(--text-light); font-size: 1.8rem; cursor: pointer; }
 @media(min-width: 768px) { .mobile-menu-button { display: none; } }
-/* Mobile nav panel */
 #main-nav.mobile-active {
     display: flex; flex-direction: column;
     position: fixed; top: 70px; left: 0;
@@ -72,7 +71,6 @@ body {
 }
 #main-nav.mobile-active ul { list-style: none; text-align: center; }
 #main-nav.mobile-active a { display: block; padding: 20px; font-size: 1.5rem; text-decoration: none; color: var(--text-light); }
-
 
 /* --- GLOBAL & SECTION STYLES --- */
 .container { width: 90%; max-width: 1200px; margin: 0 auto; }
@@ -100,7 +98,7 @@ body {
 .hero-title .highlight { color: var(--accent-glow); }
 .hero-subtitle { font-size: clamp(1rem, 3vw, 1.2rem); color: var(--text-medium); max-width: 700px; margin: 0 auto 40px; }
 
-/* --- SERVICES SECTION (FIXED SIZING) --- */
+/* --- SERVICES SECTION --- */
 .services-grid { 
     display: grid; 
     grid-template-columns: 1fr; 
@@ -113,7 +111,7 @@ body {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 25px; /* MODIFIED: Reduced padding for smaller cards */
+    padding: 25px;
     text-align: center;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
@@ -125,14 +123,14 @@ body {
 #spotify-card:hover { border-color: var(--spotify-glow); box-shadow: 0 0 30px rgba(29, 185, 84, 0.3); }
 #instagram-card:hover { border-color: var(--instagram-glow); box-shadow: 0 0 30px rgba(193, 53, 132, 0.3); }
 .service-card img { 
-    height: 45px; /* MODIFIED: Reduced logo height */
+    height: 45px;
     width: auto;
-    max-width: 70%; /* NEW: Prevents wide logos from looking funny */
-    margin: 0 auto 15px; /* Centered with margin auto */
-    object-fit: contain; /* Ensures aspect ratio is maintained */
+    max-width: 70%;
+    margin: 0 auto 15px;
+    object-fit: contain;
 }
-.service-card h3 { font-size: 1.2rem; margin-bottom: 5px; } /* MODIFIED */
-.service-card p { color: var(--text-medium); margin-bottom: 25px; flex-grow: 1; font-size: 0.9rem;} /* MODIFIED */
+.service-card h3 { font-size: 1.2rem; margin-bottom: 5px; }
+.service-card p { color: var(--text-medium); margin-bottom: 25px; flex-grow: 1; font-size: 0.9rem;}
 .card-cta-button {
     display: inline-block;
     padding: 12px 25px;
@@ -169,7 +167,6 @@ body {
     font-weight: 600; text-decoration: none;
     transition: all .3s ease;
 }
-/* Brand Colors */
 #whatsapp-card { border-left: 4px solid var(--whatsapp-color); }
 #whatsapp-card i { color: var(--whatsapp-color); }
 #whatsapp-card .community-cta { background: var(--whatsapp-color); color: #fff; }
@@ -183,7 +180,6 @@ body {
 #facebook-card i { color: var(--facebook-color); }
 #facebook-card .community-cta { background: var(--facebook-color); color: #fff; }
 .community-cta:hover { filter: brightness(1.2); transform: scale(1.03); }
-
 
 /* --- HOW IT WORKS SECTION --- */
 .steps-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
@@ -244,3 +240,49 @@ body {
 .footer-links { margin-bottom: 15px; }
 .footer-links a { color: var(--text-light); text-decoration: none; }
 .footer-links a:hover { text-decoration: underline; }
+
+/* --- NEW: STATIC CONTENT PAGE STYLES (PRIVACY/TERMS) --- */
+.static-page-main {
+    padding-top: 120px;
+    padding-bottom: 60px;
+}
+.static-content-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+@media(min-width: 768px) {
+    .static-content-container {
+        padding: 50px;
+    }
+}
+.static-content-container h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 20px;
+}
+.static-content-container h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    color: var(--accent-glow);
+}
+.static-content-container p {
+    margin-bottom: 20px;
+    color: var(--text-medium);
+}
+.static-content-container ul {
+    list-style-position: inside;
+    margin-bottom: 20px;
+    padding-left: 10px;
+}
+.static-content-container li {
+    margin-bottom: 10px;
+    color: var(--text-medium);
+}
