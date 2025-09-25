@@ -4,39 +4,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Premium Order - Cartelug</title>
+    
+    <!-- SEO and Social Media Meta Tags -->
+    <meta name="description" content="A premium, simple, and fast way to order your Spotify Premium package with Cartelug. Pay with Mobile Money in Uganda & South Sudan.">
+    <meta property="og:title" content="Spotify Premium Order - Cartelug">
+    <meta property="og:description" content="A premium, simple, and fast way to order your Spotify Premium package.">
+    <meta property="og:image" content="../logo.png">
+    <meta property="og:url" content="https://cartelug.com/spotify-order/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <!-- Favicon -->
     <link rel="icon" href="../logo.png" type="image/png">
     <link rel="apple-touch-icon" href="../logo.png">
-    <meta name="description" content="A premium, simple, and fast way to order your Spotify Premium package.">
 
-    <link rel="stylesheet" href="../base.css">
+    <!-- Fonts and Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <link rel="stylesheet" href="style.css">
-<!-- Meta Pixel Code -->
-<script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '2038256316578056');
-  fbq('track', 'PageView');
-  fbq('track', 'ViewContent');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=2038256316578056&ev=PageView&noscript=1"
-/></noscript>
 
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="aurora-background">
-        <div class="aurora-shape shape1"></div>
-        <div class="aurora-shape shape2"></div>
-    </div>
+    <!-- Animated background element -->
+    <div class="background-animation"></div>
     
+    <!-- Simple header, not part of the main flow -->
     <header class="main-header transparent">
         <div class="container">
            <div class="header-content">
@@ -45,25 +40,55 @@
        </div>
    </header>
 
+   <!-- Main container for the multi-step form -->
    <main class="card-flow-container">
-        <div class="page-header">
+        <!-- Page Title and Description -->
+        <div class="page-header animate-in">
             <img src="../spotify.png" alt="Spotify Logo" class="service-logo">
-            <h1>Order Your Spotify Premium</h1>
+            <h1>Order Spotify Premium</h1>
             <p>Complete the steps below. It takes less than a minute.</p>
         </div>
         
-        <section id="step-1" class="step-card active">
+        <!-- Step 1: Choose Plan -->
+        <section id="step-1" class="step-card active animate-in">
             <div class="card-header">
                 <span class="card-step-number">1</span>
                 <h3>Choose Your Plan</h3>
             </div>
             <div class="card-content">
                 <div class="package-options">
+                     <!-- 2 Months Option -->
+                     <button class="option-button" data-plan="2 Months" data-price="25,000 UGX / $7 USD">
+                        <div class="option-text">
+                            <span class="plan-duration">2 Months</span>
+                            <div class="price-wrapper">
+                                <del class="original-price">50,000</del>
+                                <div class="final-price-container">
+                                    <span class="plan-price">25,000 UGX</span>
+                                    <span class="plan-price-usd">$7 USD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                    <!-- 3 Months Option - Most Popular -->
+                    <button class="option-button popular" data-plan="3 Months" data-price="35,000 UGX / $10 USD">
+                        <div class="option-text">
+                            <span class="plan-duration">3 Months</span>
+                            <div class="price-wrapper">
+                                <del class="original-price">75,000</del>
+                                <div class="final-price-container">
+                                    <span class="plan-price">35,000 UGX</span>
+                                    <span class="plan-price-usd">$10 USD</span>
+                                </div>
+                            </div>
+                        </div>
+                    </button>
+                    <!-- 6 Months Option -->
                     <button class="option-button" data-plan="6 Months" data-price="70,000 UGX / $20 USD">
                         <div class="option-text">
                             <span class="plan-duration">6 Months</span>
                             <div class="price-wrapper">
-                                <del class="original-price">140,000</del>
+                                <del class="original-price">150,000</del>
                                 <div class="final-price-container">
                                     <span class="plan-price">70,000 UGX</span>
                                     <span class="plan-price-usd">$20 USD</span>
@@ -71,26 +96,15 @@
                             </div>
                         </div>
                     </button>
-                    <button class="option-button popular" data-plan="8 Months" data-price="80,000 UGX / $23 USD">
-                        <div class="option-text">
-                            <span class="plan-duration">8 Months</span>
-                            <div class="price-wrapper">
-                                <del class="original-price">160,000</del>
-                                <div class="final-price-container">
-                                    <span class="plan-price">80,000 UGX</span>
-                                    <span class="plan-price-usd">$23 USD</span>
-                                </div>
-                            </div>
-                        </div>
-                    </button>
-                    <button class="option-button" data-plan="1 Year" data-price="110,000 UGX / $31 USD">
+                    <!-- 1 Year Option -->
+                    <button class="option-button" data-plan="1 Year" data-price="120,000 UGX / $33 USD">
                         <div class="option-text">
                             <span class="plan-duration">1 Year</span>
                             <div class="price-wrapper">
-                                <del class="original-price">220,000</del>
+                                <del class="original-price">250,000</del>
                                 <div class="final-price-container">
-                                    <span class="plan-price">110,000 UGX</span>
-                                    <span class="plan-price-usd">$31 USD</span>
+                                    <span class="plan-price">120,000 UGX</span>
+                                    <span class="plan-price-usd">$33 USD</span>
                                 </div>
                             </div>
                         </div>
@@ -99,6 +113,7 @@
             </div>
         </section>
 
+        <!-- Step 2: Enter Name -->
         <section id="step-2" class="step-card locked">
             <div class="card-header">
                 <span class="card-step-number">2</span>
@@ -107,11 +122,12 @@
             <div class="card-content">
                 <form id="name-form" class="name-form">
                     <input type="text" id="clientName" class="glass-input" placeholder="Enter your full name" required>
-                    <button type="submit" class="next-button"><i class="fas fa-arrow-down"></i></button>
+                    <button type="submit" class="next-button" aria-label="Next Step"><i class="fas fa-arrow-down"></i></button>
                 </form>
             </div>
         </section>
 
+        <!-- Step 3: Select Payment Method -->
         <section id="step-3" class="step-card locked">
             <div class="card-header">
                 <span class="card-step-number">3</span>
@@ -129,16 +145,17 @@
             </div>
         </section>
 
+        <!-- Final Step: Proceed to WhatsApp -->
         <section id="step-final" class="final-cta-area locked">
             <h4>Ready to go?</h4>
             <p>You're all set. Proceed to WhatsApp to finalize your order.</p>
-            <button id="cta-button" class="cta-button">
+            <a id="cta-button-link" href="#" target="_blank" class="cta-button">
                 <i class="fab fa-whatsapp"></i> Proceed to WhatsApp
-            </button>
+            </a>
         </section>
-
    </main>
 
-   <script src="script.js"></script>
+    <!-- Link to the external JavaScript file -->
+    <script src="script.js"></script>
 </body>
 </html>
