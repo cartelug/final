@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AccessUG - Your Universe of Entertainment, Unlocked</title>
+    <title>AccessUG - Affordable Entertainment, Unlocked</title>
     <link rel="icon" href="logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css?v=1.0">
-</head>
+    <link rel="stylesheet" href="style.css?v=1.1"> </head>
 <body>
 
     <div id="background-animation"></div>
@@ -21,8 +20,8 @@
             <nav id="main-nav">
                 <ul>
                     <li><a href="#services">Services</a></li>
+                    <li><a href="#community">Community</a></li>
                     <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#trust">Why Us</a></li>
                 </ul>
             </nav>
             <button id="mobile-menu-button" class="mobile-menu-button" aria-label="Open Menu"><i class="fas fa-bars"></i></button>
@@ -32,35 +31,67 @@
     <main>
         <section class="hero-section">
             <div class="container">
-                <h1 class="hero-title">Your Universe of Entertainment, <span class="highlight">Unlocked</span>.</h1>
-                <p class="hero-subtitle">Instant, hassle-free access to Netflix, Prime Video, Spotify & more in Uganda and South Sudan. Pay easily with Mobile Money.</p>
+                <h1 class="hero-title">Affordable <span class="highlight">Entertainment.</span></h1>
+                <p class="hero-subtitle">Instant access to Netflix, Prime Video & more. Pay easily with Mobile Money in Uganda and South Sudan.</p>
                 <a href="#services" class="cta-button">Explore Services</a>
             </div>
         </section>
 
         <section id="services" class="services-section section-padding">
             <div class="container">
-                <h2 class="section-title">Premium Access, Instantly</h2>
+                <h2 class="section-title">Choose Your Service</h2>
                 <div class="services-grid">
-                    <a href="/netflix-order/" class="service-card" id="netflix-card">
+                    <div class="service-card" id="netflix-card">
                         <img src="netflix.png" alt="Netflix">
                         <h3>Netflix Premium</h3>
                         <p>4K UHD Streaming</p>
-                    </a>
-                    <a href="/prime-order/" class="service-card" id="prime-card">
+                        <a href="/netflix-order/" class="card-cta-button">Get Now</a>
+                    </div>
+                    <div class="service-card" id="prime-card">
                         <img src="prime-video.png" alt="Prime Video">
                         <h3>Prime Video</h3>
                         <p>Movies & Originals</p>
-                    </a>
-                    <a href="/spotify-order/" class="service-card" id="spotify-card">
+                        <a href="/prime-order/" class="card-cta-button">Get Now</a>
+                    </div>
+                    <div class="service-card" id="spotify-card">
                         <img src="spotify.png" alt="Spotify">
                         <h3>Spotify Premium</h3>
                         <p>Ad-Free Music</p>
-                    </a>
-                    <a href="/instagram-boost/" class="service-card" id="instagram-card">
+                        <a href="/spotify-order/" class="card-cta-button">Get Now</a>
+                    </div>
+                    <div class="service-card" id="instagram-card">
                         <img src="instagram.png" alt="Instagram">
                         <h3>Instagram Boost</h3>
                         <p>Likes & Engagement</p>
+                        <a href="/instagram-boost/" class="card-cta-button">Get Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="community" class="community-section section-padding">
+            <div class="container">
+                <h2 class="section-title">Join Our Community</h2>
+                <div class="community-grid">
+                    <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" target="_blank" class="community-card">
+                        <i class="fab fa-whatsapp"></i>
+                        <h3>WhatsApp Group</h3>
+                        <p>200+ Members in our Support & Deals Group</p>
+                    </a>
+                    <a href="https://www.instagram.com/thecartelug" target="_blank" class="community-card">
+                        <i class="fab fa-instagram"></i>
+                        <h3>Instagram</h3>
+                        <p>30k+ Followers Getting Daily Updates</p>
+                    </a>
+                    <a href="https://t.me/cartelugaccess" target="_blank" class="community-card">
+                        <i class="fab fa-telegram"></i>
+                        <h3>Telegram Channel</h3>
+                        <p>100+ Subscribers for Announcements</p>
+                    </a>
+                    <a href="https://www.facebook.com/share/1L1HfybCym/" target="_blank" class="community-card">
+                        <i class="fab fa-facebook"></i>
+                        <h3>Facebook</h3>
+                        <p>300+ Likes and Community Reviews</p>
                     </a>
                 </div>
             </div>
@@ -115,11 +146,15 @@
 
     <footer class="main-footer">
         <div class="container">
+            <div class="footer-links">
+                <a href="/privacy-policy/">Privacy Policy</a>
+                <span>&nbsp;|&nbsp;</span>
+                <a href="/terms-of-service/">Terms of Service</a>
+            </div>
             <p>&copy; 2025 AccessUG. All Rights Reserved.</p>
             <p>Your trusted partner for digital services in Uganda & South Sudan.</p>
         </div>
     </footer>
 
-    <script src="script.js?v=1.0"></script>
-</body>
+    <script src="script.js?v=1.1"></script> </body>
 </html>
