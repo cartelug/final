@@ -1,4 +1,4 @@
-/* === ULTIMATE HOMEPAGE STYLESHEET (REFINED V2) === */
+/* === ULTIMATE HOMEPAGE STYLESHEET (MOBILE SIZING FIXED) === */
 :root {
     --bg-dark: #0A0A10;
     --bg-card: rgba(20, 20, 25, 0.5);
@@ -100,14 +100,21 @@ body {
 .hero-title .highlight { color: var(--accent-glow); }
 .hero-subtitle { font-size: clamp(1rem, 3vw, 1.2rem); color: var(--text-medium); max-width: 700px; margin: 0 auto 40px; }
 
-/* --- SERVICES SECTION (2x2 GRID) --- */
-.services-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
+/* --- SERVICES SECTION (FIXED SIZING) --- */
+.services-grid { 
+    display: grid; 
+    grid-template-columns: 1fr; 
+    gap: 25px;
+    max-width: 900px;
+    margin: 0 auto;
+}
 @media(min-width: 768px) { .services-grid { grid-template-columns: 1fr 1fr; } }
 .service-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     border-radius: 16px;
-    padding: 30px 25px; text-align: center;
+    padding: 25px; /* MODIFIED: Reduced padding for smaller cards */
+    text-align: center;
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
     display: flex; flex-direction: column;
@@ -117,9 +124,15 @@ body {
 #prime-card:hover { border-color: var(--prime-glow); box-shadow: 0 0 30px rgba(0, 168, 225, 0.3); }
 #spotify-card:hover { border-color: var(--spotify-glow); box-shadow: 0 0 30px rgba(29, 185, 84, 0.3); }
 #instagram-card:hover { border-color: var(--instagram-glow); box-shadow: 0 0 30px rgba(193, 53, 132, 0.3); }
-.service-card img { height: 50px; margin-bottom: 15px; }
-.service-card h3 { font-size: 1.3rem; margin-bottom: 5px; }
-.service-card p { color: var(--text-medium); margin-bottom: 25px; flex-grow: 1;}
+.service-card img { 
+    height: 45px; /* MODIFIED: Reduced logo height */
+    width: auto;
+    max-width: 70%; /* NEW: Prevents wide logos from looking funny */
+    margin: 0 auto 15px; /* Centered with margin auto */
+    object-fit: contain; /* Ensures aspect ratio is maintained */
+}
+.service-card h3 { font-size: 1.2rem; margin-bottom: 5px; } /* MODIFIED */
+.service-card p { color: var(--text-medium); margin-bottom: 25px; flex-grow: 1; font-size: 0.9rem;} /* MODIFIED */
 .card-cta-button {
     display: inline-block;
     padding: 12px 25px;
@@ -131,7 +144,7 @@ body {
 }
 .card-cta-button:hover { background-color: #fff; transform: scale(1.05); }
 
-/* --- COMMUNITY SECTION (REDESIGNED) --- */
+/* --- COMMUNITY SECTION --- */
 .community-section { background-color: rgba(0,0,0,0.2); }
 .community-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
 @media(min-width: 600px) { .community-grid { grid-template-columns: 1fr 1fr; } }
