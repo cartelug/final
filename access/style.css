@@ -1,85 +1,173 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #000;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://www.themoviedb.org/t/p/original/t5zCBSB5xMDKcDqe91qahCOUYVV.jpg');
-    background-size: cover;
-    background-position: center;
-    color: #fff;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
-.container {
-    width: 100%;
-    max-width: 600px;
-    background: rgba(20, 20, 20, 0.85);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 40px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #1a1a1a;
 }
 
-.hidden {
-    display: none;
+.container{
+  width: 100%;
+  max-width: 800px;
+  background: #2c2c2c;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
-/* Header */
-.header {
-    text-align: center;
-    margin-bottom: 40px;
+.container .progress-bar{
+  display: flex;
+  margin: 40px 0;
+  user-select: none;
+  position: relative;
 }
 
-.logo {
-    width: 120px;
-    margin-bottom: 20px;
+.container .progress-bar .step{
+  text-align: center;
+  width: 100%;
+  position: relative;
 }
 
-h1 {
-    font-size: 2.2em;
-    margin-bottom: 10px;
-    font-weight: 700;
+.container .progress-bar .step p{
+  font-weight: 500;
+  font-size: 18px;
+  color: #fff;
+  margin-bottom: 8px;
 }
 
-/* Plan Selection */
+.progress-bar .step .bullet{
+  height: 35px;
+  width: 35px;
+  border: 2px solid #fff;
+  display: inline-block;
+  border-radius: 50%;
+  position: relative;
+  transition: 0.2s;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 31px;
+}
+
+.progress-bar .step .bullet.active{
+  border-color: #E50914;
+  background: #E50914;
+}
+
+.progress-bar .step .bullet span{
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.progress-bar .step .bullet.active span{
+  display: none;
+}
+
+.progress-bar .step:last-child .bullet:before,
+.progress-bar .step:last-child .bullet:after{
+  display: none;
+}
+
+.progress-bar .step .bullet:before,
+.progress-bar .step .bullet:after{
+  position: absolute;
+  content: '';
+  bottom: 15px;
+  right: -170px; /* Adjust this value based on your container width */
+  height: 3px;
+  width: 170px; /* Adjust this value based on your container width */
+  background: #fff;
+}
+
+.progress-bar .step .bullet.active:after{
+  background: #E50914;
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: animate 0.3s linear forwards;
+}
+
+@keyframes animate {
+  100%{
+    transform: scaleX(1);
+  }
+}
+
+.form-outer{
+  width: 100%;
+  overflow: hidden;
+}
+
+.form-outer form{
+  display: flex;
+  width: 300%;
+}
+
+.form-outer form .page{
+  width: 33.33%;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.form-outer form .page .title{
+  text-align: center;
+  font-size: 25px;
+  font-weight: 500;
+  color: #fff;
+}
+
 .plan-cards {
     display: flex;
     gap: 20px;
+    margin-top: 30px;
 }
 
 .card {
-    background: rgba(34, 34, 34, 0.8);
-    border-radius: 15px;
-    padding: 30px;
+    background-color: #3e3e3e;
+    border-radius: 8px;
+    padding: 20px;
     text-align: center;
     flex-grow: 1;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 2px solid transparent;
     transition: all 0.3s ease;
     cursor: pointer;
+    color: #fff;
+    position: relative;
 }
 
-.card:hover, .card.popular {
-    transform: translateY(-10px);
+.card:hover {
     border-color: #E50914;
-    box-shadow: 0 0 20px rgba(229, 9, 20, 0.5);
 }
+
+.popular-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #E50914;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
 
 .card h2 {
     margin-top: 0;
-    font-size: 1.5em;
 }
 
 .price {
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: bold;
     color: #E50914;
-    margin: 10px 0;
 }
 
 .card ul {
@@ -90,100 +178,109 @@ h1 {
 
 .card ul li {
     margin-bottom: 10px;
-    color: #ccc;
 }
 
-.btn {
-    background: #E50914;
-    color: #fff;
-    padding: 12px 25px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    text-transform: uppercase;
-}
-
-.btn:hover {
-    background-color: #f6121d;
-}
-
-/* Device Selection */
 .device-icons {
     display: flex;
     justify-content: space-around;
     gap: 20px;
+    margin-top: 40px;
 }
 
 .device {
     cursor: pointer;
     text-align: center;
-    transition: transform 0.3s ease;
+    color: #fff;
 }
 
-.device:hover {
+.device img {
+    transition: transform 0.3s ease;
+    filter: invert(1);
+}
+
+.device:hover img {
     transform: scale(1.1);
 }
 
-/* Login Instructions */
-.instructions .step {
-    background: rgba(34, 34, 34, 0.8);
+.instructions {
+    margin-top: 30px;
+    color: #fff;
+}
+
+.step-instruction {
+    background: #3e3e3e;
     padding: 20px;
-    border-radius: 15px;
+    border-radius: 8px;
     margin-bottom: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .credentials {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #000;
-    padding: 15px;
+    background-color: #1a1a1a;
+    padding: 10px;
     border-radius: 5px;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 1.1em;
-    border: 1px solid #444;
+}
+
+.form-outer form .page .field{
+  height: 45px;
+  margin: 45px 0;
+  display: flex;
+  position: relative;
+}
+
+.form-outer form .page .field .label{
+  position: absolute;
+  top: -30px;
+  font-weight: 500;
+}
+
+.form-outer form .page .field button, .btn{
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: #E50914;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: 0.3s ease;
+}
+
+.form-outer form .page .field button:hover{
+  background: #d40812;
+}
+
+.form-outer form .page .btns button{
+  margin-top: -20px!important;
+}
+
+.form-outer form .page .btns button.prev{
+  margin-right: 3px;
+  font-size: 17px;
 }
 
 .btn-copy {
-    background: #333;
+    background-color: #555;
     color: #fff;
     border: none;
-    padding: 10px 15px;
+    padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.btn-copy:hover {
-    background: #555;
 }
 
 .btn-whatsapp {
     display: block;
     text-align: center;
+    padding: 12px;
     margin-top: 20px;
     text-decoration: none;
     background-color: #25D366;
-    padding: 15px;
+    color: #fff;
     border-radius: 5px;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.btn-whatsapp:hover {
-    background-color: #128C7E;
-}
-
-
-@media (max-width: 600px) {
-    .plan-cards {
-        flex-direction: column;
-    }
-    .container {
-        padding: 20px;
-    }
 }
