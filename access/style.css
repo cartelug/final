@@ -7,6 +7,7 @@
     --text-secondary: #b3b3b3;
     --border-color: #2c2c2c;
     --green-accent: #1DB954;
+    --whatsapp-green: #25D366;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -22,6 +23,67 @@ body {
     padding: 2rem 1rem;
     -webkit-font-smoothing: antialiased;
 }
+
+/* Country Popup */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+.popup-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+}
+.popup-box {
+    background-color: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid var(--border-color);
+    transform: scale(0.95);
+    transition: transform 0.3s ease;
+}
+.popup-overlay.visible .popup-box {
+    transform: scale(1);
+}
+.popup-box h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.country-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.country-btn {
+    background-color: var(--surface-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+.country-btn:hover {
+    background-color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
 
 .container { width: 100%; max-width: 600px; }
 
@@ -40,12 +102,32 @@ body {
 /* Plan Selector */
 .plan-selector { background-color: var(--surface-color); border-radius: 12px; padding: 1.5rem; }
 .plan-tabs { display: flex; background-color: var(--background-color); border-radius: 8px; padding: 5px; margin-bottom: 1.5rem; }
-.plan-tab { flex: 1; background: none; border: none; color: var(--text-secondary); padding: 0.8rem; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-size: 1rem; }
+.plan-tab { flex: 1; background: none; border: none; color: var(--text-secondary); padding: 0.8rem 0.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s ease; font-size: clamp(0.8rem, 3vw, 1rem); }
 .plan-tab.active { background-color: var(--primary-color); color: var(--text-primary); }
 
-.plan-details { text-align: center; animation: fadeIn 0.3s; }
-.plan-details .price { font-size: 2.5rem; font-weight: 700; }
-.plan-details .currency { font-size: 1.5rem; color: var(--text-secondary); }
+.plan-details { text-align: center; animation: fadeIn 0.3s; min-height: 190px; }
+
+/* Doubled Discount Price Style */
+.price-display {
+    margin: 1rem 0;
+}
+.price-display .original-price {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    text-decoration: line-through;
+}
+.price-display .discounted-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+.price-display .currency {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
 .plan-details .duration { color: var(--text-secondary); margin-bottom: 1.5rem; }
 .plan-details .features { list-style: none; display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1.5rem; }
 .plan-details .features li { display: flex; align-items: center; gap: 0.5rem; }
@@ -79,8 +161,8 @@ body {
 
 .final-cta { text-align: center; margin-top: 2rem; }
 .cta-prompt { margin-bottom: 1rem; color: var(--text-secondary); }
-.whatsapp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 1rem; background-color: #25D366; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: transform 0.2s ease; border: none; width: 100%; }
-.whatsapp-btn:hover { transform: scale(1.02); }
+.whatsapp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 1rem; background-color: var(--whatsapp-green); color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 1.1rem; transition: all 0.2s ease; border: none; width: 100%; box-shadow: 0 0 0px rgba(37, 211, 102, 0); }
+.whatsapp-btn:hover { transform: scale(1.02); box-shadow: 0 0 15px rgba(37, 211, 102, 0.7); }
 
 .app-footer { text-align: center; margin-top: 3rem; color: var(--text-secondary); font-size: 0.9rem; }
 .app-footer nav { margin-top: 0.5rem; }
