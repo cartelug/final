@@ -1,182 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>AccessUG — 4K Netflix Access (Pay After You Test)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="./style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Access Hub - CartelUG</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main class="wrap" id="app" aria-live="polite">
-    <!-- Header -->
-    <div class="logo">
-      <!-- Replace with your own logo path -->
-      <img src="../logo.png" alt="AccessUG" />
-    </div>
 
-    <!-- Hero -->
-    <section class="hero">
-      <h1>4K Netflix Access. Pay After You Test.</h1>
-      <p>2 devices • Works on all devices • 24/7 support</p>
-    </section>
+    <main class="container">
+        <section class="step-view active" id="step1">
+            <header class="step-header">
+                <img src="../logo.png" alt="CartelUG Logo" class="logo">
+                <h1>Choose Your Access Plan</h1>
+                <p>Select the best plan for you. Test first, pay after.</p>
+            </header>
 
-    <!-- Stepper -->
-    <nav class="stepper" aria-label="Progress">
-      <div class="step" data-step="1" aria-current="step">
-        <div class="bullet" aria-hidden="true"><span>1</span></div>
-        <label>Plan</label>
-      </div>
-      <div class="step" data-step="2" aria-current="false">
-        <div class="bullet" aria-hidden="true"><span>2</span></div>
-        <label>Device</label>
-      </div>
-      <div class="step" data-step="3" aria-current="false">
-        <div class="bullet" aria-hidden="true"><span>3</span></div>
-        <label>Login</label>
-      </div>
-    </nav>
-
-    <!-- Pages -->
-    <div class="pages" role="region" aria-roledescription="carousel" aria-label="Checkout steps">
-      <div class="track" id="track" style="transform: translateX(0%)">
-        <!-- PAGE 1: Plans -->
-        <section class="page" id="page-plans">
-          <h2>Select Your Plan</h2>
-          <div class="plans" id="plans">
-            <!-- Basic -->
-            <article class="card" data-plan-id="basic" data-name="Basic" data-duration="2 Months" data-price="50000">
-              <h3>Basic • 2 Months</h3>
-              <div class="price">50,000 UGX</div>
-              <ul class="bullets">
-                <li><i class="fa-solid fa-check"></i> 4K UHD</li>
-                <li><i class="fa-solid fa-check"></i> 2 devices</li>
-                <li><i class="fa-solid fa-check"></i> 24/7 support</li>
-              </ul>
-              <div class="services" aria-label="Included services">
-                <span class="badge service">Netflix</span>
-              </div>
-              <div class="select"><button class="btn select-plan">Select Plan</button></div>
-            </article>
-            <!-- Standard -->
-            <article class="card" data-plan-id="standard" data-name="Standard" data-duration="3 Months" data-price="70000">
-              <h3>Standard • 3 Months</h3>
-              <div class="price">70,000 UGX</div>
-              <ul class="bullets">
-                <li><i class="fa-solid fa-check"></i> Everything in Basic</li>
-              </ul>
-              <div class="services">
-                <span class="badge service">Netflix</span>
-              </div>
-              <div class="select"><button class="btn select-plan">Select Plan</button></div>
-            </article>
-            <!-- Premium -->
-            <article class="card popular" data-plan-id="premium" data-name="Premium" data-duration="6 Months" data-price="120000">
-              <span class="badge top">Most Popular</span>
-              <h3>Premium • 6 Months</h3>
-              <div class="price">120,000 UGX</div>
-              <ul class="bullets">
-                <li><i class="fa-solid fa-check"></i> Everything in Basic</li>
-                <li><i class="fa-solid fa-gift"></i> 1‑month Prime Video</li>
-                <li><i class="fa-solid fa-gift"></i> 1‑month Spotify Premium</li>
-              </ul>
-              <div class="services">
-                <span class="badge service">Netflix</span>
-                <span class="badge service">Prime Video</span>
-                <span class="badge service">Spotify</span>
-              </div>
-              <div class="select"><button class="btn select-plan">Select Plan</button></div>
-            </article>
-          </div>
-          <div class="nav"><span class="spacer"></span></div>
-        </section>
-
-        <!-- PAGE 2: Devices -->
-        <section class="page" id="page-device">
-          <h2>How Are You Watching?</h2>
-          <div class="devices" role="radiogroup" aria-label="Device">
-            <button class="device" role="radio" aria-checked="false" data-device="TV"><i class="fa-solid fa-tv" aria-hidden="true"></i><div>TV</div></button>
-            <button class="device" role="radio" aria-checked="false" data-device="Phone / Tablet"><i class="fa-solid fa-mobile-screen-button" aria-hidden="true"></i><div>Phone / Tablet</div></button>
-            <button class="device" role="radio" aria-checked="false" data-device="PC / Laptop"><i class="fa-solid fa-laptop" aria-hidden="true"></i><div>PC / Laptop</div></button>
-          </div>
-          <div class="nav">
-            <button class="btn secondary" id="back-to-plans"><i class="fa-solid fa-arrow-left"></i> Previous</button>
-            <span class="spacer"></span>
-          </div>
-        </section>
-
-        <!-- PAGE 3: Login -->
-        <section class="page" id="page-login">
-          <h2 id="login-title">Your Login Instructions</h2>
-          <div class="pill" id="pill-device"><i class="fa-solid fa-display"></i> <span>Device: <b id="deviceLabel">—</b></span></div>
-          <div class="instructions">
-            <div class="inst">
-              <h4>Step 1: Open Netflix & Sign In</h4>
-              <p>On your <b class="device-name">device</b>, open the Netflix app and tap <b>Sign In</b>.</p>
-            </div>
-            <div class="inst">
-              <h4>Step 2: Enter Email</h4>
-              <div class="cred">
-                <span id="email">example@email.com</span>
-                <div class="tools">
-                  <button class="btn secondary" data-copy="email"><i class="fa-regular fa-copy"></i> Copy</button>
+            <div class="plan-grid">
+                <div class="plan-card next-btn">
+                    <div class="card-content">
+                        <h3>Basic</h3>
+                        <p class="price">50,000 <span class="currency">UGX</span></p>
+                        <p class="duration">2 Months Access</p>
+                        <ul class="features">
+                            <li><i class="fas fa-desktop"></i> 2 Devices</li>
+                            <li><i class="fas fa-video"></i> 4K UHD Quality</li>
+                            <li><i class="fas fa-headset"></i> 24/7 Support</li>
+                        </ul>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <div class="inst">
-              <h4>Step 3: Enter Password</h4>
-              <div class="cred">
-                <span id="password" data-secret="true">••••••••</span>
-                <div class="tools">
-                  <button class="btn secondary" id="reveal"><i class="fa-regular fa-eye"></i> Reveal</button>
-                  <button class="btn secondary" data-copy="password"><i class="fa-regular fa-copy"></i> Copy</button>
+
+                <div class="plan-card next-btn">
+                    <div class="card-content">
+                        <h3>Standard</h3>
+                        <p class="price">70,000 <span class="currency">UGX</span></p>
+                        <p class="duration">3 Months Access</p>
+                        <ul class="features">
+                            <li><i class="fas fa-desktop"></i> 2 Devices</li>
+                            <li><i class="fas fa-video"></i> 4K UHD Quality</li>
+                            <li><i class="fas fa-headset"></i> 24/7 Support</li>
+                        </ul>
+                    </div>
                 </div>
-              </div>
+
+                <div class="plan-card popular next-btn">
+                    <div class="popular-badge">Best Value</div>
+                    <div class="card-content">
+                        <h3>Premium</h3>
+                        <p class="price">120,000 <span class="currency">UGX</span></p>
+                        <p class="duration">6 Months Access</p>
+                        <ul class="features">
+                           <li><i class="fas fa-desktop"></i> 2 Devices</li>
+                            <li><i class="fas fa-video"></i> 4K UHD Quality</li>
+                            <li><i class="fas fa-headset"></i> 24/7 Support</li>
+                        </ul>
+                        <div class="bonus">
+                            <p>+ Includes FREE:</p>
+                            <div class="bonus-logos">
+                                <img src="../prime-video.png" alt="Prime Video Logo" title="1 Month Prime Video">
+                                <img src="../spotify.png" alt="Spotify Logo" title="1 Month Spotify">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="inst">
-              <h4>Step 4: Confirmation</h4>
-              <p>When you see the <b>Who’s Watching?</b> screen, tap the button below and we’ll activate your profile.</p>
-              <a class="btn" id="waCta" href="https://wa.me/256762193386" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> I’m at the Profile Screen</a>
-            </div>
-          </div>
-          <div class="nav">
-            <button class="btn secondary" id="back-to-device"><i class="fa-solid fa-arrow-left"></i> Previous</button>
-            <span class="spacer"></span>
-          </div>
         </section>
-      </div>
-    </div>
 
-    <!-- Sticky summary -->
-    <aside class="summary" aria-live="polite">
-      <div class="summary-inner">
-        <div class="plan-dot" aria-hidden="true"></div>
-        <div class="label" id="summaryLabel">Choose a plan to continue</div>
-        <span class="spacer"></span>
-        <button class="btn" id="nextBtn" disabled>Next</button>
-      </div>
-    </aside>
+        <section class="step-view" id="step2">
+             <header class="step-header">
+                <button class="back-btn" data-target="step1"><i class="fas fa-arrow-left"></i> Go Back</button>
+                <h1>How will you be watching?</h1>
+                <p>This helps us give you the easiest login instructions.</p>
+            </header>
+            <div class="device-grid">
+                <div class="device-card device-btn" data-device="TV">
+                    <i class="fas fa-tv"></i>
+                    <span>Smart TV</span>
+                </div>
+                <div class="device-card device-btn" data-device="Phone or Tablet">
+                    <i class="fas fa-mobile-alt"></i>
+                    <span>Phone or Tablet</span>
+                </div>
+                <div class="device-card device-btn" data-device="Computer">
+                    <i class="fas fa-laptop"></i>
+                    <span>Computer</span>
+                </div>
+            </div>
+        </section>
 
-    <!-- FAQ -->
-    <section class="faq" aria-label="FAQ">
-      <details>
-        <summary>Do I pay before watching?</summary>
-        <p>No — you log in, test, then complete payment via MTN or Airtel.</p>
-      </details>
-      <details>
-        <summary>Is 4K supported?</summary>
-        <p>Yes. Plans support 4K UHD where your device and connection allow.</p>
-      </details>
-      <details>
-        <summary>How many devices?</summary>
-        <p>You can use up to 2 devices.</p>
-      </details>
-    </section>
-  </main>
-
-  <script src="./script.js"></script>
+        <section class="step-view" id="step3">
+            <header class="step-header">
+                <button class="back-btn" data-target="step2"><i class="fas fa-arrow-left"></i> Go Back</button>
+                <h1 id="login-title">Your Login Details</h1>
+                <p>Follow these simple steps on your <span class="device-name">device</span>.</p>
+            </header>
+            <div class="login-instructions">
+                <div class="login-step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">
+                        <h2>Copy the Email</h2>
+                        <div class="credential-box">
+                            <span id="email">cartelug7@gmail.com</span>
+                            <button class="copy-btn" data-copy="email">
+                                <i class="fas fa-copy"></i> <span>Copy</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                 <div class="login-step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">
+                        <h2>Copy the Password</h2>
+                         <div class="credential-box">
+                            <span id="password">cartelug10</span>
+                            <button class="copy-btn" data-copy="password">
+                               <i class="fas fa-copy"></i> <span>Copy</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="login-step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">
+                        <h2>Open Netflix & Sign In</h2>
+                        <p>Paste the details in the Netflix app.</p>
+                    </div>
+                </div>
+                <div class="final-cta">
+                     <p class="cta-prompt">Once you see the profiles screen, tap below to activate your account!</p>
+                     <a href="https://wa.me/256762193386" class="whatsapp-btn">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>I'm at the Profiles Screen!</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script src="script.js"></script>
 </body>
 </html>
