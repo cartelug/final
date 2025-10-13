@@ -30,6 +30,10 @@ document.addEventListener('DOMContentLoaded', () => {
         step.id = id;
         step.className = 'flow-step';
         flowContainer.appendChild(step);
+        // Auto-scroll to the new step
+        setTimeout(() => {
+            step.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
         return step;
     };
 
@@ -50,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function showCurrencyStep() {
         const step = createStep('step-currency');
         step.innerHTML = `
-            ${createPrompt('First, please select your <span class="highlight">currency.</span>')}
+            ${createPrompt('Welcome. Please select your <span class="highlight">currency</span> to begin.')}
             <div class="currency-selector">
                 <button class="currency-btn active" data-currency="UGX">🇺🇬 UGX</button>
                 <button class="currency-btn" data-currency="SSP">🇸🇸 SSP</button>
@@ -69,12 +73,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showPackageStep() {
         let step = document.getElementById('step-packages');
-        if (step) step.remove(); // Remove old step if currency is changed
-
-        step = createStep('step-packages');
-        step.innerHTML = `${createPrompt('Which <span class="highlight">package</span> aligns with your goals?')}`;
-        const grid = document.createElement('div');
-        grid.className = 'package-grid';
+        if (step) {
+             // If exists, just re-render cards instead of creating a new step
+             renderPackageCards(step);
+        } else {
+             step = createStep('step-packages');
+             step.innerHTML = `${createPrompt('Which <span class="highlight">package</span> aligns with your goals?')}`;
+             renderPackageCards(step);
+        }
+    }
+    
+    function renderPackageCards(stepElement) {
+        let grid = stepElement.querySelector('.package-grid');
+        if (!grid) {
+            grid = document.createElement('div');
+            grid.className = 'package-grid';
+            stepElement.appendChild(grid);
+        }
+        grid.innerHTML = ''; // Clear previous cards
 
         packagesData.forEach(pkg => {
             const prices = calculatePrices(pkg.ugx);
@@ -87,17 +103,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="old-price">~~${prices[currentCurrency].old.toLocaleString()} ${currentCurrency}~~</span>
                     <span class="new-price">${prices[currentCurrency].new.toLocaleString()} ${currentCurrency}</span>
                 </div>
+                <div class="nb-note">
+                    <strong>NB:</strong> Likes & Views are strategically divided across up to 90 of your posts for natural growth.
+                </div>
             `;
             card.addEventListener('click', () => {
                 order.package = pkg.tier;
                 order.price = `${prices[currentCurrency].new.toLocaleString()} ${currentCurrency}`;
-                step.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+                stepElement.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
                 showDetailsStep();
             });
             grid.appendChild(card);
         });
-        step.appendChild(grid);
     }
     
     function showDetailsStep() {
@@ -112,10 +130,12 @@ document.addEventListener('DOMContentLoaded', () => {
             </form>
         `;
 
-        step.querySelector('#clientName').addEventListener('input', e => order.clientName = e.target.value);
         step.querySelector('#username').addEventListener('input', e => {
             order.username = e.target.value;
-            if(order.clientName && order.username) showPaymentStep();
+            order.clientName = step.querySelector('#clientName').value;
+            if(order.clientName && order.username) {
+                 setTimeout(showPaymentStep, 300); // Small delay for smoother UX
+            }
         });
     }
 

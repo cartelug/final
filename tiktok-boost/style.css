@@ -1,17 +1,22 @@
-/* Universal Elite Concierge Style */
+/* Universal Elite Concierge Style V2 */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg-color: #111111;
-    --surface-color: #1A1A1A;
-    --border-color: #2c2c2c;
+    --bg-color: #0D0D0D;
+    --surface-color: #171717;
+    --border-color: #262626;
     --text-primary: #F5F5F7;
     --text-secondary: #8A8A8E;
     --text-dark: #000000;
     --whatsapp-green: #25D366;
     --discount-red: #FF4D4D;
+    --note-yellow: #FFD60A;
     
     --accent-color: #C13584; /* Instagram Default */
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
@@ -35,13 +40,17 @@ body {
 .concierge-flow {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 3rem; /* Increased gap for better visual separation */
 }
 
 .flow-step {
     opacity: 0;
     transform: translateY(20px);
     animation: fadeIn 0.8s forwards;
+    min-height: 50vh; /* Ensures each step has significant screen presence */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 @keyframes fadeIn {
@@ -52,9 +61,9 @@ body {
 }
 
 .prompt-message {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 600;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     line-height: 1.4;
     color: var(--text-secondary);
 }
@@ -71,7 +80,7 @@ body {
 }
 
 .currency-btn, .payment-option {
-    background-color: transparent;
+    background-color: var(--surface-color);
     border: 1px solid var(--border-color);
     color: var(--text-secondary);
     font-size: 1rem;
@@ -83,7 +92,7 @@ body {
 }
 
 .currency-btn:hover, .payment-option:hover {
-    border-color: var(--text-secondary);
+    border-color: var(--text-primary);
     color: var(--text-primary);
 }
 
@@ -138,6 +147,22 @@ body {
 
 .package-card .price .new-price {
     font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* NEW NB Note Style */
+.nb-note {
+    background-color: rgba(255, 214, 10, 0.1);
+    border-left: 3px solid var(--note-yellow);
+    color: var(--note-yellow);
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.nb-note strong {
     font-weight: 700;
 }
 
