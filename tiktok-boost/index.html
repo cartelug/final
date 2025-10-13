@@ -3,74 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Boost Service</title>
+    <title>TikTok Growth Dashboard</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
-<body>
+<body class="tiktok-theme">
 
-    <div class="background-animation"></div>
+    <div class="container">
+        <header class="page-header">
+            <img src="../logo.png" alt="Cartelug Logo" class="logo">
+            <h1>Growth Dashboard</h1>
+            <p>Select your TikTok growth bundle.</p>
+        </header>
 
-    <main class="card-flow-container">
-        
-        <div class="page-header">
-            <img src="../tiktok.png" alt="TikTok Logo" class="service-logo">
-            <h1>TikTok Growth</h1>
-            <p>Choose from our viral growth bundles.</p>
-        </div>
-
-        <section id="step-1-bundles" class="step-card">
-            <div class="card-header">
-                <span class="card-step-number">1</span>
-                <h3>Choose Your Growth Bundle</h3>
-            </div>
-            <div class="card-content">
-                <p class="profit-note"><i>Guaranteed 65K–75K+ profit on all bundles</i></p>
-                <div id="packages-content" class="package-options">
-                    </div>
-            </div>
-        </section>
-
-        <section id="step-2-details" class="step-card locked">
-            <div class="card-header">
-                <span class="card-step-number">2</span>
-                <h3>Enter Your Details</h3>
-            </div>
-            <div class="card-content">
-                <form id="details-form" class="details-form">
-                    <input type="text" id="clientName" class="glass-input" placeholder="Your Full Name" required>
-                    <input type="text" id="tiktokUsername" class="glass-input" placeholder="@your_tiktok_username" required>
-                    <button type="submit" class="next-button" aria-label="Next Step"><i class="fas fa-arrow-down"></i></button>
-                </form>
-            </div>
-        </section>
-
-        <section id="step-3-payment" class="step-card locked">
-            <div class="card-header">
-                <span class="card-step-number">3</span>
-                <h3>How would you like to pay?</h3>
-            </div>
-            <div class="card-content">
-                <div class="payment-options">
-                    <div class="payment-card" data-method="MTN">
-                        <img src="../mtn.png" alt="MTN Mobile Money">
-                    </div>
-                    <div class="payment-card" data-method="Airtel">
-                        <img src="../airtel.png" alt="Airtel Money">
-                    </div>
+        <main class="dashboard">
+            <section id="step-1-bundles" class="dashboard-widget">
+                <div class="widget-header">
+                    <span class="step-indicator">1</span>
+                    <h2>Select Bundle</h2>
                 </div>
-            </div>
-        </section>
+                <div class="widget-content">
+                    <p class="profit-note">Guaranteed 65K–75K+ profit</p>
+                    <div id="bundles-grid" class="grid-layout">
+                        </div>
+                </div>
+            </section>
 
-        <section id="step-final" class="final-cta-area locked">
-            <h4>Ready to Go?</h4>
-            <p>Click below to finalize your order on WhatsApp.</p>
-            <a id="cta-button-link" href="#" target="_blank" class="cta-button">
-                <i class="fab fa-whatsapp"></i> Proceed to WhatsApp
-            </a>
-        </section>
+            <section id="step-2-finalize" class="dashboard-widget locked">
+                <div class="widget-header">
+                    <span class="step-indicator">2</span>
+                    <h2>Finalize Order</h2>
+                </div>
+                <div class="widget-content">
+                    <form id="order-form" class="order-form">
+                        <input type="text" id="clientName" placeholder="Your Full Name" required>
+                        <input type="text" id="tiktokUsername" placeholder="@your_tiktok_username" required>
+                        
+                        <div class="payment-selector">
+                            <div class="payment-option" data-method="MTN">
+                                <img src="../mtn.png" alt="MTN Mobile Money">
+                            </div>
+                            <div class="payment-option" data-method="Airtel">
+                                <img src="../airtel.png" alt="Airtel Money">
+                            </div>
+                        </div>
 
-    </main>
+                        <a id="whatsapp-link" class="cta-button disabled" href="#" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>Complete Order on WhatsApp</span>
+                        </a>
+                    </form>
+                </div>
+            </section>
+        </main>
+        <footer class="page-footer">
+            <span>⚡ Delivery: 1–10 hrs</span>
+            <span>⚡ No password needed</span>
+        </footer>
+    </div>
 
     <script src="script.js"></script>
 </body>

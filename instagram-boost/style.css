@@ -1,201 +1,268 @@
-/* Universal Premium Style for Boost Pages */
+/* Universal Premium Dashboard Style */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
+    --bg-color: #121212;
+    --widget-bg: #1E1E1E;
+    --border-color: #2D2D2D;
+    --text-primary: #FFFFFF;
+    --text-secondary: #A0A0A0;
     --whatsapp-green: #25D366;
-    --whatsapp-green-hover: #1EBE57;
-    --discount-red: #ff5252;
-    --text-light: #ffffff;
-    --text-muted: #b3b3b3;
-    --bg-color: #080808;
-    --glass-bg: rgba(25, 25, 25, 0.6);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    /* Theme-specific accent colors */
+    --accent-color: #833AB4; /* Default to Instagram */
 }
 
 body {
     background-color: var(--bg-color);
-    color: var(--text-light);
-    font-family: 'Inter', 'Poppins', sans-serif;
-    overflow-x: hidden;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 1rem;
 }
 
-.background-animation {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1;
-    background-size: 400% 400%;
-    animation: gradient-animation 20s ease infinite;
+.tiktok-theme {
+    --accent-color: #00f2ea; /* TikTok Cyan */
 }
 
-/* Instagram Specific Gradient */
-body.instagram-theme .background-animation {
-    background-image: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
-}
-
-/* TikTok Specific Gradient */
-body.tiktok-theme .background-animation {
-    background-image: linear-gradient(45deg, #010101, #00f2ea, #ff0050, #010101);
-}
-
-.card-flow-container {
-    width: 100%;
-    max-width: 600px;
+.container {
+    max-width: 800px;
     margin: 0 auto;
-    padding: 2rem 1rem 10rem 1rem;
+}
+
+.logo {
+    max-height: 40px;
+    margin-bottom: 1rem;
 }
 
 .page-header {
     text-align: center;
-    padding: 2rem 0 4rem 0;
+    padding: 2rem 0;
 }
-.page-header .service-logo {
-    max-height: 50px;
-}
+
 .page-header h1 {
-    font-size: clamp(2rem, 8vw, 3.2rem);
-    margin: 1rem 0 0.5rem 0;
+    font-size: 2.5rem;
+    margin: 0;
 }
+
 .page-header p {
+    color: var(--text-secondary);
     font-size: 1.1rem;
-    color: var(--text-muted);
 }
 
-.step-card {
-    background: var(--glass-bg);
-    backdrop-filter: blur(25px);
-    border: 1px solid var(--glass-border);
-    border-radius: 24px;
+.dashboard-widget {
+    background: var(--widget-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
     margin-bottom: 2rem;
-    transition: var(--transition-smooth);
     overflow: hidden;
+    transition: all 0.5s ease-out;
 }
 
-.step-card.locked {
-    opacity: 0;
-    transform: translateY(30px);
-    pointer-events: none;
+.dashboard-widget.locked {
     max-height: 0;
-    padding: 0; margin: 0; border: none;
+    opacity: 0;
+    margin: 0;
+    border: none;
+    pointer-events: none;
 }
-
-.card-header {
+.dashboard-widget.recommended {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-color);
+}
+.widget-header {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem 1.25rem;
-    border-bottom: 1px solid var(--glass-border);
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
 }
-.card-step-number {
-    color: var(--text-light);
-    font-weight: 700;
+
+.step-indicator {
+    background: var(--accent-color);
+    color: var(--text-primary);
     border-radius: 50%;
-    width: 32px; height: 32px;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    margin-right: 1rem;
+}
+
+.widget-header h2 {
+    margin: 0;
+    font-size: 1.2rem;
+}
+
+.widget-content {
+    padding: 1.5rem;
+}
+
+.objective-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.objective-btn {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 1.5rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.objective-btn:hover {
+    background: var(--widget-bg);
+    border-color: var(--accent-color);
+}
+
+.objective-btn.selected {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: #fff;
+}
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.package-card {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.package-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+}
+
+.package-card.selected {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 15px rgba(131, 58, 180, 0.3);
+}
+.tiktok-theme .package-card.selected {
+     box-shadow: 0 0 15px rgba(0, 242, 234, 0.3);
+}
+
+.package-card h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.2rem;
+}
+
+.package-card .description {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    min-height: 40px;
+}
+.package-card .price .old-price {
+    text-decoration: line-through;
+    color: #ff5252;
+    margin-right: 0.5rem;
+}
+
+.package-card .price .new-price {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.order-form input {
+    width: 100%;
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.payment-selector {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.payment-option {
+    flex: 1;
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-.card-header h3 { font-size: 1.25rem; }
-.card-content { padding: 1.5rem; }
-
-/* Package/Service Buttons */
-.service-options, .package-options {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-.service-button, .option-button {
-    width: 100%;
-    padding: 1rem;
-    background-color: rgba(255,255,255,0.05);
-    border: 1px solid var(--glass-border);
-    color: var(--text-light);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: left;
-}
-.service-button {
-    font-size: 1.2rem;
-    text-align: center;
-}
-.service-button:hover, .option-button:hover {
-    transform: translateY(-3px);
-    background-color: rgba(255,255,255,0.1);
-}
-.service-button.selected, .option-button.selected {
-    transform: translateY(-3px);
-}
-.plan-duration { font-weight: 600; }
-.original-price {
-    color: var(--discount-red);
-    text-decoration: line-through;
-}
-.plan-price { font-weight: 700; }
-
-/* Details Form */
-.details-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-.glass-input {
-    background: rgba(0,0,0,0.2);
-    border: 1px solid var(--glass-border);
-    border-radius: 12px;
-    padding: 1rem;
-    color: var(--text-light);
-    font-size: 1.1rem;
-}
-.next-button {
-    border-radius: 12px;
-    color: #fff;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    padding: 0.5rem;
+    transition: all 0.2s ease;
 }
 
-/* Payment Options */
-.payment-options {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+.payment-option:hover {
+    border-color: var(--text-secondary);
 }
-.payment-card {
-    background-color: rgba(0,0,0,0.2);
-    border: 2px solid var(--glass-border);
-    border-radius: 12px;
-    padding: 1.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.payment-card:hover { transform: translateY(-5px); }
-.payment-card.selected { transform: translateY(-5px); }
-.payment-card img { max-height: 50px; width: 100%; }
 
-.final-cta-area { text-align: center; }
-.final-cta-area.locked { display: none; }
+.payment-option.selected {
+    border-color: var(--text-primary);
+}
+
+.payment-option img {
+    max-height: 30px;
+    filter: grayscale(100%);
+    transition: filter 0.2s ease;
+}
+
+.payment-option.selected img {
+    filter: grayscale(0%);
+}
+
 .cta-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
     width: 100%;
-    padding: 1rem;
-    font-size: 1.2rem;
-    font-weight: 700;
-    background-color: var(--whatsapp-green);
+    background: var(--whatsapp-green);
     color: #fff;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
+    padding: 1rem;
+    border-radius: 8px;
     text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
-.cta-button:hover { background-color: var(--whatsapp-green-hover); }
 
-/* Theme-specific Colors */
-.instagram-theme .card-step-number, .instagram-theme .next-button, .instagram-theme .service-button.selected, .instagram-theme .option-button.selected {
-    background-color: #C13584; /* Instagram Purple */
+.cta-button.disabled {
+    background: #444;
+    cursor: not-allowed;
+    pointer-events: none;
 }
-.tiktok-theme .card-step-number, .tiktok-theme .next-button, .tiktok-theme .service-button.selected, .tiktok-theme .option-button.selected {
-    background-color: #ff0050; /* TikTok Red */
+
+.page-footer {
+    text-align: center;
+    padding: 2rem 0;
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
 }
-.payment-card.selected {
-    border-color: #00f2ea; /* TikTok Cyan for both */
+.profit-note {
+    text-align: center;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
 }

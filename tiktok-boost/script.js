@@ -1,76 +1,89 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-    document.body.classList.add('tiktok-theme');
+document.addEventListener('DOMContentLoaded', function () {
+    const whatsappNumber = "256762193386";
 
     const order = {
-        service: 'TikTok',
+        service: 'TikTok Growth',
         package: null,
         price: null,
         clientName: null,
-        username: null,
-        paymentMethod: null,
+        tiktokUsername: null,
+        paymentMethod: null
     };
 
-    const steps = {
-        details: document.getElementById('step-2-details'),
-        payment: document.getElementById('step-3-payment'),
-        final: document.getElementById('step-final'),
-    };
-
-    const bundlesData = [
+    const bundles = [
         { name: 'Boost Lite', price: '95,000 UGX', desc: '2K Followers + 15K Views + 2K Likes' },
         { name: 'Starter Pack', price: '120,000 UGX', desc: '3K Followers + 20K Views + 3K Likes' },
-        // ... add all other tiktok bundles here
+        { name: 'Creator Mini', price: '145,000 UGX', desc: '4K Followers + 30K Views + 4K Likes' },
+        { name: 'Growth Pack', price: '170,000 UGX', desc: '5K Followers + 40K Views + 5K Likes' },
+        { name: 'Viral Rise', price: '190,000 UGX', desc: '6K Followers + 50K Views + 6K Likes' },
+        { name: 'Influencer Pack', price: '220,000 UGX', desc: '8K Followers + 70K Views + 8K Likes' },
+        { name: 'Elite Pro', price: '260,000 UGX', desc: '10K Followers + 100K Views + 10K Likes' }
     ];
 
+    const finalizeStep = document.getElementById('step-2-finalize');
+
     function unlockStep(step) {
-        if (step && step.classList.contains('locked')) {
-            step.classList.remove('locked');
-            step.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        step.classList.remove('locked');
+        setTimeout(() => {
+            step.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+
+    const bundlesGrid = document.getElementById('bundles-grid');
+    bundles.forEach(bundle => {
+        const card = document.createElement('div');
+        card.className = 'package-card';
+        card.innerHTML = `<h3>${bundle.name}</h3><p class="description">${bundle.desc}</p><div class="price"><span class="new-price">${bundle.price}</span></div>`;
+        card.addEventListener('click', () => {
+            order.package = bundle.name;
+            order.price = bundle.price;
+            document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            unlockStep(finalizeStep);
+            updateFormState();
+        });
+        bundlesGrid.appendChild(card);
+    });
+
+    const form = document.getElementById('order-form');
+    const clientNameInput = document.getElementById('clientName');
+    const usernameInput = document.getElementById('tiktokUsername');
+    const paymentOptions = document.querySelectorAll('.payment-option');
+    const whatsappLink = document.getElementById('whatsapp-link');
+
+    function updateFormState() {
+        order.clientName = clientNameInput.value;
+        order.tiktokUsername = usernameInput.value;
+
+        const isFormValid = order.package && order.clientName && order.tiktokUsername && order.paymentMethod;
+
+        if (isFormValid) {
+            whatsappLink.classList.remove('disabled');
+            let message = `Order for Cartelug:\n\n`;
+            message += `*Service:* ${order.service}\n`;
+            message += `*Package:* ${order.package}\n`;
+            if (order.price) {
+                message += `*Price:* ${order.price}\n`;
+            }
+            message += `*TikTok Username:* ${order.tiktokUsername}\n`;
+            message += `*Payment Method:* ${order.paymentMethod}\n`;
+            message += `*Name:* ${order.clientName}`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+        } else {
+            whatsappLink.classList.add('disabled');
         }
     }
 
-    const packagesContainer = document.getElementById('packages-content');
-    bundlesData.forEach(bundle => {
-        const button = document.createElement('button');
-        button.className = 'option-button';
-        button.innerHTML = `<span class="plan-duration">${bundle.name}</span> <small>${bundle.desc}</small> <span class="plan-price">${bundle.price}</span>`;
-        button.onclick = () => {
-            order.package = bundle.name;
-            order.price = bundle.price;
-            packagesContainer.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-            unlockStep(steps.details);
-        };
-        packagesContainer.appendChild(button);
-    });
+    form.addEventListener('input', updateFormState);
 
-    document.getElementById('details-form').addEventListener('submit', e => {
-        e.preventDefault();
-        order.clientName = document.getElementById('clientName').value;
-        order.username = document.getElementById('tiktokUsername').value;
-        unlockStep(steps.payment);
-    });
-
-    steps.payment.querySelectorAll('.payment-card').forEach(card => {
-        card.addEventListener('click', () => {
-            order.paymentMethod = card.dataset.method;
-            steps.payment.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            updateWhatsAppLink();
-            unlockStep(steps.final);
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            paymentOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            order.paymentMethod = option.dataset.method;
+            updateFormState();
         });
     });
-
-    function updateWhatsAppLink() {
-        const message = `
-            *TikTok Order*
-            - *Name:* ${order.clientName}
-            - *Username:* ${order.username}
-            - *Bundle:* ${order.package}
-            - *Payment:* ${order.paymentMethod}
-        `;
-        const encodedMessage = encodeURIComponent(message.trim().replace(/\s+/g, ' '));
-        document.getElementById('cta-button-link').href = `https://wa.me/256762193386?text=${encodedMessage}`;
-    }
 });

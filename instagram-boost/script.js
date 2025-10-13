@@ -1,104 +1,143 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-    document.body.classList.add('instagram-theme');
+document.addEventListener('DOMContentLoaded', function () {
+    const whatsappNumber = "256762193386";
 
     const order = {
-        service: 'Instagram',
-        category: null,
+        service: 'Instagram Growth',
         package: null,
         price: null,
         clientName: null,
-        username: null,
-        paymentMethod: null,
+        instaUsername: null,
+        paymentMethod: null
     };
 
-    const steps = {
-        serviceType: document.getElementById('step-1-servicetype'),
-        packages: document.getElementById('step-2-packages'),
-        combined: document.getElementById('step-3-combined'),
-        details: document.getElementById('step-4-details'),
-        payment: document.getElementById('step-5-payment'),
-        final: document.getElementById('step-final'),
-    };
-
-    const packagesData = {
+    const packages = {
         followers: [
             { name: '5K Followers', price: '120,000 UGX' },
             { name: '10K Followers', price: '180,000 UGX' },
-        ],
-        likes: [
-            { name: '5K Likes', price: '80,000 UGX' },
-            { name: '10K Likes', price: '120,000 UGX' },
+            { name: '15K Followers', price: '240,000 UGX' },
+            { name: '20K Followers', price: '290,000 UGX' }
         ],
         views: [
             { name: '50K Views', price: '100,000 UGX' },
             { name: '100K Views', price: '150,000 UGX' },
+            { name: '200K Views', price: '230,000 UGX' },
+            { name: '300K Views', price: '300,000 UGX' }
         ],
+        likes: [
+            { name: '5K Likes', price: '80,000 UGX' },
+            { name: '10K Likes', price: '120,000 UGX' },
+            { name: '20K Likes', price: '170,000 UGX' },
+            { name: '30K Likes', price: '220,000 UGX' }
+        ],
+        allInOne: [
+             { name: 'All-in-One Growth', price: '500,000 UGX', description: '20k Followers, 300k Views, 30k Likes' },
+        ]
+    };
+
+    const steps = {
+        objective: document.getElementById('step-1-objective'),
+        packages: document.getElementById('step-2-packages'),
+        allInOne: document.getElementById('step-3-all-in-one'),
+        finalize: document.getElementById('step-4-finalize')
     };
 
     function unlockStep(step) {
-        if (step && step.classList.contains('locked')) {
-            step.classList.remove('locked');
-            step.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
+        step.classList.remove('locked');
+        setTimeout(() => {
+            step.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
     }
 
-    function generatePackageButtons(category) {
-        const container = steps.packages.querySelector('#packages-content');
-        container.innerHTML = '';
-        packagesData[category].forEach(pkg => {
-            const button = document.createElement('button');
-            button.className = 'option-button';
-            button.innerHTML = `<span class="plan-duration">${pkg.name}</span> <span class="plan-price">${pkg.price}</span>`;
-            button.onclick = () => {
-                order.category = category;
+    function generatePackageCards(objective) {
+        const grid = document.getElementById('packages-grid');
+        grid.innerHTML = '';
+        packages[objective].forEach(pkg => {
+            const card = document.createElement('div');
+            card.className = 'package-card';
+            card.innerHTML = `<h3>${pkg.name}</h3><div class="price"><span class="new-price">${pkg.price}</span></div>`;
+            card.addEventListener('click', () => {
                 order.package = pkg.name;
                 order.price = pkg.price;
-                container.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
-                button.classList.add('selected');
-                unlockStep(steps.combined);
-            };
-            container.appendChild(button);
+                document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                unlockStep(steps.allInOne);
+                unlockStep(steps.finalize);
+                updateFormState();
+            });
+            grid.appendChild(card);
+        });
+    }
+    
+    function generateAllInOneCard() {
+        const grid = document.getElementById('all-in-one-grid');
+        grid.innerHTML = '';
+        packages['allInOne'].forEach(pkg => {
+            const card = document.createElement('div');
+            card.className = 'package-card';
+            card.innerHTML = `<h3>${pkg.name}</h3><p class="description">${pkg.description}</p><div class="price"><span class="new-price">${pkg.price}</span></div>`;
+            card.addEventListener('click', () => {
+                order.package = pkg.name;
+                order.price = pkg.price;
+                document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                unlockStep(steps.finalize);
+                updateFormState();
+            });
+            grid.appendChild(card);
         });
     }
 
-    // Event Listeners
-    steps.serviceType.querySelectorAll('.service-button').forEach(button => {
-        button.addEventListener('click', () => {
-            const service = button.dataset.service;
-            steps.serviceType.querySelectorAll('.service-button').forEach(btn => btn.classList.remove('selected'));
-            button.classList.add('selected');
-            generatePackageButtons(service);
+    document.querySelectorAll('.objective-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const objective = btn.dataset.objective;
+            document.querySelectorAll('.objective-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.getElementById('package-title').innerText = `Choose ${objective.charAt(0).toUpperCase() + objective.slice(1)} Package`;
+            generatePackageCards(objective);
+            generateAllInOneCard();
             unlockStep(steps.packages);
         });
     });
 
-    document.getElementById('details-form').addEventListener('submit', e => {
-        e.preventDefault();
-        order.clientName = document.getElementById('clientName').value;
-        order.username = document.getElementById('instaUsername').value;
-        unlockStep(steps.payment);
-    });
+    const form = document.getElementById('order-form');
+    const clientNameInput = document.getElementById('clientName');
+    const usernameInput = document.getElementById('instaUsername');
+    const paymentOptions = document.querySelectorAll('.payment-option');
+    const whatsappLink = document.getElementById('whatsapp-link');
 
-    steps.payment.querySelectorAll('.payment-card').forEach(card => {
-        card.addEventListener('click', () => {
-            order.paymentMethod = card.dataset.method;
-            steps.payment.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            updateWhatsAppLink();
-            unlockStep(steps.final);
+    function updateFormState() {
+        order.clientName = clientNameInput.value;
+        order.instaUsername = usernameInput.value;
+
+        const isFormValid = order.package && order.clientName && order.instaUsername && order.paymentMethod;
+
+        if (isFormValid) {
+            whatsappLink.classList.remove('disabled');
+            let message = `Order for Cartelug:\n\n`;
+            message += `*Service:* ${order.service}\n`;
+            message += `*Package:* ${order.package}\n`;
+            if (order.price) {
+                message += `*Price:* ${order.price}\n`;
+            }
+             message += `*Instagram Username:* ${order.instaUsername}\n`;
+            message += `*Payment Method:* ${order.paymentMethod}\n`;
+            message += `*Name:* ${order.clientName}`;
+            
+            const encodedMessage = encodeURIComponent(message);
+            whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+        } else {
+            whatsappLink.classList.add('disabled');
+        }
+    }
+
+    form.addEventListener('input', updateFormState);
+
+    paymentOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            paymentOptions.forEach(opt => opt.classList.remove('selected'));
+            option.classList.add('selected');
+            order.paymentMethod = option.dataset.method;
+            updateFormState();
         });
     });
-
-    function updateWhatsAppLink() {
-        const message = `
-            *Instagram Order*
-            - *Name:* ${order.clientName}
-            - *Username:* ${order.username}
-            - *Service:* ${order.package}
-            - *Payment:* ${order.paymentMethod}
-        `;
-        const encodedMessage = encodeURIComponent(message.trim().replace(/\s+/g, ' '));
-        document.getElementById('cta-button-link').href = `https://wa.me/256762193386?text=${encodedMessage}`;
-    }
 });
