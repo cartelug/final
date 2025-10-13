@@ -1,83 +1,76 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const popupOverlay = document.getElementById('country-popup-overlay');
-    const countryButtons = document.querySelectorAll('.country-btn');
-    const packagesGrid = document.getElementById('packages-grid');
-    const container = document.querySelector('.container');
 
-    const USD_TO_UGX_RATE = 3600;
-    const WHATSAPP_NUMBER = '256762193386';
+    document.body.classList.add('tiktok-theme');
 
-    // --- Data for TikTok Packages ---
-    const tiktokPackages = [
-        { name: 'Boost Lite', priceUGX: 95000, desc: '2K Followers + 15K Views + 2K Likes' },
-        { name: 'Starter Pack', priceUGX: 120000, desc: '3K Followers + 20K Views + 3K Likes' },
-        { name: 'Creator Mini', priceUGX: 145000, desc: '4K Followers + 30K Views + 4K Likes' },
-        { name: 'Growth Pack', priceUGX: 170000, desc: '5K Followers + 40K Views + 5K Likes' },
-        { name: 'Viral Rise', priceUGX: 190000, desc: '6K Followers + 50K Views + 6K Likes' },
-        { name: 'Influencer Pack', priceUGX: 220000, desc: '8K Followers + 70K Views + 8K Likes' },
-        { name: 'Elite Pro', priceUGX: 260000, desc: '10K Followers + 100K Views + 10K Likes' },
+    const order = {
+        service: 'TikTok',
+        package: null,
+        price: null,
+        clientName: null,
+        username: null,
+        paymentMethod: null,
+    };
+
+    const steps = {
+        details: document.getElementById('step-2-details'),
+        payment: document.getElementById('step-3-payment'),
+        final: document.getElementById('step-final'),
+    };
+
+    const bundlesData = [
+        { name: 'Boost Lite', price: '95,000 UGX', desc: '2K Followers + 15K Views + 2K Likes' },
+        { name: 'Starter Pack', price: '120,000 UGX', desc: '3K Followers + 20K Views + 3K Likes' },
+        // ... add all other tiktok bundles here
     ];
 
-    // --- Function to Create a Package Card ---
-    function createPackageCard(pkg, country) {
-        const card = document.createElement('div');
-        card.className = 'package-card';
-
-        let priceHTML = '';
-        if (country === 'uganda') {
-            const newPrice = pkg.priceUGX.toLocaleString();
-            const oldPrice = (pkg.priceUGX * 2).toLocaleString();
-            priceHTML = `
-                <div class="price">
-                    <span class="old-price">~~${oldPrice} UGX~~</span>
-                    <span class="new-price">${newPrice} UGX</span>
-                </div>`;
-        } else if (country === 'south-sudan') {
-            const priceSSP = pkg.priceUGX * 1.5; // Note: Adjust conversion rate if needed
-            const priceUSD = pkg.priceUGX / USD_TO_UGX_RATE;
-            const newPrice = `${priceSSP.toLocaleString()} SSP / $${priceUSD.toFixed(2)}`;
-            const oldPrice = `~~${(priceSSP * 2).toLocaleString()} SSP / $${(priceUSD * 2).toFixed(2)}~~`;
-            priceHTML = `
-                <div class="price">
-                    <span class="old-price">${oldPrice}</span>
-                    <span class="new-price">${newPrice}</span>
-                </div>`;
+    function unlockStep(step) {
+        if (step && step.classList.contains('locked')) {
+            step.classList.remove('locked');
+            step.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-
-        card.innerHTML = `
-            <h3>${pkg.name}</h3>
-            <p class="description">${pkg.desc}</p>
-            ${priceHTML}
-            <button class="whatsapp-btn" data-order="${pkg.name}">Order on WhatsApp</button>
-        `;
-
-        // Add event listener for the WhatsApp button
-        card.querySelector('.whatsapp-btn').addEventListener('click', (e) => {
-            const order = e.target.dataset.order;
-            const message = `Hello! I’d like to order the ${order} bundle from the TikTok Boost page.`;
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        });
-
-        packagesGrid.appendChild(card);
     }
 
-    // --- Main Logic ---
-    // Show popup
-    popupOverlay.classList.add('active');
+    const packagesContainer = document.getElementById('packages-content');
+    bundlesData.forEach(bundle => {
+        const button = document.createElement('button');
+        button.className = 'option-button';
+        button.innerHTML = `<span class="plan-duration">${bundle.name}</span> <small>${bundle.desc}</small> <span class="plan-price">${bundle.price}</span>`;
+        button.onclick = () => {
+            order.package = bundle.name;
+            order.price = bundle.price;
+            packagesContainer.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            unlockStep(steps.details);
+        };
+        packagesContainer.appendChild(button);
+    });
 
-    // Country button event listeners
-    countryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            const selectedCountry = button.dataset.country;
-            
-            // Generate all package cards for the selected country
-            packagesGrid.innerHTML = ''; // Clear existing cards
-            tiktokPackages.forEach(pkg => createPackageCard(pkg, selectedCountry));
-            
-            // Hide popup and show main content
-            popupOverlay.classList.remove('active');
-            container.style.opacity = '1';
+    document.getElementById('details-form').addEventListener('submit', e => {
+        e.preventDefault();
+        order.clientName = document.getElementById('clientName').value;
+        order.username = document.getElementById('tiktokUsername').value;
+        unlockStep(steps.payment);
+    });
+
+    steps.payment.querySelectorAll('.payment-card').forEach(card => {
+        card.addEventListener('click', () => {
+            order.paymentMethod = card.dataset.method;
+            steps.payment.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            updateWhatsAppLink();
+            unlockStep(steps.final);
         });
     });
+
+    function updateWhatsAppLink() {
+        const message = `
+            *TikTok Order*
+            - *Name:* ${order.clientName}
+            - *Username:* ${order.username}
+            - *Bundle:* ${order.package}
+            - *Payment:* ${order.paymentMethod}
+        `;
+        const encodedMessage = encodeURIComponent(message.trim().replace(/\s+/g, ' '));
+        document.getElementById('cta-button-link').href = `https://wa.me/256762193386?text=${encodedMessage}`;
+    }
 });

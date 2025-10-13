@@ -1,87 +1,104 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const popupOverlay = document.getElementById('country-popup-overlay');
-    const countryButtons = document.querySelectorAll('.country-btn');
-    const packagesGrid = document.getElementById('packages-grid');
-    const container = document.querySelector('.container');
 
-    const USD_TO_UGX_RATE = 3600;
-    const WHATSAPP_NUMBER = '256762193386';
+    document.body.classList.add('instagram-theme');
 
-    // --- Data for Instagram Packages ---
-    const instagramPackages = [
-        { name: '5K Followers', priceUGX: 120000 },
-        { name: '10K Followers', priceUGX: 180000 },
-        { name: '15K Followers', priceUGX: 240000 },
-        { name: '20K Followers', priceUGX: 290000 },
-        { name: '50K Views', priceUGX: 100000 },
-        { name: '100K Views', priceUGX: 150000 },
-        { name: '200K Views', priceUGX: 230000 },
-        { name: '300K Views', priceUGX: 300000 },
-        { name: '5K Likes', priceUGX: 80000 },
-        { name: '10K Likes', priceUGX: 120000 },
-        { name: '20K Likes', priceUGX: 170000 },
-        { name: '30K Likes', priceUGX: 220000 },
-    ];
+    const order = {
+        service: 'Instagram',
+        category: null,
+        package: null,
+        price: null,
+        clientName: null,
+        username: null,
+        paymentMethod: null,
+    };
 
-    // --- Function to Create a Package Card ---
-    function createPackageCard(pkg, country) {
-        const card = document.createElement('div');
-        card.className = 'package-card';
+    const steps = {
+        serviceType: document.getElementById('step-1-servicetype'),
+        packages: document.getElementById('step-2-packages'),
+        combined: document.getElementById('step-3-combined'),
+        details: document.getElementById('step-4-details'),
+        payment: document.getElementById('step-5-payment'),
+        final: document.getElementById('step-final'),
+    };
 
-        let priceHTML = '';
-        if (country === 'uganda') {
-            const newPrice = pkg.priceUGX.toLocaleString();
-            const oldPrice = (pkg.priceUGX * 2).toLocaleString();
-            priceHTML = `
-                <div class="price">
-                    <span class="old-price">~~${oldPrice} UGX~~</span>
-                    <span class="new-price">${newPrice} UGX</span>
-                </div>`;
-        } else if (country === 'south-sudan') {
-            const priceSSP = pkg.priceUGX * 1.5; // Note: Adjust conversion rate if needed
-            const priceUSD = pkg.priceUGX / USD_TO_UGX_RATE;
-            const newPrice = `${priceSSP.toLocaleString()} SSP / $${priceUSD.toFixed(2)}`;
-            const oldPrice = `~~${(priceSSP * 2).toLocaleString()} SSP / $${(priceUSD * 2).toFixed(2)}~~`;
-            priceHTML = `
-                <div class="price">
-                    <span class="old-price">${oldPrice}</span>
-                    <span class="new-price">${newPrice}</span>
-                </div>`;
+    const packagesData = {
+        followers: [
+            { name: '5K Followers', price: '120,000 UGX' },
+            { name: '10K Followers', price: '180,000 UGX' },
+        ],
+        likes: [
+            { name: '5K Likes', price: '80,000 UGX' },
+            { name: '10K Likes', price: '120,000 UGX' },
+        ],
+        views: [
+            { name: '50K Views', price: '100,000 UGX' },
+            { name: '100K Views', price: '150,000 UGX' },
+        ],
+    };
+
+    function unlockStep(step) {
+        if (step && step.classList.contains('locked')) {
+            step.classList.remove('locked');
+            step.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-
-        card.innerHTML = `
-            <h3>${pkg.name}</h3>
-            ${priceHTML}
-            <button class="whatsapp-btn" data-order="${pkg.name}">Order on WhatsApp</button>
-        `;
-
-        // Add event listener for the WhatsApp button
-        card.querySelector('.whatsapp-btn').addEventListener('click', (e) => {
-            const order = e.target.dataset.order;
-            const message = `Hello! I’d like to order the ${order} from the Instagram Boost page.`;
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        });
-
-        packagesGrid.appendChild(card);
     }
 
-    // --- Main Logic ---
-    // Show popup
-    popupOverlay.classList.add('active');
+    function generatePackageButtons(category) {
+        const container = steps.packages.querySelector('#packages-content');
+        container.innerHTML = '';
+        packagesData[category].forEach(pkg => {
+            const button = document.createElement('button');
+            button.className = 'option-button';
+            button.innerHTML = `<span class="plan-duration">${pkg.name}</span> <span class="plan-price">${pkg.price}</span>`;
+            button.onclick = () => {
+                order.category = category;
+                order.package = pkg.name;
+                order.price = pkg.price;
+                container.querySelectorAll('.option-button').forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+                unlockStep(steps.combined);
+            };
+            container.appendChild(button);
+        });
+    }
 
-    // Country button event listeners
-    countryButtons.forEach(button => {
+    // Event Listeners
+    steps.serviceType.querySelectorAll('.service-button').forEach(button => {
         button.addEventListener('click', () => {
-            const selectedCountry = button.dataset.country;
-            
-            // Generate all package cards for the selected country
-            packagesGrid.innerHTML = ''; // Clear existing cards
-            instagramPackages.forEach(pkg => createPackageCard(pkg, selectedCountry));
-            
-            // Hide popup and show main content
-            popupOverlay.classList.remove('active');
-            container.style.opacity = '1';
+            const service = button.dataset.service;
+            steps.serviceType.querySelectorAll('.service-button').forEach(btn => btn.classList.remove('selected'));
+            button.classList.add('selected');
+            generatePackageButtons(service);
+            unlockStep(steps.packages);
         });
     });
+
+    document.getElementById('details-form').addEventListener('submit', e => {
+        e.preventDefault();
+        order.clientName = document.getElementById('clientName').value;
+        order.username = document.getElementById('instaUsername').value;
+        unlockStep(steps.payment);
+    });
+
+    steps.payment.querySelectorAll('.payment-card').forEach(card => {
+        card.addEventListener('click', () => {
+            order.paymentMethod = card.dataset.method;
+            steps.payment.querySelectorAll('.payment-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            updateWhatsAppLink();
+            unlockStep(steps.final);
+        });
+    });
+
+    function updateWhatsAppLink() {
+        const message = `
+            *Instagram Order*
+            - *Name:* ${order.clientName}
+            - *Username:* ${order.username}
+            - *Service:* ${order.package}
+            - *Payment:* ${order.paymentMethod}
+        `;
+        const encodedMessage = encodeURIComponent(message.trim().replace(/\s+/g, ' '));
+        document.getElementById('cta-button-link').href = `https://wa.me/256762193386?text=${encodedMessage}`;
+    }
 });

@@ -1,167 +1,201 @@
-/* GENERAL STYLES */
+/* Universal Premium Style for Boost Pages */
+:root {
+    --whatsapp-green: #25D366;
+    --whatsapp-green-hover: #1EBE57;
+    --discount-red: #ff5252;
+    --text-light: #ffffff;
+    --text-muted: #b3b3b3;
+    --bg-color: #080808;
+    --glass-bg: rgba(25, 25, 25, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background-color: #000000;
-    color: #ffffff;
-    margin: 0;
-    padding: 1rem;
+    background-color: var(--bg-color);
+    color: var(--text-light);
+    font-family: 'Inter', 'Poppins', sans-serif;
+    overflow-x: hidden;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    opacity: 0; /* Initially hidden until country is selected */
-    transition: opacity 0.5s ease-in-out;
-}
-
-header h1 {
-    text-align: center;
-    font-size: clamp(1.5rem, 5vw, 2.2rem);
-    margin-bottom: 2rem;
-}
-
-/* POPUP STYLES */
-.popup-overlay {
+.background-animation {
     position: fixed;
-    inset: 0;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+    background-size: 400% 400%;
+    animation: gradient-animation 20s ease infinite;
+}
+
+/* Instagram Specific Gradient */
+body.instagram-theme .background-animation {
+    background-image: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+/* TikTok Specific Gradient */
+body.tiktok-theme .background-animation {
+    background-image: linear-gradient(45deg, #010101, #00f2ea, #ff0050, #010101);
+}
+
+.card-flow-container {
     width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1rem 10rem 1rem;
+}
+
+.page-header {
+    text-align: center;
+    padding: 2rem 0 4rem 0;
+}
+.page-header .service-logo {
+    max-height: 50px;
+}
+.page-header h1 {
+    font-size: clamp(2rem, 8vw, 3.2rem);
+    margin: 1rem 0 0.5rem 0;
+}
+.page-header p {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+}
+
+.step-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    margin-bottom: 2rem;
+    transition: var(--transition-smooth);
+    overflow: hidden;
+}
+
+.step-card.locked {
+    opacity: 0;
+    transform: translateY(30px);
+    pointer-events: none;
+    max-height: 0;
+    padding: 0; margin: 0; border: none;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--glass-border);
+}
+.card-step-number {
+    color: var(--text-light);
+    font-weight: 700;
+    border-radius: 50%;
+    width: 32px; height: 32px;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
 }
+.card-header h3 { font-size: 1.25rem; }
+.card-content { padding: 1.5rem; }
 
-.popup-overlay.active {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.popup-content {
-    background: #1c1c1e;
-    padding: 2rem;
-    border-radius: 16px;
-    text-align: center;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-}
-
-.popup-overlay.active .popup-content {
-    transform: scale(1);
-}
-
-.country-buttons button {
-    font-size: 1.1rem;
-    padding: 12px 24px;
-    margin: 0.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background-color: #2c2c2e;
-    color: #fff;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.country-buttons button:hover {
-    background-color: #3a3a3c;
-}
-
-/* CATEGORIES */
-.categories {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.category-card {
-    background: #1c1c1e;
-    padding: 1.5rem;
-    text-align: center;
-    border-radius: 12px;
-    font-size: 1.1rem;
-    font-weight: 600;
-}
-
-/* PACKAGES GRID */
-.packages-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-}
-
-.package-card {
-    background-color: #1c1c1e;
-    border-radius: 16px;
-    padding: 1.5rem;
+/* Package/Service Buttons */
+.service-options, .package-options {
     display: flex;
     flex-direction: column;
+    gap: 1rem;
 }
-
-.package-card h3 {
-    margin-top: 0;
-    font-size: 1.25rem;
-}
-
-.price {
-    margin: 1rem 0;
-}
-
-.price .old-price {
-    text-decoration: line-through;
-    color: #8e8e93;
-    margin-right: 10px;
-}
-
-.price .new-price {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #ffffff;
-}
-
-.whatsapp-btn {
-    margin-top: auto; /* Pushes button to the bottom */
-    padding: 15px;
-    background-color: #25D366;
-    color: white;
-    text-align: center;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
+.service-button, .option-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(255,255,255,0.05);
+    border: 1px solid var(--glass-border);
+    color: var(--text-light);
+    border-radius: 12px;
     cursor: pointer;
-    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    transition: all 0.3s ease;
+    text-align: left;
 }
-
-.whatsapp-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(37, 211, 102, 0.6);
-}
-
-/* FOOTER */
-footer {
+.service-button {
+    font-size: 1.2rem;
     text-align: center;
-    margin-top: 3rem;
-    color: #8e8e93;
+}
+.service-button:hover, .option-button:hover {
+    transform: translateY(-3px);
+    background-color: rgba(255,255,255,0.1);
+}
+.service-button.selected, .option-button.selected {
+    transform: translateY(-3px);
+}
+.plan-duration { font-weight: 600; }
+.original-price {
+    color: var(--discount-red);
+    text-decoration: line-through;
+}
+.plan-price { font-weight: 700; }
+
+/* Details Form */
+.details-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.glass-input {
+    background: rgba(0,0,0,0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1rem;
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+.next-button {
+    border-radius: 12px;
+    color: #fff;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
 }
 
-/* RESPONSIVE DESIGN */
-@media (min-width: 600px) {
-    .categories {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    .packages-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+/* Payment Options */
+.payment-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
 }
+.payment-card {
+    background-color: rgba(0,0,0,0.2);
+    border: 2px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.payment-card:hover { transform: translateY(-5px); }
+.payment-card.selected { transform: translateY(-5px); }
+.payment-card img { max-height: 50px; width: 100%; }
 
-@media (min-width: 900px) {
-    .packages-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
+.final-cta-area { text-align: center; }
+.final-cta-area.locked { display: none; }
+.cta-button {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
+    background-color: var(--whatsapp-green);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    text-decoration: none;
+}
+.cta-button:hover { background-color: var(--whatsapp-green-hover); }
+
+/* Theme-specific Colors */
+.instagram-theme .card-step-number, .instagram-theme .next-button, .instagram-theme .service-button.selected, .instagram-theme .option-button.selected {
+    background-color: #C13584; /* Instagram Purple */
+}
+.tiktok-theme .card-step-number, .tiktok-theme .next-button, .tiktok-theme .service-button.selected, .tiktok-theme .option-button.selected {
+    background-color: #ff0050; /* TikTok Red */
+}
+.payment-card.selected {
+    border-color: #00f2ea; /* TikTok Cyan for both */
 }

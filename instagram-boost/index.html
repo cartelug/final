@@ -5,37 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram Boost Service</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
 
-    <div id="country-popup-overlay" class="popup-overlay">
-        <div class="popup-content">
-            <h2>Which country are you in?</h2>
-            <div class="country-buttons">
-                <button class="country-btn" data-country="uganda">🇺🇬 Uganda</button>
-                <button class="country-btn" data-country="south-sudan">🇸🇸 South Sudan</button>
-            </div>
+    <div class="background-animation"></div>
+
+    <main class="card-flow-container">
+        
+        <div class="page-header">
+            <img src="../instagram.png" alt="Instagram Logo" class="service-logo">
+            <h1>Instagram Growth</h1>
+            <p>Select your desired boost below.</p>
         </div>
-    </div>
 
-    <div class="container">
-        <header>
-            <h1>What would you like to boost today?</h1>
-        </header>
-
-        <section class="categories">
-            <div class="category-card">🎯 Followers</div>
-            <div class="category-card">❤️ Likes</div>
-            <div class="category-card">🔥 Views</div>
+        <section id="step-1-servicetype" class="step-card">
+            <div class="card-header">
+                <span class="card-step-number">1</span>
+                <h3>What would you like to get?</h3>
+            </div>
+            <div class="card-content">
+                <div class="service-options">
+                    <button class="service-button" data-service="followers">
+                        <i class="fas fa-users"></i> Get Followers
+                    </button>
+                    <button class="service-button" data-service="likes">
+                        <i class="fas fa-heart"></i> Get Likes
+                    </button>
+                    <button class="service-button" data-service="views">
+                        <i class="fas fa-play"></i> Get Views
+                    </button>
+                </div>
+            </div>
         </section>
 
-        <main id="packages-grid" class="packages-grid"></main>
+        <section id="step-2-packages" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">2</span>
+                <h3 id="packages-title">Choose Your Package</h3>
+            </div>
+            <div id="packages-content" class="card-content">
+                </div>
+        </section>
 
-        <footer>
-            <p>⚡ Delivery: 1–10 hrs</p>
-            <p>⚡ No password needed</p>
-        </footer>
-    </div>
+        <section id="step-3-combined" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">3</span>
+                <h3>All-in-One Growth Package</h3>
+            </div>
+            <div id="combined-package-content" class="card-content">
+                 </div>
+        </section>
+        
+        <section id="step-4-details" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">4</span>
+                <h3>Enter Your Details</h3>
+            </div>
+            <div class="card-content">
+                <form id="details-form" class="details-form">
+                    <input type="text" id="clientName" class="glass-input" placeholder="Your Full Name" required>
+                    <input type="text" id="instaUsername" class="glass-input" placeholder="@your_instagram_username" required>
+                    <button type="submit" class="next-button" aria-label="Next Step"><i class="fas fa-arrow-down"></i></button>
+                </form>
+            </div>
+        </section>
+
+        <section id="step-5-payment" class="step-card locked">
+            <div class="card-header">
+                <span class="card-step-number">5</span>
+                <h3>How would you like to pay?</h3>
+            </div>
+            <div class="card-content">
+                <div class="payment-options">
+                    <div class="payment-card" data-method="MTN">
+                        <img src="../mtn.png" alt="MTN Mobile Money">
+                    </div>
+                    <div class="payment-card" data-method="Airtel">
+                        <img src="../airtel.png" alt="Airtel Money">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="step-final" class="final-cta-area locked">
+            <h4>Ready to Go?</h4>
+            <p>Click below to finalize your order on WhatsApp.</p>
+            <a id="cta-button-link" href="#" target="_blank" class="cta-button">
+                <i class="fab fa-whatsapp"></i> Proceed to WhatsApp
+            </a>
+        </section>
+
+    </main>
 
     <script src="script.js"></script>
 </body>
