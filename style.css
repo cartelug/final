@@ -141,7 +141,19 @@ body {
     transition: all 0.3s ease;
 }
 .card-cta-button:hover { background-color: #fff; transform: scale(1.05); }
+/* Add this to the :root section at the top of your file */
+:root {
+    /* ... (your existing variables) ... */
+    --instagram-glow: #C13584;
+    --tiktok-glow: #00f2ea; /* New TikTok color */
+    --whatsapp-color: #25D366;
+    /* ... (the rest of your variables) ... */
+}
 
+/* Add this within the SERVICES SECTION of your CSS */
+
+/* ... (after the #instagram-card:hover rule) ... */
+#tiktok-card:hover { border-color: var(--tiktok-glow); box-shadow: 0 0 30px rgba(0, 242, 234, 0.3); }
 /* --- COMMUNITY SECTION --- */
 .community-section { background-color: rgba(0,0,0,0.2); }
 .community-grid { display: grid; grid-template-columns: 1fr; gap: 25px; }
