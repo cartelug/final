@@ -7,11 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const flowContainer = document.getElementById('concierge-flow');
 
     const packagesData = [
-        { tier: 'Starter Boost', desc: 'Perfect for testing quick traction.', ugx: 69000, features: '1K Followers + 10K Views + 1K Likes' },
-        { tier: 'Creator Growth', desc: 'Ideal for consistent engagement.', ugx: 129000, features: '3K Followers + 25K Views + 3K Likes' },
-        { tier: 'Viral Plus', desc: 'Balanced exposure & strong reach.', ugx: 189000, features: '5K Followers + 50K Views + 5K Likes' },
-        { tier: 'Influencer Pro', desc: 'For creators chasing consistency.', ugx: 259000, features: '8K Followers + 100K Views + 8K Likes' },
-        { tier: 'Elite Empire', desc: 'Dominance package for instant authority.', ugx: 360000, features: '12K Followers + 200K Views + 12K Likes' }
+        { tier: 'Starter Boost', desc: 'Perfect for testing quick traction.', ugx: 69000, features: '1K Followers + 1K Views + 1K Likes' },
+        { tier: 'Creator Growth', desc: 'Ideal for consistent engagement.', ugx: 129000, features: '3K Followers + 2K Views + 3K Likes' },
+        { tier: 'Viral Plus', desc: 'Balanced exposure & strong reach.', ugx: 189000, features: '5K Followers + 10K Views + 5K Likes' },
+        { tier: 'Influencer Pro', desc: 'For creators chasing consistency.', ugx: 259000, features: '8K Followers + 15K Views + 8K Likes' },
+        { tier: 'Elite Empire', desc: 'Dominance package for instant authority.', ugx: 360000, features: '12K Followers + 20K Views + 12K Likes' }
     ];
 
     const order = {
