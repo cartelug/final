@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="new-price">${prices[currentCurrency].new.toLocaleString()} ${currentCurrency}</span>
                 </div>
                 <div class="nb-note">
-                    <strong>NB:</strong> Likes & Views are strategically divided across up to 90 of your posts for natural growth.
+                    <strong>NB:</strong> Likes & Views are strategically divided across up to 9 of your posts.
                 </div>
             `;
             card.addEventListener('click', () => {
