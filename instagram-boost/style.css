@@ -1,16 +1,17 @@
-/* Universal Premium Dashboard Style */
+/* Universal Elite Concierge Style */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-    --bg-color: #121212;
-    --widget-bg: #1E1E1E;
-    --border-color: #2D2D2D;
-    --text-primary: #FFFFFF;
-    --text-secondary: #A0A0A0;
+    --bg-color: #111111;
+    --surface-color: #1A1A1A;
+    --border-color: #2c2c2c;
+    --text-primary: #F5F5F7;
+    --text-secondary: #8A8A8E;
+    --text-dark: #000000;
     --whatsapp-green: #25D366;
+    --discount-red: #FF4D4D;
     
-    /* Theme-specific accent colors */
-    --accent-color: #833AB4; /* Default to Instagram */
+    --accent-color: #C13584; /* Instagram Default */
 }
 
 body {
@@ -18,7 +19,8 @@ body {
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
     margin: 0;
-    padding: 1rem;
+    padding: 2rem 1rem;
+    overflow-x: hidden;
 }
 
 .tiktok-theme {
@@ -26,208 +28,146 @@ body {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 700px;
     margin: 0 auto;
 }
 
-.logo {
-    max-height: 40px;
-    margin-bottom: 1rem;
+.concierge-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
 
-.page-header {
-    text-align: center;
-    padding: 2rem 0;
-}
-
-.page-header h1 {
-    font-size: 2.5rem;
-    margin: 0;
-}
-
-.page-header p {
-    color: var(--text-secondary);
-    font-size: 1.1rem;
-}
-
-.dashboard-widget {
-    background: var(--widget-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    margin-bottom: 2rem;
-    overflow: hidden;
-    transition: all 0.5s ease-out;
-}
-
-.dashboard-widget.locked {
-    max-height: 0;
+.flow-step {
     opacity: 0;
-    margin: 0;
-    border: none;
-    pointer-events: none;
-}
-.dashboard-widget.recommended {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 20px var(--accent-color);
-}
-.widget-header {
-    display: flex;
-    align-items: center;
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid var(--border-color);
+    transform: translateY(20px);
+    animation: fadeIn 0.8s forwards;
 }
 
-.step-indicator {
-    background: var(--accent-color);
-    color: var(--text-primary);
-    border-radius: 50%;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    margin-right: 1rem;
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.widget-header h2 {
-    margin: 0;
-    font-size: 1.2rem;
-}
-
-.widget-content {
-    padding: 1.5rem;
-}
-
-.objective-selector {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 1rem;
-}
-
-.objective-btn {
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    padding: 1.5rem;
-    border-radius: 12px;
-    font-size: 1.1rem;
+.prompt-message {
+    font-size: 1.8rem;
     font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+    color: var(--text-secondary);
+}
+
+.prompt-message .highlight {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+.currency-selector, .payment-selector {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.currency-btn, .payment-option {
+    background-color: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
+}
+
+.currency-btn:hover, .payment-option:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+}
+
+.currency-btn.selected, .payment-option.selected {
+    background-color: var(--text-primary);
+    color: var(--text-dark);
+    border-color: var(--text-primary);
+    font-weight: 600;
+}
+
+.package-grid {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-}
-
-.objective-btn:hover {
-    background: var(--widget-bg);
-    border-color: var(--accent-color);
-}
-
-.objective-btn.selected {
-    background: var(--accent-color);
-    border-color: var(--accent-color);
-    color: #fff;
-}
-
-.grid-layout {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    flex-direction: column;
     gap: 1rem;
 }
 
 .package-card {
-    background: var(--bg-color);
+    background-color: var(--surface-color);
     border: 1px solid var(--border-color);
-    padding: 1.5rem;
     border-radius: 12px;
+    padding: 1.5rem;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
 .package-card:hover {
-    transform: translateY(-5px);
     border-color: var(--accent-color);
+    transform: scale(1.02);
 }
 
 .package-card.selected {
-    transform: translateY(-5px);
     border-color: var(--accent-color);
-    box-shadow: 0 0 15px rgba(131, 58, 180, 0.3);
-}
-.tiktok-theme .package-card.selected {
-     box-shadow: 0 0 15px rgba(0, 242, 234, 0.3);
+    background-color: var(--border-color);
 }
 
 .package-card h3 {
-    margin: 0 0 0.5rem 0;
-    font-size: 1.2rem;
+    margin: 0 0 0.25rem 0;
+    font-size: 1.3rem;
+    color: var(--text-primary);
 }
 
-.package-card .description {
+.package-card .features {
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    min-height: 40px;
+    margin-bottom: 1rem;
 }
+
 .package-card .price .old-price {
+    color: var(--discount-red);
     text-decoration: line-through;
-    color: #ff5252;
     margin-right: 0.5rem;
 }
 
 .package-card .price .new-price {
+    font-size: 1.2rem;
     font-weight: 700;
-    font-size: 1.1rem;
 }
 
-.order-form input {
+.details-form input {
     width: 100%;
-    background: var(--bg-color);
+    background: var(--surface-color);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    padding: 1rem;
+    padding: 1.25rem;
     border-radius: 8px;
     margin-bottom: 1rem;
     font-size: 1rem;
+    transition: border-color 0.2s;
 }
 
-.payment-selector {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
+.details-form input:focus {
+    outline: none;
+    border-color: var(--accent-color);
 }
 
 .payment-option {
-    flex: 1;
-    background: var(--bg-color);
-    border: 2px solid var(--border-color);
-    border-radius: 8px;
-    padding: 1rem;
-    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.2s ease;
-}
-
-.payment-option:hover {
-    border-color: var(--text-secondary);
-}
-
-.payment-option.selected {
-    border-color: var(--text-primary);
+    flex: 1;
+    min-width: 120px;
 }
 
 .payment-option img {
-    max-height: 30px;
-    filter: grayscale(100%);
-    transition: filter 0.2s ease;
-}
-
-.payment-option.selected img {
-    filter: grayscale(0%);
+    max-height: 24px;
 }
 
 .cta-button {
@@ -238,31 +178,16 @@ body {
     width: 100%;
     background: var(--whatsapp-green);
     color: #fff;
-    padding: 1rem;
+    padding: 1.25rem;
+    border: none;
     border-radius: 8px;
     text-decoration: none;
     font-size: 1.1rem;
     font-weight: 600;
-    transition: all 0.2s ease;
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.cta-button.disabled {
-    background: #444;
-    cursor: not-allowed;
-    pointer-events: none;
-}
-
-.page-footer {
-    text-align: center;
-    padding: 2rem 0;
-    color: var(--text-secondary);
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-}
-.profit-note {
-    text-align: center;
-    font-style: italic;
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
+.cta-button:hover {
+    background-color: #1EBE57;
 }

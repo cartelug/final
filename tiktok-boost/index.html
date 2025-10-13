@@ -3,63 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Growth Dashboard</title>
+    <title>TikTok Growth</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body class="tiktok-theme">
 
     <div class="container">
-        <header class="page-header">
-            <img src="../logo.png" alt="Cartelug Logo" class="logo">
-            <h1>Growth Dashboard</h1>
-            <p>Select your TikTok growth bundle.</p>
-        </header>
-
-        <main class="dashboard">
-            <section id="step-1-bundles" class="dashboard-widget">
-                <div class="widget-header">
-                    <span class="step-indicator">1</span>
-                    <h2>Select Bundle</h2>
-                </div>
-                <div class="widget-content">
-                    <p class="profit-note">Guaranteed 65K–75K+ profit</p>
-                    <div id="bundles-grid" class="grid-layout">
-                        </div>
-                </div>
-            </section>
-
-            <section id="step-2-finalize" class="dashboard-widget locked">
-                <div class="widget-header">
-                    <span class="step-indicator">2</span>
-                    <h2>Finalize Order</h2>
-                </div>
-                <div class="widget-content">
-                    <form id="order-form" class="order-form">
-                        <input type="text" id="clientName" placeholder="Your Full Name" required>
-                        <input type="text" id="tiktokUsername" placeholder="@your_tiktok_username" required>
-                        
-                        <div class="payment-selector">
-                            <div class="payment-option" data-method="MTN">
-                                <img src="../mtn.png" alt="MTN Mobile Money">
-                            </div>
-                            <div class="payment-option" data-method="Airtel">
-                                <img src="../airtel.png" alt="Airtel Money">
-                            </div>
-                        </div>
-
-                        <a id="whatsapp-link" class="cta-button disabled" href="#" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                            <span>Complete Order on WhatsApp</span>
-                        </a>
-                    </form>
-                </div>
-            </section>
-        </main>
-        <footer class="page-footer">
-            <span>⚡ Delivery: 1–10 hrs</span>
-            <span>⚡ No password needed</span>
-        </footer>
+        <main id="concierge-flow" class="concierge-flow"></main>
     </div>
 
     <script src="script.js"></script>

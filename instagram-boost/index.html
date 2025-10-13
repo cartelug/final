@@ -3,94 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Growth Dashboard</title>
+    <title>Instagram Growth</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body class="instagram-theme">
 
     <div class="container">
-        <header class="page-header">
-            <img src="../logo.png" alt="Cartelug Logo" class="logo">
-            <h1>Growth Dashboard</h1>
-            <p>Select your Instagram growth objective.</p>
-        </header>
-
-        <main class="dashboard">
-            <section id="step-1-objective" class="dashboard-widget">
-                <div class="widget-header">
-                    <span class="step-indicator">1</span>
-                    <h2>Select Objective</h2>
-                </div>
-                <div class="widget-content">
-                    <div class="objective-selector">
-                        <button class="objective-btn" data-objective="followers">
-                            <i class="fas fa-users icon"></i>
-                            <span>Get Followers</span>
-                        </button>
-                        <button class="objective-btn" data-objective="likes">
-                            <i class="fas fa-heart icon"></i>
-                            <span>Get Likes</span>
-                        </button>
-                        <button class="objective-btn" data-objective="views">
-                            <i class="fas fa-play-circle icon"></i>
-                            <span>Get Views</span>
-                        </button>
-                    </div>
-                </div>
-            </section>
-
-            <section id="step-2-packages" class="dashboard-widget locked">
-                <div class="widget-header">
-                    <span class="step-indicator">2</span>
-                    <h2 id="package-title">Choose Package</h2>
-                </div>
-                <div id="packages-grid" class="widget-content grid-layout">
-                    </div>
-            </section>
-            
-            <section id="step-3-all-in-one" class="dashboard-widget locked recommended">
-                <div class="widget-header">
-                     <i class="fas fa-star accent-icon"></i>
-                    <h2>Best Value: All-in-One Growth</h2>
-                </div>
-                <div id="all-in-one-grid" class="widget-content grid-layout">
-                   </div>
-            </section>
-
-
-            <section id="step-4-finalize" class="dashboard-widget locked">
-                <div class="widget-header">
-                    <span class="step-indicator">3</span>
-                    <h2>Finalize Order</h2>
-                </div>
-                <div class="widget-content">
-                    <form id="order-form" class="order-form">
-                        <input type="text" id="clientName" placeholder="Your Full Name" required>
-                        <input type="text" id="instaUsername" placeholder="@your_instagram_username" required>
-                        
-                        <div class="payment-selector">
-                            <div class="payment-option" data-method="MTN">
-                                <img src="../mtn.png" alt="MTN Mobile Money">
-                            </div>
-                            <div class="payment-option" data-method="Airtel">
-                                <img src="../airtel.png" alt="Airtel Money">
-                            </div>
-                        </div>
-
-                        <a id="whatsapp-link" class="cta-button disabled" href="#" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                            <span>Complete Order on WhatsApp</span>
-                        </a>
-                    </form>
-                </div>
-            </section>
-        </main>
-        <footer class="page-footer">
-            <span>⚡ Delivery: 1–10 hrs</span>
-            <span>⚡ No password needed</span>
-        </footer>
+        <main id="concierge-flow" class="concierge-flow"></main>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>

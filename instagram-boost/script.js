@@ -1,143 +1,169 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', () => {
     const whatsappNumber = "256762193386";
+    const isInstagram = document.body.classList.contains('instagram-theme');
+    const serviceName = isInstagram ? "Instagram Growth" : "TikTok Growth";
+    const usernamePlaceholder = isInstagram ? "@your_instagram_username" : "@your_tiktok_username";
+    
+    const flowContainer = document.getElementById('concierge-flow');
+
+    const packagesData = [
+        { tier: 'Starter Boost', desc: 'Perfect for testing quick traction.', ugx: 69000, features: '1K Followers + 10K Views + 1K Likes' },
+        { tier: 'Creator Growth', desc: 'Ideal for consistent engagement.', ugx: 129000, features: '3K Followers + 25K Views + 3K Likes' },
+        { tier: 'Viral Plus', desc: 'Balanced exposure & strong reach.', ugx: 189000, features: '5K Followers + 50K Views + 5K Likes' },
+        { tier: 'Influencer Pro', desc: 'For creators chasing consistency.', ugx: 259000, features: '8K Followers + 100K Views + 8K Likes' },
+        { tier: 'Elite Empire', desc: 'Dominance package for instant authority.', ugx: 360000, features: '12K Followers + 200K Views + 12K Likes' }
+    ];
 
     const order = {
-        service: 'Instagram Growth',
         package: null,
         price: null,
         clientName: null,
-        instaUsername: null,
+        username: null,
         paymentMethod: null
     };
 
-    const packages = {
-        followers: [
-            { name: '5K Followers', price: '120,000 UGX' },
-            { name: '10K Followers', price: '180,000 UGX' },
-            { name: '15K Followers', price: '240,000 UGX' },
-            { name: '20K Followers', price: '290,000 UGX' }
-        ],
-        views: [
-            { name: '50K Views', price: '100,000 UGX' },
-            { name: '100K Views', price: '150,000 UGX' },
-            { name: '200K Views', price: '230,000 UGX' },
-            { name: '300K Views', price: '300,000 UGX' }
-        ],
-        likes: [
-            { name: '5K Likes', price: '80,000 UGX' },
-            { name: '10K Likes', price: '120,000 UGX' },
-            { name: '20K Likes', price: '170,000 UGX' },
-            { name: '30K Likes', price: '220,000 UGX' }
-        ],
-        allInOne: [
-             { name: 'All-in-One Growth', price: '500,000 UGX', description: '20k Followers, 300k Views, 30k Likes' },
-        ]
+    let currentCurrency = 'UGX';
+
+    // ---- Helper Functions ----
+    const createStep = (id) => {
+        const step = document.createElement('section');
+        step.id = id;
+        step.className = 'flow-step';
+        flowContainer.appendChild(step);
+        return step;
     };
 
-    const steps = {
-        objective: document.getElementById('step-1-objective'),
-        packages: document.getElementById('step-2-packages'),
-        allInOne: document.getElementById('step-3-all-in-one'),
-        finalize: document.getElementById('step-4-finalize')
+    const createPrompt = (html) => `<p class="prompt-message">${html}</p>`;
+
+    const calculatePrices = (baseUGX) => {
+        const multipliers = [2.0, 1.8, 1.67, 1.54, 1.43];
+        const tierIndex = packagesData.findIndex(p => p.ugx === baseUGX);
+        const oldUGX = baseUGX * multipliers[tierIndex];
+        return {
+            UGX: { new: baseUGX, old: Math.round(oldUGX / 1000) * 1000 },
+            SSP: { new: baseUGX * 1.8, old: Math.round(oldUGX * 1.8 / 1000) * 1000 },
+            USD: { new: Math.round(baseUGX / 3600), old: Math.round(oldUGX / 3600) }
+        };
     };
 
-    function unlockStep(step) {
-        step.classList.remove('locked');
-        setTimeout(() => {
-            step.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
+    // ---- Flow Steps ----
+    function showCurrencyStep() {
+        const step = createStep('step-currency');
+        step.innerHTML = `
+            ${createPrompt('First, please select your <span class="highlight">currency.</span>')}
+            <div class="currency-selector">
+                <button class="currency-btn active" data-currency="UGX">🇺🇬 UGX</button>
+                <button class="currency-btn" data-currency="SSP">🇸🇸 SSP</button>
+                <button class="currency-btn" data-currency="USD">🇺🇸 USD</button>
+            </div>
+        `;
+        step.querySelectorAll('.currency-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentCurrency = btn.dataset.currency;
+                step.querySelectorAll('.currency-btn').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+                showPackageStep();
+            });
+        });
     }
 
-    function generatePackageCards(objective) {
-        const grid = document.getElementById('packages-grid');
-        grid.innerHTML = '';
-        packages[objective].forEach(pkg => {
+    function showPackageStep() {
+        let step = document.getElementById('step-packages');
+        if (step) step.remove(); // Remove old step if currency is changed
+
+        step = createStep('step-packages');
+        step.innerHTML = `${createPrompt('Which <span class="highlight">package</span> aligns with your goals?')}`;
+        const grid = document.createElement('div');
+        grid.className = 'package-grid';
+
+        packagesData.forEach(pkg => {
+            const prices = calculatePrices(pkg.ugx);
             const card = document.createElement('div');
             card.className = 'package-card';
-            card.innerHTML = `<h3>${pkg.name}</h3><div class="price"><span class="new-price">${pkg.price}</span></div>`;
+            card.innerHTML = `
+                <h3>${pkg.tier}</h3>
+                <p class="features">${pkg.features}</p>
+                <div class="price">
+                    <span class="old-price">~~${prices[currentCurrency].old.toLocaleString()} ${currentCurrency}~~</span>
+                    <span class="new-price">${prices[currentCurrency].new.toLocaleString()} ${currentCurrency}</span>
+                </div>
+            `;
             card.addEventListener('click', () => {
-                order.package = pkg.name;
-                order.price = pkg.price;
-                document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
+                order.package = pkg.tier;
+                order.price = `${prices[currentCurrency].new.toLocaleString()} ${currentCurrency}`;
+                step.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
                 card.classList.add('selected');
-                unlockStep(steps.allInOne);
-                unlockStep(steps.finalize);
-                updateFormState();
+                showDetailsStep();
             });
             grid.appendChild(card);
         });
+        step.appendChild(grid);
     }
     
-    function generateAllInOneCard() {
-        const grid = document.getElementById('all-in-one-grid');
-        grid.innerHTML = '';
-        packages['allInOne'].forEach(pkg => {
-            const card = document.createElement('div');
-            card.className = 'package-card';
-            card.innerHTML = `<h3>${pkg.name}</h3><p class="description">${pkg.description}</p><div class="price"><span class="new-price">${pkg.price}</span></div>`;
-            card.addEventListener('click', () => {
-                order.package = pkg.name;
-                order.price = pkg.price;
-                document.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                unlockStep(steps.finalize);
-                updateFormState();
+    function showDetailsStep() {
+        if (document.getElementById('step-details')) return;
+
+        const step = createStep('step-details');
+        step.innerHTML = `
+            ${createPrompt('Great choice. Now for your <span class="highlight">details.</span>')}
+            <form class="details-form">
+                <input type="text" id="clientName" placeholder="Your Full Name" required>
+                <input type="text" id="username" placeholder="${usernamePlaceholder}" required>
+            </form>
+        `;
+
+        step.querySelector('#clientName').addEventListener('input', e => order.clientName = e.target.value);
+        step.querySelector('#username').addEventListener('input', e => {
+            order.username = e.target.value;
+            if(order.clientName && order.username) showPaymentStep();
+        });
+    }
+
+    function showPaymentStep() {
+        if (document.getElementById('step-payment')) return;
+
+        const step = createStep('step-payment');
+        step.innerHTML = `
+            ${createPrompt('Finally, how would you like to <span class="highlight">pay?</span>')}
+            <div class="payment-selector">
+                <div class="payment-option" data-method="MTN"><img src="../mtn.png" alt="MTN"></div>
+                <div class="payment-option" data-method="Airtel"><img src="../airtel.png" alt="Airtel"></div>
+            </div>
+        `;
+        step.querySelectorAll('.payment-option').forEach(opt => {
+            opt.addEventListener('click', () => {
+                order.paymentMethod = opt.dataset.method;
+                step.querySelectorAll('.payment-option').forEach(p => p.classList.remove('selected'));
+                opt.classList.add('selected');
+                showCtaStep();
             });
-            grid.appendChild(card);
         });
     }
 
-    document.querySelectorAll('.objective-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const objective = btn.dataset.objective;
-            document.querySelectorAll('.objective-btn').forEach(b => b.classList.remove('selected'));
-            btn.classList.add('selected');
-            document.getElementById('package-title').innerText = `Choose ${objective.charAt(0).toUpperCase() + objective.slice(1)} Package`;
-            generatePackageCards(objective);
-            generateAllInOneCard();
-            unlockStep(steps.packages);
-        });
-    });
+    function showCtaStep() {
+        let step = document.getElementById('step-cta');
+        if (step) step.remove();
 
-    const form = document.getElementById('order-form');
-    const clientNameInput = document.getElementById('clientName');
-    const usernameInput = document.getElementById('instaUsername');
-    const paymentOptions = document.querySelectorAll('.payment-option');
-    const whatsappLink = document.getElementById('whatsapp-link');
+        step = createStep('step-cta');
 
-    function updateFormState() {
-        order.clientName = clientNameInput.value;
-        order.instaUsername = usernameInput.value;
+        let message = `Order for Cartelug:\n\n`;
+        message += `*Service:* ${serviceName}\n`;
+        message += `*Package:* ${order.package}\n`;
+        message += `*Price:* ${order.price}\n`;
+        message += `*Payment Method:* ${order.paymentMethod}\n`;
+        message += `*Name:* ${order.clientName}`;
 
-        const isFormValid = order.package && order.clientName && order.instaUsername && order.paymentMethod;
+        const encodedMessage = encodeURIComponent(message);
+        const href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
 
-        if (isFormValid) {
-            whatsappLink.classList.remove('disabled');
-            let message = `Order for Cartelug:\n\n`;
-            message += `*Service:* ${order.service}\n`;
-            message += `*Package:* ${order.package}\n`;
-            if (order.price) {
-                message += `*Price:* ${order.price}\n`;
-            }
-             message += `*Instagram Username:* ${order.instaUsername}\n`;
-            message += `*Payment Method:* ${order.paymentMethod}\n`;
-            message += `*Name:* ${order.clientName}`;
-            
-            const encodedMessage = encodeURIComponent(message);
-            whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-        } else {
-            whatsappLink.classList.add('disabled');
-        }
+        const ctaButton = document.createElement('a');
+        ctaButton.href = href;
+        ctaButton.target = "_blank";
+        ctaButton.className = 'cta-button';
+        ctaButton.innerHTML = `<i class="fab fa-whatsapp"></i> Complete Order on WhatsApp`;
+        step.appendChild(ctaButton);
     }
 
-    form.addEventListener('input', updateFormState);
-
-    paymentOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            paymentOptions.forEach(opt => opt.classList.remove('selected'));
-            option.classList.add('selected');
-            order.paymentMethod = option.dataset.method;
-            updateFormState();
-        });
-    });
+    // ---- Initialize Flow ----
+    showCurrencyStep();
 });
