@@ -1,0 +1,217 @@
+*   [33ma1b0470[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge branch 'main' of https://github.com/cartelug/final
+[31m|[m[32m\[m  
+[31m|[m * [33m59feae0[m Update script.js
+* [32m|[m [33m5bbd24d[m okkk
+* [32m|[m [33md25970b[m done156
+* [32m|[m [33m48dcda3[m menu update and contact update
+[32m|[m[32m/[m  
+* [33mdc2a079[m menu update
+* [33m802288c[m minimal1
+* [33m38690d8[m priceupdate
+* [33mb1643bd[m zah
+* [33mccd77d9[m small changes
+* [33m34d34d5[m neezatimeagain
+* [33m759aa21[m Chnages 23
+* [33m5e1d0f6[m changes 2
+* [33meb693fa[m changes made to pages
+* [33m4fd05d6[m added tiktok boost section
+* [33m72cd709[m Delete final-main directory
+*   [33mded0bcb[m Merge branch 'master'
+[33m|[m[34m\[m  
+[33m|[m * [33m2480400[m[33m ([m[1;31morigin/master[m[33m)[m feat: Build Instagram and TikTok boost pages
+* [33mfb735e6[m Update index.html
+* [33m603627b[m Update script.js
+* [33md7d4921[m Update style.css
+* [33m0338e28[m Update index.html
+* [33m299e7f9[m Update script.js
+* [33m036f31f[m Update style.css
+* [33m73254b9[m Update index.html
+* [33m2deca8e[m Update index.html
+* [33me10b018[m Update index.html
+* [33m8ddffbf[m Update script.js
+* [33me91b5d2[m Update style.css
+* [33m3acc437[m Update index.html
+* [33mb140893[m Update script.js
+* [33m5388e43[m Update style.css
+* [33m7d8b679[m Update index.html
+* [33m3080998[m Update script.js
+* [33mf75e614[m Update style.css
+* [33mf8d213e[m Update index.html
+* [33mee8fecf[m Update style.css
+* [33m72110bc[m Update index.html
+* [33m52ae3a4[m Update script.js
+* [33m31f55a7[m Update style.css
+* [33m2d9cdab[m Update index.html
+* [33m9716cca[m Update style.css
+* [33m20877b9[m Update style.css
+* [33mee6ae84[m Update index.html
+* [33mffbbb4c[m Create script.js
+* [33mbc34921[m Create style.css
+* [33m5db9a4b[m Create index.html
+* [33maf376ca[m Delete access
+* [33mbbb9301[m Create access
+* [33m3927ca3[m Update script.js
+* [33ma84910d[m Update style.css
+* [33m9ff6c44[m Update index.html
+* [33m7520b3b[m Update order-pass.js
+* [33m8951129[m Update order-pass.css
+* [33me99d32a[m Update index.html
+* [33m41a505a[m Update index.html
+* [33m21cd43e[m Update script.js
+* [33m6d76f2b[m Update style.css
+* [33m33d1a7b[m Update index.html
+* [33m3faaae4[m Update script.js
+* [33mb36d693[m Create order.css
+* [33m2f35c46[m Update index.html
+* [33m98e6ed0[m Update index.html
+* [33me99ee2a[m Update style.css
+* [33mb8bdc4d[m Update index.html
+* [33m0043abc[m Update index.html
+* [33me2aa687[m Update style.css
+* [33me19fbf8[m Update style.css
+* [33m4933866[m Update style.css
+* [33m7cc137a[m Update index.html
+* [33m21523c3[m Update index.html
+* [33ma63c35b[m Update script.js
+* [33m7e42c95[m Update style.css
+* [33m070d18d[m Update index.html
+* [33ma579f5e[m Update and rename script.min.js to script.js
+* [33m632f841[m Update and rename style.min.css to style.css
+* [33m4739114[m Update index.html
+* [33mf779316[m Delete script.js
+* [33ma397fa6[m Update style.min.css
+* [33m649641c[m Update style.css
+* [33me1abf59[m Update index.html
+* [33m4f741c7[m Update style.min.css
+* [33mad9f0f0[m Update index.html
+* [33md970743[m Update index.html
+* [33mea7fa9e[m Update script.min.js
+* [33m28c6cf4[m Update style.min.css
+* [33m9fd7848[m Update index.html
+* [33m296ad93[m Update script.min.js
+* [33m68b3cb5[m Update style.min.css
+* [33md508ff1[m Delete base.css
+* [33m886f912[m Delete style.css
+* [33m6fdff44[m Delete order.css
+* [33m9e49f28[m Update index.html
+* [33md4e91c7[m Update script.min.js
+* [33m7a0d1ca[m Update style.min.css
+* [33md1fdf9c[m Update index.html
+* [33m4964563[m Add files via upload
+* [33m61926c0[m Add files via upload
+* [33m8115b70[m Update index.html
+* [33m95675c2[m Update script.min.js
+* [33m36137a8[m Update style.min.css
+* [33m5ebe186[m Update index.html
+* [33mcdda6b1[m Update style.min.css
+* [33mdfcbb20[m Update script.min.js
+* [33m21297fa[m Update style.min.css
+* [33m33dc9ac[m Update index.html
+* [33m6a695f7[m Update script.min.js
+* [33m8201aa1[m Update style.min.css
+* [33m13b7ec6[m Update index.html
+* [33m91406a8[m Update index.html
+* [33me2b025a[m Create script.min.js
+* [33m1f8b2cf[m Create style.min.css
+* [33m54a1ace[m Update index.html
+* [33m112b32b[m Update index.html
+* [33m1380812[m Update index.html
+* [33m3da7b5e[m Update index.html
+* [33mcdbe73c[m Update index.html
+* [33mf591515[m Update index.html
+* [33m721763a[m Update index.html
+* [33m772a762[m Update style.css
+* [33m391b4e8[m Update order-pass.css
+* [33m3a59017[m Update order-pass.css
+* [33m8b2dce3[m Update order-pass.css
+* [33m8572885[m Update style.css
+* [33m383d2ce[m Update style.css
+* [33mc304cbf[m Update style.css
+* [33mbd56220[m Update style.css
+* [33mec168fc[m Update style.css
+* [33ma1bdfe5[m Update index.html
+* [33meec2dc6[m Update style.css
+* [33m1567ebb[m Update index.html
+* [33ma7752fd[m Update index.html
+* [33ma252e15[m Update index.html
+* [33mda54268[m Update style.css
+* [33m517e818[m Update index.html
+* [33m0e1bde7[m Update index.html
+* [33m61bbbfe[m Add files via upload
+* [33mc952f9b[m Update order-pass.js
+* [33m2123eae[m Update order-pass.css
+* [33m50c16e4[m Update index.html
+* [33m6d55b3f[m Update script.js
+* [33m1b77cfb[m Update style.css
+* [33md131f87[m Update index.html
+* [33mc2afe36[m Create script.js
+* [33me60601d[m Create style.css
+* [33m65b252e[m Update style.css
+* [33m037cad6[m Update index.html
+* [33m7fe2c3a[m Update script.js
+* [33ma0513af[m Update style.css
+* [33md294cee[m Update index.html
+* [33m3fe0875[m Create script.js
+* [33m3d82bc3[m Create style.css
+* [33m4f3591e[m Update index.html
+* [33m9b50490[m Update index.html
+* [33m3e7a9e8[m Update order-pass.css
+* [33m108452d[m Update index.html
+* [33mc9e38bc[m Update order-pass.js
+* [33m24652c4[m Update order-pass.js
+* [33m8d606e3[m Update order-pass.css
+* [33mf76e3e9[m Update index.html
+* [33m1a8a7c2[m Update order-pass.js
+* [33m4c191e5[m Update order-pass.css
+* [33m4e5f40e[m Update index.html
+* [33m99d0b7c[m Update order-pass.js
+* [33ma928057[m Update order-pass.js
+* [33md3712bf[m Update order-pass.css
+* [33m30528e6[m Update order-pass.js
+* [33md3b294e[m Update order-pass.css
+* [33m2523ddc[m Update index.html
+* [33m063d326[m Update index.html
+* [33m26c1eac[m Update order-pass.js
+* [33mcaf4a14[m Update order-pass.css
+* [33mf37f065[m Update order-pass.css
+* [33m018df60[m Update order-pass.css
+* [33m81e8022[m Update index.html
+* [33m5614b16[m Update index.html
+* [33m8e763fc[m Update order-pass.js
+* [33md2e8062[m Update order-pass.css
+* [33m99fa6cc[m Update index.html
+* [33m177c92d[m Update index.html
+* [33m9f6619e[m Update order-pass.js
+* [33mbe4f81e[m Update order-pass.css
+* [33m70427aa[m Update index.html
+* [33m27e9aba[m Update order-pass.js
+* [33mbc98d0e[m Update index.html
+* [33m28845f4[m Create order-pass.js
+* [33m8d30d9d[m Create order-pass.css
+* [33m110de96[m Delete order-v2.js
+* [33m265e4e8[m Delete order-v2.css
+* [33m84890e7[m Update index.html
+* [33mdb6f77e[m Update index.html
+* [33me2650ea[m Create order-v2.js
+* [33mb4cb232[m Update index.html
+* [33md778379[m Create order-v2.css
+* [33m8ecae7e[m Update order.css
+* [33m40a1f5b[m Update index.html
+* [33m62332b1[m Update style.css
+* [33m9e4a17b[m Add files via upload
+* [33m5edc5d7[m Add files via upload
+* [33mf3a140e[m Add files via upload
+* [33m6a077d3[m Add files via upload
+* [33m9cdd17c[m Update style.css
+* [33ma660f1d[m Update style.css
+* [33m2618981[m Add files via upload
+* [33m3946591[m Delete background-video.mp4
+* [33m06de057[m Update style.css
+* [33m89716e8[m Update style.css
+* [33m727574f[m Add files via upload
+* [33ma399813[m Delete background1.png
+* [33m9ded550[m Update style.css
+* [33m04ed44c[m Update index.html
+* [33ma0e8e8b[m Add files via upload
+* [33ma3d88ab[m Update script.js
+* [33md8e851e[m Update bas

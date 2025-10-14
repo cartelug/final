@@ -4,9 +4,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const mainNav = document.getElementById('main-nav');
     if (menuButton && mainNav) {
         menuButton.addEventListener('click', () => {
-            mainNav.classList.toggle('active');
+            mainNav.classList.toggle('mobile-active');
             const icon = menuButton.querySelector('i');
-            if (mainNav.classList.contains('active')) {
+            if (mainNav.classList.contains('mobile-active')) {
                 icon.classList.remove('fa-bars');
                 icon.classList.add('fa-times');
             } else {
