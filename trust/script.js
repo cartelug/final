@@ -1,22 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. Professional Image Handling
-    // If an image is missing, hide the card so the layout stays perfect.
-    const images = document.querySelectorAll('.proof-card img');
-    
+    // 1. CAROUSEL LOGIC
+    const track = document.getElementById('track');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+
+    if (track && prevBtn && nextBtn) {
+        
+        nextBtn.addEventListener('click', () => {
+            const slideWidth = track.clientWidth;
+            track.scrollBy({ left: slideWidth, behavior: 'smooth' });
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const slideWidth = track.clientWidth;
+            track.scrollBy({ left: -slideWidth, behavior: 'smooth' });
+        });
+    }
+
+    // 2. IMAGE ERROR HANDLING
+    // If an image (like boost3.png) is missing, hide it so there is no empty box
+    const images = document.querySelectorAll('.slide img');
     images.forEach(img => {
         img.addEventListener('error', function() {
-            // Hide the parent .proof-card
             this.parentElement.style.display = 'none';
         });
     });
 
-    // 2. Smooth Scroll Animation
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
-    };
-
+    // 3. FADE IN ANIMATION
+    const observerOptions = { threshold: 0.1 };
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
