@@ -1,5 +1,4 @@
 /* === SUPPORT PAGE LOGIC === */
-
 document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Payment Issue Escalation Logic
@@ -19,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('signed-out-modal');
     const modalClose = document.querySelector('.modal-close');
     
-    // Available Emails (You can add more here)
+    // Available Emails
     const clientEmails = [
         "cartel1@Netflix.com",
         "cartel2@Netflix.com",
@@ -44,21 +43,21 @@ document.addEventListener('DOMContentLoaded', () => {
         modalClose.addEventListener('click', closeModal);
     }
 
-    // Functions attached to window for HTML onclick access
+    // Functions attached to window so HTML buttons can use them (onclick="closeModal()")
     window.closeModal = function() {
-        modal.classList.remove('active');
+        if(modal) modal.classList.remove('active');
     };
 
     window.goToStep = function(stepNum) {
-        // Hide all steps
         document.querySelectorAll('.modal-step').forEach(el => el.classList.remove('active'));
-        // Show target step
-        document.getElementById(`step-${stepNum}`).classList.add('active');
+        const target = document.getElementById(`step-${stepNum}`);
+        if(target) target.classList.add('active');
     };
 
     function loadEmails() {
         const list = document.getElementById('email-list');
-        list.innerHTML = ''; // Clear previous
+        if(!list) return;
+        list.innerHTML = '';
         
         clientEmails.forEach(email => {
             const div = document.createElement('div');
@@ -71,7 +70,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function selectEmail(email) {
         selectedEmail = email;
-        document.getElementById('selected-email-display').textContent = email;
+        const display = document.getElementById('selected-email-display');
+        if(display) display.textContent = email;
         goToStep(2);
     }
 
@@ -79,24 +79,32 @@ document.addEventListener('DOMContentLoaded', () => {
         const emailDisplay = document.getElementById('final-email');
         const tvExtra = document.getElementById('tv-extra');
         
-        emailDisplay.textContent = selectedEmail;
+        if(emailDisplay) emailDisplay.textContent = selectedEmail;
         
         if (device === 'tv') {
-            tvExtra.classList.remove('hidden');
+            if(tvExtra) tvExtra.classList.remove('hidden');
         } else {
-            tvExtra.classList.add('hidden');
+            if(tvExtra) tvExtra.classList.add('hidden');
         }
         
         goToStep(4);
     };
 
-    // 3. Animation On Scroll
+    // 3. Animation On Scroll (Fixes Blank Page)
+    const observerOptions = {
+        threshold: 0.1
+    };
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('show-fade');
+                // Optional: Stop observing once visible
+                // observer.unobserve(entry.target); 
             }
         });
-    });
-    document.querySelectorAll('.hidden-fade').forEach(el => observer.observe(el));
+    }, observerOptions);
+
+    const hiddenElements = document.querySelectorAll('.hidden-fade');
+    hiddenElements.forEach((el) => observer.observe(el));
 });
