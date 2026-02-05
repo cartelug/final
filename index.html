@@ -3,198 +3,153 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AccessUG - Premium Digital Services</title>
-    <meta name="description" content="Netflix, Spotify, Prime Video & Social Media Boosts. Pay via Mobile Money in Uganda & South Sudan.">
+    <title>AccessUG | Elite Digital Access</title>
+    <meta name="description" content="Premium Digital Services. Netflix, Spotify, CapCut, Canva & Social Boosts.">
     <link rel="icon" href="logo.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link rel="stylesheet" href="style.css?v=3.0"> 
+    <link rel="stylesheet" href="style.css?v=4.0"> 
 </head>
 <body>
 
-    <div class="mesh-background">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
+    <div class="ambient-light"></div>
+    <div class="grid-overlay"></div>
 
-    <header class="main-header glass">
-        <div class="container header-flex">
-            <a href="index.html" class="logo-link">
-                <img src="logo.png" alt="AccessUG" id="logo">
+    <header class="navbar glass">
+        <div class="container nav-flex">
+            <a href="index.html" class="brand">
+                <img src="logo.png" alt="AccessUG">
             </a>
             
             <nav id="desktop-nav">
-                <ul>
-                    <li><a href="index.html" class="active">Home</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="trust/">Reviews</a></li>
-                    <li><a href="contact/">Support</a></li>
-                </ul>
+                <a href="#services" class="nav-link">Services</a>
+                <a href="trust/" class="nav-link">Reviews</a>
+                <a href="contact/" class="nav-link">Support</a>
+                <a href="#services" class="nav-cta">Get Started</a>
             </nav>
 
-            <button id="mobile-menu-open" aria-label="Open Menu">
-                <i class="fas fa-bars"></i>
-            </button>
+            <button id="mobile-menu-open"><i class="fas fa-bars"></i></button>
         </div>
     </header>
 
     <div id="mobile-menu-overlay" class="mobile-menu-overlay">
         <div class="mobile-menu-content glass">
-            <button id="mobile-menu-close" aria-label="Close Menu">
-                <i class="fas fa-times"></i>
-            </button>
+            <button id="mobile-menu-close"><i class="fas fa-times"></i></button>
             <nav class="mobile-nav-links">
-                <a href="index.html" class="mobile-link">Home</a>
-                <a href="#services" class="mobile-link">Services</a>
-                <a href="#trust" class="mobile-link">Reviews</a>
-                <a href="contact/" class="mobile-link">Support</a>
-                <div class="mobile-socials">
-                    <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://www.facebook.com/share/1L1HfybCym/"><i class="fab fa-facebook-f"></i></a>
-                    <a href="https://www.instagram.com/thecartelug"><i class="fab fa-instagram"></i></a>
-                </div>
+                <a href="#services">Services</a>
+                <a href="trust/">Reviews</a>
+                <a href="contact/">Support</a>
             </nav>
         </div>
     </div>
 
     <main>
-        <section class="hero-section">
-            <div class="container hero-content hidden-fade">
-                <div class="badge">🚀 #1 In East Africa</div>
-                <h1 class="hero-title">Unlock <span class="text-gradient">Premium</span> Digital Access.</h1>
-                <p class="hero-subtitle">Netflix, Spotify, Prime Video & Social Media Boosts. Pay via Mobile Money.</p>
-                <div class="hero-buttons">
-                    <a href="#services" class="cta-button primary-btn">Start Now <i class="fas fa-arrow-right"></i></a>
-<a href="trust/" class="cta-button trust-btn">
-    <span class="stars">⭐⭐⭐⭐⭐</span> See Client Reviews
-</a>
+        <section class="hero">
+            <div class="container hero-inner">
+                <div class="hero-badge">✨ #1 Premium Digital Store</div>
+                <h1 class="hero-display">
+                    Digital Freedom.<br>
+                    <span class="text-gradient">Instant Access.</span>
+                </h1>
+                <p class="hero-sub">Upgrade your lifestyle with Netflix 4K, Spotify, CapCut Pro & Viral Social Growth.</p>
+                
+                <div class="hero-actions">
+                    <a href="#services" class="btn btn-primary">
+                        <span>Explore Catalog</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="trust/" class="btn btn-glass">
+                        ⭐⭐⭐⭐⭐ Client Trust
+                    </a>
                 </div>
             </div>
         </section>
 
         <section id="services" class="section-padding">
             <div class="container">
-                <h2 class="section-title hidden-fade">Choose Your <span class="highlight">Service</span></h2>
+                <div class="section-header">
+                    <h2>Select Your <span class="highlight">Upgrade</span></h2>
+                </div>
                 
-                <div class="services-grid">
-                    <div class="service-card glass hidden-fade" style="--glow-color: #E50914;">
-                        <div class="card-icon"><i class="fas fa-play"></i></div>
-                        <div class="card-info">
+                <div class="bento-grid">
+                    
+                    <a href="netflix-order/" class="bento-card featured-card" style="--accent: #E50914;">
+                        <div class="card-bg-icon"><i class="fas fa-play"></i></div>
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fas fa-play"></i></div>
                             <h3>Netflix Premium</h3>
-                            <p>4K UHD | Private & Shared</p>
+                            <p>4K Ultra HD. Private & Shared Profiles available instantly.</p>
+                            <span class="action-link">Get Access <i class="fas fa-chevron-right"></i></span>
                         </div>
-                        <a href="netflix-order/" class="card-btn">Get Access</a>
-                    </div>
+                    </a>
 
-                    <div class="service-card glass hidden-fade" style="--glow-color: #1DB954;">
-                        <div class="card-icon"><i class="fab fa-spotify"></i></div>
-                        <div class="card-info">
+                    <a href="boost-package/" class="bento-card wide-card" style="--accent: #FF0050;">
+                        <div class="card-bg-icon"><i class="fas fa-rocket"></i></div>
+                        <div class="card-content">
+                            <div class="dual-logos">
+                                <i class="fab fa-instagram instagram-color"></i>
+                                <i class="fab fa-tiktok tiktok-color"></i>
+                            </div>
+                            <h3>AccessUG Boost Package</h3>
+                            <p>Dominate Socials. Real Followers, Likes & Viral Views bundle.</p>
+                            <span class="action-link">Go Viral <i class="fas fa-chevron-right"></i></span>
+                        </div>
+                    </a>
+
+                    <a href="spotify-order/" class="bento-card" style="--accent: #1DB954;">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fab fa-spotify"></i></div>
                             <h3>Spotify Premium</h3>
-                            <p>Ad-Free Music | Individual</p>
+                            <p>Ad-free music listening.</p>
                         </div>
-                        <a href="spotify-order/" class="card-btn">Upgrade</a>
-                    </div>
+                    </a>
 
-                    <div class="service-card glass hidden-fade" style="--glow-color: #00A8E1;">
-                        <div class="card-icon"><i class="fab fa-amazon"></i></div>
-                        <div class="card-info">
+                    <a href="canva-order/" class="bento-card" style="--accent: #00C4CC;">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fas fa-palette"></i></div>
+                            <h3>Canva Pro</h3>
+                            <p>Unlock premium templates & AI tools.</p>
+                        </div>
+                    </a>
+
+                    <a href="capcut-order/" class="bento-card" style="--accent: #FFFFFF;">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fas fa-film"></i></div>
+                            <h3>CapCut Pro</h3>
+                            <p>Advanced video editing features.</p>
+                        </div>
+                    </a>
+
+                    <a href="prime-order/" class="bento-card" style="--accent: #00A8E1;">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fab fa-amazon"></i></div>
                             <h3>Prime Video</h3>
-                            <p>Exclusive Movies & Shows</p>
+                            <p>Exclusive movies & shows.</p>
                         </div>
-                        <a href="prime-order/" class="card-btn">Watch Now</a>
-                    </div>
+                    </a>
+                    
+                    <a href="facebook-boost/" class="bento-card" style="--accent: #1877F2;">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fab fa-facebook-f"></i></div>
+                            <h3>Facebook Growth</h3>
+                            <p>Page likes & followers.</p>
+                        </div>
+                    </a>
 
-                    <div class="service-card glass hidden-fade" style="--glow-color: #C13584;">
-                        <div class="card-icon"><i class="fab fa-instagram"></i></div>
-                        <div class="card-info">
-                            <h3>Instagram Boost</h3>
-                            <p>Real Followers & Likes</p>
-                        </div>
-                        <a href="instagram-boost/" class="card-btn">Boost</a>
-                    </div>
-
-                    <div class="service-card glass hidden-fade" style="--glow-color: #00f2ea;">
-                        <div class="card-icon"><i class="fab fa-tiktok"></i></div>
-                        <div class="card-info">
-                            <h3>TikTok Growth</h3>
-                            <p>Views & Viral Engagement</p>
-                        </div>
-                        <a href="tiktok-boost/" class="card-btn">Go Viral</a>
-                    </div>
-
-                    <div class="service-card glass hidden-fade" style="--glow-color: #1877F2;">
-                        <div class="card-icon"><i class="fab fa-facebook-f"></i></div>
-                        <div class="card-info">
-                            <h3>Facebook Boost</h3>
-                            <p>Page Likes & Followers</p>
-                        </div>
-                        <a href="facebook-boost/" class="card-btn">Grow Page</a>
-                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="community" class="section-padding">
+        <section id="trust" class="trust-section">
             <div class="container">
-                <div class="community-box glass hidden-fade">
-                    <h2>Join The Community</h2>
-                    <p>Stay updated with the latest deals and giveaways.</p>
-                    <div class="social-links-row">
-                        <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" target="_blank" class="social-pill whatsapp">
-                            <i class="fab fa-whatsapp"></i> WhatsApp Group
-                        </a>
-                        <a href="https://www.facebook.com/share/1L1HfybCym/" target="_blank" class="social-pill facebook">
-                            <i class="fab fa-facebook-f"></i> Facebook
-                        </a>
-                        <a href="https://www.instagram.com/thecartelug" target="_blank" class="social-pill instagram">
-                            <i class="fab fa-instagram"></i> Instagram
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="trust" class="trust-section section-padding">
-            <div class="container">
-                <h2 class="section-title hidden-fade">Trusted By <span class="highlight">Hundreds</span></h2>
-                <div class="testimonial-marquee hidden-fade">
-                    <div class="testimonial-track">
-                        <div class="testimonial-card glass">
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                            <p>"Finally an easy way to pay for Netflix without a bank card. Instant service!"</p>
-                            <span class="author">- Aisha K.</span>
-                        </div>
-                        <div class="testimonial-card glass">
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                            <p>"Spotify upgrade was done in 5 mins. Super legit and professional."</p>
-                            <span class="author">- Brian M.</span>
-                        </div>
-                        <div class="testimonial-card glass">
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                            <p>"Best service in South Sudan. AccessUG is the real deal."</p>
-                            <span class="author">- Deng A.</span>
-                        </div>
-                        <div class="testimonial-card glass">
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                            <p>"Paid with MTN MoMo and got my login details immediately. 10/10."</p>
-                            <span class="author">- Brenda W.</span>
-                        </div>
-                        <div class="testimonial-card glass">
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                            <p>"Finally an easy way to pay for Netflix without a bank card. Instant service!"</p>
-                            <span class="author">- Aisha K.</span>
-                        </div>
-                        <div class="testimonial-card glass">
-                            <div class="stars">⭐⭐⭐⭐⭐</div>
-                            <p>"Spotify upgrade was done in 5 mins. Super legit and professional."</p>
-                            <span class="author">- Brian M.</span>
-                        </div>
-                    </div>
+                <div class="trust-badge-row">
+                    <div class="trust-item"><i class="fas fa-shield-alt"></i> Secure Payment</div>
+                    <div class="trust-item"><i class="fas fa-bolt"></i> Instant Delivery</div>
+                    <div class="trust-item"><i class="fas fa-headset"></i> 24/7 Support</div>
                 </div>
             </div>
         </section>
@@ -202,15 +157,10 @@
 
     <footer class="main-footer">
         <div class="container">
-            <div class="footer-links">
-                <a href="privacy-policy/">Privacy</a>
-                <a href="terms-of-service/">Terms</a>
-                <a href="contact/">Contact</a>
-            </div>
-            <p>&copy; 2025 AccessUG. Secure Payments via MTN & Airtel.</p>
+            <p>&copy; 2025 AccessUG. The #1 Digital Plug.</p>
         </div>
     </footer>
 
-    <script src="script.js?v=3.0" defer></script>
+    <script src="script.js?v=4.0"></script>
 </body>
 </html>
