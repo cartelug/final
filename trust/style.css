@@ -1,0 +1,153 @@
+/* === TRUST PAGE PRO STYLES === */
+
+.trust-main {
+    padding-top: 100px;
+    padding-bottom: 80px;
+}
+
+/* --- HERO & GUARANTEE --- */
+.guarantee-hero {
+    text-align: center;
+    margin-bottom: 80px;
+}
+.guarantee-badge {
+    display: inline-block;
+    background: rgba(0, 245, 122, 0.1);
+    color: var(--primary);
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: 1px solid rgba(0, 245, 122, 0.3);
+    margin-bottom: 20px;
+}
+.guarantee-hero h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 50px;
+}
+
+.guarantee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    padding: 40px;
+    border-radius: 24px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+}
+.g-item {
+    text-align: left;
+    padding: 10px;
+}
+.icon-box {
+    width: 60px; height: 60px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    color: var(--primary);
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+.g-item:hover .icon-box {
+    background: var(--primary);
+    color: #000;
+    transform: scale(1.1);
+}
+.g-item h3 { font-size: 1.2rem; margin-bottom: 10px; }
+.g-item p { color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; }
+
+/* --- SECTOR STYLES --- */
+.proof-sector {
+    margin-bottom: 100px;
+}
+.sector-header {
+    display: flex; align-items: center; justify-content: center;
+    gap: 15px; margin-bottom: 30px;
+}
+.sector-header i { font-size: 2rem; }
+.sector-header h2 { font-size: 2rem; margin: 0; }
+.sector-desc { text-align: center; color: var(--text-muted); margin-top: -20px; margin-bottom: 40px; }
+
+/* --- SCREENSHOT GRID --- */
+.screenshot-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+.proof-card {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 9/16; /* Typical Phone Screenshot Ratio */
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+.proof-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+.proof-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+    border-color: var(--primary);
+    z-index: 2;
+}
+.proof-card:hover img {
+    transform: scale(1.05);
+}
+
+/* --- FINAL CTA --- */
+.cta-box {
+    text-align: center;
+    padding: 60px 20px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.cta-box h2 { font-size: 2.2rem; margin-bottom: 15px; }
+.cta-box p { color: var(--text-muted); margin-bottom: 30px; }
+.cta-buttons { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+
+.primary-btn {
+    padding: 15px 35px; background: var(--primary); color: #000;
+    border-radius: 50px; font-weight: 700; text-decoration: none;
+    transition: 0.3s;
+}
+.primary-btn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(0,245,122,0.4); }
+
+.secondary-btn {
+    padding: 15px 35px; background: rgba(255,255,255,0.1); color: #fff;
+    border-radius: 50px; font-weight: 700; text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: 0.3s;
+}
+.secondary-btn:hover { background: #fff; color: #000; }
+
+/* Mobile Adapt */
+@media(max-width: 768px) {
+    #desktop-nav { display: none; }
+    .guarantee-hero h1 { font-size: 2.5rem; }
+    .g-item { text-align: center; }
+    .icon-box { margin: 0 auto 20px; }
+    .sector-header { flex-direction: column; gap: 10px; }
+}
+
+/* Animation */
+.fade-in-auto {
+    opacity: 0;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
