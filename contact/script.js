@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const paymentInitial = document.getElementById('payment-initial');
     const paymentApology = document.getElementById('payment-apology');
 
-    if (paymentBtn) {
+    if (paymentBtn && paymentInitial && paymentApology) {
         paymentBtn.addEventListener('click', () => {
             paymentInitial.style.display = 'none';
             paymentApology.classList.remove('hidden');
@@ -32,9 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Open Modal
     if (modalTrigger) {
         modalTrigger.addEventListener('click', () => {
-            modal.classList.add('active');
-            loadEmails();
-            goToStep(1);
+            if(modal) {
+                modal.classList.add('active');
+                loadEmails();
+                goToStep(1);
+            }
         });
     }
 
@@ -43,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalClose.addEventListener('click', closeModal);
     }
 
-    // Functions attached to window so HTML buttons can use them (onclick="closeModal()")
+    // Functions attached to window for HTML usage
     window.closeModal = function() {
         if(modal) modal.classList.remove('active');
     };
@@ -89,22 +91,4 @@ document.addEventListener('DOMContentLoaded', () => {
         
         goToStep(4);
     };
-
-    // 3. Animation On Scroll (Fixes Blank Page)
-    const observerOptions = {
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show-fade');
-                // Optional: Stop observing once visible
-                // observer.unobserve(entry.target); 
-            }
-        });
-    }, observerOptions);
-
-    const hiddenElements = document.querySelectorAll('.hidden-fade');
-    hiddenElements.forEach((el) => observer.observe(el));
 });
