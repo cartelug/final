@@ -4,43 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AccessUG | #1 Digital Store</title>
-    <meta name="description" content="Premium Digital Services. Netflix, Spotify, CapCut, Canva & Social Boosts.">
+    <meta name="description" content="Premium Digital Services. Netflix, Spotify, CapCut, Canva & Social Boosts. Instant Delivery.">
     <link rel="icon" href="logo.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link rel="stylesheet" href="style.css?v=5.0"> 
+    <link rel="stylesheet" href="style.css?v=6.0"> 
 </head>
 <body>
 
-    <div class="aurora-bg">
-        <div class="aurora-blob blob-1"></div>
-        <div class="aurora-blob blob-2"></div>
-        <div class="aurora-blob blob-3"></div>
+    <div class="warp-speed-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
     </div>
+    <div class="noise-overlay"></div>
 
-    <header class="navbar">
+    <header class="navbar glass">
         <div class="container nav-flex">
-            <a href="index.html" class="brand">
-                <img src="logo.png" alt="AccessUG">
-            </a>
+            <a href="index.html" class="brand">AccessUG<span class="dot">.</span></a>
             
             <nav id="desktop-nav">
-                <a href="#services" class="nav-item">Services</a>
-                <a href="trust/" class="nav-item">Reviews</a>
-                <a href="contact/" class="nav-item">Support</a>
-                <a href="#services" class="nav-btn">Get Started</a>
+                <a href="#services">Services</a>
+                <a href="trust/">Reviews</a>
+                <a href="contact/">Support</a>
             </nav>
 
-            <button id="mobile-menu-open"><i class="fas fa-bars"></i></button>
+            <button id="mobile-menu-open" aria-label="Menu"><i class="fas fa-bars"></i></button>
         </div>
     </header>
 
     <div id="mobile-menu-overlay" class="mobile-menu-overlay">
-        <div class="mobile-menu-content glass-panel">
+        <div class="mobile-menu-content">
             <button id="mobile-menu-close"><i class="fas fa-times"></i></button>
             <nav class="mobile-nav-links">
                 <a href="#services">Services</a>
@@ -52,133 +49,112 @@
 
     <main>
         <section class="hero">
-            <div class="container hero-content">
-                <div class="hero-badge">🚀 #1 In East Africa</div>
-                <h1 class="hero-title">
-                    Digital Access.<br>
-                    <span class="gradient-text">Unrestricted.</span>
+            <div class="container hero-inner">
+                <div class="pill-badge">🚀 #1 In East Africa</div>
+                <h1 class="display-text">
+                    Unlock Premium<br>
+                    <span class="gradient-text">Digital Access.</span>
                 </h1>
-                <p class="hero-subtitle">Instant upgrades for your digital lifestyle. Pay easily via Mobile Money.</p>
+                <p class="sub-text">Netflix 4K, Spotify, CapCut Pro & Viral Growth. Instant delivery via Mobile Money.</p>
                 
-                <div class="hero-cta-group">
-                    <a href="#services" class="cta-primary">
-                        Explore Services <i class="fas fa-arrow-down"></i>
-                    </a>
-                    <a href="trust/" class="cta-secondary">
-                        <span class="stars">⭐⭐⭐⭐⭐</span> Trusted Clients
-                    </a>
+                <div class="hero-btns">
+                    <a href="#services" class="btn-primary glow-effect">Start Now</a>
+                    <a href="trust/" class="btn-secondary">Reviews</a>
                 </div>
             </div>
         </section>
 
-        <section id="services" class="section-padding">
+        <section id="services" class="section-pad">
             <div class="container">
-                <div class="grid-header">
-                    <h2>Select Your Upgrade</h2>
+                <div class="section-head">
+                    <h2>Choose Your <span class="highlight">Upgrade</span></h2>
                 </div>
                 
-                <div class="master-grid">
+                <div class="speed-grid">
                     
-                    <a href="netflix-order/" class="grid-card netflix-card">
-                        <div class="card-bg"></div>
-                        <div class="card-content">
-                            <img src="netflix.png" alt="Netflix" class="brand-logo-large">
-                            <div class="card-text">
-                                <h3>Netflix Premium</h3>
-                                <p>4K Ultra HD • Private Profiles</p>
-                            </div>
-                            <span class="arrow-btn"><i class="fas fa-arrow-right"></i></span>
+                    <div class="service-card" style="--brand: #E50914;">
+                        <div class="card-icon"><i class="fas fa-play"></i></div>
+                        <div class="card-details">
+                            <h3>Netflix Premium</h3>
+                            <p>4K UHD • Private Profiles</p>
                         </div>
-                    </a>
+                        <a href="netflix-order/" class="get-now-btn">Get Now <i class="fas fa-bolt"></i></a>
+                    </div>
 
-                    <a href="boost-package/" class="grid-card boost-card">
-                        <div class="card-content row-layout">
-                            <div class="dual-brand-box">
-                                <img src="instagram.png" alt="IG" class="mini-logo">
-                                <span class="divider">/</span>
-                                <img src="tiktok.png" alt="TikTok" class="mini-logo">
-                            </div>
-                            <div class="card-text">
-                                <h3>AccessUG Boost</h3>
-                                <p>Viral Growth & Engagement</p>
-                            </div>
-                            <span class="arrow-btn"><i class="fas fa-bolt"></i></span>
+                    <div class="service-card" style="--brand: #FF0050;">
+                        <div class="card-icon dual-icon">
+                            <i class="fab fa-instagram"></i>
+                            <i class="fab fa-tiktok"></i>
                         </div>
-                    </a>
+                        <div class="card-details">
+                            <h3>AccessUG Boost</h3>
+                            <p>Viral Followers & Likes</p>
+                        </div>
+                        <a href="boost-package/" class="get-now-btn">Get Now <i class="fas fa-bolt"></i></a>
+                    </div>
 
-                    <a href="spotify-order/" class="grid-card spotify-card">
-                        <div class="card-content">
-                            <img src="spotify.png" alt="Spotify" class="brand-logo-std">
+                    <div class="service-card" style="--brand: #1DB954;">
+                        <div class="card-icon"><i class="fab fa-spotify"></i></div>
+                        <div class="card-details">
                             <h3>Spotify Premium</h3>
-                            <p>Ad-Free Music</p>
+                            <p>Ad-Free Music Listening</p>
                         </div>
-                    </a>
+                        <a href="spotify-order/" class="get-now-btn">Get Now <i class="fas fa-bolt"></i></a>
+                    </div>
 
-                    <a href="prime-order/" class="grid-card prime-card">
-                        <div class="card-content">
-                            <img src="prime-video.png" alt="Prime Video" class="brand-logo-std">
+                    <div class="service-card" style="--brand: #00A8E1;">
+                        <div class="card-icon"><i class="fab fa-amazon"></i></div>
+                        <div class="card-details">
                             <h3>Prime Video</h3>
-                            <p>Exclusive Originals</p>
+                            <p>Exclusive Movies & Shows</p>
                         </div>
-                    </a>
+                        <a href="prime-order/" class="get-now-btn">Get Now <i class="fas fa-bolt"></i></a>
+                    </div>
 
-                    <a href="capcut-order/" class="grid-card capcut-card">
-                        <div class="card-content">
-                            <div class="capcut-logo-mock">
-                                <i class="fas fa-cut"></i> CapCut <span class="pro-tag">PRO</span>
-                            </div>
-                            <h3>Video Editor</h3>
-                            <p>Unlock Pro Features</p>
+                    <div class="service-card" style="--brand: #ffffff;">
+                        <div class="card-icon text-icon">CC</div>
+                        <div class="card-details">
+                            <h3>CapCut Pro</h3>
+                            <p>Unlock Pro Editing Tools</p>
                         </div>
-                    </a>
+                        <a href="capcut-order/" class="get-now-btn">Get Now <i class="fas fa-bolt"></i></a>
+                    </div>
 
-                    <a href="canva-order/" class="grid-card canva-card">
-                        <div class="card-content">
-                            <div class="canva-logo-mock">Canva</div>
-                            <h3>Design Suite</h3>
-                            <p>Magic AI Tools</p>
+                    <div class="service-card" style="--brand: #00C4CC;">
+                        <div class="card-icon text-icon">Cv</div>
+                        <div class="card-details">
+                            <h3>Canva Pro</h3>
+                            <p>Premium Templates & AI</p>
                         </div>
-                    </a>
+                        <a href="canva-order/" class="get-now-btn">Get Now <i class="fas fa-bolt"></i></a>
+                    </div>
 
                 </div>
             </div>
         </section>
 
-        <section class="trust-bar">
+        <section class="trust-strip">
             <div class="container">
-                <p>Trusted by creators and streamers across the region.</p>
-                <div class="trust-icons">
-                   <img src="mtn.png" alt="MTN" style="height: 30px; opacity: 0.7;">
-                   <img src="airtel.png" alt="Airtel" style="height: 30px; opacity: 0.7;">
+                <p>Trusted by thousands across Uganda & South Sudan.</p>
+                <div class="trust-badges">
+                    <span><i class="fas fa-shield-alt"></i> Secure Payment</span>
+                    <span><i class="fas fa-stopwatch"></i> Instant Delivery</span>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="main-footer">
-        <div class="container footer-grid">
-            <div class="footer-brand">
-                <img src="logo.png" alt="AccessUG">
-                <p>Digital Freedom, Delivered Instantly.</p>
-            </div>
+    <footer class="footer">
+        <div class="container">
             <div class="footer-links">
-                <div class="link-col">
-                    <h4>Legal</h4>
-                    <a href="terms-of-service/">Terms of Service</a>
-                    <a href="privacy-policy/">Privacy Policy</a>
-                </div>
-                <div class="link-col">
-                    <h4>Support</h4>
-                    <a href="contact/">Help Center</a>
-                    <a href="contact/">WhatsApp</a>
-                </div>
+                <a href="terms-of-service/">Terms</a>
+                <a href="privacy-policy/">Privacy</a>
+                <a href="contact/">Support</a>
             </div>
-        </div>
-        <div class="footer-bottom">
             <p>&copy; 2025 AccessUG. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="script.js?v=5.0"></script>
+    <script src="script.js?v=6.0"></script>
 </body>
 </html>
