@@ -68,3 +68,46 @@ document.addEventListener('DOMContentLoaded', () => {
         yearSpan.textContent = new Date().getFullYear();
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    
+    // 1. Mobile Menu Toggle
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mainNav = document.getElementById('main-nav');
+    
+    if (menuButton && mainNav) {
+        menuButton.addEventListener('click', () => {
+            mainNav.style.display = mainNav.style.display === 'flex' ? 'none' : 'flex';
+            if(mainNav.style.display === 'flex') {
+                mainNav.style.flexDirection = 'column';
+                mainNav.style.position = 'absolute';
+                mainNav.style.top = '70px';
+                mainNav.style.left = '0';
+                mainNav.style.width = '100%';
+                mainNav.style.background = '#050507';
+                mainNav.style.padding = '20px';
+            }
+        });
+    }
+
+    // 2. Scroll Reveal Animation (The "Pro" Fade-in effect)
+    const observerOptions = {
+        threshold: 0.1 // Trigger when 10% of item is visible
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show-fade');
+            }
+        });
+    }, observerOptions);
+
+    const hiddenElements = document.querySelectorAll('.hidden-fade');
+    hiddenElements.forEach((el) => observer.observe(el));
+
+    // 3. Dynamic Year
+    const yearSpan = document.getElementById('year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+});
