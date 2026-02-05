@@ -1,0 +1,198 @@
+/* === SUPPORT PAGE SPECIFIC CSS === */
+
+/* Main Layout */
+.support-main {
+    padding-top: 120px;
+    padding-bottom: 80px;
+    min-height: 100vh;
+}
+.support-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+.support-header h1 {
+    font-size: 3rem;
+    margin: 15px 0;
+}
+.support-header p {
+    color: var(--text-muted);
+}
+
+/* Issue Grid */
+.issue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+/* Card Styling */
+.issue-card {
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: var(--text-main);
+    transition: all 0.3s ease;
+    text-align: left;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+}
+
+.issue-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--glow-color);
+    box-shadow: 0 10px 30px -10px var(--glow-color);
+}
+
+.card-icon {
+    width: 50px; height: 50px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: var(--glow-color);
+}
+
+.issue-card h3 { font-size: 1.4rem; margin-bottom: 10px; }
+.issue-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px; line-height: 1.5; }
+
+/* Image Previews inside cards */
+.preview-images {
+    display: flex; gap: 10px; margin-bottom: 20px;
+}
+.preview-images img {
+    height: 60px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.1);
+}
+
+.card-action {
+    margin-top: auto;
+    font-weight: 600;
+    color: var(--glow-color);
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.9rem;
+}
+
+/* Payment Card Specifics */
+.payment-img {
+    width: 100%; max-width: 200px; border-radius: 8px; margin: 10px 0;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.text-btn {
+    background: none; border: none; color: var(--text-muted); 
+    text-decoration: underline; cursor: pointer; font-size: 0.85rem;
+    padding: 0; margin-top: 10px;
+}
+.text-btn:hover { color: #fff; }
+
+.status-box {
+    background: rgba(229, 9, 20, 0.1);
+    border: 1px solid rgba(229, 9, 20, 0.3);
+    padding: 15px; border-radius: 10px;
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.9rem; color: #ffcccc;
+}
+.hidden { display: none; }
+
+/* Direct Support Strip */
+.direct-support {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 30px 40px; border-radius: 20px;
+    flex-wrap: wrap; gap: 20px;
+}
+.email-btn {
+    background: rgba(255,255,255,0.1); padding: 12px 25px;
+    border-radius: 50px; color: #fff; text-decoration: none;
+    font-weight: 600; transition: 0.3s;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.email-btn:hover { background: #fff; color: #000; }
+
+/* === MODAL STYLES === */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
+    z-index: 2000; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: 0.3s;
+}
+.modal-overlay.active { opacity: 1; pointer-events: all; }
+
+.modal-window {
+    width: 90%; max-width: 500px;
+    background: #0A0A0E; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 24px; padding: 40px;
+    position: relative; transform: scale(0.9); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.modal-overlay.active .modal-window { transform: scale(1); }
+
+.modal-close {
+    position: absolute; top: 20px; right: 20px;
+    background: none; border: none; color: var(--text-muted); font-size: 1.5rem; cursor: pointer;
+}
+
+.modal-step { display: none; text-align: center; animation: fadeIn 0.4s ease; }
+.modal-step.active { display: block; }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.step-header i { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+.step-header h2 { font-size: 1.8rem; margin-bottom: 10px; }
+
+/* Email Grid */
+.email-grid {
+    display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 20px;
+    max-height: 300px; overflow-y: auto;
+}
+.email-option {
+    background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;
+    cursor: pointer; border: 1px solid transparent; transition: 0.2s; color: var(--text-main);
+}
+.email-option:hover { border-color: var(--primary); background: rgba(0, 245, 122, 0.05); }
+
+/* Confirmation */
+.highlight-box {
+    background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;
+    font-weight: 700; font-size: 1.1rem; margin: 20px 0; color: #fff;
+}
+.step-actions { display: flex; gap: 15px; justify-content: center; }
+
+/* Device Grid */
+.device-grid { display: flex; gap: 15px; justify-content: center; margin: 30px 0; }
+.device-btn {
+    flex: 1; padding: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; color: #fff; cursor: pointer; transition: 0.3s;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.device-btn:hover { background: var(--primary); color: #000; }
+.device-btn i { font-size: 1.5rem; }
+
+/* Instructions */
+.instruction-box {
+    background: rgba(255,255,255,0.05); padding: 20px; border-radius: 12px;
+    text-align: left; margin: 20px 0;
+}
+.instruction-box code {
+    display: block; background: #000; padding: 10px; border-radius: 6px;
+    color: var(--primary); font-family: monospace; font-size: 1.1rem; text-align: center;
+}
+.label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 5px; margin-top: 15px; }
+
+/* Buttons */
+.btn-primary, .btn-secondary {
+    padding: 12px 30px; border-radius: 50px; border: none; font-weight: 600; cursor: pointer;
+}
+.btn-primary { background: var(--primary); color: #000; }
+.btn-secondary { background: rgba(255,255,255,0.1); color: #fff; }
+.btn-text { background: none; border: none; color: var(--text-muted); margin-top: 10px; cursor: pointer; }
+
+/* Mobile Adapt */
+.mobile-back-btn { display: none; color: #fff; text-decoration: none; }
+@media(max-width: 768px) {
+    #desktop-nav { display: none; }
+    .mobile-back-btn { display: block; }
+    .support-header h1 { font-size: 2.2rem; }
+    .direct-support { text-align: center; justify-content: center; }
+}
