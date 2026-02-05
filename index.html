@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AccessUG - Premium Digital Services</title>
-    <meta name="description" content="Instant access to Netflix, Spotify, Prime Video & Social Boosts in Uganda & South Sudan.">
+    <meta name="description" content="Netflix, Spotify, Prime Video & Social Media Boosts. Pay via Mobile Money in Uganda & South Sudan.">
     <link rel="icon" href="logo.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link rel="stylesheet" href="style.css?v=2.0"> 
+    <link rel="stylesheet" href="style.css?v=3.0"> 
 </head>
 <body>
 
@@ -23,29 +23,56 @@
     </div>
 
     <header class="main-header glass">
-        <div class="container">
-            <a href="index.html" class="logo-link"><img src="logo.png" alt="AccessUG" id="logo" width="150" height="50"></a>
-            <nav id="main-nav">
+        <div class="container header-flex">
+            <a href="index.html" class="logo-link">
+                <img src="logo.png" alt="AccessUG" id="logo">
+            </a>
+            
+            <nav id="desktop-nav">
                 <ul>
                     <li><a href="index.html" class="active">Home</a></li>
                     <li><a href="#services">Services</a></li>
-                    <li><a href="#community">Community</a></li>
+                    <li><a href="#trust">Reviews</a></li>
                     <li><a href="contact/">Support</a></li>
                 </ul>
             </nav>
-            <button id="mobile-menu-button" aria-label="Menu"><i class="fas fa-bars"></i></button>
+
+            <button id="mobile-menu-open" aria-label="Open Menu">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
     </header>
+
+    <div id="mobile-menu-overlay" class="mobile-menu-overlay">
+        <div class="mobile-menu-content glass">
+            <button id="mobile-menu-close" aria-label="Close Menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <nav class="mobile-nav-links">
+                <a href="index.html" class="mobile-link">Home</a>
+                <a href="#services" class="mobile-link">Services</a>
+                <a href="#trust" class="mobile-link">Reviews</a>
+                <a href="contact/" class="mobile-link">Support</a>
+                <div class="mobile-socials">
+                    <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.facebook.com/share/1L1HfybCym/"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://www.instagram.com/thecartelug"><i class="fab fa-instagram"></i></a>
+                </div>
+            </nav>
+        </div>
+    </div>
 
     <main>
         <section class="hero-section">
             <div class="container hero-content hidden-fade">
                 <div class="badge">🚀 #1 In East Africa</div>
                 <h1 class="hero-title">Unlock <span class="text-gradient">Premium</span> Digital Access.</h1>
-                <p class="hero-subtitle">Netflix, Spotify, Prime Video & Social Media Boosts. Instant delivery via Mobile Money.</p>
+                <p class="hero-subtitle">Netflix, Spotify, Prime Video & Social Media Boosts. Pay via Mobile Money.</p>
                 <div class="hero-buttons">
                     <a href="#services" class="cta-button primary-btn">Start Now <i class="fas fa-arrow-right"></i></a>
-                    <a href="contact/" class="cta-button secondary-btn">Get Support</a>
+                    <a href="#trust" class="cta-button trust-btn">
+                        <span class="stars">⭐⭐⭐⭐⭐</span> See Client Reviews
+                    </a>
                 </div>
             </div>
         </section>
@@ -56,7 +83,8 @@
                 
                 <div class="services-grid">
                     <div class="service-card glass hidden-fade" style="--glow-color: #E50914;">
-                        <div class="card-icon"><i class="fas fa-play"></i></div> <div class="card-info">
+                        <div class="card-icon"><i class="fas fa-play"></i></div>
+                        <div class="card-info">
                             <h3>Netflix Premium</h3>
                             <p>4K UHD | Private & Shared</p>
                         </div>
@@ -113,24 +141,60 @@
 
         <section id="community" class="section-padding">
             <div class="container">
-                <h2 class="section-title hidden-fade">Join The <span class="highlight">Cartel</span></h2>
-                <div class="stats-bar glass hidden-fade">
-                    <div class="stat">
-                        <span class="count">2000+</span>
-                        <span class="label">Happy Clients</span>
-                    </div>
-                    <div class="stat">
-                        <span class="count">24/7</span>
-                        <span class="label">Support</span>
-                    </div>
-                    <div class="stat">
-                        <span class="count">UG/SS</span>
-                        <span class="label">Mobile Money</span>
+                <div class="community-box glass hidden-fade">
+                    <h2>Join The Community</h2>
+                    <p>Stay updated with the latest deals and giveaways.</p>
+                    <div class="social-links-row">
+                        <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" target="_blank" class="social-pill whatsapp">
+                            <i class="fab fa-whatsapp"></i> WhatsApp Group
+                        </a>
+                        <a href="https://www.facebook.com/share/1L1HfybCym/" target="_blank" class="social-pill facebook">
+                            <i class="fab fa-facebook-f"></i> Facebook
+                        </a>
+                        <a href="https://www.instagram.com/thecartelug" target="_blank" class="social-pill instagram">
+                            <i class="fab fa-instagram"></i> Instagram
+                        </a>
                     </div>
                 </div>
-                <div class="community-links hidden-fade">
-                    <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" target="_blank" class="social-btn whatsapp"><i class="fab fa-whatsapp"></i> Join WhatsApp</a>
-                    <a href="https://t.me/cartelugaccess" target="_blank" class="social-btn telegram"><i class="fab fa-telegram"></i> Join Telegram</a>
+            </div>
+        </section>
+
+        <section id="trust" class="trust-section section-padding">
+            <div class="container">
+                <h2 class="section-title hidden-fade">Trusted By <span class="highlight">Hundreds</span></h2>
+                <div class="testimonial-marquee hidden-fade">
+                    <div class="testimonial-track">
+                        <div class="testimonial-card glass">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <p>"Finally an easy way to pay for Netflix without a bank card. Instant service!"</p>
+                            <span class="author">- Aisha K.</span>
+                        </div>
+                        <div class="testimonial-card glass">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <p>"Spotify upgrade was done in 5 mins. Super legit and professional."</p>
+                            <span class="author">- Brian M.</span>
+                        </div>
+                        <div class="testimonial-card glass">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <p>"Best service in South Sudan. AccessUG is the real deal."</p>
+                            <span class="author">- Deng A.</span>
+                        </div>
+                        <div class="testimonial-card glass">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <p>"Paid with MTN MoMo and got my login details immediately. 10/10."</p>
+                            <span class="author">- Brenda W.</span>
+                        </div>
+                        <div class="testimonial-card glass">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <p>"Finally an easy way to pay for Netflix without a bank card. Instant service!"</p>
+                            <span class="author">- Aisha K.</span>
+                        </div>
+                        <div class="testimonial-card glass">
+                            <div class="stars">⭐⭐⭐⭐⭐</div>
+                            <p>"Spotify upgrade was done in 5 mins. Super legit and professional."</p>
+                            <span class="author">- Brian M.</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -143,10 +207,10 @@
                 <a href="terms-of-service/">Terms</a>
                 <a href="contact/">Contact</a>
             </div>
-            <p>&copy; 2026 AccessUG. Secure Payments via MTN & Airtel.</p>
+            <p>&copy; 2025 AccessUG. Secure Payments via MTN & Airtel.</p>
         </div>
     </footer>
 
-    <script src="script.js?v=2.0" defer></script>
+    <script src="script.js?v=3.0" defer></script>
 </body>
 </html>
