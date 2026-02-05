@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trust Center - AccessUG</title>
+    <title>Trust Verification - AccessUG</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,81 +39,94 @@
 
     <main class="trust-main">
         
-        <section class="trust-hero container fade-in-auto">
-            <div class="verified-pill"><i class="fas fa-shield-alt"></i> Official & Verified</div>
-            
-            <h1>The <span class="text-gradient">Anti-Scam</span> Guarantee.</h1>
-            
-            <p class="hero-sub">Before you pay, see what clients that have paid with us have to say.</p>
-            
-            <div class="guarantee-row glass">
-                <div class="g-item">
-                    <div class="icon-circle"><i class="fas fa-handshake"></i></div>
-                    <div>
-                        <h3>Connect First, Pay After</h3>
-                        <small>Verify us yourself</small>
-                    </div>
+        <section class="interactive-hero container">
+            <div class="status-pill"><i class="fas fa-lock"></i> Secure Connection</div>
+            <h1>Let's Talk About <span class="text-alert">Scams.</span></h1>
+            <p class="hero-sub">We know you are careful with your money. You should be.</p>
+
+            <div class="truth-wizard glass">
+                
+                <div class="truth-card active" id="card-1">
+                    <div class="icon-ring"><i class="fas fa-user-shield"></i></div>
+                    <h3>"Is this real or a scam?"</h3>
+                    <p>It's the first question everyone asks. The internet is full of fakes, so being skeptical is smart.</p>
+                    <button class="action-btn" onclick="nextCard(2)">I Agree, I'm Skeptical <i class="fas fa-arrow-right"></i></button>
                 </div>
-                <div class="g-item">
-                    <div class="icon-circle"><i class="fas fa-bolt"></i></div>
-                    <div>
-                        <h3>Instant Setup</h3>
-                        <small>5-10 Mins Delivery</small>
-                    </div>
+
+                <div class="truth-card" id="card-2">
+                    <div class="icon-ring"><i class="fas fa-ban"></i></div>
+                    <h3>Scammers Hide. We Don't.</h3>
+                    <p>Scammers block you after payment. We have a public WhatsApp group with 200+ members chatting daily.</p>
+                    <button class="action-btn" onclick="nextCard(3)">Okay, that's good <i class="fas fa-arrow-right"></i></button>
                 </div>
-                <div class="g-item">
-                    <div class="icon-circle"><i class="fas fa-users"></i></div>
-                    <div>
-                        <h3>Team of 10+</h3>
-                        <small>Dedicated Care Members</small>
-                    </div>
+
+                <div class="truth-card" id="card-3">
+                    <div class="icon-ring"><i class="fas fa-check-circle"></i></div>
+                    <h3>The "Connect First" Promise</h3>
+                    <p>We are so confident, we can connect your account <b>before</b> you fully commit. If it doesn't work, we don't want your money.</p>
+                    <button class="action-btn success-btn" onclick="revealProof()">I Understand. Show Me Proof. <i class="fas fa-eye"></i></button>
                 </div>
+
             </div>
         </section>
 
-        <section class="proof-sector container fade-in-auto" style="animation-delay: 0.2s;">
+        <section id="proof-vault" class="proof-section container hidden-section">
             <div class="sector-head">
-                <h2>What Our Clients Say</h2>
+                <span class="sub-label">Verified Transactions</span>
+                <h2>The <span class="highlight">Receipts</span> Vault</h2>
                 <div class="divider-line"></div>
             </div>
 
             <div class="carousel-container glass">
+                <button class="nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
                 
-                <button class="nav-btn prev-btn" aria-label="Previous Testimonial">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-
                 <div class="carousel-track" id="track">
-                    <div class="slide"><img src="trust1.png" alt="Client Review 1"></div>
-                    <div class="slide"><img src="trust2.png" alt="Client Review 2"></div>
-                    <div class="slide"><img src="trust3.png" alt="Client Review 3"></div>
-                    <div class="slide"><img src="trust4.png" alt="Client Review 4"></div>
-                    <div class="slide"><img src="trust5.png" alt="Client Review 5"></div>
+                    <div class="slide"><img src="trust1.png" alt="Client Proof 1"></div>
+                    <div class="slide"><img src="trust2.png" alt="Client Proof 2"></div>
+                    <div class="slide"><img src="trust3.png" alt="Client Proof 3"></div>
+                    <div class="slide"><img src="trust4.png" alt="Client Proof 4"></div>
+                    <div class="slide"><img src="trust5.png" alt="Client Proof 5"></div>
                     
-                    <div class="slide"><img src="boost1.png" alt="Boost Review 1"></div>
-                    <div class="slide"><img src="boost2.png" alt="Boost Review 2"></div>
-                    <div class="slide"><img src="boost3.png" alt="Boost Review 3"></div>
+                    <div class="slide"><img src="boost1.png" alt="Boost Proof 1"></div>
+                    <div class="slide"><img src="boost2.png" alt="Boost Proof 2"></div>
+                    <div class="slide"><img src="boost3.png" alt="Boost Proof 3"></div>
                 </div>
 
-                <button class="nav-btn next-btn" aria-label="Next Testimonial">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-
-                <div class="swipe-hint"><i class="fas fa-hand-pointer"></i> Swipe to see more</div>
+                <button class="nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="swipe-hint"><i class="fas fa-hand-pointer"></i> Swipe to inspect</div>
             </div>
 
+            <div class="metrics-row">
+                <div class="metric glass">
+                    <h3>2,100+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="metric glass">
+                    <h3>4.9/5</h3>
+                    <p>User Rating</p>
+                </div>
+                <div class="metric glass">
+                    <h3>100%</h3>
+                    <p>Refund Rate</p>
+                </div>
+            </div>
         </section>
 
-        <section class="final-close container fade-in-auto">
+        <section id="final-cta" class="final-close container hidden-section">
             <div class="close-card glass">
-                <h2>Ready to Join Them?</h2>
-                <p>Choose your service and get started instantly.</p>
+                <h2>You Have Seen The Truth.</h2>
+                <p>Now you have two choices: Continue paying full price, or join AccessUG.</p>
                 
                 <div class="action-buttons">
                     <a href="../netflix-order/" class="btn-product netflix"><i class="fas fa-play"></i> Get Netflix</a>
-                    <a href="../spotify-order/" class="btn-product spotify"><i class="fab fa-spotify"></i> Get Spotify</a>
-                    <a href="../prime-order/" class="btn-product prime"><i class="fab fa-amazon"></i> Get Prime</a>
-                    <a href="https://wa.me/256762193386" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat First</a>
+                    <a href="../instagram-boost/" class="btn-product insta"><i class="fab fa-instagram"></i> Boost IG</a>
+                    <a href="../index.html#services" class="btn-product outline-btn">
+                        <i class="fas fa-grid"></i> Explore All Services
+                    </a>
+                </div>
+                
+                <div class="support-link">
+                    <a href="https://wa.me/256762193386">Still unsure? Chat with us on WhatsApp <i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </section>
@@ -122,7 +135,7 @@
 
     <footer class="main-footer">
         <div class="container">
-            <p>&copy; 2025 AccessUG. Trusted by East Africa.</p>
+            <p>&copy; 2025 AccessUG. Secure & Verified.</p>
         </div>
     </footer>
 
