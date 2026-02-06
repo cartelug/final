@@ -7,105 +7,90 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link rel="stylesheet" href="../style.css"> 
-    
-    <link rel="stylesheet" href="style.css">   
-</head>
+    <link rel="stylesheet" href="../style.css?v=7.0"> <link rel="stylesheet" href="style.css?v=14.0">   </head>
 <body>
 
-    <div class="mesh-background">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+    <div class="nebula-bg support-theme">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="noise-texture"></div>
     </div>
 
-    <header class="main-header glass">
-        <div class="container header-flex">
-            <a href="../index.html" class="logo-link">
-                <img src="../logo.png" alt="AccessUG" id="logo">
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="../index.html" class="logo-wrapper">
+                <img src="../logo.png" alt="AccessUG" class="brand-logo">
             </a>
-            <nav id="desktop-nav">
-                <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../index.html#services">Services</a></li>
-                    <li><a href="#" class="active">Support</a></li>
-                </ul>
-            </nav>
-            <a href="../index.html#services" class="mobile-back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            <a href="../index.html" class="nav-item back-link"><i class="fas fa-arrow-left"></i> Back Home</a>
         </div>
-    </header>
+    </nav>
 
     <main class="support-main">
         <div class="container">
-            <div class="support-header fade-in-auto">
-                <span class="badge">24/7 Help Center</span>
-                <h1>How Can We <span class="text-gradient">Help?</span></h1>
-                <p>Select your issue below for an instant fix.</p>
+            <div class="support-header">
+                <span class="status-badge"><i class="fas fa-headset"></i> 24/7 Help Center</span>
+                <h1 class="mega-title">How Can We <span class="highlight-blue">Help?</span></h1>
+                <p class="hero-desc">Select an issue below for an instant fix or direct support.</p>
             </div>
 
             <div class="issue-grid">
                 
-                <a href="../netflix-fix/index.html" class="issue-card glass fade-in-auto" style="--glow-color: #E50914; animation-delay: 0.1s;">
-                    <div class="card-icon"><i class="fas fa-house-lock"></i></div>
+                <a href="../netflix-fix/index.html" class="issue-card" style="--accent: #E50914;">
+                    <div class="card-icon red-glow"><i class="fas fa-house-lock"></i></div>
                     <div class="card-content">
                         <h3>Household Error</h3>
                         <p>Seeing "Not part of Household"? Click here to fix it instantly.</p>
-                        <div class="preview-images">
-                            <img src="../household.png" alt="TV Error">
-                            <img src="../householdmobile.png" alt="Mobile Error">
-                        </div>
                     </div>
                     <div class="card-action">Fix Now <i class="fas fa-arrow-right"></i></div>
                 </a>
 
-                <div class="issue-card glass fade-in-auto" id="payment-card" style="--glow-color: #E50914; animation-delay: 0.2s;">
-                    <div class="card-icon"><i class="fas fa-credit-card"></i></div>
+                <div class="issue-card" id="payment-card" style="--accent: #FFD700;">
+                    <div class="card-icon gold-glow"><i class="fas fa-credit-card"></i></div>
                     <div class="card-content">
-                        <h3>Payment Pop-up</h3>
-                        <p>Seeing a payment update message? Don't worry.</p>
+                        <h3>Payment Message?</h3>
+                        <p>Seeing a payment pop-up on screen?</p>
                         
                         <div id="payment-initial">
-                            <p class="instruction-text">Simply click <b>'X'</b> or swipe it away to continue watching.</p>
-                            <img src="../retrypayment.png" alt="Payment Pop-up" class="payment-img">
+                            <p class="instruction-text">Just click <b>'X'</b> or swipe it away to continue.</p>
                             <button id="payment-escalate-btn" class="text-btn">Still can't watch?</button>
                         </div>
 
                         <div id="payment-apology" class="status-box hidden">
                             <i class="fas fa-clock"></i>
-                            <span>Issue Reported. Our team is restoring service (24-48hrs). Missed days will be compensated.</span>
+                            <span>Reported. We are restoring service (24hrs).</span>
                         </div>
                     </div>
                 </div>
 
-                <button class="issue-card glass fade-in-auto" id="signed-out-trigger" style="--glow-color: #E50914; animation-delay: 0.3s;">
-                    <div class="card-icon"><i class="fas fa-user-slash"></i></div>
+                <button class="issue-card" id="signed-out-trigger" style="--accent: #00F57A;">
+                    <div class="card-icon green-glow"><i class="fas fa-user-slash"></i></div>
                     <div class="card-content">
-                        <h3>Signed Out?</h3>
-                        <p>Suddenly logged out or forgot your login details? Get them back here.</p>
+                        <h3>Lost Login?</h3>
+                        <p>Forgot your email or password? Recover it here.</p>
                     </div>
-                    <div class="card-action">Recover Login <i class="fas fa-key"></i></div>
+                    <div class="card-action">Recover <i class="fas fa-key"></i></div>
                 </button>
 
-                <a href="https://wa.me/256762193386?text=I%20have%20an%20issue%20with%20Prime%20Video" class="issue-card glass fade-in-auto" style="--glow-color: #00A8E1; animation-delay: 0.4s;">
-                    <div class="card-icon"><i class="fab fa-amazon"></i></div>
+                <a href="https://wa.me/256762193386?text=I%20have%20an%20issue%20with%20AccessUG%20Service" class="issue-card" style="--accent: #00A8E1;">
+                    <div class="card-icon blue-glow"><i class="fab fa-whatsapp"></i></div>
                     <div class="card-content">
-                        <h3>Prime Video Issue</h3>
-                        <p>Login failed or streaming errors? Contact support directly.</p>
+                        <h3>Chat Support</h3>
+                        <p>Talk to a human agent on WhatsApp.</p>
                     </div>
-                    <div class="card-action">Contact Support <i class="fab fa-whatsapp"></i></div>
+                    <div class="card-action">Open Chat <i class="fas fa-comment-alt"></i></div>
                 </a>
 
             </div>
 
-            <div class="direct-support glass fade-in-auto" style="animation-delay: 0.5s;">
+            <div class="direct-support glass-panel">
                 <div class="content">
-                    <h3>Need Human Help?</h3>
-                    <p>If the automated tools didn't work, email us.</p>
+                    <h3>Other Inquiries?</h3>
+                    <p>For partnerships or complex billing issues.</p>
                 </div>
-                <a href="mailto:carteluganda@gmail.com" class="email-btn">
+                <a href="mailto:carteluganda@gmail.com" class="btn glass-btn">
                     <i class="fas fa-envelope"></i> Send Email
                 </a>
             </div>
@@ -113,12 +98,12 @@
     </main>
 
     <div id="signed-out-modal" class="modal-overlay">
-        <div class="modal-window glass">
-            <button class="modal-close">&times;</button>
+        <div class="modal-window glass-panel">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
             
             <div class="modal-step active" id="step-1">
-                <div class="step-header">
-                    <i class="fas fa-envelope-open-text"></i>
+                <div class="step-header-modal">
+                    <div class="icon-ring"><i class="fas fa-envelope-open-text"></i></div>
                     <h2>Select Your Email</h2>
                     <p>Which Netflix email were you assigned?</p>
                 </div>
@@ -126,54 +111,45 @@
             </div>
 
             <div class="modal-step" id="step-2">
-                <div class="step-header">
-                    <i class="fas fa-check-circle"></i>
+                <div class="step-header-modal">
+                    <div class="icon-ring"><i class="fas fa-check-circle"></i></div>
                     <h2>Confirm Email</h2>
                 </div>
-                <p class="confirm-text">Are you sure your email is:</p>
-                <div class="highlight-box" id="selected-email-display">user@example.com</div>
+                <p class="confirm-text">Is this correct?</p>
+                <div class="highlight-box" id="selected-email-display">...</div>
                 <div class="step-actions">
-                    <button class="btn-secondary" onclick="goToStep(1)">Back</button>
-                    <button class="btn-primary" onclick="goToStep(3)">Yes, Confirm</button>
+                    <button class="btn glass-btn small" onclick="goToStep(1)">Back</button>
+                    <button class="btn primary-btn small" onclick="goToStep(3)">Yes</button>
                 </div>
             </div>
 
             <div class="modal-step" id="step-3">
-                <div class="step-header">
-                    <i class="fas fa-mobile-alt"></i>
+                <div class="step-header-modal">
+                    <div class="icon-ring"><i class="fas fa-mobile-alt"></i></div>
                     <h2>Select Device</h2>
-                    <p>Where are you signing in?</p>
                 </div>
                 <div class="device-grid">
                     <button class="device-btn" onclick="showInstruction('tv')">
                         <i class="fas fa-tv"></i> <span>TV</span>
                     </button>
                     <button class="device-btn" onclick="showInstruction('phone')">
-                        <i class="fas fa-mobile"></i> <span>Phone / Tablet</span>
+                        <i class="fas fa-mobile"></i> <span>Phone</span>
                     </button>
                 </div>
-                <button class="btn-text" onclick="goToStep(1)">Start Over</button>
             </div>
 
             <div class="modal-step" id="step-4">
-                <div class="step-header">
-                    <i class="fas fa-unlock-alt"></i>
-                    <h2>Login Details</h2>
+                <div class="step-header-modal">
+                    <div class="icon-ring"><i class="fas fa-unlock-alt"></i></div>
+                    <h2>Your Login</h2>
                 </div>
                 <div class="instruction-box">
                     <p class="label">Email:</p>
-                    <div class="copy-row">
-                        <code id="final-email">...</code>
-                    </div>
+                    <code id="final-email">...</code>
                     <p class="label">Password:</p>
-                    <div class="copy-row">
-                        <code>thecartelug</code>
-                    </div>
-                    <div id="tv-extra" class="extra-info hidden">
-                        <p>For TV: Go to <b>netflix.com/tv2</b> on your phone to type this easily.</p>
-                    </div>
+                    <code>thecartelug</code>
                 </div>
-                <button class="btn-primary" onclick="closeModal()">Done</button>
+                <button class="btn primary-btn" onclick="closeModal()">Done</button>
             </div>
         </div>
     </div>
