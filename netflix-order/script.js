@@ -12,15 +12,15 @@ function selectPlan(cardElement, planName, price, usd) {
     // 3. Update Summary
     document.getElementById('sum-total').textContent = price + " UGX";
 
-    // 4. Enable button
+    // 4. Enable button text
     const btn = document.getElementById('btn-step-1');
     btn.classList.remove('disabled');
-    btn.innerHTML = `Continue with ${planName} <i class="fas fa-arrow-right"></i>`;
+    btn.innerHTML = `Continue <i class="fas fa-arrow-right"></i>`;
 
-    // 5. SMART AUTO-SCROLL
+    // 5. SMART AUTO-SCROLL (Smooth Gliding)
     setTimeout(() => {
         btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 300);
+    }, 350);
 }
 
 function unlockBonus(id) {
@@ -31,7 +31,7 @@ function unlockBonus(id) {
     el.classList.add('unlocked');
     
     const statusSpan = el.querySelector('.status');
-    statusSpan.textContent = "UNLOCKED!";
+    statusSpan.textContent = "CLAIMED";
     
     unlockedGifts++;
 
@@ -48,7 +48,7 @@ function goToStep(stepNumber) {
     // Show target step
     document.getElementById('step-' + stepNumber).classList.add('active-step');
     
-    // Update top progress bar
+    // Update progress
     document.querySelectorAll('.step').forEach(s => {
         if(parseInt(s.dataset.step) <= stepNumber) {
             s.classList.add('active');
@@ -57,7 +57,7 @@ function goToStep(stepNumber) {
         }
     });
 
-    // Scroll to top of card for better UX
+    // Reset scroll to top of card
     document.querySelector('.wizard-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -66,7 +66,7 @@ function validateAndSend() {
     const payment = document.getElementById('paymentMethod').value;
 
     if (!name) {
-        alert("Please enter your name to finalize the order.");
+        alert("Please enter your Full Name.");
         document.getElementById('clientName').focus();
         return false;
     }
@@ -84,5 +84,5 @@ function validateAndSend() {
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     
     window.location.href = url;
-    return false; // Prevent default link behavior
+    return false;
 }

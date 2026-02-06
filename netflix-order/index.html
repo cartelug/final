@@ -7,10 +7,12 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link rel="stylesheet" href="../style.css?v=7.0"> <link rel="stylesheet" href="style.css?v=9.0">   </head>
+    <link rel="stylesheet" href="../style.css?v=7.0">
+    <link rel="stylesheet" href="style.css?v=10.0">
+</head>
 <body>
 
     <div class="theater-bg">
@@ -23,7 +25,7 @@
             <a href="../index.html" class="logo-wrapper">
                 <img src="../logo.png" alt="AccessUG" class="brand-logo">
             </a>
-            <a href="../index.html" class="nav-item back-link"><i class="fas fa-arrow-left"></i> Back Home</a>
+            <a href="../index.html" class="nav-item back-link"><i class="fas fa-arrow-left"></i> Back</a>
         </div>
     </nav>
 
@@ -40,61 +42,76 @@
             
             <div class="wizard-step active-step" id="step-1">
                 <div class="step-header">
-                    <h2>Select Your <span class="highlight-red">Duration</span></h2>
-                    <p>Limited Time Offers. Save up to 50% today.</p>
+                    <h2>Choose Your <span class="highlight-red">Access</span></h2>
+                    <p>Unlock the full cinema experience. Best value first.</p>
                 </div>
 
                 <div class="plan-grid">
-                    <div class="plan-card" onclick="selectPlan(this, '6 Months', '150,000', '40')">
-                        <div class="tag">Popular</div>
-                        <h3>6 Months Access</h3>
-                        <div class="pricing-row">
-                            <span class="slashed-price">300K</span>
-                            <span class="real-price">150K <small>UGX</small></span>
+                    
+                    <div class="plan-card featured-plan" onclick="selectPlan(this, '1 Year', '250,000', '65')">
+                        <div class="tag vip">Ultimate Value</div>
+                        <div class="card-content">
+                            <div class="plan-header">
+                                <h3>1 Year <span class="badge-pro">PRO</span></h3>
+                                <div class="price-lockup">
+                                    <span class="old-price">500K</span>
+                                    <span class="new-price">250K</span>
+                                    <span class="currency">UGX</span>
+                                </div>
+                            </div>
+                            
+                            <div class="feature-row">
+                                <div class="f-badge gold"><i class="fas fa-crown"></i> <span>4K HDR</span></div>
+                                <div class="f-badge"><i class="fas fa-mobile-alt"></i> <span>2+ Devices</span></div>
+                                <div class="f-badge"><i class="fas fa-download"></i> <span>Downloads</span></div>
+                                <div class="f-badge"><i class="fas fa-headset"></i> <span>24/7 Support</span></div>
+                            </div>
                         </div>
-                        <div class="usd-hint">≈ $40 USD</div>
-                        <ul class="features">
-                            <li><i class="fas fa-check"></i> 4K Ultra HD Quality</li>
-                            <li><i class="fas fa-check"></i> 2 Devices Active</li>
-                            <li><i class="fas fa-check"></i> Downloads on Mobile</li>
-                            <li><i class="fas fa-check"></i> 24/7 Customer Support</li>
-                        </ul>
-                        <div class="radio-circle"></div>
+                        <div class="selection-ring"></div>
                     </div>
 
                     <div class="plan-card" onclick="selectPlan(this, '9 Months', '200,000', '53')">
-                        <div class="tag gold">Best Value</div>
-                        <h3>9 Months Access</h3>
-                        <div class="pricing-row">
-                            <span class="slashed-price">400K</span>
-                            <span class="real-price">200K <small>UGX</small></span>
+                        <div class="tag gold">Best Seller</div>
+                        <div class="card-content">
+                            <div class="plan-header">
+                                <h3>9 Months Access</h3>
+                                <div class="price-lockup">
+                                    <span class="old-price">400K</span>
+                                    <span class="new-price">200K</span>
+                                    <span class="currency">UGX</span>
+                                </div>
+                            </div>
+
+                            <div class="feature-row">
+                                <div class="f-badge"><i class="fas fa-tv"></i> <span>4K HDR</span></div>
+                                <div class="f-badge"><i class="fas fa-mobile-alt"></i> <span>2+ Devices</span></div>
+                                <div class="f-badge"><i class="fas fa-download"></i> <span>Downloads</span></div>
+                            </div>
                         </div>
-                        <div class="usd-hint">≈ $53 USD</div>
-                        <ul class="features">
-                            <li><i class="fas fa-check"></i> 4K Ultra HD Quality</li>
-                            <li><i class="fas fa-check"></i> 2 Devices Active</li>
-                            <li><i class="fas fa-check"></i> Downloads on Mobile</li>
-                            <li><i class="fas fa-check"></i> 24/7 Customer Support</li>
-                        </ul>
-                        <div class="radio-circle"></div>
+                        <div class="selection-ring"></div>
                     </div>
 
-                    <div class="plan-card" onclick="selectPlan(this, '1 Year', '250,000', '65')">
-                        <div class="tag">VIP</div>
-                        <h3>1 Year Access</h3>
-                        <div class="pricing-row">
-                            <span class="slashed-price">500K</span>
-                            <span class="real-price">250K <small>UGX</small></span>
+                    <div class="plan-card" onclick="selectPlan(this, '6 Months', '150,000', '40')">
+                        <div class="tag">Starter</div>
+                        <div class="card-content">
+                            <div class="plan-header">
+                                <h3>6 Months Access</h3>
+                                <div class="price-lockup">
+                                    <span class="old-price">300K</span>
+                                    <span class="new-price">150K</span>
+                                    <span class="currency">UGX</span>
+                                </div>
+                            </div>
+
+                            <div class="feature-row">
+                                <div class="f-badge"><i class="fas fa-tv"></i> <span>4K HDR</span></div>
+                                <div class="f-badge"><i class="fas fa-mobile-alt"></i> <span>2+ Devices</span></div>
+                                <div class="f-badge"><i class="fas fa-download"></i> <span>Downloads</span></div>
+                            </div>
                         </div>
-                        <div class="usd-hint">≈ $65 USD</div>
-                        <ul class="features">
-                            <li><i class="fas fa-check"></i> 4K Ultra HD Quality</li>
-                            <li><i class="fas fa-check"></i> 2 Devices Active</li>
-                            <li><i class="fas fa-check"></i> Downloads on Mobile</li>
-                            <li><i class="fas fa-check"></i> 24/7 Customer Support</li>
-                        </ul>
-                        <div class="radio-circle"></div>
+                        <div class="selection-ring"></div>
                     </div>
+
                 </div>
 
                 <div id="scroll-target-1"></div>
@@ -105,16 +122,16 @@
 
             <div class="wizard-step" id="step-2">
                 <div class="step-header">
-                    <h2>Wait! Unlock <span class="highlight-gold">Free Gifts</span></h2>
-                    <p>Tap to reveal your exclusive bonuses included with this order.</p>
+                    <h2>Your <span class="highlight-gold">Free Gifts</span></h2>
+                    <p>Included with your premium order today.</p>
                 </div>
 
                 <div class="bonus-box">
                     <div class="bonus-item locked" id="bonus-1" onclick="unlockBonus(1)">
                         <div class="icon-box"><i class="fab fa-amazon"></i></div>
                         <div class="bonus-info">
-                            <h4>Prime Video Premium</h4>
-                            <p>6 Months Subscription (Free)</p>
+                            <h4>Prime Video</h4>
+                            <p>6 Months Free</p>
                             <span class="status">Tap to Unlock</span>
                         </div>
                     </div>
@@ -123,25 +140,21 @@
                         <div class="icon-box green"><i class="fab fa-spotify"></i></div>
                         <div class="bonus-info">
                             <h4>Spotify Premium</h4>
-                            <p>1 Month Subscription (Free)</p>
+                            <p>1 Month Free</p>
                             <span class="status">Tap to Unlock</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="info-note">
-                    <i class="fas fa-gift"></i> These accounts are sent instantly to your WhatsApp.
-                </div>
-
                 <button class="btn primary-red disabled" id="btn-step-2" onclick="goToStep(3)">
-                    Continue with Gifts <i class="fas fa-check"></i>
+                    Claim Gifts & Continue <i class="fas fa-check"></i>
                 </button>
             </div>
 
             <div class="wizard-step" id="step-3">
                 <div class="step-header">
-                    <h2>Verified by <span class="highlight-red">500+ Users</span></h2>
-                    <p>Don't just take our word for it. See the proof.</p>
+                    <h2>Trusted <span class="highlight-red">Source</span></h2>
+                    <p>Verified by 500+ happy clients in East Africa.</p>
                 </div>
 
                 <div class="proof-viewer">
@@ -150,63 +163,57 @@
                         <img src="../netrust2.png" alt="Proof 2" class="proof-img">
                         <img src="../netrust3.png" alt="Proof 3" class="proof-img">
                     </div>
-                    <div class="scroll-hint"><i class="fas fa-hand-pointer"></i> Swipe to verify</div>
-                </div>
-
-                <div class="trust-badges-row">
-                    <span><i class="fas fa-shield-alt"></i> 100% Money Back</span>
-                    <span><i class="fab fa-whatsapp"></i> Active Support Group</span>
+                    <div class="scroll-hint"><i class="fas fa-hand-pointer"></i> Swipe to inspect</div>
                 </div>
 
                 <button class="btn primary-red" onclick="goToStep(4)">
-                    I Trust AccessUG. Proceed. <i class="fas fa-arrow-right"></i>
+                    I Trust AccessUG. Next. <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
 
             <div class="wizard-step" id="step-4">
                 <div class="step-header">
                     <h2>Finalize <span class="highlight-red">Order</span></h2>
-                    <p>Enter your details to generate your order link.</p>
+                    <p>Review and generate your secure order link.</p>
                 </div>
 
                 <div class="policy-alert">
-                    <div class="alert-icon"><i class="fas fa-lock"></i></div>
+                    <div class="alert-icon"><i class="fas fa-shield-check"></i></div>
                     <div class="alert-text">
-                        <strong>Connect First Policy</strong>
-                        <p>You will be connected to the service <u>before</u> you make any payments. That is our guarantee.</p>
+                        <strong>Connect First Guarantee</strong>
+                        <p>We connect your account <u>before</u> you pay. Zero risk.</p>
                     </div>
                 </div>
 
                 <div class="input-group">
-                    <label>Your Name</label>
-                    <input type="text" id="clientName" placeholder="e.g. John Doe">
+                    <label>Full Name</label>
+                    <input type="text" id="clientName" placeholder="e.g. John Okello">
                 </div>
 
                 <div class="input-group">
-                    <label>Preferred Payment Method</label>
+                    <label>Payment Method</label>
                     <select id="paymentMethod">
                         <option value="MTN Mobile Money">MTN Mobile Money</option>
                         <option value="Airtel Money">Airtel Money</option>
-                        <option value="Chipper Cash">Chipper Cash</option>
-                        <option value="Cash in Office">Cash (Juba/Kampala)</option>
+                        <option value="Cash in Office">Cash (MEET AGENT, *JUBA*) </option>
                     </select>
                 </div>
 
                 <div class="order-summary">
                     <div class="summary-row total">
-                        <span>Total To Pay</span>
+                        <span>Total Price</span>
                         <span class="val highlight-red" id="sum-total">...</span>
                     </div>
                 </div>
 
                 <a href="#" id="whatsapp-btn" class="btn whatsapp-green-btn" onclick="return validateAndSend()">
-                    <i class="fab fa-whatsapp"></i> Confirm Order on WhatsApp
+                    <i class="fab fa-whatsapp"></i> Confirm on WhatsApp
                 </a>
             </div>
 
         </div>
     </main>
 
-    <script src="script.js?v=9.0"></script>
+    <script src="script.js?v=10.0"></script>
 </body>
 </html>
