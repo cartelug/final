@@ -10,14 +10,17 @@ function selectPlan(cardElement, planName, price, usd) {
     currentPlan = { name: planName, price: price, usd: usd };
 
     // 3. Update Summary
-    document.getElementById('sum-plan').textContent = planName;
-    document.getElementById('sum-price').textContent = price + " UGX";
     document.getElementById('sum-total').textContent = price + " UGX";
 
     // 4. Enable button
     const btn = document.getElementById('btn-step-1');
     btn.classList.remove('disabled');
     btn.innerHTML = `Continue with ${planName} <i class="fas fa-arrow-right"></i>`;
+
+    // 5. SMART AUTO-SCROLL
+    setTimeout(() => {
+        btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
 }
 
 function unlockBonus(id) {
@@ -27,13 +30,11 @@ function unlockBonus(id) {
     el.classList.remove('locked');
     el.classList.add('unlocked');
     
-    // Change status text
     const statusSpan = el.querySelector('.status');
     statusSpan.textContent = "UNLOCKED!";
     
     unlockedGifts++;
 
-    // Check if all unlocked
     if(unlockedGifts >= 2) {
         const btn = document.getElementById('btn-step-2');
         btn.classList.remove('disabled');
@@ -56,16 +57,32 @@ function goToStep(stepNumber) {
         }
     });
 
-    // If final step, generate WhatsApp Link
-    if(stepNumber === 4 && currentPlan) {
-        generateWhatsAppLink();
-    }
+    // Scroll to top of card for better UX
+    document.querySelector('.wizard-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function generateWhatsAppLink() {
+function validateAndSend() {
+    const name = document.getElementById('clientName').value.trim();
+    const payment = document.getElementById('paymentMethod').value;
+
+    if (!name) {
+        alert("Please enter your name to finalize the order.");
+        document.getElementById('clientName').focus();
+        return false;
+    }
+
+    // GENERATE EXACT WHATSAPP MESSAGE FORMAT
     const phone = "256762193386";
-    const text = `Hello AccessUG! I want to order the *Netflix ${currentPlan.name}* plan for ${currentPlan.price} UGX. I understand it comes with Free Prime Video and Spotify. Please send payment details.`;
     
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
-    document.getElementById('whatsapp-btn').href = url;
+    let message = `Order for Cartelug:\n\n`;
+    message += `*Service:* Netflix Premium\n`;
+    message += `*Package:* ${currentPlan.name}\n`;
+    message += `*Price:* ${currentPlan.price} UGX\n`;
+    message += `*Name:* ${name}\n`;
+    message += `*Payment Method:* ${payment}`;
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    
+    window.location.href = url;
+    return false; // Prevent default link behavior
 }
