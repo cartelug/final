@@ -3,198 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AccessUG | Premium Digital Ecosystem</title>
-    <meta name="description" content="The #1 Digital Store in East Africa. Netflix, Spotify, CapCut & Viral Growth.">
+    <title>AccessUG | Digital Freedom Delivered</title>
+    <meta name="description" content="The #1 Digital Store in Uganda. Netflix, Spotify, Viral Growth & More. Instant Delivery via Mobile Money.">
     <link rel="icon" href="logo.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link rel="stylesheet" href="style.css?v=7.0"> 
+    <link rel="stylesheet" href="style.css?v=20.0"> 
 </head>
 <body>
 
-    <div class="nebula-bg">
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="gradient-orb orb-3"></div>
-        <div class="noise-texture"></div>
+    <div class="nebula-canvas">
+        <div class="nebula-orb orb-1"></div>
+        <div class="nebula-orb orb-2"></div>
+        <div class="nebula-orb orb-3"></div>
+        <div class="grid-mesh"></div>
     </div>
 
-    <nav class="navbar">
-        <div class="container nav-content">
-            <a href="index.html" class="logo-wrapper">
-                <img src="logo.png" alt="AccessUG" class="brand-logo">
+    <nav class="navbar glass-nav">
+        <div class="container nav-flex">
+            <a href="#" class="brand-logo">
+                <img src="logo.png" alt="AccessUG">
             </a>
             
-            <div class="nav-links desktop-only">
-                <a href="#services" class="nav-item">Catalog</a>
-                <a href="trust/" class="nav-item">Reviews</a>
-                <a href="contact/" class="nav-item">Support</a>
+            <div class="nav-menu desktop-only">
+                <a href="#services" class="nav-link">Catalog</a>
+                <a href="#how-it-works" class="nav-link">Process</a>
+                <a href="trust/" class="nav-link">Reviews</a>
+                <a href="contact/" class="nav-link">Support</a>
             </div>
 
             <div class="nav-actions">
-                <a href="#services" class="action-btn">Get Started</a>
-                <button class="menu-btn mobile-only" id="mobile-menu-open">
-                    <i class="fas fa-bars"></i>
+                <a href="#services" class="cta-pill">Get Started</a>
+                <button class="menu-trigger mobile-only" id="mobile-menu-btn">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                    </div>
                 </button>
             </div>
         </div>
     </nav>
 
-    <div class="mobile-menu-overlay" id="mobile-menu-overlay">
-        <div class="mobile-menu-panel">
-            <button class="close-btn" id="mobile-menu-close"><i class="fas fa-times"></i></button>
-            <div class="mobile-links">
-                <a href="index.html" class="active">Home</a>
-                <a href="#services">Catalog</a>
-                <a href="trust/">Reviews</a>
-                <a href="contact/">Support</a>
+    <div class="mobile-menu-overlay">
+        <div class="mobile-menu-inner">
+            <a href="#services" class="mm-link">Catalog</a>
+            <a href="trust/" class="mm-link">Reviews</a>
+            <a href="contact/" class="mm-link">Support</a>
+            <div class="mm-socials">
+                <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.instagram.com/theaccessug"><i class="fab fa-instagram"></i></a>
             </div>
         </div>
     </div>
 
     <main>
-        <section class="hero-section">
+        <section class="hero">
             <div class="container hero-grid">
-                <div class="hero-text">
-                    <div class="status-badge">
-                        <span class="pulsing-dot"></span> #1 In East Africa
+                <div class="hero-content">
+                    <div class="status-pill fade-in-up">
+                        <span class="live-dot"></span> #1 Premium Store in East Africa
                     </div>
-                    <h1 class="mega-title">
-                        Digital Access.<br>
-                        <span class="text-gradient">Redefined.</span>
+                    <h1 class="hero-title fade-in-up delay-1">
+                        Digital Freedom.<br>
+                        <span class="gradient-text">Delivered Instantly.</span>
                     </h1>
-                    <p class="hero-desc">
-                        Upgrade your lifestyle instantly. Join 10,000+ users enjoying Premium Netflix, Spotify, and Viral Growth.
+                    <p class="hero-desc fade-in-up delay-2">
+                        Join 10,000+ members upgrading their lifestyle. 4K Streaming, Ad-Free Music, and Viral Growth at unbeatable prices.
                     </p>
-                    <div class="hero-buttons">
-                        <a href="#services" class="btn primary-glow">
-                            Explore Catalog <i class="fas fa-arrow-right"></i>
+                    <div class="hero-btns fade-in-up delay-3">
+                        <a href="#services" class="btn btn-primary glow-hover">
+                            Start Upgrading <i class="fas fa-arrow-right"></i>
                         </a>
-                        <a href="trust/" class="btn glass-btn">
-                            <span class="star-icon">★</span> Trusted by Thousands
+                        <a href="trust/" class="btn btn-glass">
+                            <i class="fas fa-shield-alt"></i> Verified Trust
                         </a>
                     </div>
+                </div>
+                
+                <div class="hero-visual fade-in-up delay-2">
+                    <div class="floating-card c1"><img src="netflix.png" alt="N"></div>
+                    <div class="floating-card c2"><img src="spotify.png" alt="S"></div>
+                    <div class="floating-card c3"><img src="instagram.png" alt="IG"></div>
+                    <div class="glow-center"></div>
                 </div>
             </div>
         </section>
 
-        <section id="services" class="catalog-section">
+        <section id="services" class="section-padding">
             <div class="container">
                 <div class="section-header">
-                    <h2>Premium <span class="highlight">Collection</span></h2>
-                    <p>Select a service to upgrade instantly.</p>
+                    <h2>Select Your <span class="highlight">Upgrade</span></h2>
+                    <p>Tap a card to configure your package.</p>
                 </div>
 
-                <div class="holo-grid">
+                <div class="bento-grid">
                     
-                    <a href="netflix-order/" class="holo-card netflix-theme">
-                        <div class="card-glow"></div>
-                        <div class="card-body">
-                            <div class="brand-header">
-                                <img src="netflix.png" alt="Netflix" class="brand-img" loading="lazy">
-                                <span class="tag">4K HDR</span>
+                    <a href="netflix-order/" class="bento-card flagship-card tilt-effect" style="--theme: #E50914;">
+                        <div class="card-bg-glow"></div>
+                        <div class="card-content">
+                            <div class="card-top">
+                                <img src="netflix.png" alt="Netflix" class="brand-icon">
+                                <span class="badge">BEST SELLER</span>
                             </div>
-                            <div class="card-info">
+                            <div class="card-bottom">
                                 <h3>Netflix Premium</h3>
-                                <p>Private profiles & shared accounts. Instant delivery.</p>
-                            </div>
-                            <div class="card-footer">
-                                <span>Get Access</span>
-                                <i class="fas fa-chevron-right"></i>
+                                <p>4K UHD • Private & Shared Profiles.</p>
+                                <span class="link-arrow">Configure <i class="fas fa-chevron-right"></i></span>
                             </div>
                         </div>
                     </a>
 
-                    <a href="boost-package/" class="holo-card boost-theme">
-                        <div class="card-glow"></div>
-                        <div class="card-body">
-                            <div class="brand-header dual-brand">
-                                <img src="instagram.png" alt="IG" class="brand-img mini" loading="lazy">
-                                <span class="divider">+</span>
-                                <img src="tiktok.png" alt="TikTok" class="brand-img mini" loading="lazy">
+                    <a href="boost-package/" class="bento-card wide-card tilt-effect" style="--theme: #FF0050;">
+                        <div class="card-bg-glow"></div>
+                        <div class="card-content horizontal">
+                            <div class="dual-icons">
+                                <img src="instagram.png" alt="IG">
+                                <span class="divider">/</span>
+                                <img src="tiktok.png" alt="TT">
                             </div>
-                            <div class="card-info">
-                                <h3>Viral Boost Pack</h3>
-                                <p>Dominate the algorithm. Real followers, likes & views.</p>
+                            <div class="text-group">
+                                <h3>Viral Boost Package</h3>
+                                <p>Real Followers, Likes & Views.</p>
                             </div>
-                            <div class="card-footer">
-                                <span>Go Viral</span>
-                                <i class="fas fa-bolt"></i>
-                            </div>
-                        </div>
-                    </a>
-
-                    <a href="spotify-order/" class="holo-card spotify-theme">
-                        <div class="card-glow"></div>
-                        <div class="card-body">
-                            <div class="brand-header">
-                                <img src="spotify.png" alt="Spotify" class="brand-img" loading="lazy">
-                            </div>
-                            <div class="card-info">
-                                <h3>Spotify Premium</h3>
-                                <p>Ad-free listening. Offline downloads enabled.</p>
-                            </div>
-                            <div class="card-footer">
-                                <span>Upgrade</span>
-                                <i class="fas fa-music"></i>
+                            <div class="live-counter">
+                                <span class="count-up">10k+</span>
+                                <small>Active</small>
                             </div>
                         </div>
                     </a>
 
-                    <a href="prime-order/" class="holo-card prime-theme">
-                        <div class="card-glow"></div>
-                        <div class="card-body">
-                            <div class="brand-header">
-                                <img src="prime-video.png" alt="Prime" class="brand-img" loading="lazy">
-                            </div>
-                            <div class="card-info">
-                                <h3>Prime Video</h3>
-                                <p>Watch exclusive movies, series & originals.</p>
-                            </div>
-                            <div class="card-footer">
-                                <span>Watch Now</span>
-                                <i class="fas fa-play"></i>
-                            </div>
+                    <a href="spotify-order/" class="bento-card standard-card tilt-effect" style="--theme: #1DB954;">
+                        <div class="card-content">
+                            <img src="spotify.png" alt="Spotify" class="brand-icon-sm">
+                            <h3>Spotify Premium</h3>
+                            <p>Ad-Free Music.</p>
                         </div>
                     </a>
 
-                    <a href="capcut-order/" class="holo-card capcut-theme">
-                        <div class="card-glow"></div>
-                        <div class="card-body">
-                            <div class="brand-header">
-                                <div class="smart-logo capcut-style">
-                                    <i class="fas fa-cut"></i> CapCut
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <h3>CapCut Pro</h3>
-                                <p>Unlock professional video editing features & effects.</p>
-                            </div>
-                            <div class="card-footer">
-                                <span>Edit Like A Pro</span>
-                                <i class="fas fa-wand-magic-sparkles"></i>
-                            </div>
+                    <a href="prime-order/" class="bento-card standard-card tilt-effect" style="--theme: #00A8E1;">
+                        <div class="card-content">
+                            <img src="prime-video.png" alt="Prime" class="brand-icon-sm">
+                            <h3>Prime Video</h3>
+                            <p>Exclusive Shows.</p>
                         </div>
                     </a>
 
-                    <a href="canva-order/" class="holo-card canva-theme">
-                        <div class="card-glow"></div>
-                        <div class="card-body">
-                            <div class="brand-header">
-                                <div class="smart-logo canva-style">Canva</div>
-                            </div>
-                            <div class="card-info">
-                                <h3>Canva Pro</h3>
-                                <p>Access premium templates, AI tools & assets.</p>
-                            </div>
-                            <div class="card-footer">
-                                <span>Design Now</span>
-                                <i class="fas fa-palette"></i>
-                            </div>
+                    <a href="capcut-order/" class="bento-card standard-card tilt-effect locked" style="--theme: #fff;">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fas fa-cut"></i></div>
+                            <h3>CapCut Pro</h3>
+                            <span class="status-tag">COMING SOON</span>
+                        </div>
+                    </a>
+
+                    <a href="canva-order/" class="bento-card standard-card tilt-effect locked" style="--theme: #00C4CC;">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fas fa-palette"></i></div>
+                            <h3>Canva Pro</h3>
+                            <span class="status-tag">COMING SOON</span>
+                        </div>
+                    </a>
+
+                    <a href="appletv-order/" class="bento-card standard-card tilt-effect locked" style="--theme: #ccc;">
+                        <div class="card-content">
+                            <div class="icon-box"><i class="fab fa-apple"></i></div>
+                            <h3>Apple TV+</h3>
+                            <span class="status-tag">COMING SOON</span>
                         </div>
                     </a>
 
@@ -202,27 +180,171 @@
             </div>
         </section>
 
-        <section class="trust-footer">
+        <section id="how-it-works" class="section-padding">
             <div class="container">
-                <div class="payment-row">
-                    <span>Secure Payments via:</span>
-                    <div class="payment-icons">
-                        <img src="mtn.png" alt="MTN" loading="lazy">
-                        <img src="airtel.png" alt="Airtel" loading="lazy">
+                <div class="timeline-wrapper">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="timeline-step">
+                        <div class="step-icon"><i class="fas fa-mouse-pointer"></i></div>
+                        <h3>1. Select</h3>
+                        <p>Choose your preferred digital service plan.</p>
                     </div>
-                </div>
-                <div class="footer-bottom">
-                    <div class="legal-links">
-                        <a href="terms-of-service/">Terms</a>
-                        <a href="privacy-policy/">Privacy</a>
-                        <a href="contact/">Support</a>
+
+                    <div class="timeline-step">
+                        <div class="step-icon"><i class="fas fa-bolt"></i></div>
+                        <h3>2. Activate</h3>
+                        <p>We connect you instantly via WhatsApp.</p>
                     </div>
-                    <p>&copy; 2025 AccessUG. Designed for Excellence.</p>
+
+                    <div class="timeline-step">
+                        <div class="step-icon"><i class="fas fa-crown"></i></div>
+                        <h3>3. Dominate</h3>
+                        <p>Enjoy premium access without limits.</p>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="comparison-table glass-panel">
+                    <div class="col features-col">
+                        <div class="th">Feature</div>
+                        <div class="td">Delivery Speed</div>
+                        <div class="td">Payment Trust</div>
+                        <div class="td">Support</div>
+                        <div class="td">Warranty</div>
+                    </div>
+                    <div class="col accessug-col">
+                        <div class="th brand">AccessUG</div>
+                        <div class="td highlight">Instant ⚡</div>
+                        <div class="td highlight">Verified ✅</div>
+                        <div class="td highlight">Daily Chat 💬</div>
+                        <div class="td highlight">Full Term 🔒</div>
+                    </div>
+                    <div class="col others-col">
+                        <div class="th">Others</div>
+                        <div class="td dimmed">24-48 Hours</div>
+                        <div class="td dimmed">Risky ❌</div>
+                        <div class="td dimmed">Ghosting 👻</div>
+                        <div class="td dimmed">No Refund</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Real <span class="highlight">Receipts</span></h2>
+                    <p>Don't just take our word for it.</p>
+                </div>
+                
+                <div class="marquee-wrapper">
+                    <div class="marquee-content">
+                        <div class="proof-card"><img src="1.png" alt="Proof"></div>
+                        <div class="proof-card"><img src="2.png" alt="Proof"></div>
+                        <div class="proof-card"><img src="3.png" alt="Proof"></div>
+                        <div class="proof-card"><img src="4.png" alt="Proof"></div>
+                        <div class="proof-card"><img src="5.png" alt="Proof"></div>
+                        <div class="proof-card"><img src="1.png" alt="Proof"></div>
+                        <div class="proof-card"><img src="2.png" alt="Proof"></div>
+                        <div class="proof-card"><img src="3.png" alt="Proof"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-padding">
+            <div class="container faq-container">
+                <h2>Common Questions</h2>
+                <div class="faq-grid">
+                    <div class="faq-item">
+                        <div class="faq-question">How do I pay? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">We accept MTN Mobile Money and Airtel Money directly. No credit card needed.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Is this legal? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">Yes. We organize family plans and corporate accounts to give you legitimate access at a lower cost.</div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What if it stops working? <i class="fas fa-chevron-down"></i></div>
+                        <div class="faq-answer">We offer a full warranty. If you have issues, our 24/7 support fixes it instantly or refunds you.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="connect-section">
+            <div class="container">
+                <div class="connect-box glass-panel">
+                    <div class="connect-content">
+                        <h2>Join The <span class="text-gradient">Cartel</span></h2>
+                        <p>Be part of the fastest growing digital community in Uganda.</p>
+                        
+                        <div class="social-orbit">
+                            <a href="https://www.instagram.com/theaccessug" target="_blank" class="orbit-btn instagram">
+                                <i class="fab fa-instagram"></i> @theaccessug
+                            </a>
+                            <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" target="_blank" class="orbit-btn whatsapp">
+                                <i class="fab fa-whatsapp"></i> Join Group
+                            </a>
+                            <a href="https://www.facebook.com/share/1L1HfybCym/" target="_blank" class="orbit-btn facebook">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="gateway-cta">
+            <div class="container">
+                <h2>Ready to Upgrade?</h2>
+                <a href="#services" class="btn btn-primary pulse-btn">Get Started Now</a>
+            </div>
+        </section>
+
     </main>
 
-    <script src="script.js?v=7.0"></script>
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="logo.png" alt="AccessUG">
+                    <p>The #1 Digital Plug in East Africa.<br>Fast. Secure. Premium.</p>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <a href="contact/">About Us</a>
+                    <a href="trust/">Reviews</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <a href="privacy-policy/">Privacy Policy</a>
+                    <a href="terms-of-service/">Terms of Service</a>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Support</h4>
+                    <a href="contact/">Help Center</a>
+                    <a href="https://wa.me/256762193386">Chat: +256 762 193 386</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 AccessUG. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/256762193386" class="floating-wa">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script src="script.js?v=20.0"></script>
 </body>
 </html>
