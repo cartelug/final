@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. MAGNETIC BUTTONS
+    // 1. MAGNETIC BUTTONS (Mouse follows cursor slightly)
     const buttons = document.querySelectorAll('.nav-btn-glow, .btn-primary-3d');
     
     buttons.forEach(btn => {
@@ -39,42 +39,49 @@ document.addEventListener('DOMContentLoaded', () => {
     const portalSection = document.querySelector('.connect-portal');
     const megaCards = document.querySelectorAll('.social-mega-card');
     
-    window.addEventListener('scroll', () => {
-        const sectionTop = portalSection.getBoundingClientRect().top;
-        const screenHeight = window.innerHeight;
-        
-        if (sectionTop < screenHeight) {
-            // Calculate progress (0 to 1)
-            const progress = 1 - (sectionTop / screenHeight);
+    if(portalSection) {
+        window.addEventListener('scroll', () => {
+            const sectionTop = portalSection.getBoundingClientRect().top;
+            const screenHeight = window.innerHeight;
             
-            megaCards.forEach((card, index) => {
-                const direction = index === 0 ? -1 : 1; 
-                const moveAmount = Math.max(0, (100 - (progress * 100)));
-                card.style.transform = `translateX(${moveAmount * direction}px)`;
-                card.style.opacity = Math.min(1, progress * 2);
-            });
-        }
-    });
+            if (sectionTop < screenHeight) {
+                // Calculate progress (0 to 1)
+                const progress = 1 - (sectionTop / screenHeight);
+                
+                megaCards.forEach((card, index) => {
+                    const direction = index === 0 ? -1 : 1; // Left vs Right
+                    // Move cards inward as you scroll
+                    const moveAmount = Math.max(0, (100 - (progress * 100)));
+                    card.style.transform = `translateX(${moveAmount * direction}px)`;
+                    card.style.opacity = Math.min(1, progress * 2);
+                });
+            }
+        });
+    }
 
-    // 4. PROFESSIONAL MOBILE MENU
+    // 4. MOBILE MENU
     const mobileBtn = document.querySelector('.mobile-toggle');
     const mobileMenu = document.querySelector('.mobile-menu-overlay');
     const closeBtn = document.querySelector('.mm-close');
-    const menuLinks = document.querySelectorAll('.mm-link');
+    const menuLinks = document.querySelectorAll('.mm-content a');
 
     if(mobileBtn) {
         mobileBtn.addEventListener('click', () => {
             mobileMenu.style.display = 'flex';
-            // Slight delay to allow display:flex to apply before opacity transition
+            document.body.style.overflow = 'hidden'; // Lock Scroll
             setTimeout(() => mobileMenu.style.opacity = '1', 10);
         });
         
         const closeMenu = () => {
             mobileMenu.style.opacity = '0';
+            document.body.style.overflow = ''; // Unlock Scroll
             setTimeout(() => mobileMenu.style.display = 'none', 300);
-        };
+        }
 
         closeBtn.addEventListener('click', closeMenu);
-        menuLinks.forEach(link => link.addEventListener('click', closeMenu));
+        
+        menuLinks.forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
     }
 });
