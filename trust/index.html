@@ -7,77 +7,78 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link rel="stylesheet" href="../style.css"> 
-    <link rel="stylesheet" href="style.css">   
+    <link rel="stylesheet" href="../style.css?v=7.0"> 
+    <link rel="stylesheet" href="style.css?v=7.0">   
 </head>
 <body>
 
-    <div class="mesh-background">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
+    <div class="nebula-bg">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="noise-texture"></div>
     </div>
 
-    <header class="main-header glass">
-        <div class="container header-flex">
-            <a href="../index.html" class="logo-link">
-                <img src="../logo.png" alt="AccessUG" id="logo">
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="../index.html" class="logo-wrapper">
+                <img src="../logo.png" alt="AccessUG" class="brand-logo">
             </a>
-            <nav id="desktop-nav">
-                <ul>
-                    <li><a href="../index.html">Home</a></li>
-                    <li><a href="../index.html#services">Services</a></li>
-                    <li><a href="#" class="active">Trust Center</a></li>
-                </ul>
-            </nav>
-            <a href="../index.html#services" class="mobile-back-btn">Order Now <i class="fas fa-arrow-right"></i></a>
+            
+            <div class="nav-links desktop-only">
+                <a href="../index.html#services" class="nav-item">Catalog</a>
+                <a href="#" class="nav-item active">Trust Center</a>
+                <a href="../contact/" class="nav-item">Support</a>
+            </div>
+
+            <div class="nav-actions">
+                <a href="../index.html#services" class="action-btn">Order Now</a>
+            </div>
         </div>
-    </header>
+    </nav>
 
     <main class="trust-main">
         
         <section class="interactive-hero container">
-            <div class="status-pill"><i class="fas fa-lock"></i> VERIFIED SERVICE </div>
-            <h1>Let's Talk About <span class="text-alert">Scams.</span></h1>
-            <p class="hero-sub">We know you are careful with your money. You should be.</p>
+            <div class="status-badge"><i class="fas fa-lock"></i> VERIFIED SERVICE</div>
+            <h1 class="mega-title">Let's Talk About <span class="text-alert">Scams.</span></h1>
+            <p class="hero-desc">We know you are careful with your money. You should be. Here is the truth.</p>
 
-            <div class="truth-wizard glass">
+            <div class="truth-wizard">
                 
                 <div class="truth-card active" id="card-1">
                     <div class="icon-ring"><i class="fas fa-user-shield"></i></div>
                     <h3>"Is this real or a scam?"</h3>
                     <p>It's the first question everyone asks. The internet is full of fakes, so being careful is smart.</p>
-                    <button class="action-btn" onclick="nextCard(2)">See Proof <i class="fas fa-arrow-right"></i></button>
+                    <button class="btn glass-btn" onclick="nextCard(2)">See Proof <i class="fas fa-arrow-right"></i></button>
                 </div>
 
                 <div class="truth-card" id="card-2">
                     <div class="icon-ring"><i class="fas fa-ban"></i></div>
                     <h3>Scammers Hide. We Don't.</h3>
                     <p>Scammers block you after payment. We have a public WhatsApp group with members you can chat with daily.</p>
-                    <button class="action-btn" onclick="nextCard(3)">Okay, that's good <i class="fas fa-arrow-right"></i></button>
+                    <button class="btn glass-btn" onclick="nextCard(3)">Okay, that's good <i class="fas fa-arrow-right"></i></button>
                 </div>
 
                 <div class="truth-card" id="card-3">
                     <div class="icon-ring"><i class="fas fa-check-circle"></i></div>
                     <h3>The "Connect First" Promise</h3>
                     <p>We are so confident, we can connect your account <b>before</b> you fully commit. If it doesn't work, we don't want your money.</p>
-                    <button class="action-btn success-btn" onclick="revealProof()">I Understand. Show Me Proof. <i class="fas fa-eye"></i></button>
+                    <button class="btn primary-glow" onclick="revealProof()">I Understand. Show Me Proof. <i class="fas fa-eye"></i></button>
                 </div>
 
             </div>
         </section>
 
         <section id="proof-vault" class="proof-section container hidden-section">
-            <div class="sector-head">
-                <span class="sub-label">Verified Transactions</span>
-                <h2>Proof <span class="highlight">of</span> real ACCESSUG users. </h2>
-                <div class="divider-line"></div>
+            <div class="section-header">
+                <h2>Verified <span class="highlight">Transactions</span></h2>
+                <p>Real screenshots from real AccessUG users.</p>
             </div>
 
-            <div class="carousel-container glass">
+            <div class="carousel-container">
                 <button class="nav-btn prev-btn"><i class="fas fa-chevron-left"></i></button>
                 
                 <div class="carousel-track" id="track">
@@ -86,10 +87,7 @@
                     <div class="slide"><img src="trust3.png" alt="Client Proof 3"></div>
                     <div class="slide"><img src="trust4.png" alt="Client Proof 4"></div>
                     <div class="slide"><img src="trust5.png" alt="Client Proof 5"></div>
-                    
                     <div class="slide"><img src="boost1.png" alt="Boost Proof 1"></div>
-                    <div class="slide"><img src="boost2.png" alt="Boost Proof 2"></div>
-                    <div class="slide"><img src="boost3.png" alt="Boost Proof 3"></div>
                 </div>
 
                 <button class="nav-btn next-btn"><i class="fas fa-chevron-right"></i></button>
@@ -97,47 +95,38 @@
             </div>
 
             <div class="metrics-row">
-                <div class="metric glass">
+                <div class="metric">
                     <h3>2,100+</h3>
                     <p>Active Users</p>
                 </div>
-                <div class="metric glass">
+                <div class="metric">
                     <h3>4.9/5</h3>
                     <p>User Rating</p>
                 </div>
-                <div class="metric glass">
+                <div class="metric">
                     <h3>100%</h3>
                     <p>Refund Rate</p>
                 </div>
             </div>
         </section>
 
-        <section id="final-cta" class="final-close container hidden-section">
-            <div class="close-card glass">
+        <section id="final-cta" class="container hidden-section">
+            <div class="close-card">
                 <h2>You Have Seen The Truth.</h2>
                 <p>Now you have two choices: Continue paying full price, or join AccessUG.</p>
                 
-                <div class="action-buttons">
-                    <a href="../netflix-order/" class="btn-product netflix"><i class="fas fa-play"></i> Get Netflix</a>
-                    <a href="../instagram-boost/" class="btn-product insta"><i class="fab fa-instagram"></i> Boost IG</a>
-                    <a href="../index.html#services" class="btn-product outline-btn">
-                        <i class="fas fa-grid"></i> Explore All Services
-                    </a>
+                <div class="hero-buttons">
+                    <a href="../netflix-order/" class="btn primary-glow"><i class="fas fa-play"></i> Get Netflix</a>
+                    <a href="../boost-package/" class="btn glass-btn"><i class="fas fa-bolt"></i> Get Boost</a>
                 </div>
                 
                 <div class="support-link">
-                    <a href="https://wa.me/256762193386">Still unsure? Chat with us on WhatsApp <i class="fab fa-whatsapp"></i></a>
+                    <a href="https://wa.me/256762193386">Still unsure? Chat on WhatsApp <i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
         </section>
 
     </main>
-
-    <footer class="main-footer">
-        <div class="container">
-            <p>&copy; 2025 AccessUG. Secure & Verified.</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>

@@ -1,9 +1,17 @@
-/* === TRUST PAGE INTERACTIVE STYLES === */
+/* === TRUST PAGE NEBULA EDITION === */
 
 .trust-main {
-    padding-top: 100px;
+    padding-top: 120px;
     padding-bottom: 80px;
     min-height: 100vh;
+}
+
+/* --- LOGO FIX --- */
+/* This forces the logo to behave even if the main CSS misses it */
+.brand-logo, #logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
 }
 
 /* --- HERO & WIZARD --- */
@@ -11,30 +19,23 @@
     text-align: center;
     margin-bottom: 60px;
     max-width: 800px;
+    margin-left: auto; margin-right: auto;
 }
-.status-pill {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(0, 245, 122, 0.1); color: var(--primary);
-    padding: 6px 16px; border-radius: 50px;
-    font-size: 0.85rem; font-weight: 600;
-    margin-bottom: 20px; border: 1px solid rgba(0, 245, 122, 0.2);
+.text-alert { 
+    color: #ff4d4d; 
+    text-shadow: 0 0 30px rgba(255, 77, 77, 0.4);
 }
-.interactive-hero h1 {
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    line-height: 1.1; margin-bottom: 15px;
-}
-.text-alert { color: #ff4d4d; text-shadow: 0 0 20px rgba(255, 77, 77, 0.3); }
-.hero-sub { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 40px; }
 
-/* THE WIZARD BOX */
+/* THE WIZARD BOX (Holographic Style) */
 .truth-wizard {
     position: relative;
-    min-height: 350px;
+    min-height: 400px;
     border-radius: 24px;
-    background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(15, 15, 20, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
 }
 
 .truth-card {
@@ -48,62 +49,36 @@
 
 .truth-card.active {
     opacity: 1; transform: translateX(0) scale(1);
-    pointer-events: all;
-    z-index: 2;
+    pointer-events: all; z-index: 2;
 }
 .truth-card.completed {
-    opacity: 0; transform: translateX(-50px) scale(0.95);
-    z-index: 0;
+    opacity: 0; transform: translateX(-50px) scale(0.95); z-index: 0;
 }
 
 .icon-ring {
-    width: 70px; height: 70px; border-radius: 50%;
+    width: 80px; height: 80px; border-radius: 50%;
     background: rgba(255,255,255,0.05);
     display: flex; align-items: center; justify-content: center;
-    font-size: 2rem; color: #fff; margin-bottom: 20px;
+    font-size: 2.2rem; color: #fff; margin-bottom: 25px;
     box-shadow: 0 0 30px rgba(255,255,255,0.05);
 }
-.truth-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
-.truth-card p { color: var(--text-muted); margin-bottom: 30px; line-height: 1.6; max-width: 500px; }
-
-/* WIZARD BUTTONS */
-.action-btn {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
-    color: #fff; padding: 15px 30px; border-radius: 50px;
-    font-size: 1rem; font-weight: 600; cursor: pointer;
-    transition: 0.3s; display: flex; align-items: center; gap: 10px;
-}
-.action-btn:hover { background: #fff; color: #000; transform: translateY(-2px); }
-
-.success-btn {
-    background: var(--primary); color: #000; border: none;
-    box-shadow: 0 0 20px rgba(0, 245, 122, 0.4);
-}
-.success-btn:hover { background: #fff; }
+.truth-card h3 { font-size: 1.8rem; margin-bottom: 15px; font-family: 'Outfit', sans-serif; }
+.truth-card p { color: #9898A0; margin-bottom: 30px; line-height: 1.6; max-width: 500px; }
 
 /* --- REVEAL SECTION STYLES --- */
 .hidden-section {
     opacity: 0; visibility: hidden; height: 0; overflow: hidden;
-    transition: opacity 1s ease;
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(20px);
 }
 .section-visible {
-    opacity: 1; visibility: visible; height: auto; margin-top: 80px;
-}
-
-.sector-head { text-align: center; margin-bottom: 40px; }
-.sub-label { 
-    text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; 
-    color: var(--primary); margin-bottom: 10px; display: block;
-}
-.sector-head h2 { font-size: 2.5rem; margin-bottom: 15px; }
-.divider-line { 
-    width: 50px; height: 4px; background: var(--primary); 
-    margin: 0 auto; border-radius: 2px; 
+    opacity: 1; visibility: visible; height: auto; margin-top: 100px;
+    transform: translateY(0);
 }
 
 /* CAROUSEL */
 .carousel-container {
-    position: relative; max-width: 380px; margin: 0 auto;
+    position: relative; max-width: 400px; margin: 0 auto;
     padding: 15px; border-radius: 30px;
     background: #000; border: 1px solid rgba(255,255,255,0.15);
     box-shadow: 0 20px 60px rgba(0,0,0,0.6);
@@ -122,13 +97,12 @@
     background: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.2); color: #fff;
     font-size: 1.2rem; cursor: pointer; z-index: 10;
-    display: flex; align-items: center; justify-content: center;
-    transition: 0.3s;
+    transition: 0.3s; display: flex; align-items: center; justify-content: center;
 }
-.nav-btn:hover { background: var(--primary); color: #000; transform: translateY(-50%) scale(1.1); }
+.nav-btn:hover { background: #00F57A; color: #000; transform: translateY(-50%) scale(1.1); }
 .prev-btn { left: -70px; }
 .next-btn { right: -70px; }
-.swipe-hint { display: none; text-align: center; margin-top: 10px; color: var(--text-muted); font-size: 0.8rem; }
+.swipe-hint { display: none; text-align: center; margin-top: 15px; color: #9898A0; font-size: 0.8rem; }
 
 /* METRICS */
 .metrics-row {
@@ -136,47 +110,30 @@
     margin-top: 60px; flex-wrap: wrap;
 }
 .metric {
-    text-align: center; padding: 20px 40px; border-radius: 16px;
-    min-width: 150px; background: rgba(255,255,255,0.03);
+    text-align: center; padding: 25px 40px; border-radius: 20px;
+    min-width: 160px; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
 }
-.metric h3 { font-size: 2rem; color: #fff; margin-bottom: 5px; }
-.metric p { color: var(--text-muted); font-size: 0.9rem; margin: 0; }
+.metric h3 { font-size: 2.2rem; color: #fff; margin-bottom: 5px; font-weight: 800; }
+.metric p { color: #9898A0; font-size: 0.95rem; margin: 0; }
 
 /* --- FINAL CTA --- */
 .close-card {
     text-align: center; padding: 60px 20px;
-    background: rgba(255,255,255,0.02);
-    border: 1px solid rgba(255,255,255,0.05);
-    border-radius: 30px;
+    background: rgba(15, 15, 20, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 30px; margin-bottom: 60px;
 }
-.action-buttons {
-    display: flex; justify-content: center; gap: 15px; 
-    flex-wrap: wrap; margin-top: 30px; margin-bottom: 30px;
-}
-.btn-product {
-    padding: 14px 25px; border-radius: 50px;
-    text-decoration: none; font-weight: 600; color: #fff;
-    display: flex; align-items: center; gap: 8px;
-    transition: 0.3s;
-}
-.btn-product:hover { transform: translateY(-3px); }
-.netflix { background: #E50914; }
-.insta { background: linear-gradient(45deg, #f09433, #dc2743); }
+.hero-buttons { margin-top: 30px; margin-bottom: 30px; }
 
-.outline-btn {
-    background: transparent; border: 1px solid rgba(255,255,255,0.3);
-}
-.outline-btn:hover { background: #fff; color: #000; }
+.support-link { margin-top: 20px; }
+.support-link a { color: #9898A0; text-decoration: none; font-size: 0.95rem; transition: 0.3s; }
+.support-link a:hover { color: #fff; }
 
-.support-link a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
-.support-link a:hover { color: #fff; text-decoration: underline; }
-
-/* Mobile */
 @media(max-width: 768px) {
     .nav-btn { display: none; }
     .swipe-hint { display: block; }
-    .prev-btn, .next-btn { display: none; }
-    .truth-card { padding: 20px; }
-    .truth-card h3 { font-size: 1.3rem; }
-    #desktop-nav { display: none; }
+    .truth-card { padding: 25px; }
+    .truth-card h3 { font-size: 1.5rem; }
+    .mega-title { font-size: 2.8rem; }
 }
