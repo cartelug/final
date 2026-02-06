@@ -28,19 +28,29 @@
                     <a href="trust/" class="magnet-link">Reviews</a>
                     <a href="contact/" class="magnet-link">Support</a>
                 </div>
-                <a href="#catalog" class="nav-btn-glow">Get Started</a>
-                <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+                <div class="nav-actions">
+                    <a href="#catalog" class="nav-btn-glow desktop">Get Started</a>
+                    <button class="mobile-toggle"><i class="fas fa-bars"></i></button>
+                </div>
             </div>
         </nav>
 
-        <div class="mobile-menu-overlay">
-            <div class="mm-content">
-                <a href="#catalog">Catalog</a>
-                <a href="trust/">Reviews</a>
-                <a href="contact/">Support</a>
-                <button class="mm-close">&times;</button>
+        <div class="mobile-menu-drawer">
+            <div class="mm-header">
+                <span class="mm-brand">ACCESS<span class="dot">UG</span></span>
+                <button class="mm-close-btn">&times;</button>
+            </div>
+            <div class="mm-links">
+                <a href="#catalog" class="mm-item"><span>01.</span> Catalog</a>
+                <a href="trust/" class="mm-item"><span>02.</span> Reviews</a>
+                <a href="contact/" class="mm-item"><span>03.</span> Support</a>
+            </div>
+            <div class="mm-footer">
+                <a href="#catalog" class="mm-cta">Get Started Now</a>
+                <p>Kampala, Uganda</p>
             </div>
         </div>
+        <div class="mm-overlay"></div>
 
         <header class="luxe-hero">
             <div class="hero-content">
@@ -106,6 +116,7 @@
                         <h3>Spotify</h3>
                         <p>Ad-free music.</p>
                     </div>
+                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </a>
 
                 <a href="prime-order/" class="bento-card" style="--accent: #00A8E1;">
@@ -115,6 +126,7 @@
                         <h3>Prime Video</h3>
                         <p>Exclusive movies.</p>
                     </div>
+                    <div class="card-arrow"><i class="fas fa-arrow-right"></i></div>
                 </a>
 
                 <div class="bento-card locked">
@@ -136,63 +148,68 @@
             </div>
         </section>
 
-        <section class="connect-portal">
-            <div class="portal-trigger">
-                <div class="scroll-instruction">SCROLL TO CONNECT</div>
-                <div class="line"></div>
+        <section class="community-deck">
+            <div class="deck-header">
+                <h2>Join The <span class="txt-gradient">Cartel</span></h2>
+                <p>Never miss a giveaway. Join 12,000+ members.</p>
             </div>
             
-            <div class="portal-container">
-                <div class="portal-text-layer">
-                    <span>JOIN THE CARTEL</span>
-                    <span>JOIN THE CARTEL</span>
-                    <span>JOIN THE CARTEL</span>
-                </div>
-
-                <div class="social-cards-wrapper">
-                    <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" class="social-mega-card whatsapp">
-                        <div class="mega-icon"><i class="fab fa-whatsapp"></i></div>
+            <div class="deck-container">
+                <a href="https://chat.whatsapp.com/HL2h4Cprwqe30290622aBF" class="deck-card wa-card">
+                    <div class="deck-icon"><i class="fab fa-whatsapp"></i></div>
+                    <div class="deck-info">
                         <h3>WhatsApp Group</h3>
-                        <p>Join the inner circle. Daily updates & giveaways.</p>
-                        <span class="join-btn">JOIN NOW</span>
-                    </a>
+                        <p>Daily Updates & Deals</p>
+                    </div>
+                    <div class="deck-action">
+                        <span class="pulse-ring"></span>
+                        JOIN NOW
+                    </div>
+                </a>
 
-                    <a href="https://www.instagram.com/theaccessug" class="social-mega-card instagram">
-                        <div class="mega-icon"><i class="fab fa-instagram"></i></div>
+                <a href="https://www.instagram.com/theaccessug" class="deck-card ig-card">
+                    <div class="deck-icon"><i class="fab fa-instagram"></i></div>
+                    <div class="deck-info">
                         <h3>@theaccessug</h3>
-                        <p>Follow the lifestyle. See proof & reviews.</p>
-                        <span class="join-btn">FOLLOW</span>
-                    </a>
-                </div>
+                        <p>Reviews & Lifestyle</p>
+                    </div>
+                    <div class="deck-action">FOLLOW</div>
+                </a>
             </div>
         </section>
 
-        <footer class="luxe-footer">
-            <div class="footer-bg-logo">ACCESS</div>
-            <div class="footer-container">
-                <div class="footer-top">
-                    <div class="f-brand">
-                        <img src="logo.png" alt="AccessUG">
-                        <p>Unlock Greatness.</p>
-                    </div>
-                    <div class="f-cols">
-                        <div class="f-col">
-                            <h4>Service</h4>
-                            <a href="netflix-order/">Netflix</a>
-                            <a href="spotify-order/">Spotify</a>
-                            <a href="boost-package/">Viral Boost</a>
-                        </div>
-                        <div class="f-col">
-                            <h4>Support</h4>
-                            <a href="trust/">Reviews</a>
-                            <a href="contact/">Help Center</a>
-                            <a href="terms-of-service/">Terms</a>
-                        </div>
+        <footer class="bento-footer">
+            <div class="footer-grid">
+                <div class="ft-tile brand-tile">
+                    <h2>ACCESS<span class="dot">UG</span></h2>
+                    <p>Unlock Greatness.</p>
+                    <div class="ft-socials">
+                        <a href="https://wa.me/256762193386"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/theaccessug"><i class="fab fa-instagram"></i></a>
                     </div>
                 </div>
-                <div class="footer-bottom">
-                    <span>&copy; 2026 AccessUG</span>
-                    <div class="status-dot"><span class="dot-online"></span> All Systems Operational</div>
+
+                <div class="ft-tile links-tile">
+                    <h4>Catalog</h4>
+                    <a href="netflix-order/">Netflix Premium</a>
+                    <a href="spotify-order/">Spotify Music</a>
+                    <a href="boost-package/">Viral Boost</a>
+                    <a href="prime-order/">Prime Video</a>
+                </div>
+
+                <div class="ft-tile support-tile">
+                    <h4>Support</h4>
+                    <a href="trust/">Customer Reviews</a>
+                    <a href="contact/">Help Center</a>
+                    <a href="terms-of-service/">Terms of Service</a>
+                    <a href="privacy-policy/">Privacy Policy</a>
+                </div>
+
+                <div class="ft-tile copy-tile">
+                    <span>&copy; 2026 AccessUG.</span>
+                    <div class="system-status">
+                        <span class="blink-dot"></span> Online
+                    </div>
                 </div>
             </div>
         </footer>
