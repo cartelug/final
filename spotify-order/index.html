@@ -3,159 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Premium Order - Cartelug</title>
+    <title>Get Spotify Premium | AccessUG</title>
     
-    <!-- SEO and Social Media Meta Tags -->
-    <meta name="description" content="A premium, simple, and fast way to order your Spotify Premium package with Cartelug. Pay with Mobile Money in Uganda & South Sudan.">
-    <meta property="og:title" content="Spotify Premium Order - Cartelug">
-    <meta property="og:description" content="A premium, simple, and fast way to order your Spotify Premium package.">
-    <meta property="og:image" content="../logo.png">
-    <meta property="og:url" content="https://cartelug.com/spotify-order/">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-
-    <!-- Favicon -->
-    <link rel="icon" href="../logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="../logo.png">
-
-    <!-- Fonts and Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-    <!-- Link to the external CSS file -->
-    <link rel="stylesheet" href="style.css">
+    
+    <link rel="stylesheet" href="../style.css?v=7.0">
+    <link rel="stylesheet" href="style.css?v=12.0">
 </head>
 <body>
-    <!-- Animated background element -->
-    <div class="background-animation"></div>
-    
-    <!-- Simple header, not part of the main flow -->
-    <header class="main-header transparent">
-        <div class="container">
-           <div class="header-content">
-               <a href="/" class="logo-link"><img src="../logo.png" alt="Cartelug Logo" id="logo"></a>
-           </div>
-       </div>
-   </header>
 
-   <!-- Main container for the multi-step form -->
-   <main class="card-flow-container">
-        <!-- Page Title and Description -->
-        <div class="page-header animate-in">
-            <img src="../spotify.png" alt="Spotify Logo" class="service-logo">
-            <h1>Order Spotify Premium</h1>
-            <p>Complete the steps below. It takes less than a minute.</p>
-        </div>
-        
-        <!-- Step 1: Choose Plan -->
-        <section id="step-1" class="step-card active animate-in">
-            <div class="card-header">
-                <span class="card-step-number">1</span>
-                <h3>Choose Your Plan</h3>
-            </div>
-            <div class="card-content">
-                <div class="package-options">
-                     <!-- 2 Months Option -->
-                     <button class="option-button" data-plan="2 Months" data-price="25,000 UGX / $7 USD">
-                        <div class="option-text">
-                            <span class="plan-duration">2 Months</span>
-                            <div class="price-wrapper">
-                                <del class="original-price">50,000</del>
-                                <div class="final-price-container">
-                                    <span class="plan-price">25,000 UGX</span>
-                                    <span class="plan-price-usd">$7 USD</span>
-                                </div>
-                            </div>
-                        </div>
-                    </button>
-                    <!-- 3 Months Option - Most Popular -->
-                    <button class="option-button popular" data-plan="3 Months" data-price="35,000 UGX / $10 USD">
-                        <div class="option-text">
-                            <span class="plan-duration">3 Months</span>
-                            <div class="price-wrapper">
-                                <del class="original-price">75,000</del>
-                                <div class="final-price-container">
-                                    <span class="plan-price">35,000 UGX</span>
-                                    <span class="plan-price-usd">$10 USD</span>
-                                </div>
-                            </div>
-                        </div>
-                    </button>
-                    <!-- 6 Months Option -->
-                    <button class="option-button" data-plan="6 Months" data-price="70,000 UGX / $20 USD">
-                        <div class="option-text">
-                            <span class="plan-duration">6 Months</span>
-                            <div class="price-wrapper">
-                                <del class="original-price">150,000</del>
-                                <div class="final-price-container">
-                                    <span class="plan-price">70,000 UGX</span>
-                                    <span class="plan-price-usd">$20 USD</span>
-                                </div>
-                            </div>
-                        </div>
-                    </button>
-                    <!-- 1 Year Option -->
-                    <button class="option-button" data-plan="1 Year" data-price="120,000 UGX / $33 USD">
-                        <div class="option-text">
-                            <span class="plan-duration">1 Year</span>
-                            <div class="price-wrapper">
-                                <del class="original-price">250,000</del>
-                                <div class="final-price-container">
-                                    <span class="plan-price">120,000 UGX</span>
-                                    <span class="plan-price-usd">$33 USD</span>
-                                </div>
-                            </div>
-                        </div>
-                    </button>
-                </div>
-            </div>
-        </section>
+    <div class="studio-bg">
+        <div class="sound-wave"></div>
+        <div class="green-glow"></div>
+        <div class="noise-overlay"></div>
+    </div>
 
-        <!-- Step 2: Enter Name -->
-        <section id="step-2" class="step-card locked">
-            <div class="card-header">
-                <span class="card-step-number">2</span>
-                <h3>Enter Your Name</h3>
-            </div>
-            <div class="card-content">
-                <form id="name-form" class="name-form">
-                    <input type="text" id="clientName" class="glass-input" placeholder="Enter your full name" required>
-                    <button type="submit" class="next-button" aria-label="Next Step"><i class="fas fa-arrow-down"></i></button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Step 3: Select Payment Method -->
-        <section id="step-3" class="step-card locked">
-            <div class="card-header">
-                <span class="card-step-number">3</span>
-                <h3>Select Payment</h3>
-            </div>
-            <div class="card-content">
-                <div class="payment-options">
-                    <div class="payment-card" data-method="MTN">
-                        <img src="../mtn.png" alt="MTN Mobile Money">
-                    </div>
-                    <div class="payment-card" data-method="Airtel">
-                        <img src="../airtel.png" alt="Airtel Money">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Final Step: Proceed to WhatsApp -->
-        <section id="step-final" class="final-cta-area locked">
-            <h4>Ready to go?</h4>
-            <p>You're all set. Proceed to WhatsApp to finalize your order.</p>
-            <a id="cta-button-link" href="#" target="_blank" class="cta-button">
-                <i class="fab fa-whatsapp"></i> Proceed to WhatsApp
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="../index.html" class="logo-wrapper">
+                <img src="../logo.png" alt="AccessUG" class="brand-logo">
             </a>
-        </section>
-   </main>
+            <a href="../index.html" class="nav-item back-link"><i class="fas fa-arrow-left"></i> Back</a>
+        </div>
+    </nav>
 
-    <!-- Link to the external JavaScript file -->
-    <script src="script.js"></script>
+    <main class="order-container">
+        
+        <div class="progress-track">
+            <div class="step active" data-step="1">1. Access</div>
+            <div class="step" data-step="2">2. Setup</div>
+            <div class="step" data-step="3">3. Trust</div>
+            <div class="step" data-step="4">4. Finish</div>
+        </div>
+
+        <div class="wizard-card glass-panel">
+            
+            <div class="wizard-step active-step" id="step-1">
+                <div class="step-header">
+                    <h2>Premium <span class="highlight-green">Unleashed</span></h2>
+                    <p>Experience music the way it was meant to be heard.</p>
+                </div>
+
+                <div class="hero-plan-card" onclick="selectPlan(this, '1 Year Plan', '99,000', '26')">
+                    <div class="floating-badge">Best Deal</div>
+                    
+                    <div class="plan-visual">
+                        <div class="album-art-glow"><i class="fab fa-spotify"></i></div>
+                    </div>
+
+                    <div class="plan-details">
+                        <div class="header-row">
+                            <h3>1 Year Premium</h3>
+                            <div class="price-stack">
+                                <span class="slashed">130K</span>
+                                <span class="current">99K <small>UGX</small></span>
+                            </div>
+                        </div>
+
+                        <div class="feature-grid">
+                            <div class="feat-item"><i class="fas fa-ban"></i> <span>No Ads</span></div>
+                            <div class="feat-item"><i class="fas fa-download"></i> <span>Offline Play</span></div>
+                            <div class="feat-item"><i class="fas fa-infinity"></i> <span>Unlimited Skips</span></div>
+                            <div class="feat-item"><i class="fas fa-sliders-h"></i> <span>High Quality Audio</span></div>
+                        </div>
+
+                        <div class="tap-hint">Tap to Select <i class="fas fa-arrow-right"></i></div>
+                    </div>
+                </div>
+
+                <div id="scroll-target-1"></div>
+                <button class="btn primary-green disabled" id="btn-step-1" onclick="goToStep(2)">
+                    Select Plan <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="wizard-step" id="step-2">
+                <div class="step-header">
+                    <h2>Account <span class="highlight-green">Setup</span></h2>
+                    <p>Do you already have a Spotify account?</p>
+                </div>
+
+                <div class="choice-grid">
+                    <div class="choice-card" onclick="selectAccountStatus('Yes', this)">
+                        <div class="choice-icon"><i class="fas fa-check-circle"></i></div>
+                        <h3>Yes, I have one</h3>
+                        <p>We will upgrade your existing email.</p>
+                        <div class="check-mark"></div>
+                    </div>
+
+                    <div class="choice-card" onclick="selectAccountStatus('No (Create for me)', this)">
+                        <div class="choice-icon"><i class="fas fa-user-plus"></i></div>
+                        <h3>No, Create for me</h3>
+                        <p>We will create a fresh premium account for you.</p>
+                        <div class="check-mark"></div>
+                    </div>
+                </div>
+
+                <button class="btn primary-green disabled" id="btn-step-2" onclick="goToStep(3)">
+                    Continue <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="wizard-step" id="step-3">
+                <div class="step-header">
+                    <h2>Verified <span class="highlight-green">Quality</span></h2>
+                    <p>Join the listening party. Trusted by thousands.</p>
+                </div>
+
+                <div class="proof-viewer">
+                    <div class="proof-track">
+                        <img src="../netrust1.png" alt="Proof 1" class="proof-img">
+                        <img src="../netrust2.png" alt="Proof 2" class="proof-img">
+                        <img src="../netrust3.png" alt="Proof 3" class="proof-img">
+                    </div>
+                    <div class="scroll-hint"><i class="fas fa-hand-pointer"></i> Swipe to inspect</div>
+                </div>
+
+                <button class="btn primary-green" onclick="goToStep(4)">
+                    I Trust AccessUG. Next. <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="wizard-step" id="step-4">
+                <div class="step-header">
+                    <h2>Start <span class="highlight-green">Listening</span></h2>
+                    <p>Review your order details below.</p>
+                </div>
+
+                <div class="policy-alert">
+                    <div class="alert-icon"><i class="fas fa-shield-check"></i></div>
+                    <div class="alert-text">
+                        <strong>Connect First Guarantee</strong>
+                        <p>We verify your premium status <u>before</u> you pay.</p>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Full Name</label>
+                    <input type="text" id="clientName" placeholder="e.g. David M.">
+                </div>
+
+                <div class="input-group">
+                    <label>Payment Method</label>
+                    <select id="paymentMethod">
+                        <option value="MTN Mobile Money">MTN Mobile Money</option>
+                        <option value="Airtel Money">Airtel Money</option>
+                        <option value="Cash in Office">Cash (Office Visit)</option>
+                    </select>
+                </div>
+
+                <div class="order-summary">
+                    <div class="summary-row">
+                        <span>Account Status</span>
+                        <span class="val" id="sum-account">...</span>
+                    </div>
+                    <hr>
+                    <div class="summary-row total">
+                        <span>Total Price</span>
+                        <span class="val highlight-green" id="sum-total">...</span>
+                    </div>
+                </div>
+
+                <a href="#" id="whatsapp-btn" class="btn whatsapp-green-btn" onclick="return validateAndSend()">
+                    <i class="fab fa-whatsapp"></i> Confirm on WhatsApp
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="script.js?v=12.0"></script>
 </body>
 </html>
