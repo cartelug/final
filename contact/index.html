@@ -3,88 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AccessUG | Neural Support</title>
+    <title>Support | AccessUG</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    <style>
-        /* CRITICAL: ISOLATED SCOPE TO PREVENT CONFLICTS */
-        /* See the CSS Section below for the full styles */
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <canvas id="neuro-bg"></canvas>
 
-    <div id="neural-support">
+    <div class="support-wrapper">
         
-        <nav class="neural-nav">
-            <a href="index.html" class="nav-back"><i class="fas fa-chevron-left"></i> Return to Base</a>
-            <div class="nav-status"><span class="pulse"></span> System Online</div>
+        <nav class="glass-nav">
+            <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
+            <div class="logo-area">
+                <span class="status-dot"></span> Live Support
+            </div>
         </nav>
 
-        <main class="core-container">
+        <main class="main-stage">
             
-            <div class="chat-column">
-                <div class="chat-window" id="chat-feed">
-                    <div class="msg bot-msg animate-pop">
-                        <div class="avatar"><i class="fas fa-robot"></i></div>
-                        <div class="text">Welcome to the Cartel Core. I am your automated specialist.<br>Select a module to begin diagnostics.</div>
+            <section class="chat-section">
+                <div class="glass-window">
+                    <div class="chat-header">
+                        <div class="bot-avatar"><i class="fas fa-robot"></i></div>
+                        <div class="bot-info">
+                            <h3>AccessUG Assistant</h3>
+                            <p>Online • Ready to help</p>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-feed" id="chat-feed">
+                        </div>
+
+                    <div class="chat-input-area disabled">
+                        <input type="text" placeholder="Select an issue to start..." disabled>
+                        <button><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <div class="modules-column" id="modules-grid">
+            <section class="options-section">
+                <h2 class="section-title">What can we fix for you?</h2>
                 
-                <button class="neuro-card" onclick="triggerIssue('netflix-household')" style="--theme: #E50914;">
-                    <div class="glitch-icon"><i class="fas fa-house-signal"></i></div>
-                    <div class="card-text">
-                        <h3>Household Fix</h3>
-                        <p>Netflix "Not part of Household" error.</p>
-                    </div>
-                    <div class="scan-line"></div>
-                </button>
+                <div class="cards-grid">
+                    
+                    <button class="issue-card" onclick="runScript('household')" style="--glow: #E50914;">
+                        <div class="card-icon"><i class="fas fa-house-user"></i></div>
+                        <div class="card-text">
+                            <h3>Netflix Household</h3>
+                            <p>"Not part of household" error?</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </button>
 
-                <button class="neuro-card" onclick="triggerIssue('netflix-download')" style="--theme: #B81D24;">
-                    <div class="glitch-icon"><i class="fas fa-download"></i></div>
-                    <div class="card-text">
-                        <h3>Download Fail</h3>
-                        <p>Can't save movies offline?</p>
-                    </div>
-                    <div class="scan-line"></div>
-                </button>
+                    <button class="issue-card" onclick="runScript('download')" style="--glow: #ff4757;">
+                        <div class="card-icon"><i class="fas fa-download"></i></div>
+                        <div class="card-text">
+                            <h3>Can't Download</h3>
+                            <p>Movies won't save offline?</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </button>
 
-                <button class="neuro-card" onclick="triggerIssue('disconnected')" style="--theme: #FFD700;">
-                    <div class="glitch-icon"><i class="fas fa-hourglass-end"></i></div>
-                    <div class="card-text">
-                        <h3>Early Disconnect</h3>
-                        <p>Logged out before time expired?</p>
-                    </div>
-                    <div class="scan-line"></div>
-                </button>
+                    <button class="issue-card" onclick="runScript('logout')" style="--glow: #ffa502;">
+                        <div class="card-icon"><i class="fas fa-plug-circle-xmark"></i></div>
+                        <div class="card-text">
+                            <h3>Logged Out Early</h3>
+                            <p>Account stopped working?</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </button>
 
-                <button class="neuro-card" onclick="triggerIssue('spotify')" style="--theme: #1DB954;">
-                    <div class="glitch-icon"><i class="fab fa-spotify"></i></div>
-                    <div class="card-text">
-                        <h3>Spotify Glitch</h3>
-                        <p>Premium not working / Kickout.</p>
-                    </div>
-                    <div class="scan-line"></div>
-                </button>
+                    <button class="issue-card" onclick="runScript('spotify')" style="--glow: #1DB954;">
+                        <div class="card-icon"><i class="fab fa-spotify"></i></div>
+                        <div class="card-text">
+                            <h3>Spotify Issues</h3>
+                            <p>Premium not active?</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </button>
 
-                <button class="neuro-card" onclick="triggerIssue('prime')" style="--theme: #00A8E1;">
-                    <div class="glitch-icon"><i class="fab fa-amazon"></i></div>
-                    <div class="card-text">
-                        <h3>Prime Video</h3>
-                        <p>Can't watch specific titles.</p>
-                    </div>
-                    <div class="scan-line"></div>
-                </button>
+                    <button class="issue-card" onclick="runScript('other')" style="--glow: #3742fa;">
+                        <div class="card-icon"><i class="fas fa-headset"></i></div>
+                        <div class="card-text">
+                            <h3>Something Else</h3>
+                            <p>Talk to a human agent.</p>
+                        </div>
+                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
+                    </button>
 
-            </div>
+                </div>
+            </section>
 
         </main>
-
     </div>
 
-    <script src="support-core.js"></script> 
+    <script src="support-core.js"></script>
 </body>
 </html>

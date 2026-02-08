@@ -1,113 +1,201 @@
-/* === NEURAL CORE STYLES === */
+/* === ACCESSUG SMART SUPPORT THEME === */
 :root {
-    --bg-void: #050505;
-    --glass: rgba(255, 255, 255, 0.03);
-    --glass-border: rgba(255, 255, 255, 0.1);
-    --neon-blue: #00f3ff;
-    --text-main: #fff;
-    --text-muted: #888;
+    --bg-dark: #050505;
+    --glass: rgba(20, 20, 20, 0.6);
+    --border: rgba(255, 255, 255, 0.1);
+    --accent: #7D2AE8;
+    --text: #fff;
 }
 
-body { margin: 0; background: var(--bg-void); font-family: 'Inter', sans-serif; overflow: hidden; color: var(--text-main); }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* The Canvas Background */
+body {
+    background: var(--bg-dark);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    height: 100vh;
+    overflow: hidden; /* Keeps the page fixed like an app */
+}
+
+/* --- BACKGROUND CANVAS --- */
 #neuro-bg {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
 }
 
-/* Scoped Container */
-#neural-support {
-    height: 100vh; display: flex; flex-direction: column;
-    position: relative; z-index: 10;
+/* --- LAYOUT --- */
+.support-wrapper {
+    height: 100%;
+    display: flex; flex-direction: column;
+    padding: 20px;
+    max-width: 1400px; margin: 0 auto;
 }
 
-/* Nav */
-.neural-nav {
-    display: flex; justify-content: space-between; padding: 20px 40px;
-    border-bottom: 1px solid var(--glass-border);
-    background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
+/* Header */
+.glass-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+    margin-bottom: 30px;
 }
-.nav-back { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
-.nav-back:hover { color: #fff; }
-.nav-status { font-size: 0.8rem; display: flex; align-items: center; gap: 8px; color: var(--neon-blue); }
-.pulse { width: 6px; height: 6px; background: var(--neon-blue); border-radius: 50%; box-shadow: 0 0 10px var(--neon-blue); animation: blink 2s infinite; }
+.back-btn { font-weight: 600; color: #ccc; transition: 0.3s; }
+.back-btn:hover { color: #fff; }
+.status-dot {
+    display: inline-block; width: 8px; height: 8px;
+    background: #00F57A; border-radius: 50%;
+    box-shadow: 0 0 10px #00F57A; margin-right: 8px;
+}
+.logo-area { font-family: 'Outfit'; font-weight: 700; font-size: 0.9rem; }
 
-/* Main Layout */
-.core-container {
-    flex: 1; display: flex; gap: 40px; padding: 40px;
-    max-width: 1400px; margin: 0 auto; width: 100%; box-sizing: border-box;
+/* Main Stage */
+.main-stage {
+    flex: 1;
+    display: flex; gap: 40px;
+    height: 80vh; /* Limits height to screen */
 }
 
-/* Chat Column (Left) */
-.chat-column {
-    flex: 1; display: flex; flex-direction: column; justify-content: flex-end;
+/* --- CHAT SECTION (Left) --- */
+.chat-section { flex: 1; display: flex; flex-direction: column; }
+
+.glass-window {
+    flex: 1;
+    background: rgba(10, 10, 10, 0.5);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
 }
-.chat-window {
-    height: 60vh; overflow-y: auto; padding-right: 20px;
+
+.chat-header {
+    padding: 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 15px;
+    background: rgba(255,255,255,0.02);
+}
+.bot-avatar {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, #7D2AE8, #4a00e0);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; box-shadow: 0 0 15px rgba(125, 42, 232, 0.4);
+}
+.bot-info h3 { font-family: 'Outfit'; font-size: 1rem; }
+.bot-info p { font-size: 0.8rem; color: #888; }
+
+.chat-feed {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
     display: flex; flex-direction: column; gap: 15px;
-    mask-image: linear-gradient(to bottom, transparent, black 10%);
 }
-.chat-window::-webkit-scrollbar { width: 4px; }
-.chat-window::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
 
-/* Messages */
+/* Chat Bubbles */
 .msg {
-    max-width: 80%; padding: 15px 20px; border-radius: 12px;
-    font-size: 0.95rem; line-height: 1.5; position: relative;
-    animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    max-width: 80%;
+    padding: 12px 18px;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 .bot-msg {
-    background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
-    color: #eee; border-radius: 4px 12px 12px 12px; display: flex; gap: 15px;
-}
-.bot-msg .avatar {
-    width: 30px; height: 30px; background: var(--neon-blue); border-radius: 50%;
-    display: flex; align-items: center; justify-content: center; color: #000; font-size: 0.8rem;
-    flex-shrink: 0; box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px 12px 12px 12px;
+    border: 1px solid var(--border);
+    color: #eee;
 }
 .user-msg {
-    align-self: flex-end; background: var(--neon-blue); color: #000;
-    border-radius: 12px 4px 12px 12px; font-weight: 600;
+    align-self: flex-end;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 12px 4px 12px 12px;
 }
-.msg-btn {
-    background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue);
-    padding: 8px 16px; margin-top: 10px; border-radius: 4px; cursor: pointer;
-    font-size: 0.85rem; transition: 0.3s; display: inline-block; margin-right: 10px;
+.chat-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 20px;
+    background: #25D366; /* WhatsApp Green */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 0.9rem; font-weight: 600;
+    transition: 0.3s;
 }
-.msg-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px rgba(0, 243, 255, 0.4); }
+.chat-btn:hover { background: #1ebc57; transform: translateY(-2px); }
 
-/* Modules Column (Right) */
-.modules-column {
-    flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 15px; align-content: center;
+.chat-input-area {
+    padding: 15px; border-top: 1px solid var(--border);
+    display: flex; gap: 10px; opacity: 0.5;
 }
-.neuro-card {
-    background: rgba(10, 10, 10, 0.6); border: 1px solid var(--glass-border);
-    padding: 20px; display: flex; align-items: center; gap: 15px;
-    border-radius: 12px; cursor: pointer; position: relative; overflow: hidden;
-    text-align: left; transition: all 0.4s ease;
+.chat-input-area input {
+    flex: 1; background: transparent; border: none;
+    color: #fff; outline: none;
 }
-.neuro-card:hover {
-    border-color: var(--theme); transform: translateX(-5px);
-    background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+.chat-input-area button {
+    background: none; border: none; color: #fff; cursor: default;
 }
-.neuro-card i { font-size: 1.5rem; color: var(--theme); filter: drop-shadow(0 0 8px var(--theme)); }
-.neuro-card h3 { margin: 0; font-size: 1rem; color: #fff; font-weight: 600; }
-.neuro-card p { margin: 5px 0 0; font-size: 0.8rem; color: #888; }
-.scan-line {
-    position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-    transform: skewX(-20deg); transition: 0.5s;
-}
-.neuro-card:hover .scan-line { left: 150%; transition: 0.7s; }
 
-/* Animations */
-@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes blink { 50% { opacity: 0.3; } }
+/* --- OPTIONS SECTION (Right) --- */
+.options-section { flex: 1; display: flex; flex-direction: column; justify-content: center; }
 
-/* Responsive */
+.section-title {
+    font-family: 'Outfit'; font-size: 2rem; margin-bottom: 30px;
+    background: linear-gradient(to right, #fff, #888);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
+.cards-grid {
+    display: flex; flex-direction: column; gap: 15px;
+}
+
+.issue-card {
+    display: flex; align-items: center; gap: 20px;
+    padding: 20px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    text-align: left; cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+}
+
+.issue-card:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: var(--glow);
+    transform: translateX(10px);
+}
+
+.card-icon {
+    width: 50px; height: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; color: var(--glow);
+    transition: 0.3s;
+}
+.issue-card:hover .card-icon {
+    background: var(--glow); color: #000;
+    box-shadow: 0 0 20px var(--glow);
+}
+
+.card-text h3 { font-family: 'Outfit'; font-size: 1.1rem; color: #fff; margin-bottom: 4px; }
+.card-text p { font-size: 0.85rem; color: #888; }
+.arrow { margin-left: auto; color: #444; transition: 0.3s; }
+.issue-card:hover .arrow { color: #fff; transform: translateX(5px); }
+
+/* --- ANIMATIONS --- */
+@keyframes popIn { from { opacity: 0; transform: scale(0.9) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
+/* RESPONSIVE */
 @media (max-width: 900px) {
-    .core-container { flex-direction: column-reverse; padding: 20px; }
-    .chat-window { height: 40vh; }
-    #neuro-bg { opacity: 0.5; }
+    .main-stage { flex-direction: column-reverse; height: auto; }
+    .chat-section { height: 500px; }
+    body { height: auto; overflow-y: auto; }
+    .issue-card { padding: 15px; }
 }
