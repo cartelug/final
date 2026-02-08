@@ -1,0 +1,113 @@
+/* === NEURAL CORE STYLES === */
+:root {
+    --bg-void: #050505;
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --neon-blue: #00f3ff;
+    --text-main: #fff;
+    --text-muted: #888;
+}
+
+body { margin: 0; background: var(--bg-void); font-family: 'Inter', sans-serif; overflow: hidden; color: var(--text-main); }
+
+/* The Canvas Background */
+#neuro-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+}
+
+/* Scoped Container */
+#neural-support {
+    height: 100vh; display: flex; flex-direction: column;
+    position: relative; z-index: 10;
+}
+
+/* Nav */
+.neural-nav {
+    display: flex; justify-content: space-between; padding: 20px 40px;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(0,0,0,0.4); backdrop-filter: blur(10px);
+}
+.nav-back { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+.nav-back:hover { color: #fff; }
+.nav-status { font-size: 0.8rem; display: flex; align-items: center; gap: 8px; color: var(--neon-blue); }
+.pulse { width: 6px; height: 6px; background: var(--neon-blue); border-radius: 50%; box-shadow: 0 0 10px var(--neon-blue); animation: blink 2s infinite; }
+
+/* Main Layout */
+.core-container {
+    flex: 1; display: flex; gap: 40px; padding: 40px;
+    max-width: 1400px; margin: 0 auto; width: 100%; box-sizing: border-box;
+}
+
+/* Chat Column (Left) */
+.chat-column {
+    flex: 1; display: flex; flex-direction: column; justify-content: flex-end;
+}
+.chat-window {
+    height: 60vh; overflow-y: auto; padding-right: 20px;
+    display: flex; flex-direction: column; gap: 15px;
+    mask-image: linear-gradient(to bottom, transparent, black 10%);
+}
+.chat-window::-webkit-scrollbar { width: 4px; }
+.chat-window::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+
+/* Messages */
+.msg {
+    max-width: 80%; padding: 15px 20px; border-radius: 12px;
+    font-size: 0.95rem; line-height: 1.5; position: relative;
+    animation: slideUp 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.bot-msg {
+    background: rgba(255, 255, 255, 0.05); border: 1px solid var(--glass-border);
+    color: #eee; border-radius: 4px 12px 12px 12px; display: flex; gap: 15px;
+}
+.bot-msg .avatar {
+    width: 30px; height: 30px; background: var(--neon-blue); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; color: #000; font-size: 0.8rem;
+    flex-shrink: 0; box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+.user-msg {
+    align-self: flex-end; background: var(--neon-blue); color: #000;
+    border-radius: 12px 4px 12px 12px; font-weight: 600;
+}
+.msg-btn {
+    background: transparent; border: 1px solid var(--neon-blue); color: var(--neon-blue);
+    padding: 8px 16px; margin-top: 10px; border-radius: 4px; cursor: pointer;
+    font-size: 0.85rem; transition: 0.3s; display: inline-block; margin-right: 10px;
+}
+.msg-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 20px rgba(0, 243, 255, 0.4); }
+
+/* Modules Column (Right) */
+.modules-column {
+    flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px; align-content: center;
+}
+.neuro-card {
+    background: rgba(10, 10, 10, 0.6); border: 1px solid var(--glass-border);
+    padding: 20px; display: flex; align-items: center; gap: 15px;
+    border-radius: 12px; cursor: pointer; position: relative; overflow: hidden;
+    text-align: left; transition: all 0.4s ease;
+}
+.neuro-card:hover {
+    border-color: var(--theme); transform: translateX(-5px);
+    background: linear-gradient(90deg, rgba(255,255,255,0.03), transparent);
+}
+.neuro-card i { font-size: 1.5rem; color: var(--theme); filter: drop-shadow(0 0 8px var(--theme)); }
+.neuro-card h3 { margin: 0; font-size: 1rem; color: #fff; font-weight: 600; }
+.neuro-card p { margin: 5px 0 0; font-size: 0.8rem; color: #888; }
+.scan-line {
+    position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: skewX(-20deg); transition: 0.5s;
+}
+.neuro-card:hover .scan-line { left: 150%; transition: 0.7s; }
+
+/* Animations */
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes blink { 50% { opacity: 0.3; } }
+
+/* Responsive */
+@media (max-width: 900px) {
+    .core-container { flex-direction: column-reverse; padding: 20px; }
+    .chat-window { height: 40vh; }
+    #neuro-bg { opacity: 0.5; }
+}
