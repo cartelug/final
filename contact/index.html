@@ -3,94 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support | AccessUG</title>
+    <title>AccessUG | Neural Support</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <canvas id="neuro-bg"></canvas>
+    <canvas id="fluid-bg"></canvas>
+    <div class="noise-overlay"></div>
 
-    <div class="support-wrapper">
+    <div class="app-container">
         
         <nav class="glass-nav">
-            <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Home</a>
-            <div class="logo-area">
-                <span class="status-dot"></span> Live Support
+            <a href="../index.html" class="nav-pill">
+                <i class="fas fa-chevron-left"></i> <span>Return to Base</span>
+            </a>
+            <div class="nav-status">
+                <span class="led-blink"></span> SYSTEM ONLINE
             </div>
         </nav>
 
-        <main class="main-stage">
+        <main class="neural-grid">
             
-            <section class="chat-section">
-                <div class="glass-window">
-                    <div class="chat-header">
-                        <div class="bot-avatar"><i class="fas fa-robot"></i></div>
-                        <div class="bot-info">
-                            <h3>AccessUG Assistant</h3>
-                            <p>Online • Ready to help</p>
+            <section class="chat-zone">
+                <div class="glass-panel chat-panel" id="chat-panel">
+                    <div class="panel-header">
+                        <div class="bot-id">
+                            <div class="avatar-ring">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="bot-meta">
+                                <h3>AccessUG Core</h3>
+                                <p>Automated Diagnostics</p>
+                            </div>
                         </div>
+                        <div class="scan-line"></div>
                     </div>
-                    
-                    <div class="chat-feed" id="chat-feed">
+
+                    <div class="chat-viewport" id="chat-feed">
                         </div>
 
-                    <div class="chat-input-area disabled">
-                        <input type="text" placeholder="Select an issue to start..." disabled>
-                        <button><i class="fas fa-paper-plane"></i></button>
+                    <div class="input-dock" id="input-dock">
+                        <input type="text" id="user-input" placeholder="Select an issue to begin..." disabled autocomplete="off">
+                        <button id="send-btn" disabled><i class="fas fa-arrow-up"></i></button>
                     </div>
                 </div>
             </section>
 
-            <section class="options-section">
-                <h2 class="section-title">What can we fix for you?</h2>
-                
-                <div class="cards-grid">
+            <section class="command-zone">
+                <div class="zone-header">
+                    <h2>Select Protocol</h2>
+                    <p>Initialize a fix for your service.</p>
+                </div>
+
+                <div class="card-stack">
                     
-                    <button class="issue-card" onclick="runScript('household')" style="--glow: #E50914;">
-                        <div class="card-icon"><i class="fas fa-house-user"></i></div>
-                        <div class="card-text">
+                    <button class="holo-card" onclick="startFlow('household')" onmouseenter="shiftColor('red')" onmouseleave="resetColor()">
+                        <div class="card-glow" style="--c: #E50914;"></div>
+                        <div class="icon-box"><i class="fas fa-house-signal"></i></div>
+                        <div class="card-data">
                             <h3>Netflix Household</h3>
-                            <p>"Not part of household" error?</p>
+                            <p>Update Location / Email Fix</p>
                         </div>
-                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
                     </button>
 
-                    <button class="issue-card" onclick="runScript('download')" style="--glow: #ff4757;">
-                        <div class="card-icon"><i class="fas fa-download"></i></div>
-                        <div class="card-text">
-                            <h3>Can't Download</h3>
-                            <p>Movies won't save offline?</p>
+                    <button class="holo-card" onclick="startFlow('netflix_limit')" onmouseenter="shiftColor('red')" onmouseleave="resetColor()">
+                        <div class="card-glow" style="--c: #B81D24;"></div>
+                        <div class="icon-box"><i class="fas fa-tablet-screen-button"></i></div>
+                        <div class="card-data">
+                            <h3>Netflix Download/Limit</h3>
+                            <p>Screen limit or Download fail</p>
                         </div>
-                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
                     </button>
 
-                    <button class="issue-card" onclick="runScript('logout')" style="--glow: #ffa502;">
-                        <div class="card-icon"><i class="fas fa-plug-circle-xmark"></i></div>
-                        <div class="card-text">
-                            <h3>Logged Out Early</h3>
-                            <p>Account stopped working?</p>
+                    <button class="holo-card" onclick="startFlow('prime')" onmouseenter="shiftColor('blue')" onmouseleave="resetColor()">
+                        <div class="card-glow" style="--c: #00A8E1;"></div>
+                        <div class="icon-box"><i class="fab fa-amazon"></i></div>
+                        <div class="card-data">
+                            <h3>Prime Video</h3>
+                            <p>Device Limit / Playback Error</p>
                         </div>
-                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
                     </button>
 
-                    <button class="issue-card" onclick="runScript('spotify')" style="--glow: #1DB954;">
-                        <div class="card-icon"><i class="fab fa-spotify"></i></div>
-                        <div class="card-text">
-                            <h3>Spotify Issues</h3>
-                            <p>Premium not active?</p>
+                    <button class="holo-card" onclick="startFlow('spotify')" onmouseenter="shiftColor('green')" onmouseleave="resetColor()">
+                        <div class="card-glow" style="--c: #1DB954;"></div>
+                        <div class="icon-box"><i class="fab fa-spotify"></i></div>
+                        <div class="card-data">
+                            <h3>Spotify Status</h3>
+                            <p>Premium Check</p>
                         </div>
-                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
                     </button>
 
-                    <button class="issue-card" onclick="runScript('other')" style="--glow: #3742fa;">
-                        <div class="card-icon"><i class="fas fa-headset"></i></div>
-                        <div class="card-text">
-                            <h3>Something Else</h3>
-                            <p>Talk to a human agent.</p>
+                    <button class="holo-card agent-card" onclick="startFlow('agent')" onmouseenter="shiftColor('purple')" onmouseleave="resetColor()">
+                        <div class="card-glow" style="--c: #7D2AE8;"></div>
+                        <div class="icon-box"><i class="fas fa-headset"></i></div>
+                        <div class="card-data">
+                            <h3>Speak to Agent</h3>
+                            <p>General Inquiries</p>
                         </div>
-                        <div class="arrow"><i class="fas fa-chevron-right"></i></div>
                     </button>
 
                 </div>
