@@ -3,157 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support Hub - AccessUG</title>
+    <title>Contact Nexus | AccessUG</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="../style.css?v=7.0"> <link rel="stylesheet" href="style.css?v=14.0">   </head>
+    <link rel="stylesheet" href="nexus.css">
+</head>
 <body>
 
-    <div class="nebula-bg support-theme">
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="noise-texture"></div>
-    </div>
+    <canvas id="nexus-canvas"></canvas>
 
-    <nav class="navbar">
-        <div class="container nav-content">
-            <a href="../index.html" class="logo-wrapper">
-                <img src="../logo.png" alt="AccessUG" class="brand-logo">
+    <div id="hud-layer">
+        
+        <nav class="hud-nav">
+            <a href="../index.html" class="nav-btn"><i class="fas fa-arrow-left"></i> SYSTEM_EXIT</a>
+            <div class="nav-center">NEXUS CONTROL // <span id="target-readout">IDLE</span></div>
+            <div class="nav-status"><span class="blink"></span> ONLINE</div>
+        </nav>
+
+        <div id="intro-hint" class="center-hint">
+            <div class="hint-icon"><i class="fas fa-computer-mouse"></i></div>
+            <p>SELECT A MODULE TO ENGAGE</p>
+        </div>
+
+        <div id="neural-interface" class="interface-hidden">
+            <div class="chat-glass-panel">
+                <div class="chat-header">
+                    <div class="header-info">
+                        <i class="fas fa-robot" id="ai-icon"></i>
+                        <div>
+                            <h3 id="chat-title">DIAGNOSTICS</h3>
+                            <p id="chat-sub">Automated Support Agent</p>
+                        </div>
+                    </div>
+                    <button class="close-btn" onclick="nexus.disengage()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="chat-feed" id="chat-feed">
+                    </div>
+            </div>
+        </div>
+
+        <div class="social-dock">
+            <a href="https://wa.me/256762193386" target="_blank" class="dock-item wa">
+                <i class="fab fa-whatsapp"></i>
+                <span class="tooltip">WhatsApp</span>
             </a>
-            <a href="../index.html" class="nav-item back-link"><i class="fas fa-arrow-left"></i> Back Home</a>
+            <a href="https://www.instagram.com/theaccessug" target="_blank" class="dock-item ig">
+                <i class="fab fa-instagram"></i>
+                <span class="tooltip">Instagram</span>
+            </a>
         </div>
-    </nav>
 
-    <main class="support-main">
-        <div class="container">
-            <div class="support-header">
-                <span class="status-badge"><i class="fas fa-headset"></i> 24/7 Help Center</span>
-                <h1 class="mega-title">How Can We <span class="highlight-blue">Help?</span></h1>
-                <p class="hero-desc">Select an issue below for an instant fix or direct support.</p>
-            </div>
-
-            <div class="issue-grid">
-                
-                <a href="../netflix-fix/index.html" class="issue-card" style="--accent: #E50914;">
-                    <div class="card-icon red-glow"><i class="fas fa-house-lock"></i></div>
-                    <div class="card-content">
-                        <h3>Household Error</h3>
-                        <p>Seeing "Not part of Household"? Click here to fix it instantly.</p>
-                    </div>
-                    <div class="card-action">Fix Now <i class="fas fa-arrow-right"></i></div>
-                </a>
-
-                <div class="issue-card" id="payment-card" style="--accent: #FFD700;">
-                    <div class="card-icon gold-glow"><i class="fas fa-credit-card"></i></div>
-                    <div class="card-content">
-                        <h3>Payment Message?</h3>
-                        <p>Seeing a payment pop-up on screen?</p>
-                        
-                        <div id="payment-initial">
-                            <p class="instruction-text">Just click <b>'X'</b> or swipe it away to continue.</p>
-                            <button id="payment-escalate-btn" class="text-btn">Still can't watch?</button>
-                        </div>
-
-                        <div id="payment-apology" class="status-box hidden">
-                            <i class="fas fa-clock"></i>
-                            <span>Reported. We are restoring service (24hrs).</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="issue-card" id="signed-out-trigger" style="--accent: #00F57A;">
-                    <div class="card-icon green-glow"><i class="fas fa-user-slash"></i></div>
-                    <div class="card-content">
-                        <h3>Lost Login?</h3>
-                        <p>Forgot your email or password? Recover it here.</p>
-                    </div>
-                    <div class="card-action">Recover <i class="fas fa-key"></i></div>
-                </button>
-
-                <a href="https://wa.me/256762193386?text=I%20have%20an%20issue%20with%20AccessUG%20Service" class="issue-card" style="--accent: #00A8E1;">
-                    <div class="card-icon blue-glow"><i class="fab fa-whatsapp"></i></div>
-                    <div class="card-content">
-                        <h3>Chat Support</h3>
-                        <p>Talk to a human agent on WhatsApp.</p>
-                    </div>
-                    <div class="card-action">Open Chat <i class="fas fa-comment-alt"></i></div>
-                </a>
-
-            </div>
-
-            <div class="direct-support glass-panel">
-                <div class="content">
-                    <h3>Other Inquiries?</h3>
-                    <p>For partnerships or complex billing issues.</p>
-                </div>
-                <a href="mailto:carteluganda@gmail.com" class="btn glass-btn">
-                    <i class="fas fa-envelope"></i> Send Email
-                </a>
-            </div>
-        </div>
-    </main>
-
-    <div id="signed-out-modal" class="modal-overlay">
-        <div class="modal-window glass-panel">
-            <button class="modal-close" onclick="closeModal()">&times;</button>
-            
-            <div class="modal-step active" id="step-1">
-                <div class="step-header-modal">
-                    <div class="icon-ring"><i class="fas fa-envelope-open-text"></i></div>
-                    <h2>Select Your Email</h2>
-                    <p>Which Netflix email were you assigned?</p>
-                </div>
-                <div id="email-list" class="email-grid"></div> 
-            </div>
-
-            <div class="modal-step" id="step-2">
-                <div class="step-header-modal">
-                    <div class="icon-ring"><i class="fas fa-check-circle"></i></div>
-                    <h2>Confirm Email</h2>
-                </div>
-                <p class="confirm-text">Is this correct?</p>
-                <div class="highlight-box" id="selected-email-display">...</div>
-                <div class="step-actions">
-                    <button class="btn glass-btn small" onclick="goToStep(1)">Back</button>
-                    <button class="btn primary-btn small" onclick="goToStep(3)">Yes</button>
-                </div>
-            </div>
-
-            <div class="modal-step" id="step-3">
-                <div class="step-header-modal">
-                    <div class="icon-ring"><i class="fas fa-mobile-alt"></i></div>
-                    <h2>Select Device</h2>
-                </div>
-                <div class="device-grid">
-                    <button class="device-btn" onclick="showInstruction('tv')">
-                        <i class="fas fa-tv"></i> <span>TV</span>
-                    </button>
-                    <button class="device-btn" onclick="showInstruction('phone')">
-                        <i class="fas fa-mobile"></i> <span>Phone</span>
-                    </button>
-                </div>
-            </div>
-
-            <div class="modal-step" id="step-4">
-                <div class="step-header-modal">
-                    <div class="icon-ring"><i class="fas fa-unlock-alt"></i></div>
-                    <h2>Your Login</h2>
-                </div>
-                <div class="instruction-box">
-                    <p class="label">Email:</p>
-                    <code id="final-email">...</code>
-                    <p class="label">Password:</p>
-                    <code>thecartelug</code>
-                </div>
-                <button class="btn primary-btn" onclick="closeModal()">Done</button>
-            </div>
-        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="nexus.js"></script>
 </body>
 </html>
