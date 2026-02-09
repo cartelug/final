@@ -1,60 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. MOBILE MENU TOGGLE
-    const menuBtn = document.querySelector('.menu-trigger');
-    const portal = document.querySelector('.mobile-portal');
-    const links = document.querySelectorAll('.mp-content a');
+    // 1. Tab Filtering System
+    const tabs = document.querySelectorAll('.tab-btn');
+    const cards = document.querySelectorAll('.card');
 
-    if(menuBtn) {
-        menuBtn.addEventListener('click', () => {
-            portal.classList.toggle('active');
-            menuBtn.classList.toggle('open');
-            // Animate lines
-            const lines = menuBtn.querySelectorAll('.line');
-            if(portal.classList.contains('active')) {
-                lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                lines[1].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-            } else {
-                lines.forEach(l => l.style.transform = 'none');
-            }
-        });
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Remove active class from all
+            tabs.forEach(t => t.classList.remove('active'));
+            // Add to clicked
+            tab.classList.add('active');
 
-        links.forEach(l => {
-            l.addEventListener('click', () => {
-                portal.classList.remove('active');
-                menuBtn.querySelectorAll('.line').forEach(l => l.style.transform = 'none');
+            const category = tab.getAttribute('data-category');
+
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-cat');
+                
+                if (category === 'all' || cardCat === category) {
+                    card.style.display = 'flex';
+                    // Slight animation for re-appearing
+                    card.style.opacity = '0';
+                    setTimeout(() => card.style.opacity = '1', 50);
+                } else {
+                    card.style.display = 'none';
+                }
             });
         });
-    }
+    });
 
-    // 2. PARALLAX CARDS (Intersection Observer)
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+    // 2. Smooth Scroll for Anchor Links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if(target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             }
         });
-    }, { threshold: 0.1 });
-
-    const cards = document.querySelectorAll('.holo-card');
-    cards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(50px)';
-        // Staggered delay
-        card.style.transitionDelay = `${index * 0.1}s`;
-        observer.observe(card);
     });
 
-    // 3. MOUSE TRACKING GLOW (For Buttons)
-    const buttons = document.querySelectorAll('.btn-neon-primary');
-    buttons.forEach(btn => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            btn.style.setProperty('--x', x + 'px');
-            btn.style.setProperty('--y', y + 'px');
-        });
-    });
+    // 3. Ticker Cloner (Infinite Effect)
+    const ticker = document.querySelector('.ticker');
+    if (ticker) {
+        const clone = ticker.innerHTML;
+        ticker.innerHTML += clone; // Duplicate content for seamless loop
+    }
 });
