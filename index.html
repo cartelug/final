@@ -3,268 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Cartel | Premium Subscriptions in Uganda & South Sudan</title>
-    <meta name="description" content="Get Netflix, Spotify, Prime Video and Social Boosts instantly. Pay via MTN & Airtel Mobile Money. Trusted by 10,000+ customers.">
+    <title>AccessUG | Premium Digital Services in Uganda & South Sudan</title>
+    <meta name="description" content="Netflix, Spotify, and Viral Growth services. Connect first, pay after confirmation. Trusted by 12,000+ clients in East Africa.">
+    <link rel="icon" href="logo.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="home-2026.css">
-    
-    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="stylesheet" href="home.css">
 </head>
-<body>
+<body class="home">
 
-    <div class="ambient-glow glow-1"></div>
-    <div class="ambient-glow glow-2"></div>
-
-    <nav class="glass-nav">
-        <div class="container nav-content">
-            <div class="brand">
-                <img src="logo.png" alt="Cartel Logo" class="nav-logo" onerror="this.style.display='none'; document.querySelector('.brand-text').style.display='block'">
-                <span class="brand-text">CARTEL</span>
+    <nav class="home-nav">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <img src="logo.png" alt="AccessUG">
+            </a>
+            <div class="nav-links desktop-only">
+                <a href="#catalog">Services</a>
+                <a href="#proof">Proof</a>
+                <a href="contact/">Support</a>
             </div>
-            <div class="nav-actions">
-                <div class="status-pill">
-                    <span class="dot"></span>
-                    <span class="status-text">Online</span>
-                </div>
-                <a href="#catalog" class="btn btn-sm btn-primary">Browse</a>
-            </div>
+            <button class="menu-toggle mobile-only" aria-label="Menu">
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
-    <header class="hero">
+    <div class="mobile-menu">
+        <div class="mm-links">
+            <a href="#catalog" class="mm-link">Services</a>
+            <a href="#proof" class="mm-link">Client Proof</a>
+            <a href="contact/" class="mm-link">Support</a>
+        </div>
+    </div>
+
+    <header class="home-hero">
+        <div class="hero-bg"></div>
         <div class="container">
             <div class="hero-content">
-                <div class="badge-pill">
-                    <i class="ri-shield-check-fill"></i> Trusted by 12,000+ Users
+                <div class="region-pill">
+                    <img src="uganda-flag.png" alt="UG">
+                    <img src="south-sudan-flag.png" alt="SS">
+                    <span>#1 In East Africa</span>
                 </div>
-                <h1 class="hero-title">
-                    Global Premium.<br>
-                    <span class="text-gradient">Local Payment.</span>
-                </h1>
+                <h1>Digital Greatness.<br><span class="text-gradient">Unlocked.</span></h1>
                 <p class="hero-sub">
-                    Get Netflix, Spotify, Prime, and Viral Boosts instantly. 
-                    Pay securely with <strong>MTN MoMo</strong> or <strong>Airtel Money</strong>.
+                    Premium Netflix, Spotify & Viral Growth. 
+                    <br class="mobile-break">
+                    <span class="highlight-text">Connect first. Pay after confirmation.</span>
                 </p>
-                
-                <div class="hero-cta-group">
-                    <a href="#catalog" class="btn btn-lg btn-primary">
-                        Start Ordering <i class="ri-arrow-right-line"></i>
+                <div class="hero-actions">
+                    <a href="#catalog" class="btn btn-primary">
+                        Browse Catalog <i class="fas fa-arrow-down"></i>
                     </a>
-                    <a href="https://wa.me/256700000000" class="btn btn-lg btn-glass">
-                        <i class="ri-whatsapp-line"></i> WhatsApp Support
+                    <a href="#proof" class="btn btn-secondary">
+                        See Proof
                     </a>
                 </div>
-
-                <div class="trust-row">
-                    <img src="mtn.png" alt="MTN" class="pay-logo">
-                    <img src="airtel.png" alt="Airtel" class="pay-logo">
-                    <div class="divider-v"></div>
-                    <div class="rating-box">
-                        <div class="stars">★★★★★</div>
-                        <span>4.9/5 Rating</span>
-                    </div>
+                <div class="trust-indicator">
+                    <i class="fas fa-shield-alt"></i> Instant Setup • Mobile Money Accepted
                 </div>
             </div>
         </div>
     </header>
 
-    <div class="ticker-wrap">
-        <div class="ticker">
-            <div class="ticker-item"><i class="ri-check-circle-fill"></i> John (Kampala) bought Netflix 4K</div>
-            <div class="ticker-item"><i class="ri-check-circle-fill"></i> Sarah (Juba) bought Spotify Duo</div>
-            <div class="ticker-item"><i class="ri-check-circle-fill"></i> David (Entebbe) bought TikTok Boost</div>
-            <div class="ticker-item"><i class="ri-check-circle-fill"></i> Amo (Gulu) bought Prime Video</div>
-        </div>
-    </div>
-
-    <main id="catalog" class="section">
+    <section class="home-process">
         <div class="container">
-            <div class="section-header">
-                <h2>Select Your Service</h2>
-                <p>Instant activation. 100% Guaranteed.</p>
-            </div>
-
-            <div class="tabs-scroll">
-                <button class="tab-btn active" data-category="all">All</button>
-                <button class="tab-btn" data-category="streaming">Streaming</button>
-                <button class="tab-btn" data-category="music">Music</button>
-                <button class="tab-btn" data-category="boost">Viral Boost</button>
-                <button class="tab-btn" data-category="tools">Tools</button>
-            </div>
-
-            <div class="grid" id="product-grid">
-                
-                <article class="card featured-card" data-cat="streaming">
-                    <div class="card-badge">Best Seller</div>
-                    <div class="card-icon-bg">
-                        <img src="netflix.png" alt="Netflix">
-                    </div>
-                    <div class="card-body">
-                        <h3>Netflix Premium</h3>
-                        <p class="benefit">4K UHD • No Ads • Works on TV</p>
-                        <div class="price-row">
-                            <span class="price">From 15,000 UGX</span>
-                            <span class="delivery"><i class="ri-flashlight-fill"></i> Instant</span>
-                        </div>
-                        <div class="action-row">
-                            <a href="./netflix-order/" class="btn btn-block btn-primary">Order Now</a>
-                            <a href="./view-netflix/" class="btn-text">Details</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card" data-cat="music">
-                    <div class="card-icon-bg">
-                        <img src="spotify.png" alt="Spotify">
-                    </div>
-                    <div class="card-body">
-                        <h3>Spotify Premium</h3>
-                        <p class="benefit">Ad-free music • Offline play</p>
-                        <div class="price-row">
-                            <span class="price">From 10,000 UGX</span>
-                            <span class="delivery"><i class="ri-time-line"></i> 5 Mins</span>
-                        </div>
-                        <div class="action-row">
-                            <a href="./spotify-order/" class="btn btn-block btn-secondary">Order Now</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card" data-cat="streaming">
-                    <div class="card-icon-bg">
-                        <img src="prime-video.png" alt="Prime">
-                    </div>
-                    <div class="card-body">
-                        <h3>Prime Video</h3>
-                        <p class="benefit">Exclusive movies & series</p>
-                        <div class="price-row">
-                            <span class="price">From 12,000 UGX</span>
-                            <span class="delivery"><i class="ri-time-line"></i> 10 Mins</span>
-                        </div>
-                        <div class="action-row">
-                            <a href="./prime-order/" class="btn btn-block btn-secondary">Order Now</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card" data-cat="boost">
-                    <div class="card-icon-bg">
-                        <img src="tiktok.png" alt="TikTok">
-                    </div>
-                    <div class="card-body">
-                        <h3>TikTok Growth</h3>
-                        <p class="benefit">Real followers & Likes</p>
-                        <div class="price-row">
-                            <span class="price">Custom pricing</span>
-                            <span class="delivery"><i class="ri-bar-chart-fill"></i> Fast</span>
-                        </div>
-                        <div class="action-row">
-                            <a href="./tiktok-boost/" class="btn btn-block btn-secondary">Boost Now</a>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="card" data-cat="boost">
-                    <div class="card-icon-bg">
-                        <img src="instagram.png" alt="Instagram">
-                    </div>
-                    <div class="card-body">
-                        <h3>Instagram Boost</h3>
-                        <p class="benefit">Followers, Likes & Views</p>
-                        <div class="price-row">
-                            <span class="price">Custom pricing</span>
-                            <span class="delivery"><i class="ri-bar-chart-fill"></i> Fast</span>
-                        </div>
-                        <div class="action-row">
-                            <a href="./instagram-boost/" class="btn btn-block btn-secondary">Boost Now</a>
-                        </div>
-                    </div>
-                </article>
-
-                 <article class="card" data-cat="tools">
-                    <div class="card-icon-bg">
-                        <i class="ri-palette-line" style="font-size: 32px; color: #fff;"></i>
-                    </div>
-                    <div class="card-body">
-                        <h3>Canva Pro</h3>
-                        <p class="benefit">Unlock all premium features</p>
-                        <div class="price-row">
-                            <span class="price">Ask for price</span>
-                            <span class="delivery"><i class="ri-time-line"></i> 15 Mins</span>
-                        </div>
-                        <div class="action-row">
-                            <a href="./canva-order/" class="btn btn-block btn-secondary">Get Pro</a>
-                        </div>
-                    </div>
-                </article>
-
-            </div>
-        </div>
-    </main>
-
-    <section class="section section-dark">
-        <div class="container">
-            <div class="steps-grid">
+            <div class="process-grid">
                 <div class="step-card">
                     <div class="step-num">01</div>
                     <h3>Choose Service</h3>
-                    <p>Select the subscription or boost package you need from our catalog.</p>
+                    <p>Select the premium package you need.</p>
                 </div>
-                <div class="step-card">
+                <div class="step-card highlight">
                     <div class="step-num">02</div>
-                    <h3>Pay Locally</h3>
-                    <p>Use MTN or Airtel Mobile Money. No credit card required. Safe & Secure.</p>
+                    <h3>Connect First</h3>
+                    <p>We set up your account <strong>before</strong> you pay.</p>
                 </div>
                 <div class="step-card">
                     <div class="step-num">03</div>
-                    <h3>Instant Access</h3>
-                    <p>Receive your credentials or upgrade link via WhatsApp or Email within minutes.</p>
+                    <h3>Pay Later</h3>
+                    <p>Confirm access, then pay via MM.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <footer class="footer">
+    <section id="catalog" class="home-catalog">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h4>The Cartel</h4>
-                    <p>Premium digital services for East Africa.</p>
-                    <div class="footer-flags">
-                        <img src="uganda-flag.png" alt="Uganda" title="Uganda">
-                        <img src="south-sudan-flag.png" alt="South Sudan" title="South Sudan">
+            <div class="section-header">
+                <h2>Our Services</h2>
+                <div class="line"></div>
+            </div>
+
+            <div class="cat-label">Premium Streaming</div>
+            <div class="service-grid">
+                <a href="netflix-order/" class="service-card netflix-theme">
+                    <div class="card-icon">
+                        <img src="netflix.png" alt="Netflix">
                     </div>
-                </div>
-                <div class="footer-col">
-                    <h4>Legal</h4>
-                    <a href="./terms-of-service/">Terms of Service</a>
-                    <a href="./privacy-policy/">Privacy Policy</a>
-                    <a href="./contact/">Contact Us</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Support</h4>
-                    <a href="https://wa.me/256700000000" class="btn btn-sm btn-glass">
-                        <i class="ri-whatsapp-line"></i> Chat Support
-                    </a>
-                    <p class="small-text mt-2">Available 8AM - 10PM EAT</p>
+                    <div class="card-info">
+                        <h3>Netflix Premium</h3>
+                        <p>4K UHD • Private Profile</p>
+                        <div class="card-meta">Connect First, Pay After</div>
+                    </div>
+                    <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+                </a>
+
+                <a href="spotify-order/" class="service-card spotify-theme">
+                    <div class="card-icon">
+                        <img src="spotify.png" alt="Spotify">
+                    </div>
+                    <div class="card-info">
+                        <h3>Spotify Premium</h3>
+                        <p>Ad-free Music • Individual</p>
+                        <div class="card-meta">Connect First, Pay After</div>
+                    </div>
+                    <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+                </a>
+
+                <a href="prime-order/" class="service-card prime-theme">
+                    <div class="card-icon">
+                        <img src="prime-video.png" alt="Prime">
+                    </div>
+                    <div class="card-info">
+                        <h3>Prime Video</h3>
+                        <p>Exclusive Movies & Series</p>
+                        <div class="card-meta">Connect First, Pay After</div>
+                    </div>
+                    <div class="card-arrow"><i class="fas fa-chevron-right"></i></div>
+                </a>
+            </div>
+
+            <div class="cat-label">Viral Growth</div>
+            <div class="service-grid">
+                <a href="boost-package/" class="service-card tiktok-theme featured-card">
+                    <div class="badge">TRENDING</div>
+                    <div class="card-icon">
+                        <img src="tiktok.png" alt="Viral">
+                    </div>
+                    <div class="card-info">
+                        <h3>AccessUG Boost Package</h3>
+                        <p>Explode your TikTok & IG Views</p>
+                        <div class="card-meta">Guaranteed Reach</div>
+                    </div>
+                    <div class="card-arrow"><i class="fas fa-bolt"></i></div>
+                </a>
+
+                <div class="service-card locked">
+                    <div class="card-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+                    <div class="card-info">
+                        <h3>Facebook Boost</h3>
+                        <p>Coming Soon</p>
+                    </div>
+                    <div class="card-lock"><i class="fas fa-lock"></i></div>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 The Cartel. All rights reserved.</p>
+
+            <div class="cat-label">Creative Tools</div>
+            <div class="service-grid">
+                <div class="service-card locked">
+                    <div class="card-icon"><i class="fas fa-palette"></i></div>
+                    <div class="card-info">
+                        <h3>Canva Pro</h3>
+                        <p>Coming Soon</p>
+                    </div>
+                    <div class="card-lock"><i class="fas fa-lock"></i></div>
+                </div>
+                <div class="service-card locked">
+                    <div class="card-icon"><i class="fas fa-cut"></i></div>
+                    <div class="card-info">
+                        <h3>CapCut Pro</h3>
+                        <p>Coming Soon</p>
+                    </div>
+                    <div class="card-lock"><i class="fas fa-lock"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proof" class="home-proof">
+        <div class="container">
+            <div class="section-header">
+                <h2>Client Proof</h2>
+                <p>Real results from 12,000+ satisfied clients.</p>
+            </div>
+            
+            <div class="carousel-window">
+                <div class="carousel-track" id="proofTrack">
+                    <div class="slide"><img src="1.png" alt="Client Proof 1" loading="lazy"></div>
+                    <div class="slide"><img src="2.png" alt="Client Proof 2" loading="lazy"></div>
+                    <div class="slide"><img src="3.png" alt="Client Proof 3" loading="lazy"></div>
+                    <div class="slide"><img src="4.png" alt="Client Proof 4" loading="lazy"></div>
+                    <div class="slide"><img src="5.png" alt="Client Proof 5" loading="lazy"></div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="c-btn prev" id="prevBtn" aria-label="Previous"><i class="fas fa-arrow-left"></i></button>
+                    <button class="c-btn next" id="nextBtn" aria-label="Next"><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            
+            <div class="proof-cta">
+                <a href="trust/" class="btn btn-outline">View All Reviews</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="home-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="f-brand">
+                    <img src="logo.png" alt="AccessUG" class="f-logo">
+                    <p>Digital Freedom Delivered.</p>
+                    <p class="f-loc">Kampala • Juba</p>
+                </div>
+                <div class="f-links">
+                    <h4>Platform</h4>
+                    <a href="netflix-order/">Netflix</a>
+                    <a href="spotify-order/">Spotify</a>
+                    <a href="boost-package/">Viral Boost</a>
+                </div>
+                <div class="f-links">
+                    <h4>Company</h4>
+                    <a href="trust/">Reviews</a>
+                    <a href="contact/">Contact Support</a>
+                    <a href="terms-of-service/">Terms of Service</a>
+                </div>
+            </div>
+            <div class="f-copy">
+                &copy; 2026 AccessUG. All rights reserved.
             </div>
         </div>
     </footer>
 
-    <a href="https://wa.me/256700000000" class="float-wa" aria-label="Chat on WhatsApp">
-        <i class="ri-whatsapp-fill"></i>
-    </a>
-
-    <script src="home-2026.js"></script>
+    <script src="home.js"></script>
 </body>
 </html>
