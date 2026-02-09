@@ -8,167 +8,219 @@
     <link rel="icon" href="logo.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="home.css">
 </head>
-<body class="apple-body">
+<body class="apple-mode">
 
-    <nav class="global-nav">
-        <div class="nav-content">
-            <a href="#" class="nav-logo">
-                <img src="logo.png" alt="AccessUG">
-            </a>
-            
-            <ul class="nav-list desktop-only">
-                <li><a href="netflix-order/">Netflix</a></li>
-                <li><a href="spotify-order/">Spotify</a></li>
-                <li><a href="prime-order/">Prime Video</a></li>
-                <li><a href="boost-package/">Viral Boost</a></li>
-                <li><a href="trust/">Proof</a></li>
-                <li><a href="contact/">Support</a></li>
+    <nav class="ac-globalnav">
+        <div class="ac-gn-content">
+            <ul class="ac-gn-list">
+                <li class="ac-gn-item ac-gn-apple">
+                    <a href="#" class="ac-gn-link ac-gn-link-apple">
+                        <span class="brand-text">AccessUG</span>
+                    </a>
+                </li>
+                <li class="ac-gn-item desktop-only"><a href="netflix-order/" class="ac-gn-link">Netflix</a></li>
+                <li class="ac-gn-item desktop-only"><a href="spotify-order/" class="ac-gn-link">Spotify</a></li>
+                <li class="ac-gn-item desktop-only"><a href="boost-package/" class="ac-gn-link">Viral Boost</a></li>
+                <li class="ac-gn-item desktop-only"><a href="prime-order/" class="ac-gn-link">Prime Video</a></li>
+                <li class="ac-gn-item desktop-only"><a href="trust/" class="ac-gn-link">Proof</a></li>
+                <li class="ac-gn-item desktop-only"><a href="contact/" class="ac-gn-link">Support</a></li>
+                
+                <li class="ac-gn-item ac-gn-search">
+                    <a href="#search" class="ac-gn-link ac-gn-link-search"><i class="fas fa-search"></i></a>
+                </li>
+                <li class="ac-gn-item ac-gn-bag">
+                    <a href="#bag" class="ac-gn-link ac-gn-link-bag"><i class="fas fa-shopping-bag"></i></a>
+                </li>
+                
+                <li class="ac-gn-item mobile-only">
+                    <button class="ac-gn-menuanchor">
+                        <span class="ac-gn-menuicon-bread ac-gn-menuicon-bread-top"></span>
+                        <span class="ac-gn-menuicon-bread ac-gn-menuicon-bread-bottom"></span>
+                    </button>
+                </li>
             </ul>
-
-            <div class="nav-actions">
-                <a href="#search" class="icon-link"><i class="fas fa-search"></i></a>
-                <a href="#bag" class="icon-link"><i class="fas fa-shopping-bag"></i></a>
-                <button class="mobile-toggle mobile-only" aria-label="Menu">
-                    <span class="line top"></span>
-                    <span class="line bottom"></span>
-                </button>
-            </div>
         </div>
     </nav>
 
-    <div class="mobile-curtain">
-        <div class="curtain-content">
-            <a href="netflix-order/" class="curtain-link">Netflix</a>
-            <a href="spotify-order/" class="curtain-link">Spotify</a>
-            <a href="prime-order/" class="curtain-link">Prime Video</a>
-            <a href="boost-package/" class="curtain-link">Viral Boost</a>
-            <a href="trust/" class="curtain-link">Proof</a>
-            <a href="contact/" class="curtain-link">Support</a>
+    <div class="ac-gn-curtain">
+        <div class="ac-gn-curtain-content">
+            <ul class="ac-gn-list-mobile">
+                <li><a href="netflix-order/">Netflix</a></li>
+                <li><a href="spotify-order/">Spotify</a></li>
+                <li><a href="boost-package/">Viral Boost</a></li>
+                <li><a href="prime-order/">Prime Video</a></li>
+                <li><a href="trust/">Proof</a></li>
+                <li><a href="contact/">Support</a></li>
+            </ul>
         </div>
     </div>
 
-    <main class="main-content">
+    <main class="main">
 
-        <section class="unit-wrapper theme-dark">
-            <div class="unit-content">
-                <h2 class="headline">Netflix Premium</h2>
-                <h3 class="subhead">The ultimate cinema experience.</h3>
-                <div class="cta-links">
-                    <a href="netflix-order/" class="button primary">Order Now</a>
-                    <a href="netflix-order/" class="link">Learn more <i class="fas fa-chevron-right chevron"></i></a>
-                </div>
-            </div>
-            <div class="unit-image">
-                <figure class="hero-asset floating-slow">
-                    <img src="netflix.png" alt="Netflix">
-                </figure>
-            </div>
-        </section>
-
-        <section class="unit-wrapper theme-light">
-            <div class="unit-content">
-                <h2 class="headline text-black">Viral Boost</h2>
-                <h3 class="subhead text-grey">Titanium fame. Instant.</h3>
-                <div class="cta-links">
-                    <a href="boost-package/" class="button outline">Buy</a>
-                    <a href="boost-package/" class="link">Learn more <i class="fas fa-chevron-right chevron"></i></a>
-                </div>
-            </div>
-            <div class="unit-image">
-                <figure class="hero-asset floating-fast">
-                    <img src="tiktok.png" alt="Viral">
-                </figure>
-            </div>
-        </section>
-
-        <div class="grid-section">
-            
-            <div class="grid-tile theme-dark">
-                <div class="tile-content">
-                    <h4 class="tile-head">Spotify Premium</h4>
-                    <p class="tile-copy">Music re-engineered.</p>
+        <section class="module-hero theme-dark">
+            <div class="unit-wrapper">
+                <a href="netflix-order/" class="unit-link-overlay" aria-label="Netflix"></a>
+                <div class="unit-copy-wrapper">
+                    <h2 class="headline">Netflix Premium</h2>
+                    <h3 class="subhead">The ultimate cinema experience.</h3>
                     <div class="cta-links">
-                        <a href="spotify-order/" class="button primary small">Buy</a>
-                        <a href="spotify-order/" class="link small">Learn more <i class="fas fa-chevron-right chevron"></i></a>
+                        <a href="netflix-order/" class="button button-primary">Order Now</a>
+                        <a href="netflix-order/" class="link">Learn more <i class="fas fa-chevron-right chevron"></i></a>
                     </div>
                 </div>
-                <div class="tile-image centered">
-                    <i class="fab fa-spotify huge-icon green-glow"></i>
+                <div class="unit-image-wrapper">
+                    <div class="css-device cinema-card floating-slow">
+                        <div class="screen">
+                            <span class="n-logo">N</span>
+                            <div class="ui-row"></div>
+                            <div class="ui-row short"></div>
+                        </div>
+                        <div class="reflection"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="module-hero theme-light">
+            <div class="unit-wrapper">
+                <a href="boost-package/" class="unit-link-overlay" aria-label="Viral Boost"></a>
+                <div class="unit-copy-wrapper">
+                    <h2 class="headline text-black">Viral Boost</h2>
+                    <h3 class="subhead text-grey">Titanium fame. Instant.</h3>
+                    <div class="cta-links">
+                        <a href="boost-package/" class="button button-outline">Buy</a>
+                        <a href="boost-package/" class="link">Learn more <i class="fas fa-chevron-right chevron"></i></a>
+                    </div>
+                </div>
+                <div class="unit-image-wrapper">
+                    <div class="css-device phone-ui floating-fast">
+                        <div class="notch"></div>
+                        <div class="stat-box">
+                            <span class="val">10.5K</span>
+                            <span class="lbl">Followers</span>
+                        </div>
+                        <div class="stat-graph">
+                            <div class="bar b1"></div>
+                            <div class="bar b2"></div>
+                            <div class="bar b3"></div>
+                            <div class="bar b4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="module-grid">
+            
+            <div class="grid-tile theme-dark">
+                <div class="tile-wrapper">
+                    <a href="spotify-order/" class="tile-link-overlay"></a>
+                    <div class="tile-copy">
+                        <h4 class="tile-headline">Spotify</h4>
+                        <h5 class="tile-subhead">Music re-engineered.</h5>
+                        <div class="cta-links">
+                            <a href="spotify-order/" class="button button-small">Buy</a>
+                            <a href="spotify-order/" class="link link-small">Learn more <i class="fas fa-chevron-right chevron"></i></a>
+                        </div>
+                    </div>
+                    <div class="tile-image-wrapper">
+                        <div class="css-icon spotify-green">
+                            <i class="fab fa-spotify"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="grid-tile theme-light">
-                <div class="tile-content">
-                    <h4 class="tile-head text-black">Prime Video</h4>
-                    <p class="tile-copy text-grey">Exclusive originals.</p>
-                    <div class="cta-links">
-                        <a href="prime-order/" class="button outline small">Order</a>
-                        <a href="prime-order/" class="link small">Learn more <i class="fas fa-chevron-right chevron"></i></a>
+                <div class="tile-wrapper">
+                    <a href="prime-order/" class="tile-link-overlay"></a>
+                    <div class="tile-copy">
+                        <h4 class="tile-headline text-black">Prime Video</h4>
+                        <h5 class="tile-subhead text-grey">Exclusive originals.</h5>
+                        <div class="cta-links">
+                            <a href="prime-order/" class="button button-outline-small">Order</a>
+                            <a href="prime-order/" class="link link-small">Learn more <i class="fas fa-chevron-right chevron"></i></a>
+                        </div>
                     </div>
-                </div>
-                <div class="tile-image centered">
-                    <i class="fas fa-play huge-icon blue-glow"></i>
+                    <div class="tile-image-wrapper">
+                        <div class="css-icon prime-blue">
+                            <i class="fas fa-play"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="grid-tile theme-dark">
-                <div class="tile-content">
-                    <div class="logo-lockup"><i class="fas fa-shield-alt"></i> AccessUG</div>
-                    <h4 class="tile-head gradient-text">Connect First.</h4>
-                    <p class="tile-copy">Pay after confirmation.</p>
-                    <div class="cta-links">
-                        <a href="contact/" class="link small">See how it works <i class="fas fa-chevron-right chevron"></i></a>
+                <div class="tile-wrapper">
+                    <a href="contact/" class="tile-link-overlay"></a>
+                    <div class="tile-copy">
+                        <div class="logo-lockup"><i class="fas fa-shield-alt"></i> AccessUG</div>
+                        <h4 class="tile-headline gradient-text">Connect First.</h4>
+                        <h5 class="tile-subhead">Pay after confirmation.</h5>
+                        <div class="cta-links">
+                            <a href="contact/" class="link link-small">See how it works <i class="fas fa-chevron-right chevron"></i></a>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="grid-tile theme-light bg-grey">
-                <div class="tile-content">
-                    <h4 class="tile-head text-black">Facebook</h4>
-                    <p class="tile-copy text-grey">Arriving 2026.</p>
-                    <div class="cta-links">
-                        <span class="badge">Coming Soon</span>
+            <div class="grid-tile theme-grey">
+                <div class="tile-wrapper">
+                    <div class="tile-copy">
+                        <h4 class="tile-headline text-black">Facebook</h4>
+                        <h5 class="tile-subhead text-grey">Arriving 2026.</h5>
+                        <div class="cta-links">
+                            <span class="badge">Coming Soon</span>
+                        </div>
+                    </div>
+                    <div class="tile-image-wrapper">
+                        <div class="css-icon meta-blue">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
                     </div>
                 </div>
-                <div class="tile-image centered">
-                    <i class="fab fa-facebook-f huge-icon grey-glow"></i>
+            </div>
+
+        </section>
+
+        <section class="module-carousel">
+            <div class="carousel-content">
+                <h3 class="carousel-head">Verified Clients.</h3>
+                <div class="carousel-track-container">
+                    <div class="carousel-track" id="proofTrack">
+                        <div class="slide"><img src="1.png" alt="Proof 1"></div>
+                        <div class="slide"><img src="2.png" alt="Proof 2"></div>
+                        <div class="slide"><img src="3.png" alt="Proof 3"></div>
+                        <div class="slide"><img src="4.png" alt="Proof 4"></div>
+                        <div class="slide"><img src="5.png" alt="Proof 5"></div>
+                    </div>
                 </div>
-            </div>
-
-        </div>
-
-        <section class="carousel-section">
-            <div class="carousel-track">
-                <div class="slide"><img src="1.png" alt="Proof"></div>
-                <div class="slide"><img src="2.png" alt="Proof"></div>
-                <div class="slide"><img src="3.png" alt="Proof"></div>
-                <div class="slide"><img src="4.png" alt="Proof"></div>
-                <div class="slide"><img src="5.png" alt="Proof"></div>
-                <div class="slide"><img src="1.png" alt="Proof"></div>
-                <div class="slide"><img src="2.png" alt="Proof"></div>
-            </div>
-            <div class="carousel-overlay">
-                <h3>Verified Clients.</h3>
-                <a href="trust/" class="button white">See All Proof</a>
+                <div class="carousel-controls">
+                    <button id="prevBtn" aria-label="Previous"><i class="fas fa-arrow-left"></i></button>
+                    <button id="nextBtn" aria-label="Next"><i class="fas fa-arrow-right"></i></button>
+                </div>
+                <div class="carousel-cta">
+                    <a href="trust/" class="button button-white">See All Proof</a>
+                </div>
             </div>
         </section>
 
     </main>
 
-    <footer class="global-footer">
-        <div class="footer-content">
-            <div class="footnote">
+    <footer class="ac-gf">
+        <div class="ac-gf-content">
+            <section class="ac-gf-footnotes">
                 <p>1. Connect First Guarantee applies to all new orders in Uganda and South Sudan.</p>
                 <p>2. Subscription pricing is subject to change based on exchange rates.</p>
-            </div>
-            <div class="directory">
-                <div class="col">
-                    <h5>Shop</h5>
+            </section>
+            <nav class="ac-gf-directory">
+                <div class="ac-gf-col">
+                    <h3 class="ac-gf-head">Shop</h3>
                     <ul>
                         <li><a href="netflix-order/">Netflix</a></li>
                         <li><a href="spotify-order/">Spotify</a></li>
@@ -176,25 +228,24 @@
                         <li><a href="boost-package/">Viral Boost</a></li>
                     </ul>
                 </div>
-                <div class="col">
-                    <h5>Support</h5>
+                <div class="ac-gf-col">
+                    <h3 class="ac-gf-head">Support</h3>
                     <ul>
                         <li><a href="contact/">Contact Us</a></li>
                         <li><a href="trust/">Reviews</a></li>
                     </ul>
                 </div>
-                <div class="col">
-                    <h5>Legal</h5>
+                <div class="ac-gf-col">
+                    <h3 class="ac-gf-head">Legal</h3>
                     <ul>
                         <li><a href="terms-of-service/">Terms of Use</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
                     </ul>
                 </div>
-            </div>
-            <div class="footer-base">
-                <div class="copyright">Copyright © 2026 AccessUG Inc. All rights reserved.</div>
-                <div class="locale">Uganda | South Sudan</div>
-            </div>
+            </nav>
+            <section class="ac-gf-footer">
+                <div class="ac-gf-footer-legal">Copyright © 2026 AccessUG Inc. All rights reserved.</div>
+                <div class="ac-gf-footer-locale">Uganda | South Sudan</div>
+            </section>
         </div>
     </footer>
 

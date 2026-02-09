@@ -1,21 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    const toggle = document.querySelector('.mobile-toggle');
+    const menuBtn = document.querySelector('.ac-gn-menuanchor');
     const body = document.body;
-    const curtain = document.querySelector('.mobile-curtain');
+    const curtain = document.querySelector('.ac-gn-curtain');
 
-    if(toggle) {
-        toggle.addEventListener('click', () => {
+    if(menuBtn) {
+        menuBtn.addEventListener('click', () => {
             body.classList.toggle('menu-open');
             
-            // Animate lines to X
-            const lines = toggle.querySelectorAll('.line');
+            // Transform lines to X
+            const top = menuBtn.querySelector('.ac-gn-menuicon-bread-top');
+            const bottom = menuBtn.querySelector('.ac-gn-menuicon-bread-bottom');
+            
             if(body.classList.contains('menu-open')) {
-                lines[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-                lines[1].style.transform = 'rotate(-45deg) translate(5px, -5px)';
+                top.style.transform = 'rotate(45deg) translate(2px, 2px)';
+                bottom.style.transform = 'rotate(-45deg) translate(2px, -3px)';
             } else {
-                lines[0].style.transform = 'none';
-                lines[1].style.transform = 'none';
+                top.style.transform = 'none';
+                bottom.style.transform = 'none';
             }
         });
 
@@ -23,9 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
         curtain.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 body.classList.remove('menu-open');
-                const lines = toggle.querySelectorAll('.line');
-                lines[0].style.transform = 'none';
-                lines[1].style.transform = 'none';
+                const top = menuBtn.querySelector('.ac-gn-menuicon-bread-top');
+                const bottom = menuBtn.querySelector('.ac-gn-menuicon-bread-bottom');
+                top.style.transform = 'none';
+                bottom.style.transform = 'none';
             });
         });
     }
