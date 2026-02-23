@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Access Portal | AccessUG</title>
+    <title>GET Connected | AccessUG</title>
     
     <link rel="icon" href="../IMAGES/logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;900&family=Space+Mono:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="../HOME/style.css">
@@ -36,12 +36,12 @@
             <section class="wizard-step active" id="step-onboard">
                 <div class="step-header text-center">
                     <div class="icon-pulse"><i class="fas fa-fingerprint"></i></div>
-                    <h1>Welcome to <span class="text-gradient">Access</span></h1>
-                    <p>Enter your details to initiate a secure connection.</p>
+                    <h1>Welcome to <span class="text-gradient">Accessug</span></h1>
+                    <p class="hero-subtitle"><i class="fas fa-star text-gold"></i> #1 in East Africa.</p>
                 </div>
 
                 <div class="input-group">
-                    <label>Your Name</label>
+                    <label>Your full name</label>
                     <input type="text" id="userName" placeholder="e.g. David M." autocomplete="off">
                 </div>
 
@@ -61,7 +61,7 @@
                 </div>
 
                 <button class="btn btn-primary-glow btn-block mt-4" onclick="initiatePortal()">
-                    Enter Portal <i class="fas fa-arrow-right"></i>
+                    Continue <i class="fas fa-arrow-right"></i>
                 </button>
             </section>
 
@@ -69,7 +69,7 @@
                 <div class="step-header">
                     <button class="back-link" onclick="goBack('step-onboard')"><i class="fas fa-arrow-left"></i> Back</button>
                     <h1>Select <span class="text-gradient">Service</span></h1>
-                    <p>Which premium environment are you connecting to?</p>
+                    <p>Which service are you connecting to?</p>
                 </div>
 
                 <div class="service-grid">
@@ -92,14 +92,12 @@
                 <div class="step-header">
                     <button class="back-link" onclick="goBack('step-service')"><i class="fas fa-arrow-left"></i> Back</button>
                     <h1 id="plan-title">Choose <span class="dynamic-color">Plan</span></h1>
-                    <p>Unlock ultimate premium access.</p>
+                    <p>Select your premium package.</p>
                 </div>
 
-                <div class="dynamic-features" id="plan-features">
-                    </div>
+                <div class="dynamic-features" id="plan-features"></div>
 
-                <div class="pricing-stack" id="pricing-stack">
-                    </div>
+                <div class="pricing-stack" id="pricing-stack"></div>
             </section>
 
             <section class="wizard-step" id="step-device">
@@ -109,29 +107,43 @@
                     <p>Where will you be watching?</p>
                 </div>
                 
-                <div class="device-grid">
-                    <button class="device-btn" onclick="selectDevice('TV')"><i class="fas fa-tv"></i> Television</button>
-                    <button class="device-btn" onclick="selectDevice('Mobile')"><i class="fas fa-mobile-alt"></i> Phone / Tablet</button>
-                    <button class="device-btn" onclick="selectDevice('PC')"><i class="fas fa-laptop"></i> Computer</button>
-                </div>
-            </section>
+                <div class="device-grid-expanded">
+                    <button class="device-pro-card" onclick="selectDevice('Smart TV')">
+                        <div class="d-icon"><i class="fas fa-tv"></i></div>
+                        <div class="d-content">
+                            <h3>Smart TV</h3>
+                            <p class="d-note">Using the Netflix app directly on your TV with your TV remote.</p>
+                            <div class="d-helper"><i class="fas fa-info-circle"></i> If a code appears, choose 'Use Remote' to sign in directly.</div>
+                        </div>
+                    </button>
 
-            <section class="wizard-step" id="step-tv-type">
-                <div class="step-header">
-                    <button class="back-link" onclick="goBack('step-device')"><i class="fas fa-arrow-left"></i> Back</button>
-                    <h1>TV <span class="dynamic-color">System</span></h1>
-                    <p>How does your TV operate?</p>
-                </div>
-                <div class="device-grid">
-                    <button class="device-btn" onclick="finishNetflix('Smart TV')"><i class="fas fa-photo-video"></i> Smart TV <small>(Has App Store)</small></button>
-                    <button class="device-btn" onclick="finishNetflix('Normal TV')"><i class="fas fa-globe"></i> Normal TV <small>(Uses Browser)</small></button>
+                    <button class="device-pro-card" onclick="selectDevice('Normal TV')">
+                        <div class="d-icon"><i class="fas fa-hdd"></i></div>
+                        <div class="d-content">
+                            <h3>TV <span class="badge-sub">(Connected Device)</span></h3>
+                            <p class="d-note">Using a Firestick, Android box, Console, or Decoder.</p>
+                            <div class="d-helper"><i class="fas fa-info-circle"></i> Open Netflix on that device and sign in there.</div>
+                        </div>
+                    </button>
+
+                    <div class="d-row">
+                        <button class="device-pro-card small" onclick="selectDevice('Mobile')">
+                            <div class="d-icon"><i class="fas fa-mobile-alt"></i></div>
+                            <h3>Mobile / Tablet</h3>
+                        </button>
+                        <button class="device-pro-card small" onclick="selectDevice('PC')">
+                            <div class="d-icon"><i class="fas fa-laptop"></i></div>
+                            <h3>Computer</h3>
+                        </button>
+                    </div>
                 </div>
             </section>
 
             <section class="wizard-step" id="step-final">
                 <div class="step-header">
                     <button class="back-link" id="final-back-btn" onclick="goBack('step-device')"><i class="fas fa-arrow-left"></i> Back</button>
-                    <h1 id="final-title">Finalizing...</h1>
+                    <h1 id="final-title">Activation <span class="dynamic-color">Ready</span></h1>
+                    <p id="final-subtitle">Follow the steps below to access your account.</p>
                 </div>
                 
                 <div id="final-content" class="final-content-box">
