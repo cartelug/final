@@ -1,96 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. ELITE SCROLL ANIMATION ENGINE (Intersection Observer)
-    const observerOptions = {
+    // 1. LIGHTWEIGHT SCROLL REVEAL (Intersection Observer)
+    const revealElements = document.querySelectorAll('.scroll-reveal');
+    
+    const revealOptions = {
         root: null,
-        rootMargin: '0px',
-        threshold: 0.15 // Triggers when 15% of the element is visible
+        rootMargin: '0px 0px -50px 0px', // Triggers slightly before element comes into view
+        threshold: 0.1
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
+    const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Add the animate class
-                entry.target.classList.add('aos-animate');
-                // Optional: Stop observing once animated
-                // observer.unobserve(entry.target); 
+                entry.target.classList.add('is-visible');
+                // Optional: Stop observing once revealed to save resources
+                observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, revealOptions);
 
-    // Grab all elements with data-aos and observe them
-    const aosElements = document.querySelectorAll('[data-aos]');
-    aosElements.forEach(el => observer.observe(el));
+    revealElements.forEach(el => revealObserver.observe(el));
 
-
-    // 2. NAVBAR SCROLL EFFECT
+    // 2. NAVBAR BLUR EFFECT ON SCROLL
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
+        if (window.scrollY > 30) {
             navbar.classList.add('scrolled');
         } else {
             navbar.classList.remove('scrolled');
         }
-    });
+    }, { passive: true }); // passive: true improves scroll performance
 
-    // 3. SERVICE TAB FILTERING
-    const tabChips = document.querySelectorAll('.tab-chip');
-    const serviceCards = document.querySelectorAll('.elite-card');
+    // 3. FLUID SERVICE TAB FILTERING
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const serviceCards = document.querySelectorAll('.service-card');
 
-    tabChips.forEach(chip => {
-        chip.addEventListener('click', () => {
-            // Remove active from all chips
-            tabChips.forEach(c => c.classList.remove('active'));
-            // Add active to clicked chip
-            chip.classList.add('active');
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Update active button state
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-            const targetCategory = chip.getAttribute('data-target');
+            const target = btn.getAttribute('data-target');
 
-            // Filter logic
             serviceCards.forEach(card => {
-                const cardCategories = card.getAttribute('data-category').split(' ');
+                const categories = card.getAttribute('data-category').split(' ');
                 
-                // Hide card first
-                card.style.display = 'none';
-                card.classList.remove('aos-animate'); // Reset animation state
-                
-                // If it matches, show it
-                if (cardCategories.includes(targetCategory)) {
-                    card.style.display = 'block';
-                    // Re-trigger animation cleanly
-                    setTimeout(() => {
-                        card.classList.add('aos-animate');
-                    }, 50);
+                if (categories.includes(target)) {
+                    card.style.display = 'flex';
+                    // Force a reflow to restart CSS animation cleanly
+                    void card.offsetWidth; 
+                    card.classList.add('is-visible');
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('is-visible');
                 }
             });
         });
     });
-
-    // 4. MOUSE PARALLAX FOR 3D TOKENS (Desktop Only)
-    const tokens = document.querySelectorAll('.orbit-item');
-    const heroSection = document.querySelector('.hero-section');
-
-    if (window.innerWidth > 768) {
-        heroSection.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 2;
-            const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-            tokens.forEach(token => {
-                const speed = parseFloat(token.getAttribute('data-speed')) || 1;
-                const moveX = x * 30 * speed;
-                const moveY = y * 30 * speed;
-                
-                // Apply a smooth transform
-                token.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            });
-        });
-
-        // Reset tokens on mouse leave
-        heroSection.addEventListener('mouseleave', () => {
-            tokens.forEach(token => {
-                token.style.transform = `translate(0px, 0px)`;
-            });
-        });
-    }
 
 });
