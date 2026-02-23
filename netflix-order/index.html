@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
-    <link rel="stylesheet" href="../HOME/style.css?v=12.0">
+    <link rel="stylesheet" href="../HOME/style.css?v=7.0">
     <link rel="stylesheet" href="style.css?v=10.0">
 </head>
 <body class="netflix-mode">
@@ -49,6 +49,7 @@
                 </div>
 
                 <div class="plan-grid">
+                    
                     <div class="plan-card featured-plan" onclick="selectPlan(this, '1 Year', '250,000', '65')">
                         <div class="tag vip">Ultimate Value</div>
                         <div class="card-content">
@@ -65,11 +66,55 @@
                                 <div class="f-badge gold"><i class="fas fa-crown"></i> <span>4K HDR</span></div>
                                 <div class="f-badge"><i class="fas fa-mobile-alt"></i> <span>2+ Devices</span></div>
                                 <div class="f-badge"><i class="fas fa-download"></i> <span>Downloads</span></div>
+                                <div class="f-badge"><i class="fas fa-headset"></i> <span>24/7 Support</span></div>
                             </div>
                         </div>
                         <div class="selection-ring"></div>
                     </div>
+
+                    <div class="plan-card" onclick="selectPlan(this, '9 Months', '200,000', '53')">
+                        <div class="tag gold">Best Seller</div>
+                        <div class="card-content">
+                            <div class="plan-header">
+                                <h3>9 Months Access</h3>
+                                <div class="price-lockup">
+                                    <span class="old-price">400K</span>
+                                    <span class="new-price">200K</span>
+                                    <span class="currency">UGX</span>
+                                </div>
+                            </div>
+
+                            <div class="feature-row">
+                                <div class="f-badge"><i class="fas fa-tv"></i> <span>4K HDR</span></div>
+                                <div class="f-badge"><i class="fas fa-mobile-alt"></i> <span>2+ Devices</span></div>
+                                <div class="f-badge"><i class="fas fa-download"></i> <span>Downloads</span></div>
+                            </div>
+                        </div>
+                        <div class="selection-ring"></div>
                     </div>
+
+                    <div class="plan-card" onclick="selectPlan(this, '6 Months', '150,000', '40')">
+                        <div class="tag">Starter</div>
+                        <div class="card-content">
+                            <div class="plan-header">
+                                <h3>6 Months Access</h3>
+                                <div class="price-lockup">
+                                    <span class="old-price">300K</span>
+                                    <span class="new-price">150K</span>
+                                    <span class="currency">UGX</span>
+                                </div>
+                            </div>
+
+                            <div class="feature-row">
+                                <div class="f-badge"><i class="fas fa-tv"></i> <span>4K HDR</span></div>
+                                <div class="f-badge"><i class="fas fa-mobile-alt"></i> <span>2+ Devices</span></div>
+                                <div class="f-badge"><i class="fas fa-download"></i> <span>Downloads</span></div>
+                            </div>
+                        </div>
+                        <div class="selection-ring"></div>
+                    </div>
+
+                </div>
 
                 <div id="scroll-target-1"></div>
                 <button class="btn primary-red disabled" id="btn-step-1" onclick="goToStep(2)">
@@ -89,6 +134,15 @@
                         <div class="bonus-info">
                             <h4>Prime Video</h4>
                             <p>6 Months Free</p>
+                            <span class="status">Tap to Unlock</span>
+                        </div>
+                    </div>
+
+                    <div class="bonus-item locked" id="bonus-2" onclick="unlockBonus(2)">
+                        <div class="icon-box green"><i class="fab fa-spotify"></i></div>
+                        <div class="bonus-info">
+                            <h4>Spotify Premium</h4>
+                            <p>1 Month Free</p>
                             <span class="status">Tap to Unlock</span>
                         </div>
                     </div>
@@ -144,6 +198,7 @@
                     <select id="paymentMethod">
                         <option value="MTN Mobile Money">MTN Mobile Money</option>
                         <option value="Airtel Money">Airtel Money</option>
+                        <option value="Cash in Office">Cash (MEET AGENT in JUBA) </option>
                     </select>
                 </div>
 
