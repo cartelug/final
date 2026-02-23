@@ -194,3 +194,141 @@ body.prime-mode {
 .prime-mode .proof-viewer { border-radius: 12px; overflow: hidden; border: 1px solid var(--border); margin-bottom: 20px; background: #000; }
 .prime-mode .proof-track { display: flex; overflow-x: auto; scrollbar-width: none; }
 .prime-mode .proof-img { width: 100%; flex-shrink: 0; }
+
+
+/* =========================================================
+   1. PERFECTLY CENTERED LOGO & NAVBAR UPGRADES
+   ========================================================= */
+.navbar {
+    position: relative;
+    width: 100%;
+    z-index: 100;
+}
+
+.navbar .nav-content {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-height: 80px;
+    width: 100%;
+    padding: 0 5%;
+}
+
+/* Absolute centering for the logo */
+.navbar .logo-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Keeps it dead center regardless of other elements */
+    z-index: 10;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.navbar .logo-wrapper:hover {
+    transform: translate(-50%, -50%) scale(1.05); /* Slight pop when hovering the logo */
+}
+
+/* =========================================================
+   2. EXTREMELY CREATIVE "BACK" BUTTON
+   ========================================================= */
+.navbar .back-link {
+    position: absolute;
+    left: 5%; /* Pins it to the left side */
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 22px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Liquid sweep hover effect for the back button */
+.navbar .back-link::before {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: -150%; 
+    width: 100%; 
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+}
+
+.navbar .back-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateX(-5px); /* Creatively slides left on hover */
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+}
+
+.navbar .back-link:hover::before {
+    left: 150%; /* Triggers the light sweep */
+}
+
+/* Make the arrow bounce inside the button */
+.navbar .back-link i {
+    transition: transform 0.3s ease;
+}
+.navbar .back-link:hover i {
+    transform: translateX(-5px);
+}
+
+/* =========================================================
+   3. EXTREME BACKGROUND & CARD ANIMATIONS
+   ========================================================= */
+
+/* Breathing Spotlight Effect for the Cinematic Backgrounds */
+@keyframes breatheSpotlight {
+    0%, 100% { 
+        opacity: 0.5; 
+        transform: translateX(-50%) scale(1); 
+    }
+    50% { 
+        opacity: 0.9; 
+        transform: translateX(-50%) scale(1.15); /* Expands the light */
+    }
+}
+
+.spotlight, .blue-spotlight {
+    animation: breatheSpotlight 8s ease-in-out infinite;
+}
+
+/* Levitation Effect for the Main Glass Wizard Card */
+@keyframes levitateCard {
+    0%, 100% { 
+        transform: translateY(0px); 
+        box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+    50% { 
+        transform: translateY(-12px); /* Floats up slightly */
+        box-shadow: 0 45px 80px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+}
+
+.wizard-card.glass-panel {
+    animation: levitateCard 6s ease-in-out infinite;
+    /* Extra inner glow */
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    .navbar .back-link {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+        left: 3%;
+    }
+    .navbar .logo-wrapper img {
+        max-height: 38px;
+    }
+}
