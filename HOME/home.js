@@ -1,11 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // 1. LIGHTWEIGHT SCROLL REVEAL (Intersection Observer)
-    const revealElements = document.querySelectorAll('.scroll-reveal');
-    
-    const revealOptions = {
+    // 1. LIGHTWEIGHT SCROLL REVEAL
+    const observerOptions = {
         root: null,
-        rootMargin: '0px 0px -50px 0px', // Triggers slightly before element comes into view
+        rootMargin: '0px 0px -10% 0px',
         threshold: 0.1
     };
 
@@ -13,43 +11,42 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                // Optional: Stop observing once revealed to save resources
-                observer.unobserve(entry.target);
+                observer.unobserve(entry.target); // Run once for performance
             }
         });
-    }, revealOptions);
+    }, observerOptions);
 
-    revealElements.forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('.reveal-up').forEach(el => {
+        revealObserver.observe(el);
+    });
 
-    // 2. NAVBAR BLUR EFFECT ON SCROLL
-    const navbar = document.getElementById('navbar');
+    // 2. NAV BLUR ON SCROLL
+    const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
-        if (window.scrollY > 30) {
-            navbar.classList.add('scrolled');
+        if (window.scrollY > 20) {
+            nav.classList.add('scrolled');
         } else {
-            navbar.classList.remove('scrolled');
+            nav.classList.remove('scrolled');
         }
-    }, { passive: true }); // passive: true improves scroll performance
+    }, { passive: true });
 
-    // 3. FLUID SERVICE TAB FILTERING
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const serviceCards = document.querySelectorAll('.service-card');
+    // 3. TAB FILTERING
+    const tabs = document.querySelectorAll('.tab');
+    const cards = document.querySelectorAll('.service-card');
 
-    filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            // Update active button state
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
 
-            const target = btn.getAttribute('data-target');
+            const filter = tab.getAttribute('data-filter');
 
-            serviceCards.forEach(card => {
+            cards.forEach(card => {
                 const categories = card.getAttribute('data-category').split(' ');
-                
-                if (categories.includes(target)) {
+                if (categories.includes(filter)) {
                     card.style.display = 'flex';
-                    // Force a reflow to restart CSS animation cleanly
-                    void card.offsetWidth; 
+                    // Trigger reflow to restart animation
+                    void card.offsetWidth;
                     card.classList.add('is-visible');
                 } else {
                     card.style.display = 'none';
@@ -59,4 +56,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 4. PERFORMANCE-SAFE PARALLAX (Only active on desktop to save mobile battery)
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (window.innerWidth > 768 && !prefersReducedMotion) {
+        const logos = document.querySelectorAll('.f-logo');
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrollY = window.scrollY;
+                    logos.forEach(logo => {
+                        const speed = parseFloat(logo.getAttribute('data-speed'));
+                        logo.style.transform = `translateY(${scrollY * speed * -1}px)`;
+                    });
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        }, { passive: true });
+    }
 });
