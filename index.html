@@ -4,26 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AccessUG | #1 Premium Digital Services in East Africa</title>
-    <meta name="description" content="Premium Netflix, Spotify, and Viral Growth. Connect First, Pay After. The #1 Trusted Service in East Africa.">
+    <meta name="description" content="Premium Netflix, Prime Video, Spotify, and Viral Growth. Connect First, Pay After. The #1 Trusted Service in East Africa.">
     
     <link rel="icon" href="IMAGES/logo.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="HOME/home.css">
 </head>
-<body>
+<body class="home-body">
 
-    <div class="pearl-bg-layer base"></div>
-    <div class="pearl-bg-layer noise"></div>
-    <div class="pearl-bg-layer spotlight-1"></div>
-    <div class="pearl-bg-layer spotlight-2"></div>
+    <div class="mesh-bg">
+        <div class="mesh-blob blob-1"></div>
+        <div class="mesh-blob blob-2"></div>
+        <div class="mesh-blob blob-3"></div>
+        <div class="noise-overlay"></div>
+    </div>
 
-    <nav class="glass-nav">
+    <nav class="elite-nav" id="navbar">
         <div class="nav-container">
             <a href="#" class="brand">
                 <img src="IMAGES/logo.png" alt="AccessUG Logo" class="brand-logo">
@@ -31,284 +32,193 @@
             </a>
             
             <div class="nav-links desktop-only">
-                <a href="#services">Services</a>
+                <a href="#services">Catalog</a>
                 <a href="#how-it-works">How it Works</a>
-                <a href="#testimonials">Reviews</a>
+                <a href="trust/">Trust Center</a>
             </div>
 
             <div class="nav-actions">
-                <a href="contact/" class="btn-sm btn-outline desktop-only">Support</a>
-                <a href="https://wa.me/256762193386" class="btn-icon mobile-only" aria-label="Contact Support">
-                    <i class="fab fa-whatsapp"></i>
-                </a>
+                <a href="contact/" class="btn-sm btn-ghost desktop-only">Support</a>
+                <a href="access/" class="btn-sm btn-primary">Client Portal</a>
             </div>
         </div>
     </nav>
 
     <main>
         <header class="hero-section">
-            <div class="hero-content">
+            <div class="hero-content" data-aos="fade-up">
                 <div class="trust-badge">
-                    <span class="badge-icon">🚀</span> 
-                    <span class="badge-text">#1 in East Africa</span>
+                    <span class="pulse-dot"></span> 
+                    <span class="badge-text">#1 Premium Provider in East Africa</span>
                 </div>
                 
                 <h1 class="hero-title">
-                    Premium Access.<br>
+                    Elite Access.<br>
                     <span class="text-gradient">Zero Risk.</span>
                 </h1>
                 
                 <p class="hero-sub">
-                    Get Netflix, Spotify, and Viral Boosts instantly. <br class="desktop-only">
-                    We connect you first, you pay after confirmation.
+                    Get Netflix, Prime Video, Spotify, and Viral Boosts instantly. <br class="desktop-only">
+                    We connect you first. You pay after confirmation.
                 </p>
 
                 <div class="hero-cta-group">
-                    <a href="#services" class="btn btn-primary btn-lg">
-                        Explore Services
+                    <a href="#services" class="btn btn-glow btn-lg">
+                        Explore Services <i class="fas fa-arrow-down"></i>
                     </a>
-                    <a href="#testimonials" class="btn btn-secondary btn-lg">
-                        See what clients say
+                    <a href="trust/" class="btn btn-outline btn-lg">
+                        <i class="fas fa-shield-alt"></i> See Proof
                     </a>
                 </div>
             </div>
 
             <div class="hero-visuals">
-                <div class="token-grid">
-                    <div class="logo-token t-netflix parallax" data-speed="0.04">
-                        <div class="token-glass"><img src="IMAGES/netflix.png" alt="Netflix"></div>
-                    </div>
-                    <div class="logo-token t-spotify parallax" data-speed="0.07">
-                        <div class="token-glass"><img src="IMAGES/spotify.png" alt="Spotify"></div>
-                    </div>
-                    <div class="logo-token t-prime parallax" data-speed="0.03">
-                        <div class="token-glass"><img src="IMAGES/prime-video.png" alt="Prime"></div>
-                    </div>
-                    <div class="logo-token t-tiktok parallax" data-speed="0.06">
-                        <div class="token-glass"><img src="IMAGES/tiktok.png" alt="TikTok"></div>
-                    </div>
-                    <div class="logo-token t-insta parallax" data-speed="0.05">
-                        <div class="token-glass"><img src="IMAGES/instagram.png" alt="Instagram"></div>
-                    </div>
+                <div class="token-orbit">
+                    <div class="orbit-item t-netflix" data-speed="1.2"><img src="IMAGES/netflix.png" alt="Netflix"></div>
+                    <div class="orbit-item t-prime" data-speed="0.8"><img src="IMAGES/prime-video.png" alt="Prime"></div>
+                    <div class="orbit-item t-spotify" data-speed="1.5"><img src="IMAGES/spotify.png" alt="Spotify"></div>
+                    <div class="orbit-item t-tiktok" data-speed="1.1"><img src="IMAGES/tiktok.png" alt="TikTok"></div>
+                    <div class="orbit-item t-insta" data-speed="0.9"><img src="IMAGES/instagram.png" alt="Instagram"></div>
                 </div>
             </div>
         </header>
 
         <section id="services" class="section-services">
             <div class="container">
-                <div class="section-head">
-                    <h2>Service Navigator</h2>
-                    <p>Select a category to upgrade your lifestyle.</p>
+                <div class="section-head" data-aos="fade-up">
+                    <h2 class="section-title">The <span class="text-gradient">Catalog</span></h2>
+                    <p>Select a service below to configure your premium upgrade.</p>
                 </div>
 
-                <div class="tabs-wrapper">
+                <div class="tabs-wrapper" data-aos="fade-up" data-aos-delay="100">
                     <div class="tabs-track">
-                        <button class="tab-chip active" data-target="all">Most Popular</button>
+                        <button class="tab-chip active" data-target="all">All Services</button>
                         <button class="tab-chip" data-target="streaming">Streaming</button>
-                        <button class="tab-chip" data-target="music">Music</button>
-                        <button class="tab-chip" data-target="boosts">Boosts</button>
-                        <button class="tab-chip" data-target="tools">Tools</button>
+                        <button class="tab-chip" data-target="boosts">Viral Boosts</button>
                     </div>
                 </div>
 
-                <div class="services-grid">
-                    <div class="svc-card" data-category="streaming all">
-                        <div class="svc-header">
-                            <div class="svc-icon icon-netflix"><i class="fas fa-play"></i></div>
-                            <div class="svc-meta">
-                                <h3>Netflix Premium</h3>
-                                <span class="svc-tag">Best Seller</span>
-                            </div>
-                        </div>
-                        <p class="svc-benefit">4K UHD + HDR Cinema Experience.</p>
-                        <div class="svc-specs">
-                            <span><i class="fas fa-check"></i> Private/Shared</span>
-                            <span><i class="fas fa-check"></i> TV & Mobile</span>
-                        </div>
-                        <a href="netflix-order/" class="btn btn-block">Order Now</a>
-                    </div>
-
-                    <div class="svc-card" data-category="music all">
-                        <div class="svc-header">
-                            <div class="svc-icon icon-spotify"><i class="fab fa-spotify"></i></div>
-                            <div class="svc-meta">
-                                <h3>Spotify Premium</h3>
-                                <span class="svc-tag">Trending</span>
-                            </div>
-                        </div>
-                        <p class="svc-benefit">Ad-free music with offline play.</p>
-                        <div class="svc-specs">
-                            <span><i class="fas fa-check"></i> Individual Plan</span>
-                            <span><i class="fas fa-check"></i> Keep Playlists</span>
-                        </div>
-                        <a href="spotify-order/" class="btn btn-block">Order Now</a>
-                    </div>
-
-                    <div class="svc-card" data-category="boosts all">
-                        <div class="svc-header">
-                            <div class="svc-icon icon-insta"><i class="fab fa-instagram"></i></div>
-                            <div class="svc-meta">
-                                <h3>Instagram Boost</h3>
-                                <span class="svc-tag">Viral</span>
-                            </div>
-                        </div>
-                        <p class="svc-benefit">Real followers & organic engagement.</p>
-                        <div class="svc-specs">
-                            <span><i class="fas fa-check"></i> High Retention</span>
-                            <span><i class="fas fa-check"></i> No Password</span>
-                        </div>
-                        <a href="boost-package/" class="btn btn-block">Order Now</a>
-                    </div>
-
-                    <div class="svc-card" data-category="streaming">
-                        <div class="svc-header">
-                            <div class="svc-icon icon-prime"><i class="fas fa-crown"></i></div>
-                            <div class="svc-meta">
-                                <h3>Prime Video</h3>
-                            </div>
-                        </div>
-                        <p class="svc-benefit">Exclusive Amazon Originals in 4K.</p>
-                        <div class="svc-specs">
-                            <span><i class="fas fa-check"></i> 6 Profiles</span>
-                            <span><i class="fas fa-check"></i> Full Warranty</span>
-                        </div>
-                        <a href="prime-order/" class="btn btn-block">Order Now</a>
-                    </div>
-
-                    <div class="svc-card" data-category="boosts">
-                        <div class="svc-header">
-                            <div class="svc-icon icon-tiktok"><i class="fab fa-tiktok"></i></div>
-                            <div class="svc-meta">
-                                <h3>TikTok Boost</h3>
-                            </div>
-                        </div>
-                        <p class="svc-benefit">Go viral with instant views.</p>
-                        <div class="svc-specs">
-                            <span><i class="fas fa-check"></i> Instant Start</span>
-                            <span><i class="fas fa-check"></i> Safe Delivery</span>
-                        </div>
-                        <a href="boost-package/" class="btn btn-block">Order Now</a>
-                    </div>
-
-                    <div class="svc-card" data-category="tools">
-                        <div class="svc-header">
-                            <div class="svc-icon icon-canva"><i class="fas fa-palette"></i></div>
-                            <div class="svc-meta">
-                                <h3>Canva Pro</h3>
-                            </div>
-                        </div>
-                        <p class="svc-benefit">Design without limits.</p>
-                        <div class="svc-specs">
-                            <span><i class="fas fa-check"></i> Premium Assets</span>
-                            <span><i class="fas fa-check"></i> Private Acct</span>
-                        </div>
-                        <a href="canva-order/" class="btn btn-block">Order Now</a>
-                    </div>
-                </div>
-
-                <div class="coming-soon-container">
-                    <details class="cs-accordion">
-                        <summary>
-                            <span><i class="fas fa-clock"></i> Coming Soon (Late 2026)</span>
-                            <i class="fas fa-chevron-down arrow"></i>
-                        </summary>
-                        <div class="cs-body">
-                            <p>Disney+, HBO Max, and Hulu.</p>
-                            <a href="contact/" class="text-link">Notify me when available &rarr;</a>
-                        </div>
-                    </details>
-                </div>
-            </div>
-        </section>
-
-        <section id="how-it-works" class="section-scroll-story">
-            <div class="container story-layout">
-                <div class="story-sticky">
-                    <div class="story-progress">
-                        <div class="progress-bar"></div>
-                    </div>
-                    <ul class="story-nav-list">
-                        <li class="active" data-step="0">Simple</li>
-                        <li data-step="1">Fast</li>
-                        <li data-step="2">Secure</li>
-                    </ul>
-                </div>
-
-                <div class="story-content-col">
-                    <div class="story-block" data-step="0">
-                        <div class="sb-icon"><i class="fas fa-magic"></i></div>
-                        <h3>Simplicity Redefined.</h3>
-                        <p>No complex signups. No credit cards. Just a direct WhatsApp connection to get you premium access in minutes.</p>
-                    </div>
-                    <div class="story-block" data-step="1">
-                        <div class="sb-icon"><i class="fas fa-bolt"></i></div>
-                        <h3>Lightning Speed.</h3>
-                        <p>Our automated systems and support team ensure your account is active almost immediately after you request it.</p>
-                    </div>
-                    <div class="story-block" data-step="2">
-                        <div class="sb-icon"><i class="fas fa-shield-alt"></i></div>
-                        <h3>Total Security.</h3>
-                        <p>The "Connect First, Pay Later" model means 0% risk for you. You only pay when you are 100% satisfied.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="testimonials" class="section-reviews">
-            <div class="container">
-                <div class="section-head">
-                    <h2>Verified Wins</h2>
-                    <p>Real screenshots from happy clients.</p>
-                </div>
-
-                <div class="reviews-viewport">
-                    <div class="reviews-track">
-                        <div class="review-card" tabindex="0">
-                            <img src="IMAGES/1.png" alt="Testimonial 1" loading="lazy">
-                            <div class="zoom-hint"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="review-card" tabindex="0">
-                            <img src="IMAGES/2.png" alt="Testimonial 2" loading="lazy">
-                            <div class="zoom-hint"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="review-card" tabindex="0">
-                            <img src="IMAGES/3.png" alt="Testimonial 3" loading="lazy">
-                            <div class="zoom-hint"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="review-card" tabindex="0">
-                            <img src="IMAGES/4.png" alt="Testimonial 4" loading="lazy">
-                            <div class="zoom-hint"><i class="fas fa-plus"></i></div>
-                        </div>
-                        <div class="review-card" tabindex="0">
-                            <img src="IMAGES/5.png" alt="Testimonial 5" loading="lazy">
-                            <div class="zoom-hint"><i class="fas fa-plus"></i></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swipe-instruction">
-                    <i class="fas fa-hand-pointer"></i> Swipe to explore • Tap to zoom
-                </div>
-            </div>
-        </section>
-
-        <section class="section-cta">
-            <div class="container">
-                <div class="cta-card">
-                    <div class="cta-decoration"></div>
-                    <h2>Ready to start?</h2>
-                    <p class="trust-line">We connect you first <span class="arr">&rarr;</span> you pay after.</p>
+                <div class="elite-service-grid" id="service-grid">
                     
-                    <div class="trust-pills">
-                        <span><i class="fas fa-check-circle"></i> Fast Activation</span>
-                        <span><i class="fas fa-headset"></i> Support Available</span>
-                    </div>
+                    <a href="netflix-order/" class="elite-card" data-category="streaming all" data-theme="red" data-aos="fade-up">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-top">
+                                <div class="svc-icon icon-netflix"><img src="IMAGES/netflix.png" alt="Netflix"></div>
+                                <span class="svc-tag tag-hot">Top Seller</span>
+                            </div>
+                            <h3>Netflix Premium</h3>
+                            <p>4K UHD + HDR Cinema Experience. No interruptions.</p>
+                            <div class="svc-specs">
+                                <span><i class="fas fa-tv"></i> Smart TV & Mobile</span>
+                                <span><i class="fas fa-users"></i> Multi-Profile</span>
+                            </div>
+                            <div class="card-cta">Configure <i class="fas fa-arrow-right"></i></div>
+                        </div>
+                    </a>
 
-                    <div class="cta-actions">
-                        <a href="https://wa.me/256762193386?text=Hello%21%20AccessUG%2C%20I%27d%20like%20to%20get%20connected.%20I%27m%20from%20the%20website." class="btn btn-whatsapp btn-lg">
-                            <i class="fab fa-whatsapp"></i> Start on WhatsApp
+                    <a href="prime-order/" class="elite-card" data-category="streaming all" data-theme="blue" data-aos="fade-up" data-aos-delay="50">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-top">
+                                <div class="svc-icon icon-prime"><img src="IMAGES/prime-video.png" alt="Prime"></div>
+                                <span class="svc-tag tag-value">Best Value</span>
+                            </div>
+                            <h3>Prime Video</h3>
+                            <p>Exclusive Amazon Originals, movies, and sports in 4K.</p>
+                            <div class="svc-specs">
+                                <span><i class="fas fa-crown"></i> Originals</span>
+                                <span><i class="fas fa-download"></i> Downloads</span>
+                            </div>
+                            <div class="card-cta">Configure <i class="fas fa-arrow-right"></i></div>
+                        </div>
+                    </a>
+
+                    <a href="spotify-order/" class="elite-card" data-category="streaming all" data-theme="green" data-aos="fade-up" data-aos-delay="100">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-top">
+                                <div class="svc-icon icon-spotify"><img src="IMAGES/spotify.png" alt="Spotify"></div>
+                            </div>
+                            <h3>Spotify Premium</h3>
+                            <p>Ad-free music, offline listening, and perfect audio quality.</p>
+                            <div class="svc-specs">
+                                <span><i class="fas fa-ban"></i> Zero Ads</span>
+                                <span><i class="fas fa-music"></i> Keep Playlists</span>
+                            </div>
+                            <div class="card-cta">Configure <i class="fas fa-arrow-right"></i></div>
+                        </div>
+                    </a>
+
+                    <a href="boost-package/" class="elite-card" data-category="boosts all" data-theme="purple" data-aos="fade-up">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-top">
+                                <div class="svc-icon icon-mix">
+                                    <img src="IMAGES/tiktok.png" alt="TikTok">
+                                    <img src="IMAGES/instagram.png" alt="Instagram" class="overlap-img">
+                                </div>
+                                <span class="svc-tag tag-viral">Trending</span>
+                            </div>
+                            <h3>Ultimate Viral Boost</h3>
+                            <p>Explode your followers and likes on TikTok or Instagram instantly.</p>
+                            <div class="svc-specs">
+                                <span><i class="fas fa-rocket"></i> Instant Start</span>
+                                <span><i class="fas fa-shield-alt"></i> No Password Needed</span>
+                            </div>
+                            <div class="card-cta">Configure <i class="fas fa-arrow-right"></i></div>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works" class="section-workflow">
+            <div class="container workflow-layout">
+                <div class="workflow-text" data-aos="fade-right">
+                    <h2 class="section-title">The <span class="text-gradient">Process</span></h2>
+                    <p>We designed the most frictionless, secure onboarding system in the digital space.</p>
+                </div>
+
+                <div class="workflow-steps">
+                    <div class="w-step" data-aos="fade-up">
+                        <div class="w-icon"><i class="fas fa-mouse-pointer"></i></div>
+                        <div class="w-info">
+                            <h3>1. Select & Configure</h3>
+                            <p>Choose your plan and generate your secure order.</p>
+                        </div>
+                    </div>
+                    <div class="w-step" data-aos="fade-up" data-aos-delay="100">
+                        <div class="w-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="w-info">
+                            <h3>2. Instant Connection</h3>
+                            <p>We connect your device or upgrade your account via WhatsApp within minutes.</p>
+                        </div>
+                    </div>
+                    <div class="w-step" data-aos="fade-up" data-aos-delay="200">
+                        <div class="w-icon"><i class="fas fa-shield-check"></i></div>
+                        <div class="w-info">
+                            <h3>3. Verify Then Pay</h3>
+                            <p>You only send payment <b>after</b> you are fully logged in and watching. 0% Risk.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section-cta" data-aos="zoom-in">
+            <div class="container">
+                <div class="elite-cta-box">
+                    <div class="cta-bg-glow"></div>
+                    <h2>Ready to upgrade?</h2>
+                    <p>Join over 2,100+ active users enjoying premium access.</p>
+                    <div class="cta-buttons">
+                        <a href="https://wa.me/256762193386" class="btn btn-whatsapp btn-lg">
+                            <i class="fab fa-whatsapp"></i> Chat with Support
                         </a>
-                        <a href="#services" class="btn btn-outline btn-lg">
-                            Explore Services
+                        <a href="access/" class="btn btn-ghost btn-lg">
+                            Go to Client Portal
                         </a>
                     </div>
                 </div>
@@ -316,46 +226,32 @@
         </section>
     </main>
 
-    <footer class="main-footer">
+    <footer class="elite-footer">
         <div class="container">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <h4>AccessUG</h4>
+            <div class="footer-grid">
+                <div class="f-brand">
+                    <img src="IMAGES/logo.png" alt="AccessUG">
                     <p>The #1 trusted digital upgrade service in East Africa.</p>
                 </div>
-                <div class="footer-nav">
-                    <div class="f-col">
-                        <h5>Services</h5>
-                        <a href="netflix-order/">Netflix</a>
-                        <a href="spotify-order/">Spotify</a>
-                        <a href="boost-package/">Viral Boosts</a>
-                    </div>
-                    <div class="f-col">
-                        <h5>Company</h5>
-                        <a href="#how-it-works">How it Works</a>
-                        <a href="trust/">Reviews</a>
-                        <a href="contact/">Contact</a>
-                    </div>
-                    <div class="f-col">
-                        <h5>Legal</h5>
-                        <a href="terms-of-service/">Terms</a>
-                        <a href="privacy-policy/">Privacy</a>
-                    </div>
+                <div class="f-links">
+                    <h4>Portals</h4>
+                    <a href="access/">Netflix Login</a>
+                    <a href="access/">Prime Login</a>
+                    <a href="renew/">Renew Account</a>
+                </div>
+                <div class="f-links">
+                    <h4>Company</h4>
+                    <a href="trust/">Trust Center</a>
+                    <a href="contact/">Support Team</a>
+                    <a href="privacy-policy/">Privacy</a>
+                    <a href="terms-of-service/">Terms</a>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 AccessUG. All rights reserved.</p>
-                <p class="disclaimer">Netflix, Spotify & trademarks belong to their respective owners.</p>
             </div>
         </div>
     </footer>
-
-    <div id="lightbox" class="lightbox-modal" aria-hidden="true">
-        <button class="lb-close" aria-label="Close">&times;</button>
-        <div class="lb-content">
-            <img id="lb-image" src="" alt="Enlarged review">
-        </div>
-    </div>
 
     <script src="HOME/home.js"></script>
 </body>
