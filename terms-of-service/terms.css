@@ -1,0 +1,114 @@
+/* === Terms of Service Page Styles (terms.css) === */
+
+.terms-section {
+    background-color: rgba(18, 18, 18, 0.9); /* Darker background for focus */
+    padding-top: 60px;
+    padding-bottom: 80px;
+}
+
+.terms-title {
+    text-align: center;
+    font-size: clamp(2.2rem, 6vw, 3rem); /* Large title */
+    color: #fff;
+    margin-bottom: 15px;
+    font-weight: 700;
+    /* Optional: Remove default underline from base.css if applied via .section-title */
+    /* padding-bottom: 0; */
+}
+/* Remove the ::after pseudo-element if .terms-title doesn't inherit from .section-title */
+.terms-title::after {
+     display: none; /* Hide the gradient line if not desired */
+}
+
+
+.last-updated {
+    text-align: center;
+    color: var(--text-medium);
+    font-size: 0.95rem;
+    margin-bottom: 50px;
+}
+
+.terms-content {
+    background-color: var(--card-bg); /* Use card background from base */
+    backdrop-filter: blur(10px);
+     -webkit-backdrop-filter: blur(10px);
+    padding: 40px 50px;
+    border-radius: 15px;
+    border: 1px solid var(--card-border);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    max-width: 850px; /* Limit width for readability */
+    margin: 0 auto; /* Center the content box */
+}
+
+.terms-content h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-top: 35px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.terms-content h2:first-of-type {
+     margin-top: 0; /* No top margin for the very first heading */
+}
+
+.terms-content p,
+.terms-content li {
+    font-size: 1rem; /* Standard text size */
+    line-height: 1.8; /* Good readability */
+    color: var(--text-medium);
+    margin-bottom: 15px;
+}
+
+.terms-content strong {
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.terms-content ul {
+    list-style: disc; /* Use standard bullets */
+    margin-left: 25px; /* Indent lists */
+    margin-bottom: 20px;
+    padding-left: 15px;
+}
+
+.terms-content li {
+    margin-bottom: 10px; /* Slightly less space between list items */
+}
+
+
+/* Responsive adjustments for terms */
+@media (max-width: 768px) {
+    .terms-content {
+        padding: 30px 25px;
+    }
+    .terms-content h2 {
+        font-size: 1.4rem;
+    }
+    .terms-content p,
+    .terms-content li {
+        font-size: 0.95rem;
+        line-height: 1.7;
+    }
+}
+
+@media (max-width: 480px) {
+    .terms-title {
+        font-size: 2rem;
+    }
+    .last-updated {
+         margin-bottom: 30px;
+    }
+    .terms-content {
+        padding: 25px 15px;
+    }
+    .terms-content h2 {
+        font-size: 1.3rem;
+    }
+     .terms-content ul {
+        margin-left: 15px;
+        padding-left: 10px;
+    }
+}
