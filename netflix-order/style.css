@@ -1,4 +1,15 @@
 /* === NETFLIX "CINEMA GRADE" THEME v10 (SCOPED) === */
+/* Fix for the warped or oversized navbar logo */
+.navbar .brand-logo {
+    max-height: 45px; /* Adjust this value if you want it bigger or smaller */
+    width: auto;      /* Ensures the width scales proportionally */
+    object-fit: contain; /* Prevents the image from stretching/warping */
+}
+
+.navbar .logo-wrapper {
+    display: flex;
+    align-items: center;
+}
 
 :root {
     --netflix-red: #E50914;
