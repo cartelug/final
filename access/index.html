@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Access Portal | AccessUG</title>
+    <title>AccessUG | Elite Portal</title>
     
     <link rel="icon" href="../IMAGES/logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,9 +17,9 @@
 <body class="portal-body">
 
     <div class="portal-bg">
-        <div class="glow-orb red-orb"></div>
-        <div class="glow-orb blue-orb"></div>
-        <div class="glow-orb green-orb"></div>
+        <div class="mesh-gradient"></div>
+        <div class="glow-orb primary-orb"></div>
+        <div class="glow-orb secondary-orb"></div>
         <div class="glass-noise"></div>
     </div>
 
@@ -27,7 +27,7 @@
         <a href="../index.html" class="logo-wrapper">
             <img src="../IMAGES/logo.png" alt="AccessUG" class="brand-logo">
         </a>
-        <div class="secure-badge"><i class="fas fa-shield-alt"></i> 256-bit Secure</div>
+        <div class="secure-badge"><i class="fas fa-lock"></i> Elite Connection</div>
     </nav>
 
     <main class="portal-container">
@@ -69,7 +69,7 @@
                 </div>
 
                 <button class="btn btn-primary-glow btn-block mt-4" onclick="initiatePortal()">
-                    Continue <i class="fas fa-arrow-right"></i>
+                    Enter System <i class="fas fa-arrow-right"></i>
                 </button>
             </section>
 
@@ -82,16 +82,13 @@
 
                 <div class="service-grid">
                     <button class="svc-select-card s-netflix" onclick="selectService('Netflix', 'netflix')">
-                        <img src="../IMAGES/netflix.png" alt="Netflix">
-                        <span>Netflix</span>
+                        <img src="../IMAGES/netflix.png" alt="Netflix"> <span>Netflix</span>
                     </button>
                     <button class="svc-select-card s-prime" onclick="selectService('Prime Video', 'prime')">
-                        <img src="../IMAGES/prime-video.png" alt="Prime">
-                        <span>Prime Video</span>
+                        <img src="../IMAGES/prime-video.png" alt="Prime"> <span>Prime Video</span>
                     </button>
                     <button class="svc-select-card s-spotify" onclick="selectService('Spotify', 'spotify')">
-                        <img src="../IMAGES/spotify.png" alt="Spotify">
-                        <span>Spotify</span>
+                        <img src="../IMAGES/spotify.png" alt="Spotify"> <span>Spotify</span>
                     </button>
                 </div>
             </section>
@@ -102,46 +99,64 @@
                     <h1 id="plan-title">Choose <span class="dynamic-color">Plan</span></h1>
                 </div>
 
-                <div class="dynamic-features" id="plan-features"></div>
+                <div class="duration-slider" id="duration-slider">
+                    </div>
 
-                <div class="pricing-stack" id="pricing-stack"></div>
+                <div class="plan-showcase" id="plan-showcase">
+                    <div class="showcase-glow-ring"></div>
+                    <div class="showcase-content">
+                        
+                        <div class="showcase-gift" id="showcase-gift">
+                            </div>
+
+                        <div class="showcase-pricing">
+                            <span class="s-old" id="showcase-old">...</span>
+                            <span class="s-new glowing-text" id="showcase-new">...</span>
+                        </div>
+
+                        <div class="showcase-features" id="showcase-features">
+                            </div>
+
+                        <button class="btn btn-primary-glow btn-block mt-4" id="confirm-plan-btn" onclick="confirmPlan()">
+                            Select this plan <i class="fas fa-check"></i>
+                        </button>
+                    </div>
+                </div>
             </section>
 
             <section class="wizard-step" id="step-device">
                 <div class="step-header">
                     <button class="back-link" onclick="goBack('step-plans')"><i class="fas fa-arrow-left"></i> Back</button>
                     <h1>Connect <span class="dynamic-color">Device</span></h1>
+                    <p>Select your viewing device to get instructions.</p>
                 </div>
                 
-                <div class="device-grid-expanded">
-                    <button class="device-pro-card" onclick="selectDevice('Smart TV')">
-                        <div class="d-icon"><i class="fas fa-tv"></i></div>
-                        <div class="d-content">
-                            <h3>Smart TV</h3>
-                            <p class="d-note">The Netflix app is installed directly on your TV. You use your TV remote.</p>
-                            <div class="d-helper"><i class="fas fa-info-circle"></i> If a code appears, choose 'Use Remote' to sign in directly on your TV.</div>
-                        </div>
+                <div class="compact-device-grid">
+                    
+                    <button class="c-dev-card" onclick="selectDevice('Smart TV')">
+                        <div class="c-dev-icon"><i class="fas fa-tv"></i></div>
+                        <h4>Smart TV</h4>
+                        <p>App is built into your TV. Use your TV remote.</p>
                     </button>
 
-                    <button class="device-pro-card" onclick="selectDevice('TV')">
-                        <div class="d-icon"><i class="fas fa-hdd"></i></div>
-                        <div class="d-content">
-                            <h3>TV <span class="badge-sub">(Connected Device)</span></h3>
-                            <p class="d-note">You are using a Firestick, Android Box, Console, or Decoder.</p>
-                            <div class="d-helper"><i class="fas fa-info-circle"></i> Normal TV uses a connected device. Open Netflix on that device and sign in there.</div>
-                        </div>
+                    <button class="c-dev-card" onclick="selectDevice('TV')">
+                        <div class="c-dev-icon"><i class="fas fa-hdd"></i></div>
+                        <h4>Normal TV</h4>
+                        <p>Connected via Firestick, Console, or Android Box.</p>
                     </button>
 
-                    <div class="d-row">
-                        <button class="device-pro-card small" onclick="selectDevice('Mobile')">
-                            <div class="d-icon"><i class="fas fa-mobile-alt"></i></div>
-                            <h3>Mobile / Tablet</h3>
-                        </button>
-                        <button class="device-pro-card small" onclick="selectDevice('PC')">
-                            <div class="d-icon"><i class="fas fa-laptop"></i></div>
-                            <h3>Computer</h3>
-                        </button>
-                    </div>
+                    <button class="c-dev-card" onclick="selectDevice('Mobile')">
+                        <div class="c-dev-icon"><i class="fas fa-mobile-alt"></i></div>
+                        <h4>Phone / Tablet</h4>
+                        <p>Using the mobile app.</p>
+                    </button>
+
+                    <button class="c-dev-card" onclick="selectDevice('PC')">
+                        <div class="c-dev-icon"><i class="fas fa-laptop"></i></div>
+                        <h4>Computer</h4>
+                        <p>Using a web browser.</p>
+                    </button>
+
                 </div>
             </section>
 

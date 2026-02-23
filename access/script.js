@@ -1,23 +1,24 @@
 // --- STATE MANAGEMENT ---
 let user = {
     name: "", country: "UG", currency: "UGX", rate: 1,
-    serviceDisplay: "", service: "", planTitle: "", device: ""
+    serviceDisplay: "", service: "", planTitle: "", device: "", activePlanIndex: 0
 };
 
-// --- PRICING & DATA ---
+// --- ELITE PRICING DATA ---
+// NOTE: Prime Logo applies to ALL Netflix plans now!
 const planData = {
     netflix: {
         features: [
             '<i class="fas fa-tv"></i> 4K UHD Quality',
             '<i class="fas fa-users"></i> 2+ Devices',
             '<i class="fas fa-download"></i> Offline Downloads',
-            '<i class="fas fa-headset"></i> 24/7 VIP Support'
+            '<i class="fas fa-headset"></i> 24/7 Support'
         ],
         plans: [
-            { title: "1 Year", price: 250000, oldPrice: 500000, giftHtml: `<img src="../IMAGES/prime-video.png" alt="Prime"> 1 Year Free Prime Video` },
-            { title: "9 Months", price: 200000, oldPrice: 400000, giftHtml: `<i class="fas fa-gift"></i> 9 Months Free Prime` },
-            { title: "6 Months", price: 150000, oldPrice: 300000, giftHtml: `<i class="fas fa-gift"></i> 6 Months Free Prime` },
-            { title: "3 Months", price: 90000, oldPrice: 180000, giftHtml: `<i class="fas fa-gift"></i> 3 Months Free Prime` }
+            { title: "1 Year", price: 250000, oldPrice: 500000, giftHtml: `<img src="../IMAGES/prime-video.png" alt="Prime"> 1 Year Free Prime` },
+            { title: "9 Months", price: 200000, oldPrice: 400000, giftHtml: `<img src="../IMAGES/prime-video.png" alt="Prime"> 9 Months Free Prime` },
+            { title: "6 Months", price: 150000, oldPrice: 300000, giftHtml: `<img src="../IMAGES/prime-video.png" alt="Prime"> 6 Months Free Prime` },
+            { title: "3 Months", price: 90000, oldPrice: 180000, giftHtml: `<img src="../IMAGES/prime-video.png" alt="Prime"> 3 Months Free Prime` }
         ]
     },
     prime: {
@@ -84,7 +85,7 @@ function goBack(toId) {
     updateTracker();
 }
 
-// --- FLOW LOGIC ---
+// --- ONBOARDING & SERVICE ---
 function initiatePortal() {
     const nameInput = document.getElementById('userName').value.trim();
     if (!nameInput) { alert("Please enter your full name to continue."); return; }
@@ -100,54 +101,81 @@ function selectService(displayName, serviceId) {
     if (serviceId === 'spotify') {
         switchStep('step-service', 'step-spotify');
     } else {
-        renderPlans(serviceId);
+        user.activePlanIndex = 0; // Default to first plan
+        renderAdvancedPlans(serviceId);
         switchStep('step-service', 'step-plans');
     }
 }
 
-function renderPlans(service) {
+// --- ADVANCED SLIDER LOGIC ---
+function renderAdvancedPlans(service) {
     const data = planData[service];
-    document.getElementById('plan-features').innerHTML = data.features.map(f => `<div class="f-pill">${f}</div>`).join('');
-    const stack = document.getElementById('pricing-stack');
-    stack.innerHTML = '';
-
-    data.plans.forEach(plan => {
-        let newP = "", oldP = "";
-        if (user.currency === "USD") {
-            newP = `$${Math.round(plan.price * user.rate)}`;
-            oldP = `$${Math.round(plan.oldPrice * user.rate)}`;
-        } else {
-            newP = `${(plan.price / 1000)}K`;
-            oldP = `${(plan.oldPrice / 1000)}K`;
-        }
-
-        const card = document.createElement('div');
-        card.className = 'plan-card';
-        card.onclick = () => {
-            user.planTitle = plan.title;
-            if (service === 'prime') { finishPrime(); } else { switchStep('step-plans', 'step-device'); }
-        };
-
-        card.innerHTML = `
-            <div class="p-info">
-                <h3>${plan.title} Access</h3>
-                <div class="p-gift">${plan.giftHtml}</div>
-            </div>
-            <div class="p-price-stack">
-                <div class="p-old">${oldP}</div>
-                <div class="p-new">${newP} <small>${user.currency}</small></div>
-            </div>
-        `;
-        stack.appendChild(card);
+    
+    // Inject Features
+    document.getElementById('showcase-features').innerHTML = data.features.map(f => `<div class="f-pill">${f}</div>`).join('');
+    
+    // Inject Slider Buttons
+    const slider = document.getElementById('duration-slider');
+    slider.innerHTML = '';
+    data.plans.forEach((plan, index) => {
+        const btn = document.createElement('button');
+        btn.className = `slider-btn ${index === user.activePlanIndex ? 'active' : ''}`;
+        btn.innerText = plan.title;
+        btn.onclick = () => updateShowcase(index);
+        slider.appendChild(btn);
     });
+
+    // Render Initial Showcase
+    updateShowcase(user.activePlanIndex);
 }
 
+function updateShowcase(index) {
+    user.activePlanIndex = index;
+    const plan = planData[user.service].plans[index];
+    user.planTitle = plan.title;
+    
+    // Update Slider UI
+    const btns = document.querySelectorAll('.slider-btn');
+    btns.forEach((b, i) => {
+        b.classList.toggle('active', i === index);
+    });
+
+    // Calculate Price
+    let newP = "", oldP = "";
+    if (user.currency === "USD") {
+        newP = `$${Math.round(plan.price * user.rate)}`;
+        oldP = `$${Math.round(plan.oldPrice * user.rate)}`;
+    } else {
+        newP = `${(plan.price / 1000)}K`;
+        oldP = `${(plan.oldPrice / 1000)}K`;
+    }
+
+    // Animate Update
+    const showcase = document.getElementById('plan-showcase');
+    showcase.style.transform = 'scale(0.98)';
+    showcase.style.opacity = '0.8';
+    
+    setTimeout(() => {
+        document.getElementById('showcase-old').innerText = oldP;
+        document.getElementById('showcase-new').innerHTML = `${newP} <small>${user.currency}</small>`;
+        document.getElementById('showcase-gift').innerHTML = plan.giftHtml;
+        
+        showcase.style.transform = 'scale(1)';
+        showcase.style.opacity = '1';
+        updateTracker();
+    }, 150);
+}
+
+function confirmPlan() {
+    if (user.service === 'prime') { finishPrime(); } else { switchStep('step-plans', 'step-device'); }
+}
+
+// --- DEVICE & FINAL INSTRUCTIONS ---
 function selectDevice(device) {
     user.device = device;
     finishNetflix(device);
 }
 
-// --- UTILITY ---
 function copyText(elementId, btnElement) {
     const text = document.getElementById(elementId).innerText;
     navigator.clipboard.writeText(text).then(() => {
@@ -158,10 +186,10 @@ function copyText(elementId, btnElement) {
     });
 }
 
-// --- FINAL INSTRUCTIONS (EXACT COPY REQUESTED) ---
 function finishNetflix(device) {
     document.getElementById('final-back-btn').setAttribute('onclick', "goBack('step-device')");
-    
+    updateTracker();
+
     const vaultHtml = `
         <div class="credential-vault">
             <div class="cred-row">
@@ -185,19 +213,19 @@ function finishNetflix(device) {
     if (device === 'Smart TV') {
         stepsHtml = `
             <div class="step-timeline">
-                <div class="t-step"><div class="t-num">1</div><div class="t-text">Open the Netflix app on your TV and select <b>Sign In</b>.</div></div>
-                <div class="t-step"><div class="t-num">2</div><div class="t-text">If a code screen appears, choose <b>"Use Remote"</b>.</div></div>
-                <div class="t-step"><div class="t-num">3</div><div class="t-text">If prompted, choose <b>"Use Password Instead"</b>.</div></div>
-                <div class="t-step"><div class="t-num">4</div><div class="t-text">Enter the Email and Password above, tap Sign In, and wait at the <b>Who's watching? (Profiles)</b> screen.</div></div>
+                <div class="t-step"><div class="t-num">1</div><div class="t-text">Open the Netflix app directly on your TV and select <b>Sign In</b>.</div></div>
+                <div class="t-step"><div class="t-num">2</div><div class="t-text">If a code screen appears, ignore the code and choose <b>"Use Remote"</b> instead.</div></div>
+                <div class="t-step"><div class="t-num">3</div><div class="t-text">If prompted with sending a link, choose <b>"Use Password Instead"</b>.</div></div>
+                <div class="t-step"><div class="t-num">4</div><div class="t-text">Enter the Email and Password above, tap Sign In, and wait at the <b>"Who's watching?" (Profiles)</b> screen.</div></div>
             </div>
         `;
     } else if (device === 'TV') {
         stepsHtml = `
             <div class="step-timeline">
-                <div class="t-step"><div class="t-num">1</div><div class="t-text">Use your connected device remote and open Netflix on that device.</div></div>
-                <div class="t-step"><div class="t-num">2</div><div class="t-text">Tap <b>Sign In</b>. If a code screen appears, choose <b>"Use Remote"</b>.</div></div>
+                <div class="t-step"><div class="t-num">1</div><div class="t-text">Use your connected device remote (Firestick/Console) and open Netflix.</div></div>
+                <div class="t-step"><div class="t-num">2</div><div class="t-text">Select <b>Sign In</b>. If a code screen appears, choose <b>"Use Remote"</b>.</div></div>
                 <div class="t-step"><div class="t-num">3</div><div class="t-text">If prompted, choose <b>"Use Password Instead"</b>.</div></div>
-                <div class="t-step"><div class="t-num">4</div><div class="t-text">Enter the Email and Password above, tap Sign In, and wait at the <b>Who's watching? (Profiles)</b> screen.</div></div>
+                <div class="t-step"><div class="t-num">4</div><div class="t-text">Enter the Email and Password above, tap Sign In, and wait at the <b>"Who's watching?" (Profiles)</b> screen.</div></div>
             </div>
         `;
     } else {
@@ -205,7 +233,7 @@ function finishNetflix(device) {
             <div class="step-timeline">
                 <div class="t-step"><div class="t-num">1</div><div class="t-text">Open Netflix and log out of any existing accounts.</div></div>
                 <div class="t-step"><div class="t-num">2</div><div class="t-text">Tap <b>Sign In</b> and enter the Email and Password shown above.</div></div>
-                <div class="t-step"><div class="t-num">3</div><div class="t-text">Tap Sign In and wait at the <b>Who's watching? (Profiles)</b> screen.</div></div>
+                <div class="t-step"><div class="t-num">3</div><div class="t-text">Tap Sign In and wait at the <b>"Who's watching?" (Profiles)</b> screen.</div></div>
             </div>
         `;
     }
@@ -231,7 +259,7 @@ function finishPrime() {
         <div class="credential-vault">
             <div class="cred-row">
                 <div class="cred-info">
-                    <span>Prime Email Address</span>
+                    <span>Prime Login Email</span>
                     <strong id="pm-email">cartelug1@gmail.com</strong>
                 </div>
                 <button class="btn-copy" onclick="copyText('pm-email', this)"><i class="far fa-copy"></i> Copy</button>
