@@ -1,186 +1,211 @@
+// --- STATE MANAGEMENT ---
+let user = {
+    name: "",
+    country: "UG",
+    currency: "UGX",
+    rate: 1,
+    service: "",
+    planTitle: "",
+    device: "",
+    tvType: ""
+};
+
+// --- PRICING DATA (Base is UGX) ---
+const planData = {
+    netflix: {
+        features: [
+            '<i class="fas fa-tv"></i> 4K UHD Streaming',
+            '<i class="fas fa-users"></i> 2+ Devices',
+            '<i class="fas fa-download"></i> Offline Downloads',
+            '<i class="fas fa-headset"></i> 24/7 VIP Support'
+        ],
+        plans: [
+            { title: "1 Year", months: 12, price: 250000, gift: "1 Year Free Prime Video" },
+            { title: "9 Months", months: 9, price: 200000, gift: "9 Months Free Prime Video" },
+            { title: "6 Months", months: 6, price: 150000, gift: "6 Months Free Prime Video" },
+            { title: "3 Months", months: 3, price: 90000, gift: "3 Months Free Prime Video" }
+        ]
+    },
+    prime: {
+        features: [
+            '<i class="fas fa-crown"></i> Amazon Originals',
+            '<i class="fas fa-tv"></i> 4K UHD',
+            '<i class="fas fa-mobile-alt"></i> Any Device'
+        ],
+        plans: [
+            { title: "1 Year", months: 12, price: 150000, gift: "1 Month Free Netflix" },
+            { title: "6 Months", months: 6, price: 120000, gift: "1 Month Free Netflix" },
+            { title: "3 Months", months: 3, price: 80000, gift: "1 Month Free Netflix" }
+        ]
+    }
+};
+
+// --- INITIALIZATION ---
 document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM ELEMENTS ---
-    const steps = document.querySelectorAll('.step');
-    const planTabs = document.querySelectorAll('.plan-tab');
-    const planDetailsContainer = document.querySelector('.plan-details');
-    const nextToDeviceBtn = document.getElementById('next-to-device');
-    const deviceBtns = document.querySelectorAll('.device-btn');
-    const tvTypeBtns = document.querySelectorAll('.tv-type-btn');
-    const backBtns = document.querySelectorAll('.back-btn');
-    const loginGuideContainer = document.querySelector('.login-guide');
-    const loginTitle = document.getElementById('login-title');
-    const countryPopup = document.getElementById('country-popup-overlay');
+    // Country Selection Logic
     const countryBtns = document.querySelectorAll('.country-btn');
-
-    // --- STATE MANAGEMENT ---
-    let selectedDevice = '';
-    let selectedCountry = null; // Persisted for the session
-
-    // --- DATA ---
-    const plans = {
-        basic: {
-            duration: "2 Months Access",
-            pricing: {
-                uganda: { original: 100000, discounted: 50000, currency: "UGX" },
-                sudan: { original: 180000, discounted: 90000, currency: "SSP" }
-            },
-            features: [ { icon: "fa-desktop", text: "2 Devices" }, { icon: "fa-video", text: "4K UHD" }, { icon: "fa-headset", text: "24/7 Support" } ]
-        },
-        standard: {
-            duration: "3 Months Access",
-            pricing: {
-                uganda: { original: 140000, discounted: 70000, currency: "UGX" },
-                sudan: { original: 252000, discounted: 126000, currency: "SSP" }
-            },
-            features: [ { icon: "fa-desktop", text: "2 Devices" }, { icon: "fa-video", text: "4K UHD" }, { icon: "fa-headset", text: "24/7 Support" } ]
-        },
-        premium: {
-            duration: "6 Months Access",
-            pricing: {
-                uganda: { original: 240000, discounted: 120000, currency: "UGX" },
-                sudan: { original: 432000, discounted: 216000, currency: "SSP" }
-            },
-            features: [ { icon: "fa-desktop", text: "2 Devices" }, { icon: "fa-video", text: "4K UHD" }, { icon: "fa-headset", text: "24/7 Support" } ],
-            bonus: true
-        },
-        year: {
-            duration: "1 Year Access",
-            pricing: {
-                uganda: { original: 400000, discounted: 200000, currency: "UGX" },
-                sudan: { original: 720000, discounted: 360000, currency: "SSP" }
-            },
-            features: [ { icon: "fa-desktop", text: "2 Devices" }, { icon: "fa-video", text: "4K UHD" }, { icon: "fa-headset", text: "24/7 Support" } ],
-            bonus: true
-        }
-    };
-
-    // --- FUNCTIONS ---
-    const formatCurrency = (amount) => new Intl.NumberFormat('en-US').format(amount);
-
-    const updatePlanDetails = (planKey) => {
-        if (!selectedCountry) return; // Don't run if country isn't selected
-        const plan = plans[planKey];
-        const prices = plan.pricing[selectedCountry];
-
-        let featuresHTML = plan.features.map(f => `<li><i class="fas ${f.icon}"></i> ${f.text}</li>`).join('');
-        let bonusHTML = plan.bonus ? `
-            <div class="bonus">
-                <p>+ Includes FREE:</p>
-                <div class="bonus-logos">
-                    <img src="../prime-video.png" alt="Prime Video">
-                    <img src="../spotify.png" alt="Spotify">
-                </div>
-            </div>` : '';
-
-        planDetailsContainer.innerHTML = `
-            <div class="price-display">
-                <del class="original-price">${formatCurrency(prices.original)} ${prices.currency}</del>
-                <div class="discounted-price">${formatCurrency(prices.discounted)} <span class="currency">${prices.currency}</span></div>
-            </div>
-            <p class="duration">${plan.duration}</p>
-            <ul class="features">${featuresHTML}</ul>
-            ${bonusHTML}
-        `;
-    };
-
-    const showStep = (stepId) => {
-        steps.forEach(step => step.classList.remove('active'));
-        document.getElementById(stepId)?.classList.add('active');
-        window.scrollTo(0, 0);
-    };
-    
-    const generateLoginGuide = (device, tvType = null) => {
-        let guideHTML = '';
-        let backTarget = 'step2';
-        let finalDeviceName = tvType || device;
-
-        if (device === 'TV' && tvType === 'Smart TV') {
-            guideHTML += `<div class="visual-step"><div class="icon"><img src="../netflix.png" alt="Netflix Logo"></div><div class="text">Find and <strong>Open the Netflix App</strong> on your TV.</div></div><div class="visual-step"><div class="icon"><i class="fas fa-sign-in-alt"></i></div><div class="text">Important: Choose <strong>Sign In</strong>, not Sign Up.</div></div><div class="visual-step"><div class="icon"><i class="fas fa-gamepad"></i></div><div class="text">When asked, select <strong>'Sign in with your remote'</strong>.</div></div>`;
-            backTarget = 'step2-5';
-        } else {
-             guideHTML += `<div class="visual-step"><div class="icon"><img src="../netflix.png" alt="Netflix Logo"></div><div class="text"><strong>Open the Netflix App</strong> or go to Netflix.com on your ${finalDeviceName}.</div></div>`;
-        }
-        
-        const encodedMessage = encodeURIComponent("Hello Accessug! I’m on the profiles screen.");
-        const whatsappLink = `https://wa.me/256762193386?text=${encodedMessage}`;
-
-        guideHTML += `
-            <div class="visual-step"><div class="icon"><i class="fas fa-at"></i></div><div class="text">Enter the Email Address<div class="credential-box"><span id="email">cartelug7@gmail.com</span><button class="copy-btn" data-copy="email"><i class="fas fa-copy"></i></button></div></div></div>
-            <div class="visual-step"><div class="icon"><i class="fas fa-key"></i></div><div class="text">Enter the Password<div class="credential-box"><span id="password">cartelug10</span><button class="copy-btn" data-copy="password"><i class="fas fa-copy"></i></button></div></div></div>
-            <div class="final-cta"><p class="cta-prompt">Once you see the profiles screen, tap below to activate your account!</p><a href="${whatsappLink}" target="_blank" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> I'm at the Profiles Screen!</a></div>
-        `;
-        
-        loginGuideContainer.innerHTML = guideHTML;
-        loginTitle.textContent = `Login on Your ${finalDeviceName}`;
-        document.querySelector('#step3 .back-btn').dataset.target = backTarget;
-        addCopyButtonListeners();
-    };
-
-    const addCopyButtonListeners = () => {
-        document.querySelectorAll('.copy-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                e.preventDefault();
-                const textToCopy = document.getElementById(button.dataset.copy).textContent;
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    const icon = button.querySelector('i');
-                    icon.classList.remove('fa-copy');
-                    icon.classList.add('fa-check');
-                    button.style.backgroundColor = 'var(--green-accent)';
-                    setTimeout(() => {
-                        icon.classList.add('fa-copy');
-                        icon.classList.remove('fa-check');
-                        button.style.backgroundColor = '';
-                    }, 2000);
-                });
-            });
-        });
-    };
-    
-    // --- EVENT LISTENERS ---
-    planTabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            planTabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            updatePlanDetails(tab.dataset.plan);
-        });
-    });
-
     countryBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            selectedCountry = btn.dataset.country;
-            countryPopup.classList.remove('visible');
-            const activePlanTab = document.querySelector('.plan-tab.active');
-            updatePlanDetails(activePlanTab.dataset.plan);
+        btn.addEventListener('click', (e) => {
+            countryBtns.forEach(b => b.classList.remove('active'));
+            const target = e.currentTarget;
+            target.classList.add('active');
+            user.country = target.getAttribute('data-country');
+            user.currency = target.getAttribute('data-currency');
+            user.rate = parseFloat(target.getAttribute('data-rate'));
         });
     });
-
-    nextToDeviceBtn.addEventListener('click', () => showStep('step2'));
-
-    deviceBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            selectedDevice = btn.dataset.deviceType;
-            if (selectedDevice === 'TV') {
-                showStep('step2-5');
-            } else {
-                generateLoginGuide(selectedDevice);
-                showStep('step3');
-            }
-        });
-    });
-    
-    tvTypeBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const tvType = btn.dataset.tvType;
-            generateLoginGuide('TV', tvType);
-            showStep('step3');
-        });
-    });
-
-    backBtns.forEach(btn => {
-        btn.addEventListener('click', () => showStep(btn.dataset.target));
-    });
-
-    // --- INITIALIZATION ---
-    // The country popup is visible by default via CSS. 
-    // The app remains in a waiting state until a country is chosen.
 });
+
+// --- NAVIGATION LOGIC ---
+function switchStep(fromId, toId) {
+    document.getElementById(fromId).classList.remove('active');
+    document.getElementById(toId).classList.add('active');
+}
+
+function goBack(toId) {
+    // Hide all steps, show target
+    document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+    document.getElementById(toId).classList.add('active');
+}
+
+// --- STEP 0: ONBOARD ---
+function initiatePortal() {
+    const nameInput = document.getElementById('userName').value.trim();
+    if (!nameInput) {
+        alert("Please enter your name to continue.");
+        return;
+    }
+    user.name = nameInput;
+    switchStep('step-onboard', 'step-service');
+}
+
+// --- STEP 1: SERVICE ---
+function selectService(service) {
+    user.service = service;
+    document.body.setAttribute('data-theme', service);
+    
+    if (service === 'spotify') {
+        switchStep('step-service', 'step-spotify');
+    } else {
+        renderPlans(service);
+        switchStep('step-service', 'step-plans');
+    }
+}
+
+// --- STEP 2: PLANS ---
+function renderPlans(service) {
+    const data = planData[service];
+    
+    // Render Features
+    const featContainer = document.getElementById('plan-features');
+    featContainer.innerHTML = data.features.map(f => `<div class="f-badge">${f}</div>`).join('');
+
+    // Render Cards
+    const stack = document.getElementById('pricing-stack');
+    stack.innerHTML = '';
+
+    data.plans.forEach(plan => {
+        // Calculate Price based on Currency
+        let displayPrice = "";
+        if (user.currency === "USD") {
+            const usdVal = Math.round(plan.price * user.rate);
+            displayPrice = `$${usdVal}`;
+        } else {
+            displayPrice = `${(plan.price / 1000)}K`;
+        }
+
+        const card = document.createElement('div');
+        card.className = 'plan-card';
+        card.onclick = () => {
+            user.planTitle = plan.title;
+            switchStep('step-plans', 'step-device');
+        };
+
+        card.innerHTML = `
+            <div class="p-info">
+                <h3>${plan.title} Access</h3>
+                <div class="p-gift"><i class="fas fa-gift"></i> ${plan.gift}</div>
+            </div>
+            <div class="p-price">
+                ${displayPrice}
+                <small>${user.currency}</small>
+            </div>
+        `;
+        stack.appendChild(card);
+    });
+}
+
+// --- STEP 3/4: DEVICE & FINAL ---
+function selectDevice(device) {
+    user.device = device;
+    if (user.service === 'netflix' && device === 'TV') {
+        switchStep('step-device', 'step-tv-type');
+    } else if (user.service === 'netflix') {
+        finishNetflix(device);
+    } else if (user.service === 'prime') {
+        finishPrime();
+    }
+}
+
+function finishNetflix(tvType) {
+    if(tvType) user.tvType = tvType;
+    document.getElementById('final-back-btn').setAttribute('onclick', "goBack('step-device')");
+    
+    // Custom Netflix Instructions based on device
+    let instHtml = "";
+    if (user.device === 'Mobile') {
+        instHtml = `
+            <div class="instruction-box">
+                <h3><i class="fas fa-mobile-alt"></i> Mobile Login</h3>
+                <p>1. Open your Netflix App.<br>2. Log out of any existing accounts.<br>3. Send us a message on WhatsApp to receive your premium Email and Password.</p>
+            </div>
+        `;
+    } else if (user.device === 'PC') {
+        instHtml = `
+            <div class="instruction-box">
+                <h3><i class="fas fa-laptop"></i> PC Login</h3>
+                <p>1. Go to Netflix.com on your browser.<br>2. Clear your browser cookies if you have errors.<br>3. Message us on WhatsApp for credentials.</p>
+            </div>
+        `;
+    } else {
+        instHtml = `
+            <div class="instruction-box">
+                <h3><i class="fas fa-tv"></i> TV Login (${user.tvType})</h3>
+                <p>1. Open the Netflix app on your TV.<br>2. Select "Sign In".<br>3. Message us on WhatsApp to get the credentials or Sign-in code.</p>
+            </div>
+        `;
+    }
+
+    const msg = encodeURIComponent(`Hello AccessUG, my name is ${user.name}. I selected Netflix ${user.planTitle} (${user.currency}). I am ready to login on my ${user.device} ${user.tvType ? `(${user.tvType})` : ''}.`);
+    
+    document.getElementById('final-content').innerHTML = `
+        ${instHtml}
+        <a href="https://wa.me/256762193386?text=${msg}" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Get Credentials</a>
+    `;
+    
+    document.getElementById('final-title').innerText = "Netflix Setup Guide";
+    
+    // Hide step-tv-type if we came from there
+    document.getElementById('step-tv-type').classList.remove('active');
+    document.getElementById('step-device').classList.remove('active');
+    document.getElementById('step-final').classList.add('active');
+}
+
+function finishPrime() {
+    document.getElementById('final-back-btn').setAttribute('onclick', "goBack('step-device')");
+    const msg = encodeURIComponent(`Hello AccessUG, my name is ${user.name}. I selected Prime Video ${user.planTitle} (${user.currency}). I'm ready for the password for Prime.`);
+    
+    document.getElementById('final-content').innerHTML = `
+        <p style="color:#aaa; margin-bottom: 20px;">Your Prime Video package is ready for activation.</p>
+        <a href="https://wa.me/256762193386?text=${msg}" class="btn btn-whatsapp"><i class="fab fa-whatsapp"></i> Request Prime Password</a>
+    `;
+    
+    document.getElementById('final-title').innerText = "Prime Video Setup";
+    switchStep('step-device', 'step-final');
+}
+
+// --- SPOTIFY ACTION ---
+function sendSpotifyWhatsApp() {
+    const msg = encodeURIComponent(`Hello AccessUG, my name is ${user.name}. I have accepted the invite, please send me the Address to join.`);
+    window.location.href = `https://wa.me/256762193386?text=${msg}`;
+}

@@ -3,107 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Access Hub - CartelUG</title>
-    <link rel="icon" href="../IMAGES/logo.png" type="image/png">
+    <title>Master Access Portal | AccessUG</title>
     
+    <link rel="icon" href="../IMAGES/logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <link rel="stylesheet" href="../HOME/style.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="portal-body">
 
-    <div id="country-popup-overlay" class="popup-overlay visible">
-        <div class="popup-box" role="dialog" aria-modal="true" aria-labelledby="popup-title">
-            <h2 id="popup-title">Which country are you in?</h2>
-            <div class="country-buttons">
-                <button class="country-btn" data-country="uganda" aria-label="Select Uganda">🇺🇬 Uganda</button>
-                <button class="country-btn" data-country="sudan" aria-label="Select South Sudan">🇸🇸 South Sudan</button>
-            </div>
-        </div>
+    <div class="portal-bg">
+        <div class="glow-orb red-orb"></div>
+        <div class="glow-orb blue-orb"></div>
+        <div class="glow-orb green-orb"></div>
+        <div class="glass-noise"></div>
     </div>
 
-    <main class="container">
-        <div class="app-view">
-            <header class="app-header">
-                <a href="../index.html" class="logo-link">
-                    <img src="../IMAGES/logo.png" alt="CartelUG Logo" class="logo">
-                </a>
-            </header>
+    <nav class="portal-nav">
+        <a href="../index.html" class="logo-wrapper">
+            <img src="../IMAGES/logo.png" alt="AccessUG" class="brand-logo">
+        </a>
+        <div class="secure-badge"><i class="fas fa-shield-alt"></i> 256-bit Secure</div>
+    </nav>
 
-            <section class="step active" id="step1">
-                <div class="step-header">
-                    <h1>Choose Your Plan</h1>
-                    <p>Select your preferred access duration.</p>
-                </div>
-                <div class="plan-selector">
-                    <div class="plan-tabs">
-                        <button class="plan-tab" data-plan="basic">2 Months</button>
-                        <button class="plan-tab" data-plan="standard">3 Months</button>
-                        <button class="plan-tab active" data-plan="premium">6 Months</button>
-                        <button class="plan-tab" data-plan="year">1 Year</button>
-                    </div>
-                    <div class="plan-details">
-                        </div>
-                </div>
-                <button class="cta-button" id="next-to-device">Continue</button>
-            </section>
-
-            <section class="step" id="step2">
-                <div class="step-header">
-                    <button class="back-btn" data-target="step1"><i class="fas fa-arrow-left"></i> Back</button>
-                    <h1>How will you watch?</h1>
-                    <p>Select the device you'll be using.</p>
-                </div>
-                <div class="device-grid">
-                    <div class="device-card device-btn" data-device-type="TV">
-                        <i class="fas fa-tv"></i><span>TV</span>
-                    </div>
-                    <div class="device-card device-btn" data-device-type="Phone">
-                        <i class="fas fa-mobile-alt"></i><span>Phone / Tablet</span>
-                    </div>
-                    <div class="device-card device-btn" data-device-type="PC">
-                        <i class="fas fa-laptop"></i><span>Computer</span>
-                    </div>
-                </div>
-            </section>
+    <main class="portal-container">
+        <div class="glass-wizard">
             
-            <section class="step" id="step2-5">
-                 <div class="step-header">
-                    <button class="back-btn" data-target="step2"><i class="fas fa-arrow-left"></i> Back</button>
-                    <h1>What kind of TV?</h1>
-                    <p>This helps us give you the perfect instructions.</p>
+            <section class="wizard-step active" id="step-onboard">
+                <div class="step-header text-center">
+                    <div class="icon-pulse"><i class="fas fa-fingerprint"></i></div>
+                    <h1>Welcome to <span class="text-gradient">Access</span></h1>
+                    <p>Enter your details to initiate a secure connection.</p>
+                </div>
+
+                <div class="input-group">
+                    <label>Your Name</label>
+                    <input type="text" id="userName" placeholder="e.g. David M." autocomplete="off">
+                </div>
+
+                <div class="input-group">
+                    <label>Your Region</label>
+                    <div class="country-grid">
+                        <button class="country-btn active" data-country="UG" data-currency="UGX" data-rate="1">
+                            🇺🇬 Uganda <small>(UGX)</small>
+                        </button>
+                        <button class="country-btn" data-country="SS" data-currency="USD" data-rate="0.00027">
+                            🇸🇸 South Sudan <small>(USD)</small>
+                        </button>
+                        <button class="country-btn" data-country="CD" data-currency="USD" data-rate="0.00027">
+                            🇨🇩 Congo <small>(USD)</small>
+                        </button>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary-glow btn-block mt-4" onclick="initiatePortal()">
+                    Enter Portal <i class="fas fa-arrow-right"></i>
+                </button>
+            </section>
+
+            <section class="wizard-step" id="step-service">
+                <div class="step-header">
+                    <button class="back-link" onclick="goBack('step-onboard')"><i class="fas fa-arrow-left"></i> Back</button>
+                    <h1>Select <span class="text-gradient">Service</span></h1>
+                    <p>Which premium environment are you connecting to?</p>
+                </div>
+
+                <div class="service-grid">
+                    <button class="svc-select-card s-netflix" onclick="selectService('netflix')">
+                        <img src="../IMAGES/netflix.png" alt="Netflix">
+                        <span>Netflix</span>
+                    </button>
+                    <button class="svc-select-card s-prime" onclick="selectService('prime')">
+                        <img src="../IMAGES/prime-video.png" alt="Prime">
+                        <span>Prime Video</span>
+                    </button>
+                    <button class="svc-select-card s-spotify" onclick="selectService('spotify')">
+                        <img src="../IMAGES/spotify.png" alt="Spotify">
+                        <span>Spotify</span>
+                    </button>
+                </div>
+            </section>
+
+            <section class="wizard-step" id="step-plans">
+                <div class="step-header">
+                    <button class="back-link" onclick="goBack('step-service')"><i class="fas fa-arrow-left"></i> Back</button>
+                    <h1 id="plan-title">Choose <span class="dynamic-color">Plan</span></h1>
+                    <p>Unlock ultimate premium access.</p>
+                </div>
+
+                <div class="dynamic-features" id="plan-features">
+                    </div>
+
+                <div class="pricing-stack" id="pricing-stack">
+                    </div>
+            </section>
+
+            <section class="wizard-step" id="step-device">
+                <div class="step-header">
+                    <button class="back-link" onclick="goBack('step-plans')"><i class="fas fa-arrow-left"></i> Back</button>
+                    <h1>Connect <span class="dynamic-color">Device</span></h1>
+                    <p>Where will you be watching?</p>
+                </div>
+                
+                <div class="device-grid">
+                    <button class="device-btn" onclick="selectDevice('TV')"><i class="fas fa-tv"></i> Television</button>
+                    <button class="device-btn" onclick="selectDevice('Mobile')"><i class="fas fa-mobile-alt"></i> Phone / Tablet</button>
+                    <button class="device-btn" onclick="selectDevice('PC')"><i class="fas fa-laptop"></i> Computer</button>
+                </div>
+            </section>
+
+            <section class="wizard-step" id="step-tv-type">
+                <div class="step-header">
+                    <button class="back-link" onclick="goBack('step-device')"><i class="fas fa-arrow-left"></i> Back</button>
+                    <h1>TV <span class="dynamic-color">System</span></h1>
+                    <p>How does your TV operate?</p>
                 </div>
                 <div class="device-grid">
-                    <div class="device-card tv-type-btn" data-tv-type="Smart TV">
-                        <i class="fas fa-photo-video"></i><span>Smart TV <small>(Has an App Store)</small></span>
+                    <button class="device-btn" onclick="finishNetflix('Smart TV')"><i class="fas fa-photo-video"></i> Smart TV <small>(Has App Store)</small></button>
+                    <button class="device-btn" onclick="finishNetflix('Normal TV')"><i class="fas fa-globe"></i> Normal TV <small>(Uses Browser)</small></button>
+                </div>
+            </section>
+
+            <section class="wizard-step" id="step-final">
+                <div class="step-header">
+                    <button class="back-link" id="final-back-btn" onclick="goBack('step-device')"><i class="fas fa-arrow-left"></i> Back</button>
+                    <h1 id="final-title">Finalizing...</h1>
+                </div>
+                
+                <div id="final-content" class="final-content-box">
                     </div>
-                    <div class="device-card tv-type-btn" data-tv-type="Normal TV">
-                       <i class="fas fa-globe"></i><span>Normal TV <small>(Using a Browser)</small></span>
+            </section>
+
+            <section class="wizard-step" id="step-spotify">
+                <div class="step-header">
+                    <button class="back-link" onclick="goBack('step-service')"><i class="fas fa-arrow-left"></i> Back</button>
+                    <h1>Spotify <span class="text-green">Setup</span></h1>
+                    <p>Follow these 3 simple steps to join the family.</p>
+                </div>
+
+                <div class="spotify-guide">
+                    <div class="sg-step">
+                        <div class="sg-num">1</div>
+                        <div class="sg-info">
+                            <h3>Click the Invite</h3>
+                            <p>Open the official AccessUG premium invite link.</p>
+                            <a href="#" target="_blank" class="btn btn-outline-green"><i class="fas fa-link"></i> Open Invite Link</a>
+                        </div>
+                    </div>
+                    <div class="sg-step">
+                        <div class="sg-num">2</div>
+                        <div class="sg-info">
+                            <h3>Accept & Login</h3>
+                            <p>Press "Accept Invite" and log into your current Spotify account.</p>
+                        </div>
+                    </div>
+                    <div class="sg-step">
+                        <div class="sg-num">3</div>
+                        <div class="sg-info">
+                            <h3>Request Address</h3>
+                            <p>Ask our system for the verification address on WhatsApp.</p>
+                            <button class="btn btn-spotify" onclick="sendSpotifyWhatsApp()"><i class="fab fa-whatsapp"></i> Request Address</button>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section class="step" id="step3">
-                <div class="step-header">
-                    <button class="back-btn" data-target="step2"><i class="fas fa-arrow-left"></i> Back</button>
-                    <h1 id="login-title">Login on Your Device</h1>
-                </div>
-                <div class="login-guide">
-                    </div>
-            </section>
         </div>
-        
-        <footer class="app-footer">
-            <p>&copy; 2025 CartelUG. All Rights Reserved.</p>
-            <nav>
-                <a href="../terms-of-service/index.html">Terms of Service</a>
-                <a href="../privacy-policy/index.html">Privacy Policy</a>
-            </nav>
-        </footer>
     </main>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
