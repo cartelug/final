@@ -199,3 +199,176 @@ body {
     body { height: auto; overflow-y: auto; }
     .issue-card { padding: 15px; }
 }
+/* =========================================================
+   1. PERFECTLY CENTERED LOGO & NAVBAR
+   ========================================================= */
+.navbar {
+    position: relative;
+    width: 100%;
+    z-index: 100;
+}
+
+.navbar .nav-content {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-height: 80px;
+    width: 100%;
+    padding: 0 5%;
+}
+
+/* Rips the logo out of the layout flow to ensure dead-center perfection */
+.navbar .logo-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 10;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.navbar .logo-wrapper img {
+    max-height: 45px;
+    width: auto;
+    object-fit: contain;
+}
+
+.navbar .logo-wrapper:hover {
+    transform: translate(-50%, -50%) scale(1.08); /* Premium pop effect */
+}
+
+/* =========================================================
+   2. EXTREMELY CREATIVE "BACK" BUTTON
+   ========================================================= */
+.navbar .back-link {
+    position: absolute;
+    left: 5%; 
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 22px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    backdrop-filter: blur(15px);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Liquid light sweep hover effect */
+.navbar .back-link::before {
+    content: '';
+    position: absolute;
+    top: 0; 
+    left: -150%; 
+    width: 100%; 
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+}
+
+.navbar .back-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateX(-5px); /* Slides left on hover */
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
+}
+
+.navbar .back-link:hover::before {
+    left: 150%; 
+}
+
+.navbar .back-link i {
+    transition: transform 0.3s ease;
+}
+.navbar .back-link:hover i {
+    transform: translateX(-5px);
+}
+
+/* =========================================================
+   3. ANTI-WARPING TRUST SCREENSHOTS (SQUARE OR 9:16)
+   ========================================================= */
+.proof-viewer {
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    background: #050505;
+    padding: 15px 0;
+}
+
+.proof-track {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none; /* Hides scrollbar on Firefox */
+    gap: 15px; /* Space between screenshots */
+    padding: 0 15px;
+    scroll-snap-type: x mandatory; /* Makes swiping snap to the images */
+}
+
+.proof-track::-webkit-scrollbar {
+    display: none; /* Hides scrollbar on Chrome/Safari */
+}
+
+.proof-img {
+    flex: 0 0 auto; /* Prevents the image from being squashed */
+    height: 350px; /* Fixed height so all images line up perfectly */
+    width: auto; /* Automatically adjusts width based on the image's ratio */
+    max-width: 85%; /* Prevents a wide image from taking up the entire screen width */
+    object-fit: contain; /* Ensures the whole image is visible without cutting off */
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    scroll-snap-align: center; /* Snaps the image to the center when swiping */
+}
+
+/* =========================================================
+   4. EXTREME CINEMATIC ANIMATIONS
+   ========================================================= */
+
+/* Breathing Spotlight */
+@keyframes breatheSpotlight {
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.9; transform: translateX(-50%) scale(1.15); }
+}
+.spotlight, .blue-spotlight {
+    animation: breatheSpotlight 8s ease-in-out infinite;
+}
+
+/* Levitating Glass Card */
+@keyframes levitateCard {
+    0%, 100% { 
+        transform: translateY(0px); 
+        box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    }
+    50% { 
+        transform: translateY(-12px); 
+        box-shadow: 0 45px 80px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+    }
+}
+.wizard-card.glass-panel {
+    animation: levitateCard 6s ease-in-out infinite;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* =========================================================
+   5. MOBILE RESPONSIVENESS
+   ========================================================= */
+@media (max-width: 768px) {
+    .navbar .back-link {
+        padding: 8px 16px;
+        font-size: 0.8rem;
+        left: 3%;
+    }
+    .navbar .logo-wrapper img {
+        max-height: 38px;
+    }
+    .proof-img {
+        height: 280px; /* Slightly shorter screenshots on mobile */
+    }
+}
