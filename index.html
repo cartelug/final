@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>AccessUG | Cinematic Digital Upgrades</title>
-    <meta name="description" content="Uganda's premium digital upgrades. Connect First, Pay After. Netflix, Prime, Spotify.">
+    <meta name="description" content="Uganda's premium digital upgrades. Connect First, Pay via Mobile money. Netflix, Prime, Spotify.">
     
     <link rel="icon" href="IMAGES/logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,6 +18,11 @@
 
     <div class="cursor-spotlight" id="spotlight"></div>
 
+    <div id="lightbox" class="lightbox-overlay">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Zoomed Proof">
+    </div>
+
     <nav class="precision-nav" id="navbar">
         <div class="container nav-grid">
             <a href="/" class="brand-monolith">
@@ -26,11 +31,10 @@
             </a>
             <div class="nav-links">
                 <a href="#vault" class="nav-item">The Vault</a>
-                <a href="#framework" class="nav-item">Framework</a>
-                <a href="#intel" class="nav-item">Client Intel</a>
+                <a href="#framework" class="nav-item">How it works</a>
+                <a href="#intel" class="nav-item">Client Proof</a>
             </div>
-            <a href="access/" class="btn-outline">Client Portal</a>
-        </div>
+            </div>
     </nav>
 
     <main class="smooth-scroll-wrapper">
@@ -49,15 +53,22 @@
                 </h1>
                 
                 <p class="lead-text fade-up delay-2">
-                    Zero risk. Infinite entertainment. We configure your Smart TV or Mobile via VIP WhatsApp support. You only transfer funds after verifying the stream.
+                    Connect First, Pay via Mobile money.
                 </p>
+
+                <div class="momo-showcase fade-up delay-2">
+                    <img src="IMAGES/mtn.png" alt="MTN Mobile Money" class="momo-brand mtn-glow">
+                    <img src="IMAGES/airtel.png" alt="Airtel Money" class="momo-brand airtel-glow">
+                </div>
                 
                 <div class="action-dock fade-up delay-3">
-                    <a href="#vault" class="btn-solid-emerald glow-hover">
-                        Initialize Upgrade <i class="fas fa-arrow-down"></i>
+                    <a href="#vault" class="btn-get-connected">
+                        <span class="btn-flare"></span>
+                        <span class="btn-txt">Get Connected</span>
+                        <i class="fas fa-bolt"></i>
                     </a>
                     <a href="#intel" class="btn-text-only">
-                        Verify Client Logs <i class="fas fa-chevron-right"></i>
+                        See what our clients say <i class="fas fa-chevron-right"></i>
                     </a>
                 </div>
             </div>
@@ -82,9 +93,9 @@
                             <div class="card-body">
                                 <h3>Netflix 4K Ultra</h3>
                                 <ul class="spec-matrix">
-                                    <li><i class="fas fa-check"></i> UHD Resolution</li>
-                                    <li><i class="fas fa-check"></i> TV, Phone & PC</li>
-                                    <li><i class="fas fa-check"></i> WhatsApp Setup</li>
+                                    <li><i class="fas fa-check glow-tick"></i> UHD Resolution</li>
+                                    <li><i class="fas fa-check glow-tick"></i> TV, Phone & PC</li>
+                                    <li><i class="fas fa-check glow-tick"></i> WhatsApp Setup</li>
                                 </ul>
                             </div>
                             <div class="card-foot">
@@ -106,9 +117,9 @@
                             <div class="card-body">
                                 <h3>Prime Video</h3>
                                 <ul class="spec-matrix">
-                                    <li><i class="fas fa-check"></i> Amazon Originals</li>
-                                    <li><i class="fas fa-check"></i> 4K HDR Streaming</li>
-                                    <li><i class="fas fa-check"></i> Offline Downloads</li>
+                                    <li><i class="fas fa-check glow-tick"></i> Amazon Originals</li>
+                                    <li><i class="fas fa-check glow-tick"></i> 4K HDR Streaming</li>
+                                    <li><i class="fas fa-check glow-tick"></i> Offline Downloads</li>
                                 </ul>
                             </div>
                             <div class="card-foot">
@@ -130,9 +141,9 @@
                             <div class="card-body">
                                 <h3>Spotify Premium</h3>
                                 <ul class="spec-matrix">
-                                    <li><i class="fas fa-check"></i> Ad-Free Listening</li>
-                                    <li><i class="fas fa-check"></i> Keep Playlists</li>
-                                    <li><i class="fas fa-check"></i> Max Audio Fidelity</li>
+                                    <li><i class="fas fa-check glow-tick"></i> Ad-Free Listening</li>
+                                    <li><i class="fas fa-check glow-tick"></i> Keep Playlists</li>
+                                    <li><i class="fas fa-check glow-tick"></i> Max Audio Quality</li>
                                 </ul>
                             </div>
                             <div class="card-foot">
@@ -152,37 +163,37 @@
             <div class="container">
                 <div class="framework-layout">
                     <div class="framework-text fade-up">
-                        <h2 class="heading-large">Zero Risk <span class="text-emerald">Protocol.</span></h2>
-                        <p class="subtitle">A flawless 4-step deployment sequence.</p>
+                        <h2 class="heading-large">Zero Risk <span class="text-emerald">Steps.</span></h2>
+                        <p class="subtitle">A simple, safe, and instant process.</p>
                     </div>
                     
                     <div class="framework-steps">
                         <div class="step-module fade-up delay-1">
                             <div class="step-digit">01</div>
                             <div class="step-content">
-                                <h4>Select Module</h4>
-                                <p>Choose Netflix, Prime, or Spotify from the Vault.</p>
+                                <h4>Choose Service</h4>
+                                <p>Pick Netflix, Prime, or Spotify from the Vault above.</p>
                             </div>
                         </div>
                         <div class="step-module fade-up delay-2">
                             <div class="step-digit">02</div>
                             <div class="step-content">
-                                <h4>Identify</h4>
-                                <p>Fill in your basic name and device details to generate a key.</p>
+                                <h4>Enter Details</h4>
+                                <p>Give us your name and the device you want to use.</p>
                             </div>
                         </div>
                         <div class="step-module fade-up delay-3">
                             <div class="step-digit">03</div>
                             <div class="step-content">
-                                <h4>Handshake</h4>
-                                <p>Our VIP team configures your Smart TV or Phone via WhatsApp.</p>
+                                <h4>Get Connected</h4>
+                                <p>Our team connects your TV or phone instantly on WhatsApp.</p>
                             </div>
                         </div>
                         <div class="step-module module-highlight fade-up delay-4">
-                            <div class="step-digit"><i class="fas fa-lock"></i></div>
+                            <div class="step-digit"><i class="fas fa-mobile-alt"></i></div>
                             <div class="step-content">
-                                <h4 class="text-emerald">Pay After</h4>
-                                <p>Only transfer funds <b>after</b> you are fully logged in and streaming.</p>
+                                <h4 class="text-emerald">Pay via Mobile Money After</h4>
+                                <p>Send your payment only <b>after</b> you are fully logged in and watching.</p>
                             </div>
                         </div>
                     </div>
@@ -194,12 +205,12 @@
             <div class="container">
                 <div class="section-title text-center fade-up">
                     <h2 class="heading-large">Verified <span class="text-emerald">Intel.</span></h2>
-                    <p class="subtitle">Raw, unfiltered logs from active clients.</p>
+                    <p class="subtitle">Swipe to view. Tap to zoom.</p>
                 </div>
             </div>
             
-            <div class="cinematic-marquee fade-up delay-1">
-                <div class="marquee-track">
+            <div class="cinematic-marquee fade-up delay-1" id="swipe-marquee">
+                <div class="marquee-track" id="marquee-track">
                     <img src="IMAGES/trust1.png" alt="Client Log" class="intel-asset">
                     <img src="IMAGES/trust2.png" alt="Client Log" class="intel-asset">
                     <img src="IMAGES/trust3.png" alt="Client Log" class="intel-asset">
