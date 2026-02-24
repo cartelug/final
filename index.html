@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="obsidian-theme">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>AccessUG | Elite Digital Services</title>
+    <meta name="description" content="Premium Netflix, Prime Video, Spotify, and Viral Growth. Connect First, Pay After. Zero Risk.">
+    <meta name="theme-color" content="#020204">
+    
     <link rel="icon" href="IMAGES/logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,146 +14,287 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-scroll-state="top">
 
-    <div class="canvas-bg" aria-hidden="true">
-        <div class="mesh-orb orb-1"></div>
-        <div class="mesh-orb orb-2"></div>
-        <div class="texture-overlay"></div>
+    <div class="depth-engine" aria-hidden="true">
+        <div class="engine-mesh">
+            <div class="mesh-node node-alpha"></div>
+            <div class="mesh-node node-beta"></div>
+        </div>
+        <div class="engine-noise"></div>
+        <div class="engine-vignette"></div>
     </div>
 
-    <nav class="obsidian-nav" id="nav">
-        <div class="container nav-flex">
-            <a href="#" class="brand-lockup">
-                <img src="IMAGES/logo.png" alt="AccessUG">
-                <span>AccessUG</span>
+    <header class="luxury-header" id="header-main">
+        <div class="container header-grid">
+            <a href="/" class="brand-lockup" aria-label="AccessUG Home">
+                <div class="brand-logo-wrap">
+                    <img src="IMAGES/logo.png" alt="" class="brand-img">
+                    <div class="brand-flare"></div>
+                </div>
+                <span class="brand-typography">AccessUG</span>
             </a>
-            <div class="nav-links desktop">
-                <a href="#catalog">Catalog</a>
-                <a href="#process">How it Works</a>
-                <a href="#trust">Trust Center</a>
-            </div>
-            <div class="nav-actions">
-                <a href="access/" class="btn-text">Account</a>
-                <button class="menu-btn mobile" aria-label="Menu">
-                    <div class="menu-line"></div>
-                    <div class="menu-line"></div>
+            
+            <nav class="nav-desktop hidden-mobile" aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li><a href="#catalog" class="nav-link">Catalog</a></li>
+                    <li><a href="#process" class="nav-link">How it Works</a></li>
+                    <li><a href="#testimonials" class="nav-link">Trust Center</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav-utilities">
+                <a href="access/" class="util-link">Account</a>
+                <button class="hamburger-menu hidden-desktop" aria-label="Toggle Menu" aria-expanded="false">
+                    <span class="burger-line top"></span>
+                    <span class="burger-line bottom"></span>
                 </button>
             </div>
         </div>
-    </nav>
+    </header>
 
-    <main>
-        <section class="hero">
-            <div class="container hero-grid">
-                <div class="hero-content reveal">
-                    <div class="elite-badge">
-                        <span class="pulse-dot"></span> #1 in East Africa.
+    <main class="main-content" id="main">
+        
+        <section class="hero-stage">
+            <div class="container hero-container">
+                <div class="hero-content-wrapper">
+                    
+                    <div class="reveal-group" style="--stagger: 1;">
+                        <div class="elite-pill">
+                            <div class="pill-dot-wrap"><span class="pill-dot"></span><span class="pill-ping"></span></div>
+                            <span class="pill-text">#1 in East Africa.</span>
+                        </div>
                     </div>
-                    <h1 class="hero-title">
-                        Welcome to AccessUG.<br>
-                        <span class="text-emerald">Zero Risk.</span>
-                    </h1>
-                    <p class="hero-sub">
-                        Premium digital upgrades. Connect first, pay after confirmation. Experience the elite standard.
-                    </p>
-                    <div class="cta-group">
-                        <a href="#catalog" class="btn-primary-emerald">Explore Services</a>
-                        <a href="#trust" class="btn-secondary">See what our clients say</a>
+
+                    <div class="reveal-group" style="--stagger: 2;">
+                        <h1 class="hero-display">
+                            Welcome to AccessUG.<br>
+                            <span class="text-emerald-glow">Zero Risk.</span>
+                        </h1>
                     </div>
+
+                    <div class="reveal-group" style="--stagger: 3;">
+                        <p class="hero-lead">
+                            Premium digital upgrades. Connect first, pay after confirmation. Experience the elite standard today.
+                        </p>
+                    </div>
+
+                    <div class="reveal-group" style="--stagger: 4;">
+                        <div class="hero-actions">
+                            <a href="#catalog" class="btn-primary-emerald magnetic-target" data-strength="20">
+                                <span class="btn-label">Explore Services</span>
+                                <div class="btn-sheen"></div>
+                            </a>
+                            <a href="#testimonials" class="btn-ghost magnetic-target" data-strength="10">
+                                <span class="btn-label">See what our clients say</span>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            <div class="constellation" aria-hidden="true">
-                <div class="float-icon pos-nx"><img src="IMAGES/netflix.png" alt=""></div>
-                <div class="float-icon pos-pm"><img src="IMAGES/prime-video.png" alt=""></div>
-                <div class="float-icon pos-sp"><img src="IMAGES/spotify.png" alt=""></div>
+
+            <div class="hero-constellation" aria-hidden="true">
+                <div class="c-node n-1" data-parallax="0.08"><img src="IMAGES/netflix.png" alt=""></div>
+                <div class="c-node n-2" data-parallax="0.12"><img src="IMAGES/prime-video.png" alt=""></div>
+                <div class="c-node n-3" data-parallax="0.05"><img src="IMAGES/spotify.png" alt=""></div>
+                <div class="c-node n-4" data-parallax="0.15"><img src="IMAGES/tiktok.png" alt=""></div>
             </div>
         </section>
 
-        <div class="trust-marquee reveal">
-            <div class="marquee-content">
-                <span><i class="fas fa-shield-check"></i> Connect First, Pay After</span><span class="dot"></span>
-                <span><i class="fas fa-users"></i> 2,100+ Active Users</span><span class="dot"></span>
-                <span><i class="fas fa-bolt"></i> Instant Setup</span><span class="dot"></span>
-                <span><i class="fas fa-headset"></i> 24/7 VIP Support</span><span class="dot"></span>
-                <span aria-hidden="true"><i class="fas fa-shield-check"></i> Connect First, Pay After</span><span class="dot" aria-hidden="true"></span>
-                <span aria-hidden="true"><i class="fas fa-users"></i> 2,100+ Active Users</span><span class="dot" aria-hidden="true"></span>
-                <span aria-hidden="true"><i class="fas fa-bolt"></i> Instant Setup</span><span class="dot" aria-hidden="true"></span>
-                <span aria-hidden="true"><i class="fas fa-headset"></i> 24/7 VIP Support</span><span class="dot" aria-hidden="true"></span>
+        <div class="trust-marquee reveal-group" style="--stagger: 5;">
+            <div class="marquee-scroller">
+                <div class="marquee-item"><i class="fas fa-shield-check"></i> Connect First, Pay After</div>
+                <div class="marquee-divider"></div>
+                <div class="marquee-item"><i class="fas fa-users"></i> 2,100+ Active Users</div>
+                <div class="marquee-divider"></div>
+                <div class="marquee-item"><i class="fas fa-bolt"></i> Fast Setup</div>
+                <div class="marquee-divider"></div>
+                <div class="marquee-item"><i class="fas fa-headset"></i> 24/7 VIP Support</div>
+                <div class="marquee-divider"></div>
+                <div class="marquee-item" aria-hidden="true"><i class="fas fa-shield-check"></i> Connect First, Pay After</div>
+                <div class="marquee-divider" aria-hidden="true"></div>
+                <div class="marquee-item" aria-hidden="true"><i class="fas fa-users"></i> 2,100+ Active Users</div>
+                <div class="marquee-divider" aria-hidden="true"></div>
+                <div class="marquee-item" aria-hidden="true"><i class="fas fa-bolt"></i> Fast Setup</div>
+                <div class="marquee-divider" aria-hidden="true"></div>
+                <div class="marquee-item" aria-hidden="true"><i class="fas fa-headset"></i> 24/7 VIP Support</div>
+                <div class="marquee-divider" aria-hidden="true"></div>
             </div>
         </div>
 
-        <section id="catalog" class="catalog">
+        <section id="catalog" class="catalog-stage">
             <div class="container">
-                <div class="section-head reveal">
-                    <h2>The Catalog</h2>
-                    <p>Select your premium upgrade.</p>
-                </div>
                 
-                <div class="tab-scroller reveal">
-                    <button class="tab-btn active">All Services</button>
-                    <button class="tab-btn">Streaming</button>
-                    <button class="tab-btn">Viral Boosts</button>
+                <header class="section-header reveal-on-scroll">
+                    <h2 class="section-title">The Catalog</h2>
+                    <p class="section-desc">Select a module to configure your premium upgrade.</p>
+                </header>
+
+                <div class="catalog-filters reveal-on-scroll">
+                    <button class="filter-pill active" data-target="all">All Services</button>
+                    <button class="filter-pill" data-target="streaming">Streaming</button>
+                    <button class="filter-pill" data-target="viral">Viral Boosts</button>
                 </div>
 
                 <div class="bento-grid">
-                    <div class="bento-card bento-hero reveal">
-                        <div class="card-inner">
-                            <div class="c-head">
-                                <div class="c-icon"><img src="IMAGES/netflix.png" alt="Netflix"></div>
-                                <div class="c-badge badge-red">Top Seller</div>
+                    
+                    <article class="glow-card bento-hero theme-netflix reveal-on-scroll" data-category="all streaming">
+                        <div class="card-border-glow"></div>
+                        <div class="card-bg-glow"></div>
+                        <div class="card-glass-surface">
+                            <div class="card-header">
+                                <div class="brand-icon-box"><img src="IMAGES/netflix.png" alt="Netflix"></div>
+                                <div class="status-badge badge-red">Top Seller</div>
                             </div>
-                            <h3 class="c-title">Netflix Premium</h3>
-                            <div class="c-features">
-                                <span class="c-chip">4K UHD</span>
-                                <span class="c-chip">Watch on TV + phone + PC</span>
-                                <span class="c-chip">Downloads on mobile</span>
-                                <span class="c-chip">24/7 support</span>
+                            <div class="card-body">
+                                <h3 class="card-heading">Netflix Premium</h3>
+                                <div class="feature-matrix">
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>4K UHD</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Watch on TV + phone + PC</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Downloads on mobile</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>24/7 support</span></div>
+                                </div>
                             </div>
-                            <div class="c-foot">
-                                <a href="netflix-order/" class="btn-get-now">
-                                    <span class="btn-text">Get Now</span> <i class="fas fa-arrow-right"></i>
+                            <div class="card-footer">
+                                <a href="netflix-order/" class="btn-emerald-flow">
+                                    <span class="btn-text">Get Now</span>
+                                    <i class="fas fa-arrow-right icon-shift"></i>
                                 </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="glow-card bento-square theme-prime reveal-on-scroll delay-1" data-category="all streaming">
+                        <div class="card-border-glow"></div>
+                        <div class="card-bg-glow"></div>
+                        <div class="card-glass-surface">
+                            <div class="card-header">
+                                <div class="brand-icon-box"><img src="IMAGES/prime-video.png" alt="Prime Video"></div>
+                                <div class="status-badge badge-blue">Best Value</div>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-heading">Prime Video</h3>
+                                <div class="feature-matrix col-1">
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Amazon Originals</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>4K HDR Streaming</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Offline Viewing</span></div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="prime-order/" class="btn-emerald-flow">
+                                    <span class="btn-text">Get Now</span>
+                                    <i class="fas fa-arrow-right icon-shift"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="glow-card bento-square theme-spotify reveal-on-scroll delay-2" data-category="all streaming">
+                        <div class="card-border-glow"></div>
+                        <div class="card-bg-glow"></div>
+                        <div class="card-glass-surface">
+                            <div class="card-header">
+                                <div class="brand-icon-box"><img src="IMAGES/spotify.png" alt="Spotify"></div>
+                            </div>
+                            <div class="card-body">
+                                <h3 class="card-heading">Spotify Premium</h3>
+                                <div class="feature-matrix col-1">
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Ad-Free Listening</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Offline Downloads</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Highest Audio Quality</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Keep Your Playlists</span></div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="spotify-order/" class="btn-emerald-flow">
+                                    <span class="btn-text">Get Now</span>
+                                    <i class="fas fa-arrow-right icon-shift"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="glow-card bento-wide theme-viral reveal-on-scroll" data-category="all viral">
+                        <div class="card-border-glow"></div>
+                        <div class="card-bg-glow"></div>
+                        <div class="card-glass-surface">
+                            <div class="card-header">
+                                <div class="brand-icon-box multi-stack">
+                                    <img src="IMAGES/tiktok.png" alt="TikTok">
+                                    <img src="IMAGES/instagram.png" alt="Instagram">
+                                </div>
+                                <div class="status-badge badge-purple">Trending</div>
+                            </div>
+                            <div class="card-body wide-body">
+                                <div class="text-col">
+                                    <h3 class="card-heading">Viral Boosts</h3>
+                                    <p class="card-sub">Instant metrics explosion.</p>
+                                </div>
+                                <div class="feature-matrix">
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Real Followers & Likes</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>Instant Start</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>No Passwords</span></div>
+                                    <div class="feature-chip"><i class="fas fa-check"></i> <span>100% Safe</span></div>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <a href="boost-package/" class="btn-emerald-flow">
+                                    <span class="btn-text">Get Now</span>
+                                    <i class="fas fa-arrow-right icon-shift"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="process" class="process-stage">
+            <div class="container">
+                <header class="section-header reveal-on-scroll">
+                    <h2 class="section-title">How it works</h2>
+                    <p class="section-desc">Frictionless onboarding engineered for total peace of mind.</p>
+                </header>
+
+                <div class="timeline-wrapper">
+                    <div class="tl-node reveal-on-scroll">
+                        <div class="tl-indicator">1</div>
+                        <div class="tl-card glow-card">
+                            <div class="card-glass-surface">
+                                <h4>Configure</h4>
+                                <p>Select your premium plan and generate your secure order link instantly.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tl-node reveal-on-scroll delay-1">
+                        <div class="tl-indicator">2</div>
+                        <div class="tl-card glow-card">
+                            <div class="card-glass-surface">
+                                <h4>Connect</h4>
+                                <p>We provide instant access via WhatsApp tailored to your specific setup.</p>
+                                <div class="device-hint-grid">
+                                    <div class="d-box">
+                                        <div class="d-icon"><i class="fas fa-tv"></i></div>
+                                        <div class="d-info"><strong>Smart TV</strong><span>App is on the TV</span></div>
+                                    </div>
+                                    <div class="d-box">
+                                        <div class="d-icon"><i class="fas fa-hdd"></i></div>
+                                        <div class="d-info"><strong>Normal TV</strong><span>Uses stick/console</span></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="bento-card bento-square reveal delay-1">
-                        <div class="card-inner">
-                            <div class="c-head">
-                                <div class="c-icon"><img src="IMAGES/prime-video.png" alt="Prime"></div>
-                                <div class="c-badge badge-blue">Best Value</div>
-                            </div>
-                            <h3 class="c-title">Prime Video</h3>
-                            <div class="c-features">
-                                <span class="c-chip">Amazon Originals</span>
-                                <span class="c-chip">4K HDR Quality</span>
-                                <span class="c-chip">Offline Viewing</span>
-                            </div>
-                            <div class="c-foot">
-                                <a href="prime-order/" class="btn-get-now">
-                                    <span class="btn-text">Get Now</span> <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bento-card bento-square reveal delay-2">
-                        <div class="card-inner">
-                            <div class="c-head">
-                                <div class="c-icon"><img src="IMAGES/spotify.png" alt="Spotify"></div>
-                            </div>
-                            <h3 class="c-title">Spotify Premium</h3>
-                            <div class="c-features">
-                                <span class="c-chip">Ad-Free Audio</span>
-                                <span class="c-chip">Offline Downloads</span>
-                                <span class="c-chip">Flawless Quality</span>
-                                <span class="c-chip">Keep Playlists</span>
-                            </div>
-                            <div class="c-foot">
-                                <a href="spotify-order/" class="btn-get-now">
-                                    <span class="btn-text">Get Now</span> <i class="fas fa-arrow-right"></i>
-                                </a>
+                    <div class="tl-node step-final reveal-on-scroll delay-2">
+                        <div class="tl-indicator glowing-indicator"><i class="fas fa-lock"></i></div>
+                        <div class="tl-card glow-card final-card">
+                            <div class="card-glass-surface">
+                                <h4 class="text-emerald-glow">Pay After</h4>
+                                <p>Zero risk. You only send your payment <b>after</b> you are fully logged in and streaming.</p>
                             </div>
                         </div>
                     </div>
@@ -158,102 +302,84 @@
             </div>
         </section>
 
-        <section id="process" class="process">
+        <section id="testimonials" class="testimonial-stage">
             <div class="container">
-                <div class="section-head reveal">
-                    <h2>How it works</h2>
-                </div>
-                <div class="timeline">
-                    <div class="t-row reveal">
-                        <div class="t-node">1</div>
-                        <div class="t-card">
-                            <h4>Configure</h4>
-                            <p>Select your premium plan and generate your secure order link.</p>
+                <header class="section-header reveal-on-scroll">
+                    <h2 class="section-title">See what our clients say.</h2>
+                </header>
+                
+                <div class="testimonial-slider reveal-on-scroll delay-1">
+                    <div class="t-slide glow-card">
+                        <div class="card-glass-surface">
+                            <div class="star-rating">★★★★★</div>
+                            <p class="quote">"I was skeptical about sending money online, but they connected my TV first. Only paid when I saw it working. Incredible."</p>
+                            <div class="author">— David M.</div>
                         </div>
                     </div>
-                    <div class="t-row reveal delay-1">
-                        <div class="t-node">2</div>
-                        <div class="t-card">
-                            <h4>Connect</h4>
-                            <p>We provide instant access via WhatsApp.</p>
-                            <div class="device-hint">
-                                <div><i class="fas fa-tv"></i> Smart TV (App on TV)</div>
-                                <div><i class="fas fa-hdd"></i> TV (Stick/Console Box)</div>
-                            </div>
+                    <div class="t-slide glow-card">
+                        <div class="card-glass-surface">
+                            <div class="star-rating">★★★★★</div>
+                            <p class="quote">"Got my Spotify upgraded in less than 5 minutes on WhatsApp. Kept all my playlists. Highly recommend."</p>
+                            <div class="author">— Sarah A.</div>
                         </div>
                     </div>
-                    <div class="t-row reveal delay-2">
-                        <div class="t-node active-node"><i class="fas fa-lock"></i></div>
-                        <div class="t-card active-t-card">
-                            <h4 class="text-emerald">Pay After</h4>
-                            <p>Zero risk. You only send your payment <b>after</b> you are fully logged in and streaming.</p>
+                    <div class="t-slide glow-card">
+                        <div class="card-glass-surface">
+                            <div class="star-rating">★★★★★</div>
+                            <p class="quote">"The 4K quality on Netflix is flawless. Support team is always online when I need help setting up a new device."</p>
+                            <div class="author">— John O.</div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="trust" class="testimonials reveal">
-            <div class="container">
-                <div class="section-head">
-                    <h2>See what our clients say.</h2>
-                </div>
-                <div class="review-scroll">
-                    <div class="r-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"Connected my TV first. Only paid when I saw it working. Incredible."</p>
-                        <span class="r-author">— David M.</span>
-                    </div>
-                    <div class="r-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"Got Spotify upgraded in less than 5 minutes. Highly recommend."</p>
-                        <span class="r-author">— Sarah A.</span>
-                    </div>
-                    <div class="r-card">
-                        <div class="stars">★★★★★</div>
-                        <p>"The 4K quality on Netflix is flawless. Support is amazing."</p>
-                        <span class="r-author">— John O.</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta-block reveal">
-            <div class="container">
-                <div class="cta-glass">
-                    <h2>Ready to upgrade?</h2>
-                    <p>Join over 2,100+ active users. Connect first, pay after.</p>
-                    <div class="cta-actions">
-                        <a href="#catalog" class="btn-primary-emerald">Start Order</a>
-                        <a href="https://wa.me/256762193386" class="btn-secondary"><i class="fab fa-whatsapp"></i> Chat Support</a>
+        <section class="closing-stage">
+            <div class="container reveal-on-scroll">
+                <div class="closing-vault glow-card">
+                    <div class="card-bg-glow highlight-glow"></div>
+                    <div class="card-glass-surface vault-inner">
+                        <h2>Ready to upgrade?</h2>
+                        <p>Join over 2,100+ active users. Connect first, pay after.</p>
+                        <div class="vault-actions">
+                            <a href="#catalog" class="btn-primary-emerald magnetic-target" data-strength="15">Start Order</a>
+                            <a href="https://wa.me/256762193386" class="btn-ghost magnetic-target" data-strength="10"><i class="fab fa-whatsapp"></i> Chat Support</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="container f-grid">
-            <div class="f-brand">
-                <img src="IMAGES/logo.png" alt="AccessUG">
+    <footer class="obsidian-footer">
+        <div class="container footer-grid">
+            <div class="f-col-brand">
+                <img src="IMAGES/logo.png" alt="AccessUG" class="f-logo">
                 <p>The elite digital upgrade service. Connect first, pay after.</p>
             </div>
-            <div class="f-links">
-                <h4>Access</h4>
-                <a href="access/">Netflix Login</a>
-                <a href="access/">Prime Login</a>
+            <div class="f-col-links">
+                <h4 class="f-heading">Access Center</h4>
+                <nav class="f-nav">
+                    <a href="access/">Netflix Login</a>
+                    <a href="access/">Prime Login</a>
+                    <a href="renew/">Renew Account</a>
+                </nav>
             </div>
-            <div class="f-links">
-                <h4>Company</h4>
-                <a href="contact/">Support Team</a>
-                <a href="privacy-policy/">Privacy</a>
+            <div class="f-col-links">
+                <h4 class="f-heading">Company</h4>
+                <nav class="f-nav">
+                    <a href="#testimonials">Trust Center</a>
+                    <a href="contact/">Support Team</a>
+                    <a href="privacy-policy/">Privacy Policy</a>
+                    <a href="terms-of-service/">Terms of Service</a>
+                </nav>
             </div>
         </div>
-        <div class="container f-legal">
+        <div class="container footer-legal">
             <p>&copy; 2026 AccessUG. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="engine.js"></script>
 </body>
 </html>
