@@ -1,11 +1,30 @@
 /**
- * ACCESSUG - CHAMELEON ENGINE & OBSERVERS
+ * ACCESSUG - OBSIDIAN INTERACTIVE ENGINE
  * Location: HOME/script.js
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // === 1. NAVBAR GLASS EFFECT ===
+    // === 1. DYNAMIC SPOTLIGHT (Cinematic Lighting) ===
+    const spotlight = document.getElementById('spotlight');
+    
+    // Only enable on desktop for performance and UI reasons
+    if (window.matchMedia("(pointer: fine)").matches) {
+        window.addEventListener('mousemove', (e) => {
+            requestAnimationFrame(() => {
+                spotlight.style.left = `${e.clientX}px`;
+                spotlight.style.top = `${e.clientY}px`;
+            });
+        });
+        
+        // Hide spotlight when mouse leaves the window
+        document.addEventListener('mouseleave', () => spotlight.style.opacity = '0');
+        document.addEventListener('mouseenter', () => spotlight.style.opacity = '1');
+    } else {
+        spotlight.style.display = 'none'; // Disable on mobile
+    }
+
+    // === 2. PRECISION NAVBAR SCROLL LOGIC ===
     const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -15,48 +34,48 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-    // === 2. INTERSECTION OBSERVERS (For Reveals) ===
+    // === 3. HIGH-PERFORMANCE OBSERVER (Scroll Reveals) ===
     const observerOptions = {
         root: null,
-        rootMargin: '0px 0px -10% 0px',
-        threshold: 0.1
+        rootMargin: '0px 0px -15% 0px', // Trigger slightly before it hits the bottom
+        threshold: 0
     };
 
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target); // Save CPU
+                observer.unobserve(entry.target); // Unobserve to save CPU/Battery
             }
         });
     }, observerOptions);
 
-    const animatedElements = document.querySelectorAll('.fade-up, .fade-in-left, .fade-in-right');
+    const animatedElements = document.querySelectorAll('.fade-up');
     animatedElements.forEach(el => revealObserver.observe(el));
 
-    // === 3. THE CHAMELEON AURA ENGINE ===
-    // This watches sections and changes the root aura color based on the brand being viewed.
-    const auraContainer = document.body;
+    // === 4. 3D TILT PHYSICS FOR VAULT CARDS ===
+    // Creates a physical "weight" to the monolith cards when hovered
+    const cards = document.querySelectorAll('[data-tilt]');
     
-    const colorObserverOptions = {
-        root: null,
-        rootMargin: '-40% 0px -40% 0px', // Trigger when section is squarely in the middle of the screen
-        threshold: 0
-    };
-
-    const colorObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const colorTheme = entry.target.getAttribute('data-color');
-                if (colorTheme) {
-                    // Update the active aura variable dynamically
-                    auraContainer.style.setProperty('--active-aura', `var(--theme-${colorTheme})`);
-                }
-            }
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            if (!window.matchMedia("(pointer: fine)").matches) return; // Skip on mobile
+            
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = ((y - centerY) / centerY) * -4; // Subtle 4deg tilt
+            const rotateY = ((x - centerX) / centerX) * 4;
+            
+            card.style.transform = `perspective(1500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-12px)`;
         });
-    }, colorObserverOptions);
-
-    const colorSections = document.querySelectorAll('[data-color]');
-    colorSections.forEach(section => colorObserver.observe(section));
-
+        
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = `perspective(1500px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+        });
+    });
 });
