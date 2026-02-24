@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Lightweight Scroll Reveals
+    
+    // 1. Hardware Accelerated Scroll Reveals
     const observer = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -9,37 +10,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, { rootMargin: '0px 0px -50px 0px', threshold: 0.1 });
 
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    // 2. Nav Blur on Scroll
+    // 2. Premium Nav Blur Transition
     const nav = document.getElementById('main-nav');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 20) nav.classList.add('scrolled');
         else nav.classList.remove('scrolled');
     }, { passive: true });
 
-    // 3. Tab Filtering Engine
-    const tabs = document.querySelectorAll('.tab-btn');
-    const cards = document.querySelectorAll('.luxury-card');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
+    // 3. Optional: Mouse tracking for desktop card glow (Vercel style)
+    const cards = document.querySelectorAll('.bento-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
             
-            const filter = tab.getAttribute('data-filter');
-
-            cards.forEach(card => {
-                const categories = card.getAttribute('data-category').split(' ');
-                if (categories.includes(filter)) {
-                    card.style.display = 'block';
-                    void card.offsetWidth; // Trigger reflow for animation reset
-                    card.classList.add('is-visible');
-                } else {
-                    card.style.display = 'none';
-                    card.classList.remove('is-visible');
-                }
-            });
+            // Set custom properties for the CSS radial gradient
+            const glow = card.querySelector('.card-glow-border');
+            if(glow) {
+                glow.style.setProperty('--mouse-x', `${x}px`);
+                glow.style.setProperty('--mouse-y', `${y}px`);
+            }
         });
     });
 });
