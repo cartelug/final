@@ -1,80 +1,66 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // === 1. PROFESSIONAL MOBILE MENU TOGGLE ===
-    const menuBtn = document.getElementById('menu-btn');
-    const menuOverlay = document.getElementById('mob-menu-overlay');
-    const menuLinks = document.querySelectorAll('.mm-link');
+    // 1. Navbar Glassmorphism on Scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
 
-    if (menuBtn && menuOverlay) {
-        menuBtn.addEventListener('click', () => {
-            // Toggle Active State
-            menuOverlay.classList.toggle('active');
-            
-            // Animate Hamburger Icon
-            if (menuOverlay.classList.contains('active')) {
-                menuBtn.classList.add('menu-open');
-                document.body.style.overflow = 'hidden'; // Lock scroll
-            } else {
-                menuBtn.classList.remove('menu-open');
-                document.body.style.overflow = ''; // Unlock scroll
-            }
-        });
-
-        // Close when clicking a link
-        menuLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                menuOverlay.classList.remove('active');
-                menuBtn.classList.remove('menu-open');
-                document.body.style.overflow = '';
-            });
-        });
-    }
-
-    // === 2. SCROLL FADE-IN ANIMATIONS (Legacy Support) ===
+    // 2. High-Performance Intersection Observer for Reveal Animations
     const observerOptions = {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px"
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.15
     };
 
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-                observer.unobserve(entry.target);
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target); // Stop observing once revealed for performance
             }
         });
     }, observerOptions);
 
-    // Apply to elements
-    const fadeElements = document.querySelectorAll('.obs-card, .section-title');
-    fadeElements.forEach(el => {
-        el.style.opacity = "0";
-        el.style.transform = "translateY(30px)";
-        el.style.transition = "all 0.6s ease-out";
-        observer.observe(el);
-    });
+    const revealElements = document.querySelectorAll('.reveal');
+    revealElements.forEach(el => observer.observe(el));
 
-    // === 3. 3D TILT EFFECT FOR CARDS (Refined) ===
-    const cards = document.querySelectorAll('.obs-card');
-
+    // 3. Optimized Mouse Spotlight Effect for Cards
+    // We only attach the event listener to the grid container, not every single card.
+    const cards = document.querySelectorAll('.elite-card');
+    
     cards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
+            // Calculate mouse position relative to the card
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
+            
+            // Set CSS variables that the pseudo-element gradient uses
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
 
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = ((y - centerY) / centerY) * -3; 
-            const rotateY = ((x - centerX) / centerX) * 3;
-
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+    // 4. Magnetic Button Micro-interaction
+    const magneticButtons = document.querySelectorAll('.magnetic');
+    
+    magneticButtons.forEach(btn => {
+        btn.addEventListener('mousemove', (e) => {
+            const position = btn.getBoundingClientRect();
+            const x = e.pageX - position.left - position.width / 2;
+            const y = e.pageY - position.top - position.height / 2;
+            
+            // Subtle movement - multiplied by 0.3 for a premium, heavy feel
+            btn.style.transform = `translate(${x * 0.3}px, ${y * 0.3}px)`;
         });
 
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = `perspective(1000px) rotateX(0) rotateY(0) scale(1)`;
+        btn.addEventListener('mouseout', () => {
+            btn.style.transform = 'translate(0px, 0px)';
         });
     });
 });
