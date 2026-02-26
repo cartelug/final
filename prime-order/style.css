@@ -1,22 +1,24 @@
-/* === PRIME VIDEO "BLUE CINEMA" THEME v11 (SCOPED) === */
+/* === PRIME VIDEO "CINEMA GRADE" THEME v11 === */
+
 /* Fix for the warped or oversized navbar logo */
 .navbar .brand-logo {
-    max-height: 45px; /* Adjust this value if you want it bigger or smaller */
-    width: auto;      /* Ensures the width scales proportionally */
-    object-fit: contain; /* Prevents the image from stretching/warping */
+    max-height: 45px; 
+    width: auto;      
+    object-fit: contain; 
 }
 
 .navbar .logo-wrapper {
     display: flex;
     align-items: center;
 }
+
 :root {
     --prime-blue: #00A8E1;
-    --neon-blue: #00d4ff;
+    --neon-blue: #33c3ff;
     --gold: #FFD700;
-    --glass: rgba(10, 15, 25, 0.9);
-    --border: rgba(0, 168, 225, 0.15);
-    --surface: rgba(0, 168, 225, 0.03);
+    --glass: rgba(15, 15, 20, 0.9);
+    --border: rgba(255, 255, 255, 0.1);
+    --surface: rgba(255, 255, 255, 0.03);
 }
 
 body.prime-mode {
@@ -26,15 +28,15 @@ body.prime-mode {
     margin: 0;
 }
 
-/* --- BLUE CINEMATIC BACKGROUND --- */
-.prime-mode .prime-bg {
+/* --- CINEMATIC BACKGROUND (BLUE THEMED) --- */
+.prime-mode .theater-bg {
     position: fixed; inset: 0; z-index: -1;
-    background: radial-gradient(circle at center, #001f3f 0%, #020202 85%);
+    background: radial-gradient(circle at center, #001a2b 0%, #020202 80%);
 }
-.prime-mode .blue-spotlight {
+.prime-mode .spotlight {
     position: absolute; top: -50%; left: 50%; transform: translateX(-50%);
     width: 100vw; height: 100vh;
-    background: radial-gradient(ellipse at center, rgba(0, 168, 225, 0.15) 0%, transparent 60%);
+    background: radial-gradient(ellipse at center, rgba(0, 168, 225, 0.12) 0%, transparent 60%);
     pointer-events: none;
 }
 .prime-mode .noise-overlay {
@@ -60,11 +62,11 @@ body.prime-mode {
 
 .prime-mode .step-header { text-align: center; margin-bottom: 30px; }
 .prime-mode .step-header h2 { font-family: 'Outfit', sans-serif; font-size: 1.8rem; margin-bottom: 8px; color: #fff; }
-.prime-mode .highlight-blue { color: var(--neon-blue); text-shadow: 0 0 25px rgba(0, 168, 225, 0.4); }
+.prime-mode .highlight-blue { color: var(--neon-blue); text-shadow: 0 0 25px rgba(0, 168, 225, 0.5); }
 .prime-mode .highlight-gold { color: var(--gold); }
-.prime-mode .step-header p { color: #8899a6; font-size: 0.9rem; }
+.prime-mode .step-header p { color: #888; font-size: 0.9rem; }
 
-/* --- STEP 1: PLAN CARDS --- */
+/* --- STEP 1: CINEMA PLAN CARDS --- */
 .prime-mode .plan-grid { display: flex; flex-direction: column; gap: 18px; margin-bottom: 30px; }
 
 .prime-mode .plan-card {
@@ -74,15 +76,16 @@ body.prime-mode {
     position: relative; cursor: pointer;
     transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
     transform-origin: center;
+    overflow: visible;
 }
 
 /* INTERACTION: Scale & Glow */
-.prime-mode .plan-card:hover { transform: translateY(-3px); border-color: var(--neon-blue); }
+.prime-mode .plan-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.3); }
 .prime-mode .plan-card.selected {
     transform: scale(1.03);
     border-color: var(--neon-blue);
-    background: rgba(0, 168, 225, 0.08);
-    box-shadow: 0 0 40px rgba(0, 168, 225, 0.15);
+    background: rgba(0, 168, 225, 0.05);
+    box-shadow: 0 0 40px rgba(0, 168, 225, 0.2);
     z-index: 2;
 }
 
@@ -92,9 +95,11 @@ body.prime-mode {
     background: #333; color: #fff;
     padding: 4px 10px; border-radius: 50px;
     font-size: 0.65rem; font-weight: 800; text-transform: uppercase;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.5); z-index: 5;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    z-index: 5;
 }
 .prime-mode .tag.vip { background: var(--prime-blue); }
+.prime-mode .tag.gold { background: var(--gold); color: #000; }
 
 .prime-mode .plan-header {
     display: flex; justify-content: space-between; align-items: center;
@@ -122,8 +127,8 @@ body.prime-mode {
     font-size: 0.7rem; color: #aaa; display: flex; align-items: center; gap: 6px;
 }
 .prime-mode .f-badge i { font-size: 0.8rem; color: #fff; }
-.prime-mode .f-badge.blue { border-color: rgba(0, 168, 225, 0.3); color: #fff; }
-.prime-mode .f-badge.blue i { color: var(--prime-blue); }
+.prime-mode .f-badge.gold { border-color: rgba(255, 215, 0, 0.3); color: #fff; }
+.prime-mode .f-badge.gold i { color: var(--gold); }
 
 /* --- STEP 2: BONUSES --- */
 .prime-mode .bonus-item {
@@ -137,8 +142,8 @@ body.prime-mode {
     background: linear-gradient(to right, rgba(255, 215, 0, 0.05), transparent);
 }
 .prime-mode .icon-box { width: 45px; height: 45px; background: #222; border-radius: 10px; display: grid; place-items: center; font-size: 1.2rem; }
-.prime-mode .icon-box.red { color: #E50914; }
 .prime-mode .icon-box.green { color: #1DB954; }
+.prime-mode .icon-box.red { color: #E50914; }
 .prime-mode .status { font-size: 0.65rem; text-transform: uppercase; font-weight: 800; color: var(--gold); display: block; margin-top: 4px; }
 .prime-mode .unlocked .status { color: #00F57A; content: 'CLAIMED'; }
 
@@ -153,7 +158,7 @@ body.prime-mode {
 .prime-mode .alert-text p { font-size: 0.8rem; color: #ccc; margin: 0; line-height: 1.4; }
 
 .prime-mode .input-group { margin-bottom: 15px; }
-.prime-mode .input-group label { display: block; font-size: 0.8rem; color: #8899a6; margin-bottom: 6px; }
+.prime-mode .input-group label { display: block; font-size: 0.8rem; color: #888; margin-bottom: 6px; }
 .prime-mode .input-group input, .prime-mode .input-group select {
     width: 100%; padding: 14px; background: rgba(0,0,0,0.3);
     border: 1px solid var(--border); border-radius: 10px;
@@ -195,7 +200,6 @@ body.prime-mode {
 .prime-mode .proof-track { display: flex; overflow-x: auto; scrollbar-width: none; }
 .prime-mode .proof-img { width: 100%; flex-shrink: 0; }
 
-
 /* =========================================================
    1. PERFECTLY CENTERED LOGO & NAVBAR UPGRADES
    ========================================================= */
@@ -214,18 +218,17 @@ body.prime-mode {
     padding: 0 5%;
 }
 
-/* Absolute centering for the logo */
 .navbar .logo-wrapper {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%); /* Keeps it dead center regardless of other elements */
+    transform: translate(-50%, -50%); 
     z-index: 10;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .navbar .logo-wrapper:hover {
-    transform: translate(-50%, -50%) scale(1.05); /* Slight pop when hovering the logo */
+    transform: translate(-50%, -50%) scale(1.05); 
 }
 
 /* =========================================================
@@ -233,7 +236,7 @@ body.prime-mode {
    ========================================================= */
 .navbar .back-link {
     position: absolute;
-    left: 5%; /* Pins it to the left side */
+    left: 5%; 
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -251,7 +254,6 @@ body.prime-mode {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Liquid sweep hover effect for the back button */
 .navbar .back-link::before {
     content: '';
     position: absolute;
@@ -267,15 +269,14 @@ body.prime-mode {
 .navbar .back-link:hover {
     background: rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.4);
-    transform: translateX(-5px); /* Creatively slides left on hover */
+    transform: translateX(-5px); 
     box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
 }
 
 .navbar .back-link:hover::before {
-    left: 150%; /* Triggers the light sweep */
+    left: 150%; 
 }
 
-/* Make the arrow bounce inside the button */
 .navbar .back-link i {
     transition: transform 0.3s ease;
 }
@@ -286,49 +287,131 @@ body.prime-mode {
 /* =========================================================
    3. EXTREME BACKGROUND & CARD ANIMATIONS
    ========================================================= */
-
-/* Breathing Spotlight Effect for the Cinematic Backgrounds */
 @keyframes breatheSpotlight {
-    0%, 100% { 
-        opacity: 0.5; 
-        transform: translateX(-50%) scale(1); 
-    }
-    50% { 
-        opacity: 0.9; 
-        transform: translateX(-50%) scale(1.15); /* Expands the light */
-    }
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.9; transform: translateX(-50%) scale(1.15); }
 }
 
 .spotlight, .blue-spotlight {
     animation: breatheSpotlight 8s ease-in-out infinite;
 }
 
-/* Levitation Effect for the Main Glass Wizard Card */
 @keyframes levitateCard {
-    0%, 100% { 
-        transform: translateY(0px); 
-        box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    }
-    50% { 
-        transform: translateY(-12px); /* Floats up slightly */
-        box-shadow: 0 45px 80px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-    }
+    0%, 100% { transform: translateY(0px); box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1); }
+    50% { transform: translateY(-12px); box-shadow: 0 45px 80px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
 }
 
 .wizard-card.glass-panel {
     animation: levitateCard 6s ease-in-out infinite;
-    /* Extra inner glow */
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Responsive adjustments for mobile */
 @media (max-width: 768px) {
-    .navbar .back-link {
-        padding: 8px 16px;
-        font-size: 0.8rem;
-        left: 3%;
-    }
-    .navbar .logo-wrapper img {
-        max-height: 38px;
-    }
+    .navbar .back-link { padding: 8px 16px; font-size: 0.8rem; left: 3%; }
+    .navbar .logo-wrapper img { max-height: 38px; }
+}
+
+/* =========================================================
+   4. CINEMATIC GATEKEEPER (REGION SELECT)
+   ========================================================= */
+.gatekeeper-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.gatekeeper-modal {
+    width: 90%;
+    max-width: 400px;
+    background: var(--glass);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(0, 168, 225, 0.3); /* Blue Shadow */
+    animation: dropIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes dropIn {
+    0% { transform: scale(0.8) translateY(-50px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Blue Cinematic Glow Behind Modal */
+.gatekeeper-modal .glow-orb {
+    position: absolute;
+    top: -50%; left: 50%;
+    transform: translateX(-50%);
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0, 168, 225, 0.4), transparent 70%);
+    z-index: 0; pointer-events: none;
+}
+
+.gatekeeper-modal h2 {
+    position: relative; z-index: 1;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.gatekeeper-modal p {
+    position: relative; z-index: 1;
+    color: #aaa; font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.region-grid {
+    position: relative; z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.region-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.region-btn img {
+    width: 35px;
+    height: 25px;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.region-btn span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.region-btn:hover {
+    background: rgba(0, 168, 225, 0.1);
+    border-color: var(--neon-blue);
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(0, 168, 225, 0.2);
+}
+
+/* Pause the wizard card levitation to make input and clicking easier */
+.wizard-card.glass-panel:hover,
+.wizard-card.glass-panel:focus-within {
+    animation-play-state: paused;
 }
