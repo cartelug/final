@@ -4,9 +4,9 @@ const regionData = {
         name: "Uganda",
         currency: "UGX",
         prices: {
-            "1year": { old: "500K", new: "250K", rawValue: "250,000" },
-            "9mo": { old: "400K", new: "200K", rawValue: "200,000" },
-            "6mo": { old: "300K", new: "150K", rawValue: "150,000" }
+            "1year": { old: "240K", new: "120K", rawValue: "120,000" },
+            "9mo": { old: "180K", new: "90K", rawValue: "90,000" },
+            "6mo": { old: "120K", new: "60K", rawValue: "60,000" }
         },
         payments: ["MTN Mobile Money", "Airtel Money", "Cash in Office (Kampala)"]
     },
@@ -14,9 +14,9 @@ const regionData = {
         name: "South Sudan",
         currency: "USD",
         prices: {
-            "1year": { old: "$180", new: "$100", rawValue: "100" },
-            "9mo": { old: "$140", new: "$80", rawValue: "80" },
-            "6mo": { old: "$90", new: "$50", rawValue: "50" }
+            "1year": { old: "$80", new: "$40", rawValue: "40" },
+            "9mo": { old: "$60", new: "$30", rawValue: "30" },
+            "6mo": { old: "$40", new: "$20", rawValue: "20" }
         },
         payments: ["MoMo - wire via agent", "Give cash in South Sudan"]
     },
@@ -24,9 +24,9 @@ const regionData = {
         name: "DRC Congo",
         currency: "USD",
         prices: {
-            "1year": { old: "$180", new: "$100", rawValue: "100" },
-            "9mo": { old: "$140", new: "$80", rawValue: "80" },
-            "6mo": { old: "$90", new: "$50", rawValue: "50" }
+            "1year": { old: "$80", new: "$40", rawValue: "40" },
+            "9mo": { old: "$60", new: "$30", rawValue: "30" },
+            "6mo": { old: "$40", new: "$20", rawValue: "20" }
         },
         payments: ["Mobile Money"]
     }
