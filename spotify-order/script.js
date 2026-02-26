@@ -102,8 +102,8 @@ function selectPlan(cardElement, planName, planId) {
     // 3. Update Summary
     document.getElementById('sum-total').textContent = `${rawPrice} ${data.currency}`;
 
-    // 4. Update the Netflix Gift text dynamically to match Spotify duration!
-    document.querySelector('#bonus-1 p').textContent = `${currentPlanDuration} Free`;
+// 4. Set the Netflix Gift text permanently to 1 Month Free
+    document.querySelector('#bonus-1 p').textContent = `1 Month Free`;
 
     // 5. Enable button text
     const btn = document.getElementById('btn-step-1');
@@ -164,7 +164,7 @@ function validateAndSend() {
     let message = `*NEW ORDER [${data.name.toUpperCase()}]*\n\n`;
     message += `*Service:* Spotify Premium\n`;
     message += `*Package:* ${currentPlanName}\n`;
-    message += `*Bonuses:* Netflix (${currentPlanDuration}), Prime (1 Mo)\n`;
+    message += `*Bonuses:* Netflix (1 Month), Prime (1 Mo)\n`;
     message += `*Price:* ${rawPrice} ${data.currency}\n`;
     message += `*Name:* ${name}\n`;
     message += `*Payment Method:* ${payment}`;
