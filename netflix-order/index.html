@@ -13,10 +13,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="../HOME/style.css?v=7.0">
-    <link rel="stylesheet" href="style.css?v=10.0">
+    <link rel="stylesheet" href="style.css?v=11.0">
 </head>
 <body class="netflix-mode">
 
+    <div id="region-gatekeeper" class="gatekeeper-overlay">
+        <div class="gatekeeper-modal glass-panel">
+            <div class="glow-orb"></div>
+            <h2>Select Your Region</h2>
+            <p>Tap your location for accurate local pricing.</p>
+            
+            <div class="region-grid">
+                <div class="region-btn" onclick="setRegion('UG')">
+                    <img src="../IMAGES/uganda-flag.png" alt="Uganda">
+                    <span>Uganda</span>
+                </div>
+                
+                <div class="region-btn" onclick="setRegion('SS')">
+                    <img src="../IMAGES/south-sudan-flag.png" alt="South Sudan">
+                    <span>South Sudan</span>
+                </div>
+
+                <div class="region-btn" onclick="setRegion('CD')">
+                    <img src="https://flagcdn.com/w80/cd.png" alt="DRC Congo">
+                    <span>DRC Congo</span>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="theater-bg">
         <div class="spotlight"></div>
         <div class="noise-overlay"></div>
@@ -50,15 +74,15 @@
 
                 <div class="plan-grid">
                     
-                    <div class="plan-card featured-plan" onclick="selectPlan(this, '1 Year', '250,000', '65')">
+                    <div class="plan-card featured-plan" id="card-1year">
                         <div class="tag vip">Ultimate Value</div>
                         <div class="card-content">
                             <div class="plan-header">
                                 <h3>1 Year <span class="badge-pro">PRO</span></h3>
                                 <div class="price-lockup">
-                                    <span class="old-price">500K</span>
-                                    <span class="new-price">250K</span>
-                                    <span class="currency">UGX</span>
+                                    <span class="old-price">...</span>
+                                    <span class="new-price">...</span>
+                                    <span class="currency">...</span>
                                 </div>
                             </div>
                             
@@ -72,15 +96,15 @@
                         <div class="selection-ring"></div>
                     </div>
 
-                    <div class="plan-card" onclick="selectPlan(this, '9 Months', '200,000', '53')">
+                    <div class="plan-card" id="card-9mo">
                         <div class="tag gold">Best Seller</div>
                         <div class="card-content">
                             <div class="plan-header">
                                 <h3>9 Months Access</h3>
                                 <div class="price-lockup">
-                                    <span class="old-price">400K</span>
-                                    <span class="new-price">200K</span>
-                                    <span class="currency">UGX</span>
+                                    <span class="old-price">...</span>
+                                    <span class="new-price">...</span>
+                                    <span class="currency">...</span>
                                 </div>
                             </div>
 
@@ -93,15 +117,15 @@
                         <div class="selection-ring"></div>
                     </div>
 
-                    <div class="plan-card" onclick="selectPlan(this, '6 Months', '150,000', '40')">
+                    <div class="plan-card" id="card-6mo">
                         <div class="tag">Starter</div>
                         <div class="card-content">
                             <div class="plan-header">
                                 <h3>6 Months Access</h3>
                                 <div class="price-lockup">
-                                    <span class="old-price">300K</span>
-                                    <span class="new-price">150K</span>
-                                    <span class="currency">UGX</span>
+                                    <span class="old-price">...</span>
+                                    <span class="new-price">...</span>
+                                    <span class="currency">...</span>
                                 </div>
                             </div>
 
@@ -133,8 +157,7 @@
                         <div class="icon-box"><i class="fab fa-amazon"></i></div>
                         <div class="bonus-info">
                             <h4>Prime Video</h4>
-                            <p>6 Months Free</p>
-                            <span class="status">Tap to Unlock</span>
+                            <p>...</p> <span class="status">Tap to Unlock</span>
                         </div>
                     </div>
 
@@ -196,10 +219,7 @@
                 <div class="input-group">
                     <label>Payment Method</label>
                     <select id="paymentMethod">
-                        <option value="MTN Mobile Money">MTN Mobile Money</option>
-                        <option value="Airtel Money">Airtel Money</option>
-                        <option value="Cash in Office">Cash (MEET AGENT in JUBA) </option>
-                    </select>
+                        </select>
                 </div>
 
                 <div class="order-summary">
@@ -217,6 +237,6 @@
         </div>
     </main>
 
-    <script src="script.js?v=10.0"></script>
+    <script src="script.js?v=11.0"></script>
 </body>
 </html>

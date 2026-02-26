@@ -1,10 +1,10 @@
-/* === NETFLIX "CINEMA GRADE" THEME v10 (SCOPED) === */
+/* === NETFLIX "CINEMA GRADE" THEME v11 (SCOPED) === */
 
 /* Fix for the warped or oversized navbar logo */
 .navbar .brand-logo {
-    max-height: 45px; /* Adjust this value if you want it bigger or smaller */
-    width: auto;      /* Ensures the width scales proportionally */
-    object-fit: contain; /* Prevents the image from stretching/warping */
+    max-height: 45px; 
+    width: auto;      
+    object-fit: contain; 
 }
 
 .navbar .logo-wrapper {
@@ -217,18 +217,17 @@ body.netflix-mode {
     padding: 0 5%;
 }
 
-/* Absolute centering for the logo */
 .navbar .logo-wrapper {
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%); /* Keeps it dead center regardless of other elements */
+    transform: translate(-50%, -50%); 
     z-index: 10;
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .navbar .logo-wrapper:hover {
-    transform: translate(-50%, -50%) scale(1.05); /* Slight pop when hovering the logo */
+    transform: translate(-50%, -50%) scale(1.05); 
 }
 
 /* =========================================================
@@ -236,7 +235,7 @@ body.netflix-mode {
    ========================================================= */
 .navbar .back-link {
     position: absolute;
-    left: 5%; /* Pins it to the left side */
+    left: 5%; 
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -254,7 +253,6 @@ body.netflix-mode {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Liquid sweep hover effect for the back button */
 .navbar .back-link::before {
     content: '';
     position: absolute;
@@ -270,15 +268,14 @@ body.netflix-mode {
 .navbar .back-link:hover {
     background: rgba(255, 255, 255, 0.15);
     border-color: rgba(255, 255, 255, 0.4);
-    transform: translateX(-5px); /* Creatively slides left on hover */
+    transform: translateX(-5px); 
     box-shadow: 0 10px 30px rgba(255, 255, 255, 0.15);
 }
 
 .navbar .back-link:hover::before {
-    left: 150%; /* Triggers the light sweep */
+    left: 150%; 
 }
 
-/* Make the arrow bounce inside the button */
 .navbar .back-link i {
     transition: transform 0.3s ease;
 }
@@ -289,49 +286,131 @@ body.netflix-mode {
 /* =========================================================
    3. EXTREME BACKGROUND & CARD ANIMATIONS
    ========================================================= */
-
-/* Breathing Spotlight Effect for the Cinematic Backgrounds */
 @keyframes breatheSpotlight {
-    0%, 100% { 
-        opacity: 0.5; 
-        transform: translateX(-50%) scale(1); 
-    }
-    50% { 
-        opacity: 0.9; 
-        transform: translateX(-50%) scale(1.15); /* Expands the light */
-    }
+    0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+    50% { opacity: 0.9; transform: translateX(-50%) scale(1.15); }
 }
 
 .spotlight, .blue-spotlight {
     animation: breatheSpotlight 8s ease-in-out infinite;
 }
 
-/* Levitation Effect for the Main Glass Wizard Card */
 @keyframes levitateCard {
-    0%, 100% { 
-        transform: translateY(0px); 
-        box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    }
-    50% { 
-        transform: translateY(-12px); /* Floats up slightly */
-        box-shadow: 0 45px 80px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2);
-    }
+    0%, 100% { transform: translateY(0px); box-shadow: 0 30px 60px rgba(0,0,0,0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1); }
+    50% { transform: translateY(-12px); box-shadow: 0 45px 80px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
 }
 
 .wizard-card.glass-panel {
     animation: levitateCard 6s ease-in-out infinite;
-    /* Extra inner glow */
     border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Responsive adjustments for mobile */
 @media (max-width: 768px) {
-    .navbar .back-link {
-        padding: 8px 16px;
-        font-size: 0.8rem;
-        left: 3%;
-    }
-    .navbar .logo-wrapper img {
-        max-height: 38px;
-    }
+    .navbar .back-link { padding: 8px 16px; font-size: 0.8rem; left: 3%; }
+    .navbar .logo-wrapper img { max-height: 38px; }
+}
+
+/* =========================================================
+   4. CINEMATIC GATEKEEPER (REGION SELECT)
+   ========================================================= */
+.gatekeeper-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.gatekeeper-modal {
+    width: 90%;
+    max-width: 400px;
+    background: var(--glass);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 40px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 40px 100px rgba(229, 9, 20, 0.3);
+    animation: dropIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes dropIn {
+    0% { transform: scale(0.8) translateY(-50px); opacity: 0; }
+    100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Red Cinematic Glow Behind Modal */
+.gatekeeper-modal .glow-orb {
+    position: absolute;
+    top: -50%; left: 50%;
+    transform: translateX(-50%);
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(229, 9, 20, 0.4), transparent 70%);
+    z-index: 0; pointer-events: none;
+}
+
+.gatekeeper-modal h2 {
+    position: relative; z-index: 1;
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.gatekeeper-modal p {
+    position: relative; z-index: 1;
+    color: #aaa; font-size: 0.9rem;
+    margin-bottom: 30px;
+}
+
+.region-grid {
+    position: relative; z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.region-btn {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 20px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.region-btn img {
+    width: 35px;
+    height: 25px;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.region-btn span {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 0.5px;
+}
+
+.region-btn:hover {
+    background: rgba(229, 9, 20, 0.1);
+    border-color: var(--neon-red);
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(229, 9, 20, 0.2);
+}
+
+/* Pause the wizard card levitation to make input and clicking easier */
+.wizard-card.glass-panel:hover,
+.wizard-card.glass-panel:focus-within {
+    animation-play-state: paused;
 }
