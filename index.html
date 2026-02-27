@@ -9,7 +9,7 @@
     <link rel="icon" href="IMAGES/logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="HOME/style.css">
@@ -40,7 +40,14 @@
     <main class="smooth-scroll-wrapper">
         
         <section class="stage-hero">
-            <div class="hero-ambient"></div>
+            <div class="anti-gravity-bg">
+                <img src="IMAGES/netflix.png" alt="Netflix" class="hero-asset ha-netflix">
+                <img src="IMAGES/spotify.png" alt="Spotify" class="hero-asset ha-spotify">
+                <img src="IMAGES/prime-video.png" alt="Prime" class="hero-asset ha-prime">
+                <img src="IMAGES/uganda-flag.png" alt="Uganda" class="hero-asset ha-uganda">
+                <img src="IMAGES/south-sudan-flag.png" alt="South Sudan" class="hero-asset ha-ssudan">
+            </div>
+
             <div class="container hero-content">
                 <div class="trust-pill fade-up">
                     <div class="live-ping"></div>
@@ -62,18 +69,15 @@
                 </div>
                 
                 <div class="action-dock fade-up delay-3">
-<div class="smart-neon-bg">
-    <img src="IMAGES/netflix.png" alt="Netflix" class="smart-logo s-netflix">
-    <img src="IMAGES/spotify.png" alt="Spotify" class="smart-logo s-spotify">
-    <img src="IMAGES/prime-video.png" alt="Prime" class="smart-logo s-prime">
-</div>
+                    <a href="#vault" class="btn-hyper-connect">
+                        <span class="btn-border"></span>
+                        <span class="btn-surface">
+                            <i class="fas fa-bolt"></i>
+                            <span class="btn-text">Get Connected</span>
+                        </span>
+                    </a>
 
-<a href="#services" class="btn-premium-cta">
-    <div class="btn-glow-wrap"></div>
-    <i class="fas fa-crown"></i> 
-    <span>Unlock Premium Access</span>
-</a>
-                    <a href="#intel" class="btn-text-only">
+                    <a href="#intel" class="btn-text-only" style="margin-top: 15px; width: 100%; justify-content: center;">
                         See what our clients say <i class="fas fa-chevron-right"></i>
                     </a>
                 </div>
@@ -81,6 +85,13 @@
         </section>
 
         <section id="vault" class="stage-vault">
+            <div class="vault-bg">
+                <div class="v-grid"></div>
+                <div class="v-orb orb-nx"></div>
+                <div class="v-orb orb-pm"></div>
+                <div class="v-orb orb-sp"></div>
+            </div>
+
             <div class="container">
                 <div class="section-title fade-up">
                     <h2 class="heading-large">The <span class="text-emerald">Vault.</span></h2>
@@ -166,7 +177,11 @@
         </section>
 
         <section id="framework" class="stage-framework">
-            <div class="container">
+            <div class="framework-bg">
+                <div class="data-stream"></div>
+            </div>
+
+            <div class="container relative-z">
                 <div class="framework-layout">
                     <div class="framework-text fade-up">
                         <h2 class="heading-large">Zero Risk <span class="text-emerald">Steps.</span></h2>
@@ -208,7 +223,9 @@
         </section>
 
         <section id="intel" class="stage-intel">
-            <div class="container">
+            <div class="intel-bg"></div>
+
+            <div class="container relative-z">
                 <div class="section-title text-center fade-up">
                     <h2 class="heading-large">Verified <span class="text-emerald">Intel.</span></h2>
                     <p class="subtitle">Swipe to view. Tap to zoom.</p>
@@ -247,9 +264,7 @@
             </div>
             <div class="f-links">
                 <h4 class="f-head">Command Center</h4>
-               <a href="https://wa.me/256762193386?text=Hello%20AccessUG%20VIP%20Support,%20I%20need%20assistance." class="footer-link">
-    <i class="fab fa-whatsapp"></i> VIP WhatsApp Support
-</a>
+                <a href="contact/">VIP WhatsApp Support</a>
                 <a href="terms-of-service/">Terms of Protocol</a>
                 <a href="privacy-policy/">Privacy Doctrine</a>
             </div>
