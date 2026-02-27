@@ -142,9 +142,11 @@ function goToStep(stepNumber) {
     document.querySelector('.wizard-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function validateAndSend() {
+async function validateAndSend() {
     const name = document.getElementById('clientName').value.trim();
     const payment = document.getElementById('paymentMethod').value;
+    // Add this line to grab the referral code
+    const referrer = document.getElementById('referralCode')?.value.trim() || "Direct";
 
     if (!name) {
         alert("Please enter your Full Name.");
@@ -159,13 +161,32 @@ function validateAndSend() {
     else if (currentPlanName.includes("9 Months")) rawPrice = data.prices["9mo"].rawValue;
     else if (currentPlanName.includes("6 Months")) rawPrice = data.prices["6mo"].rawValue;
 
+    // --- START: GOOGLE SHEETS INTEGRATION ---
+    // This sends data to your sheet in the background
+    const formData = new URLSearchParams();
+    formData.append('ClientName', name);
+    formData.append('Service', 'Prime Video'); // Identifies the service
+    formData.append('Package', currentPlanName);
+    formData.append('Price', rawPrice.replace(/,/g, '')); // Removes commas for math
+    formData.append('Referrer', referrer);
+
+    try {
+        // REPLACE the URL below with your Google Web App URL from Step 2
+        fetch("YOUR_DEPLOYED_WEB_APP_URL", { 
+            method: 'POST', 
+            body: formData, 
+            mode: 'no-cors' 
+        });
+    } catch (e) { console.log("Sheets sync failed, proceeding to WhatsApp."); }
+    // --- END: GOOGLE SHEETS INTEGRATION ---
+
     const phone = "256762193386"; 
     
     let message = `*NEW ORDER [${data.name.toUpperCase()}]*\n\n`;
-    message += `*Service:* Prime Video Premium\n`;
+    message += `*Service:* Netflix Premium\n`;
     message += `*Package:* ${currentPlanName}\n`;
-    message += `*Bonuses:* Netflix (${currentPlanDuration}), Spotify (1 Mo)\n`;
     message += `*Price:* ${rawPrice} ${data.currency}\n`;
+    message += `*Referrer:* ${referrer}\n`; // Included in WhatsApp for you to see
     message += `*Name:* ${name}\n`;
     message += `*Payment Method:* ${payment}`;
 
