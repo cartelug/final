@@ -172,7 +172,7 @@ async function validateAndSend() {
 
     try {
         // REPLACE the URL below with your Google Web App URL from Step 2
-        fetch("YOUR_DEPLOYED_WEB_APP_URL", { 
+        fetch("https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec", { 
             method: 'POST', 
             body: formData, 
             mode: 'no-cors' 
