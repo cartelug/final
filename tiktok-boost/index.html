@@ -13,23 +13,41 @@
 </head>
 <body class="light-theme">
 
+    <div class="region-overlay" id="region-overlay">
+        <div class="overlay-content">
+            <h2>🌍 Where are you ordering from?</h2>
+            <div class="country-cards">
+                <div class="country-card" onclick="selectRegion('UGX')">
+                    <span class="flag">🇺🇬</span>
+                    <h3>Uganda</h3>
+                    <p>Prices in UGX</p>
+                </div>
+                <div class="country-card" onclick="selectRegion('USD')">
+                    <span class="flag">🇸🇸</span>
+                    <h3>South Sudan</h3>
+                    <p>Prices in USD</p>
+                </div>
+                <div class="country-card" onclick="selectRegion('USD')">
+                    <span class="flag">🇨🇩</span>
+                    <h3>DR Congo</h3>
+                    <p>Prices in USD</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="mesh-background"></div>
 
     <nav class="builder-nav">
         <a href="../index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
-        <div class="region-pills">
-            <button class="r-pill active" onclick="setRegion('UGX')" id="reg-UGX">UGX</button>
-            <button class="r-pill" onclick="setRegion('SSP')" id="reg-SSP">SSP</button>
-            <button class="r-pill" onclick="setRegion('USD')" id="reg-USD">USD</button>
-        </div>
-    </nav>
+        </nav>
 
     <main class="builder-container">
         
         <header class="builder-header">
             <div class="header-icon"><i class="fab fa-tiktok"></i></div>
-            <h1>Build Your Campaign</h1>
-            <p>Toggle the services you want. Bundle them together to unlock an automatic combo discount.</p>
+            <h1>Boost Your Page</h1>
+            <p>Choose what you would like to boost.</p>
         </header>
 
         <div class="builder-layout">
@@ -53,7 +71,7 @@
                                 <label>How many followers?</label>
                                 <div class="sg-value"><span id="val-followers">1,000</span></div>
                             </div>
-                            <input type="range" class="pro-slider cyan-slider" id="slider-followers" min="1000" max="50000" step="500" value="1000" oninput="updateMath()">
+                            <input type="range" class="pro-slider cyan-slider" id="slider-followers" min="0" step="1" oninput="updateMath()">
                         </div>
                     </div>
                 </div>
@@ -73,9 +91,9 @@
                         <div class="slider-group">
                             <div class="sg-header">
                                 <label>How many likes?</label>
-                                <div class="sg-value"><span id="val-likes">250</span></div>
+                                <div class="sg-value"><span id="val-likes">1,000</span></div>
                             </div>
-                            <input type="range" class="pro-slider pink-slider" id="slider-likes" min="250" max="50000" step="250" value="250" oninput="updateMath()">
+                            <input type="range" class="pro-slider pink-slider" id="slider-likes" min="0" step="1" oninput="updateMath()">
                         </div>
                         <div class="slider-group split-group">
                             <div class="sg-header">
@@ -83,7 +101,7 @@
                                 <div class="sg-value"><span id="split-likes">5</span> Videos</div>
                             </div>
                             <input type="range" class="pro-slider gray-slider" id="slider-split-likes" min="1" max="10" step="1" value="5" oninput="updateMath()">
-                            <p class="split-hint" id="hint-likes"><i class="fas fa-magic"></i> That's 50 likes per video.</p>
+                            <p class="split-hint" id="hint-likes"><i class="fas fa-magic"></i> That's calculated automatically.</p>
                         </div>
                     </div>
                 </div>
@@ -103,9 +121,9 @@
                         <div class="slider-group">
                             <div class="sg-header">
                                 <label>How many views?</label>
-                                <div class="sg-value"><span id="val-views">10,000</span></div>
+                                <div class="sg-value"><span id="val-views">5,000</span></div>
                             </div>
-                            <input type="range" class="pro-slider purple-slider" id="slider-views" min="10000" max="1000000" step="10000" value="10000" oninput="updateMath()">
+                            <input type="range" class="pro-slider purple-slider" id="slider-views" min="0" step="1" oninput="updateMath()">
                         </div>
                         <div class="slider-group split-group">
                             <div class="sg-header">
@@ -142,13 +160,13 @@
 
             <div class="receipt-column">
                 <div class="live-quote-card">
-                    <h2>Live Quote</h2>
+                    <h2>Your Bill</h2>
                     
                     <div class="quote-items" id="quote-items">
                         </div>
 
                     <div class="quote-discount" id="quote-discount" style="display: none;">
-                        <span class="qd-label"><i class="fas fa-tag"></i> Combo Discount Applied</span>
+                        <span class="qd-label" id="discount-label"><i class="fas fa-tag"></i> Combo Discount</span>
                         <span class="qd-amount" id="discount-amount">- 0 UGX</span>
                     </div>
 
@@ -161,13 +179,18 @@
                     </div>
 
                     <button class="btn-checkout" onclick="deployOrder()">
-                        Secure My Campaign <i class="fas fa-lock"></i>
+                        Place Order Now <i class="fas fa-lock"></i>
                     </button>
                     <p class="checkout-hint">You will pay via Mobile Money on WhatsApp after confirmation.</p>
                 </div>
             </div>
 
         </div>
+
+        <div class="reset-region-wrap">
+            <a class="reset-region-link" onclick="resetRegion()">Change country</a>
+        </div>
+
     </main>
 
     <script src="script.js"></script>
