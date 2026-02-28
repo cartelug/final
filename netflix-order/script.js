@@ -194,3 +194,22 @@ async function validateAndSend() {
     window.location.href = url;
     return false;
 }
+// --- DUAL-PILL REFERRAL LOGIC ---
+function switchReferral(isYes) {
+    const btnNo = document.getElementById('btn-ref-no');
+    const btnYes = document.getElementById('btn-ref-yes');
+    const slideBox = document.getElementById('ref-input-slide');
+    const inputField = document.getElementById('referralCode');
+
+    if (isYes) {
+        btnNo.classList.remove('active');
+        btnYes.classList.add('active');
+        slideBox.classList.add('open');
+        setTimeout(() => inputField.focus(), 150); // Auto-focuses keyboard
+    } else {
+        btnYes.classList.remove('active');
+        btnNo.classList.add('active');
+        slideBox.classList.remove('open');
+        inputField.value = ""; // Clears the box if they change their mind
+    }
+}
