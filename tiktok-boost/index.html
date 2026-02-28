@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TikTok Boost | AccessUG</title>
+    <title>TikTok Elite Growth | AccessUG</title>
     <link rel="icon" href="../IMAGES/tiktok.png" type="image/png">
     
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,97 +13,111 @@
 </head>
 <body data-theme="followers">
 
-    <div class="aurora-bg">
-        <div class="aurora-blob blob-1"></div>
-        <div class="aurora-blob blob-2"></div>
+    <div class="light-ambient-bg">
+        <div class="glow-orb orb-cyan"></div>
+        <div class="glow-orb orb-pink"></div>
     </div>
 
     <nav class="app-nav">
-        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
-        <div class="currency-selector">
-            <button class="curr-btn active" onclick="setCurrency('UGX')" id="curr-UGX">UGX</button>
-            <button class="curr-btn" onclick="setCurrency('SSP')" id="curr-SSP">SSP</button>
-            <button class="curr-btn" onclick="setCurrency('USD')" id="curr-USD">USD</button>
+        <a href="../index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back
+        </a>
+        <div class="currency-pills">
+            <button class="cur-pill active" onclick="setCurrency('UGX')" id="curr-UGX">UGX</button>
+            <button class="cur-pill" onclick="setCurrency('SSP')" id="curr-SSP">SSP</button>
+            <button class="cur-pill" onclick="setCurrency('USD')" id="curr-USD">USD</button>
         </div>
     </nav>
 
     <main class="app-container">
         
         <header class="page-header">
-            <h1>TikTok Boost</h1>
-            <p>Select your package and instantly upgrade your profile.</p>
+            <div class="tt-logo"><i class="fab fa-tiktok"></i></div>
+            <h1>Elite Growth Dashboard</h1>
+            <p>Customize your campaign. Instant deployment.</p>
         </header>
 
-        <section class="config-section">
-            <h2 class="section-label">1. What do you want to boost?</h2>
-            <div class="service-cards">
-                <button class="service-card active" onclick="setService('followers')" id="card-followers">
-                    <i class="fas fa-users"></i>
-                    <span>Followers</span>
-                </button>
-                <button class="service-card" onclick="setService('views')" id="card-views">
-                    <i class="fas fa-play"></i>
-                    <span>Views</span>
-                </button>
-                <button class="service-card" onclick="setService('likes')" id="card-likes">
-                    <i class="fas fa-heart"></i>
-                    <span>Likes</span>
-                </button>
-            </div>
-        </section>
-
-        <section class="config-section">
-            <h2 class="section-label" id="slider-title">2. How many Followers?</h2>
+        <div class="dashboard-card">
             
-            <div class="slider-display">
-                <input type="number" id="manual-input" class="ghost-input" oninput="syncFromInput()" value="1000">
-                <span class="metric-label" id="metric-label">Followers</span>
-            </div>
-
-            <div class="range-wrapper">
-                <input type="range" id="amount-slider" class="fluid-slider" oninput="syncFromSlider()">
-                <div class="slider-milestones" id="milestones">
-                    </div>
-            </div>
-        </section>
-
-        <section class="config-section">
-            <h2 class="section-label">3. Where do we send it?</h2>
-            <div class="input-box">
-                <i class="fab fa-tiktok"></i>
-                <input type="text" id="target-link" placeholder="Enter @username or video link">
-            </div>
-        </section>
-
-        <section class="config-section">
-            <div class="referral-module">
-                <h2 class="section-label">Did a friend refer you?</h2>
-                <div class="pill-toggle-group">
-                    <button class="pill-btn active" id="ref-no" onclick="toggleReferral(false)">No</button>
-                    <button class="pill-btn" id="ref-yes" onclick="toggleReferral(true)">Yes</button>
+            <div class="control-group">
+                <label>1. Select Campaign Type</label>
+                <div class="service-tabs">
+                    <button class="s-tab active" onclick="setService('followers')" id="tab-followers">
+                        <i class="fas fa-users"></i> Followers
+                    </button>
+                    <button class="s-tab" onclick="setService('likes')" id="tab-likes">
+                        <i class="fas fa-heart"></i> Likes
+                    </button>
+                    <button class="s-tab" onclick="setService('views')" id="tab-views">
+                        <i class="fas fa-play"></i> Views
+                    </button>
                 </div>
-                <div class="ref-slide-down" id="ref-box">
+            </div>
+
+            <div class="control-group">
+                <div class="header-flex">
+                    <label id="slider-label">2. Target Volume</label>
+                    <div class="live-metric"><span id="metric-output">1,000</span> <span id="metric-name">Followers</span></div>
+                </div>
+                
+                <div class="slider-wrapper">
+                    <input type="range" id="volume-slider" class="smooth-slider" oninput="syncVolume()">
+                    <div class="slider-ticks" id="volume-ticks">
+                        <span>1k</span><span>10k</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group split-group" id="split-engine">
+                <div class="header-flex">
+                    <label>Distribute Across Posts</label>
+                    <div class="live-metric"><span id="split-output">1</span> Post</div>
+                </div>
+                
+                <div class="slider-wrapper">
+                    <input type="range" id="split-slider" class="smooth-slider split-slider" min="1" max="5" step="1" value="1" oninput="syncSplit()">
+                    <div class="slider-ticks">
+                        <span>1 Post</span><span>5 Posts</span>
+                    </div>
+                </div>
+                <div class="split-math" id="split-math">
+                    <i class="fas fa-magic"></i> All engagement goes to your latest post.
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>3. Target Destination</label>
+                <div class="input-modern">
+                    <i class="fas fa-link"></i>
+                    <input type="text" id="target-link" placeholder="Enter TikTok Username or Link">
+                </div>
+            </div>
+
+            <div class="referral-box">
+                <div class="ref-header">
+                    <span>Did a friend refer you?</span>
+                    <div class="ref-switches">
+                        <button class="ref-btn active" id="ref-no" onclick="toggleReferral(false)">No</button>
+                        <button class="ref-btn" id="ref-yes" onclick="toggleReferral(true)">Yes</button>
+                    </div>
+                </div>
+                <div class="ref-body" id="ref-body">
                     <input type="text" id="referral-code" placeholder="What is their name?">
                 </div>
             </div>
-        </section>
 
-        <div class="live-receipt">
-            <div class="receipt-row">
-                <span class="r-label">Target Metric:</span>
-                <span class="r-value highlight" id="receipt-amount">1,000 Followers</span>
-            </div>
-            <div class="receipt-row total-row">
-                <span class="r-label">Total to Pay:</span>
-                <div class="r-price">
-                    <span id="live-price">75,000</span> <span id="live-currency" class="cur-text">UGX</span>
+        </div>
+
+        <div class="sticky-checkout">
+            <div class="checkout-content">
+                <div class="price-block">
+                    <span class="price-title">Total Investment</span>
+                    <div class="price-amount"><span id="final-price">75,000</span> <span id="final-curr" class="curr-tag">UGX</span></div>
                 </div>
+                <button class="btn-deploy" onclick="deployCampaign()">
+                    Deploy Now <i class="fas fa-arrow-right"></i>
+                </button>
             </div>
-            
-            <button class="btn-checkout" onclick="processOrder()">
-                <span>Continue to WhatsApp</span>
-                <i class="fas fa-arrow-right"></i>
-            </button>
         </div>
 
     </main>
