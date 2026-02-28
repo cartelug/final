@@ -1,177 +1,174 @@
-// --- 1. CORE DATA MATRIX ---
+// --- 1. RATES & CONFIGURATION ---
+// Base Rates configured to hit your 75k target when Followers + Likes are combined.
 const rates = {
-    'UGX': { followers: 75, views: 0.6, likes: 12, symbol: 'UGX' },
-    'SSP': { followers: 20, views: 0.15, likes: 3, symbol: 'SSP' },
-    'USD': { followers: 0.02, views: 0.00015, likes: 0.003, symbol: 'USD' }
+    'UGX': { followers: 60, likes: 100, views: 2, symbol: 'UGX' },
+    'SSP': { followers: 16, likes: 25, views: 0.5, symbol: 'SSP' },
+    'USD': { followers: 0.015, likes: 0.025, views: 0.0005, symbol: '$' }
 };
 
-// Adjusted to the exact 1k-10k limits you requested
-const config = {
-    followers: { min: 1000, max: 10000, step: 500, label: "Followers", color: "#20D5D2", allowSplit: false },
-    likes: { min: 1000, max: 10000, step: 500, label: "Likes", color: "#FE2C55", allowSplit: true },
-    views: { min: 10000, max: 500000, step: 10000, label: "Views", color: "#a855f7", allowSplit: true }
+const BUNDLE_DISCOUNT = 0.12; // 12% off if 2 or more services selected
+
+// State Management
+let state = {
+    region: 'UGX',
+    services: {
+        followers: { active: true, volume: 1000 },
+        likes: { active: true, volume: 250, split: 5 },
+        views: { active: false, volume: 10000, split: 1 }
+    }
 };
 
-let currentRegion = 'UGX';
-let currentService = 'followers';
-
-// Initialize
 window.onload = () => {
-    setCurrency('UGX');
-    setService('followers');
+    // Initial Render
+    document.getElementById('mod-followers').classList.add('active-mod');
+    document.getElementById('mod-likes').classList.add('active-mod');
+    updateMath();
 };
 
-// --- 2. THEME & SERVICE ENGINE ---
-function setService(service) {
-    currentService = service;
-    const settings = config[service];
+// --- 2. INTERACTION CONTROLS ---
+function setRegion(region) {
+    state.region = region;
+    document.querySelectorAll('.r-pill').forEach(b => b.classList.remove('active'));
+    document.getElementById(`reg-${region}`).classList.add('active');
+    updateMath();
+}
 
-    // Change CSS Variables for Dynamic Theming
-    document.documentElement.style.setProperty('--theme-active', settings.color);
-    document.documentElement.style.setProperty('--theme-glow', `rgba(${hexToRgb(settings.color)}, 0.2)`);
-
-    // Update Tabs
-    document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
-    document.getElementById(`tab-${service}`).classList.add('active');
-
-    // Update Text
-    document.getElementById('slider-label').innerText = `2. Target Volume`;
-    document.getElementById('metric-name').innerText = settings.label;
-
-    // Update Main Slider
-    const volSlider = document.getElementById('volume-slider');
-    volSlider.min = settings.min;
-    volSlider.max = settings.max;
-    volSlider.step = settings.step;
-    volSlider.value = settings.min;
-
-    // Update Visual Ticks
-    const formatTick = (val) => val >= 1000 ? (val/1000) + 'k' : val;
-    document.getElementById('volume-ticks').innerHTML = `<span>${formatTick(settings.min)}</span><span>${formatTick(settings.max)}</span>`;
-
-    // Handle Split Engine Visibility
-    const splitEngine = document.getElementById('split-engine');
-    if (settings.allowSplit) {
-        splitEngine.classList.add('visible');
-        document.getElementById('split-slider').value = 1; // Reset to 1
+function toggleService(service) {
+    const mod = document.getElementById(`mod-${service}`);
+    state.services[service].active = !state.services[service].active;
+    
+    if (state.services[service].active) {
+        mod.classList.add('active-mod');
     } else {
-        splitEngine.classList.remove('visible');
+        mod.classList.remove('active-mod');
     }
-
-    runCalculations();
+    updateMath();
 }
 
-// --- 3. CURRENCY ENGINE ---
-function setCurrency(currency) {
-    currentRegion = currency;
+function toggleReferralUI() {
+    const trigger = document.querySelector('.ref-trigger');
+    const content = document.getElementById('ref-content');
+    trigger.classList.toggle('open');
+    content.classList.toggle('open');
+}
+
+// --- 3. THE SMART MATH ENGINE ---
+function updateMath() {
+    // 1. Grab values from sliders
+    state.services.followers.volume = parseInt(document.getElementById('slider-followers').value);
     
-    document.querySelectorAll('.cur-pill').forEach(b => b.classList.remove('active'));
-    document.getElementById(`curr-${currency}`).classList.add('active');
+    state.services.likes.volume = parseInt(document.getElementById('slider-likes').value);
+    state.services.likes.split = parseInt(document.getElementById('slider-split-likes').value);
     
-    document.getElementById('final-curr').innerText = rates[currency].symbol;
-    runCalculations();
-}
+    state.services.views.volume = parseInt(document.getElementById('slider-views').value);
+    state.services.views.split = parseInt(document.getElementById('slider-split-views').value);
 
-// --- 4. FLUID SLIDER SYNC ---
-function syncVolume() {
-    runCalculations();
-}
+    // 2. Update UI Texts
+    document.getElementById('val-followers').innerText = state.services.followers.volume.toLocaleString();
+    
+    document.getElementById('val-likes').innerText = state.services.likes.volume.toLocaleString();
+    document.getElementById('split-likes').innerText = state.services.likes.split;
+    document.getElementById('hint-likes').innerHTML = `<i class="fas fa-magic"></i> That's ${Math.floor(state.services.likes.volume / state.services.likes.split).toLocaleString()} likes per video.`;
+    
+    document.getElementById('val-views').innerText = state.services.views.volume.toLocaleString();
+    document.getElementById('split-views').innerText = state.services.views.split;
+    document.getElementById('hint-views').innerHTML = `<i class="fas fa-magic"></i> That's ${Math.floor(state.services.views.volume / state.services.views.split).toLocaleString()} views per video.`;
 
-function syncSplit() {
-    runCalculations();
-}
+    // 3. Calculate Prices
+    const rate = rates[state.region];
+    let subtotal = 0;
+    let activeCount = 0;
+    
+    const quoteBox = document.getElementById('quote-items');
+    quoteBox.innerHTML = ''; // Clear old
 
-// --- 5. THE SMART MATH ENGINE ---
-function runCalculations() {
-    const settings = config[currentService];
-    let volume = parseInt(document.getElementById('volume-slider').value) || settings.min;
-    let splitCount = parseInt(document.getElementById('split-slider').value) || 1;
+    // Build Receipt Items
+    Object.keys(state.services).forEach(key => {
+        if (state.services[key].active) {
+            activeCount++;
+            let itemPrice = state.services[key].volume * rate[key];
+            subtotal += itemPrice;
 
-    // Output Main Volume
-    document.getElementById('metric-output').innerText = volume.toLocaleString();
+            // Format item price display
+            let displayPrice = state.region === 'USD' ? `$${itemPrice.toFixed(2)}` : `${Math.floor(itemPrice).toLocaleString()}`;
 
-    // Output Split Logic
-    if (settings.allowSplit) {
-        document.getElementById('split-output').innerText = splitCount;
-        const mathBox = document.getElementById('split-math');
-        
-        if (splitCount === 1) {
-            mathBox.innerHTML = `<i class="fas fa-magic"></i> All engagement goes to your target link.`;
-        } else {
-            const perPost = Math.floor(volume / splitCount);
-            mathBox.innerHTML = `<i class="fas fa-chart-pie"></i> ${perPost.toLocaleString()} ${settings.label} will be sent to your last ${splitCount} posts.`;
+            quoteBox.innerHTML += `
+                <div class="q-item">
+                    <span class="qi-name">${state.services[key].volume.toLocaleString()} ${key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                    <span class="qi-price">${displayPrice}</span>
+                </div>
+            `;
         }
+    });
+
+    if (activeCount === 0) {
+        quoteBox.innerHTML = `<div class="q-item" style="color: #94a3b8; justify-content:center;">Select a service to begin</div>`;
     }
 
-    // Calculate Price
-    const rate = rates[currentRegion][currentService];
-    let finalPrice = volume * rate;
+    // 4. Apply Combo Discount logic
+    const discountEl = document.getElementById('quote-discount');
+    const oldPriceEl = document.getElementById('old-price');
+    const finalPriceEl = document.getElementById('final-price');
+    const finalCurrEl = document.getElementById('final-curr');
 
-    if (currentRegion === 'USD') {
-        document.getElementById('final-price').innerText = `$${finalPrice.toFixed(2)}`;
-        document.getElementById('final-curr').innerText = ""; 
+    let finalTotal = subtotal;
+
+    if (activeCount >= 2 && subtotal > 0) {
+        let discountAmt = subtotal * BUNDLE_DISCOUNT;
+        finalTotal = subtotal - discountAmt;
+        
+        discountEl.style.display = 'flex';
+        
+        if (state.region === 'USD') {
+            document.getElementById('discount-amount').innerText = `-$${discountAmt.toFixed(2)}`;
+            oldPriceEl.innerText = `$${subtotal.toFixed(2)}`;
+        } else {
+            document.getElementById('discount-amount').innerText = `-${Math.floor(discountAmt).toLocaleString()} ${rate.symbol}`;
+            oldPriceEl.innerText = `${Math.floor(subtotal).toLocaleString()}`;
+        }
     } else {
-        document.getElementById('final-price').innerText = Math.floor(finalPrice).toLocaleString();
+        discountEl.style.display = 'none';
+        oldPriceEl.innerText = '';
+    }
+
+    // 5. Final Output
+    if (state.region === 'USD') {
+        finalPriceEl.innerText = `$${finalTotal.toFixed(2)}`;
+        finalCurrEl.innerText = '';
+    } else {
+        finalPriceEl.innerText = Math.floor(finalTotal).toLocaleString();
+        finalCurrEl.innerText = rate.symbol;
     }
 }
 
-// --- 6. REFERRAL ENGINE ---
-let usesReferral = false;
-function toggleReferral(isYes) {
-    usesReferral = isYes;
-    const btnNo = document.getElementById('ref-no');
-    const btnYes = document.getElementById('ref-yes');
-    const box = document.getElementById('ref-body');
-
-    if (isYes) {
-        btnNo.classList.remove('active');
-        btnYes.classList.add('active');
-        box.classList.add('open');
-        setTimeout(() => document.getElementById('referral-code').focus(), 150);
-    } else {
-        btnYes.classList.remove('active');
-        btnNo.classList.add('active');
-        box.classList.remove('open');
-        document.getElementById('referral-code').value = "";
+// --- 4. CHECKOUT ---
+function deployOrder() {
+    let activeCount = Object.keys(state.services).filter(k => state.services[k].active).length;
+    if (activeCount === 0) {
+        alert("Please toggle on at least one service."); return;
     }
-}
 
-// --- 7. DEPLOY TO WHATSAPP ---
-function deployCampaign() {
-    const settings = config[currentService];
-    const volume = parseInt(document.getElementById('volume-slider').value);
-    const splitCount = settings.allowSplit ? parseInt(document.getElementById('split-slider').value) : 1;
     const targetLink = document.getElementById('target-link').value.trim();
-    const finalPrice = document.getElementById('final-price').innerText;
-    const curr = currentRegion === 'USD' ? '' : rates[currentRegion].symbol;
-    const referrer = usesReferral ? document.getElementById('referral-code').value.trim() || "None" : "Direct";
-
     if (!targetLink) {
-        alert("Please enter the target username or link."); 
-        document.getElementById('target-link').focus();
-        return;
+        alert("Please enter the target username or video link."); 
+        document.getElementById('target-link').focus(); return;
     }
 
-    let msg = `*TIKTOK ELITE CAMPAIGN*\n\n`;
-    msg += `*Service:* ${settings.label}\n`;
-    msg += `*Volume:* ${volume.toLocaleString()}\n`;
+    const ref = document.getElementById('referral-code').value.trim() || "None";
+    const finalStr = document.getElementById('final-price').innerText + " " + document.getElementById('final-curr').innerText;
+
+    let msg = `*NEW BUILDER CAMPAIGN [${state.region}]*\n\n`;
     
-    if (settings.allowSplit && splitCount > 1) {
-        msg += `*Distribution:* Split across ${splitCount} posts (${Math.floor(volume/splitCount)} per post)\n`;
-    } else {
-        msg += `*Distribution:* Single Target\n`;
-    }
+    if (state.services.followers.active) msg += `🚀 *Followers:* ${state.services.followers.volume.toLocaleString()}\n`;
+    if (state.services.likes.active) msg += `❤️ *Likes:* ${state.services.likes.volume.toLocaleString()} (Split: ${state.services.likes.split})\n`;
+    if (state.services.views.active) msg += `👁️ *Views:* ${state.services.views.volume.toLocaleString()} (Split: ${state.services.views.split})\n`;
 
-    msg += `*Total Price:* ${finalPrice} ${curr}\n`;
+    if (activeCount >= 2) msg += `\n🎁 *Bundle Discount Applied*\n`;
+
+    msg += `\n*Total:* ${finalStr.trim()}\n`;
     msg += `*Target:* ${targetLink}\n`;
-    msg += `*Referrer:* ${referrer}\n`;
+    msg += `*Referrer:* ${ref}`;
 
     const phone = "256762193386"; 
     window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
-}
-
-// Utility: Convert HEX to RGB for CSS Glows
-function hexToRgb(hex) {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : null;
 }
