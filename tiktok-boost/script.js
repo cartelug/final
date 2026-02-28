@@ -1,189 +1,162 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const whatsappNumber = "256762193386";
-    const isInstagram = document.body.classList.contains('instagram-theme');
-    const serviceName = isInstagram ? "Instagram Growth" : "TikTok Growth";
-    const usernamePlaceholder = isInstagram ? "@your_instagram_username" : "@your_tiktok_username";
+// --- 1. CORE DATA MATRIX ---
+const rates = {
+    'UGX': { followers: 75, views: 0.6, likes: 12, symbol: 'UGX' },
+    'SSP': { followers: 20, views: 0.15, likes: 3, symbol: 'SSP' },
+    'USD': { followers: 0.02, views: 0.00015, likes: 0.003, symbol: 'USD' }
+};
+
+const config = {
+    followers: { min: 1000, max: 50000, step: 1000, label: "Followers", color: "#00f2fe", start: "1k", end: "50k" },
+    views: { min: 100000, max: 2000000, step: 50000, label: "Views", color: "#a855f7", start: "100k", end: "2M" },
+    likes: { min: 5000, max: 50000, step: 1000, label: "Likes", color: "#fe0979", start: "5k", end: "50k" }
+};
+
+let currentRegion = 'UGX';
+let currentService = 'followers';
+
+// Initialize
+window.onload = () => {
+    setCurrency('UGX');
+    setService('followers');
+};
+
+// --- 2. THEME & SERVICE ENGINE ---
+function setService(service) {
+    currentService = service;
+    const settings = config[service];
+
+    // Change the Global Accent Color
+    document.documentElement.style.setProperty('--theme-color', settings.color);
+    document.documentElement.style.setProperty('--theme-glow', `rgba(${hexToRgb(settings.color)}, 0.4)`);
+
+    // UI Updates
+    document.querySelectorAll('.service-card').forEach(c => c.classList.remove('active'));
+    document.getElementById(`card-${service}`).classList.add('active');
+
+    document.getElementById('slider-title').innerText = `2. How many ${settings.label}?`;
+    document.getElementById('metric-label').innerText = settings.label;
+
+    // Setup Slider Data
+    const slider = document.getElementById('amount-slider');
+    const input = document.getElementById('manual-input');
     
-    const flowContainer = document.getElementById('concierge-flow');
-
-    const packagesData = [
-        { tier: 'Starter Boost', desc: 'Perfect for testing quick traction.', ugx: 69000, features: '1K Followers + 1K Views + 1K Likes' },
-        { tier: 'Creator Growth', desc: 'Ideal for consistent engagement.', ugx: 129000, features: '3K Followers + 2K Views + 3K Likes' },
-        { tier: 'Viral Plus', desc: 'Balanced exposure & strong reach.', ugx: 189000, features: '5K Followers + 10K Views + 5K Likes' },
-        { tier: 'Influencer Pro', desc: 'For creators chasing consistency.', ugx: 259000, features: '8K Followers + 15K Views + 8K Likes' },
-        { tier: 'Elite Empire', desc: 'Dominance package for instant authority.', ugx: 360000, features: '12K Followers + 20K Views + 12K Likes' }
-    ];
-
-    const order = {
-        package: null,
-        price: null,
-        clientName: null,
-        username: null,
-        paymentMethod: null
-    };
-
-    let currentCurrency = 'UGX';
-
-    // ---- Helper Functions ----
-    const createStep = (id) => {
-        const step = document.createElement('section');
-        step.id = id;
-        step.className = 'flow-step';
-        flowContainer.appendChild(step);
-        // Auto-scroll to the new step
-        setTimeout(() => {
-            step.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }, 100);
-        return step;
-    };
-
-    const createPrompt = (html) => `<p class="prompt-message">${html}</p>`;
-
-    const calculatePrices = (baseUGX) => {
-        const multipliers = [2.0, 1.8, 1.67, 1.54, 1.43];
-        const tierIndex = packagesData.findIndex(p => p.ugx === baseUGX);
-        const oldUGX = baseUGX * multipliers[tierIndex];
-        return {
-            UGX: { new: baseUGX, old: Math.round(oldUGX / 1000) * 1000 },
-            SSP: { new: baseUGX * 1.8, old: Math.round(oldUGX * 1.8 / 1000) * 1000 },
-            USD: { new: Math.round(baseUGX / 3600), old: Math.round(oldUGX / 3600) }
-        };
-    };
-
-    // ---- Flow Steps ----
-    function showCurrencyStep() {
-        const step = createStep('step-currency');
-        step.innerHTML = `
-            ${createPrompt('Welcome. Please select your <span class="highlight">currency</span> to begin.')}
-            <div class="currency-selector">
-                <button class="currency-btn active" data-currency="UGX">🇺🇬 UGX</button>
-                <button class="currency-btn" data-currency="SSP">🇸🇸 SSP</button>
-                <button class="currency-btn" data-currency="USD">🇺🇸 USD</button>
-            </div>
-        `;
-        step.querySelectorAll('.currency-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                currentCurrency = btn.dataset.currency;
-                step.querySelectorAll('.currency-btn').forEach(b => b.classList.remove('selected'));
-                btn.classList.add('selected');
-                showPackageStep();
-            });
-        });
-    }
-
-    function showPackageStep() {
-        let step = document.getElementById('step-packages');
-        if (step) {
-             // If exists, just re-render cards instead of creating a new step
-             renderPackageCards(step);
-        } else {
-             step = createStep('step-packages');
-             step.innerHTML = `${createPrompt('Which <span class="highlight">package</span> aligns with your goals?')}`;
-             renderPackageCards(step);
-        }
-    }
+    slider.min = settings.min;
+    slider.max = settings.max;
+    slider.step = settings.step;
     
-    function renderPackageCards(stepElement) {
-        let grid = stepElement.querySelector('.package-grid');
-        if (!grid) {
-            grid = document.createElement('div');
-            grid.className = 'package-grid';
-            stepElement.appendChild(grid);
-        }
-        grid.innerHTML = ''; // Clear previous cards
+    slider.value = settings.min;
+    input.value = settings.min;
 
-        packagesData.forEach(pkg => {
-            const prices = calculatePrices(pkg.ugx);
-            const card = document.createElement('div');
-            card.className = 'package-card';
-            card.innerHTML = `
-                <h3>${pkg.tier}</h3>
-                <p class="features">${pkg.features}</p>
-                <div class="price">
-                    <span class="old-price">~~${prices[currentCurrency].old.toLocaleString()} ${currentCurrency}~~</span>
-                    <span class="new-price">${prices[currentCurrency].new.toLocaleString()} ${currentCurrency}</span>
-                </div>
-                <div class="nb-note">
-                    <strong>NB:</strong> Likes & Views are strategically divided across up to 9 of your posts.
-                </div>
-            `;
-            card.addEventListener('click', () => {
-                order.package = pkg.tier;
-                order.price = `${prices[currentCurrency].new.toLocaleString()} ${currentCurrency}`;
-                stepElement.querySelectorAll('.package-card').forEach(c => c.classList.remove('selected'));
-                card.classList.add('selected');
-                showDetailsStep();
-            });
-            grid.appendChild(card);
-        });
-    }
+    // Update the visual milestones under the slider
+    document.getElementById('milestones').innerHTML = `<span>${settings.start}</span><span>${settings.end}</span>`;
+
+    runCalculations();
+}
+
+// --- 3. CURRENCY ENGINE ---
+function setCurrency(currency) {
+    currentRegion = currency;
     
-    function showDetailsStep() {
-        if (document.getElementById('step-details')) return;
+    document.querySelectorAll('.curr-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(`curr-${currency}`).classList.add('active');
+    
+    document.getElementById('live-currency').innerText = rates[currency].symbol;
+    runCalculations();
+}
 
-        const step = createStep('step-details');
-        step.innerHTML = `
-            ${createPrompt('Great choice. Now for your <span class="highlight">details.</span>')}
-            <form class="details-form">
-                <input type="text" id="clientName" placeholder="Your Full Name" required>
-                <input type="text" id="username" placeholder="${usernamePlaceholder}" required>
-            </form>
-        `;
+// --- 4. FLUID INPUT SYNC ---
+function syncFromSlider() {
+    document.getElementById('manual-input').value = document.getElementById('amount-slider').value;
+    runCalculations();
+}
 
-        step.querySelector('#username').addEventListener('input', e => {
-            order.username = e.target.value;
-            order.clientName = step.querySelector('#clientName').value;
-            if(order.clientName && order.username) {
-                 setTimeout(showPaymentStep, 300); // Small delay for smoother UX
-            }
-        });
+function syncFromInput() {
+    let val = parseInt(document.getElementById('manual-input').value) || 0;
+    const settings = config[currentService];
+    
+    if (val >= settings.min && val <= settings.max) {
+        document.getElementById('amount-slider').value = val;
+    }
+    runCalculations();
+}
+
+// --- 5. REAL-TIME RECEIPT CALCULATOR ---
+function runCalculations() {
+    const settings = config[currentService];
+    let amount = parseInt(document.getElementById('manual-input').value) || settings.min;
+    
+    // Prevent going below minimum in calculations
+    if (amount < settings.min) amount = settings.min;
+
+    // Calculate cost based on region
+    const rate = rates[currentRegion][currentService];
+    let finalPrice = amount * rate;
+
+    // Format the text
+    document.getElementById('receipt-amount').innerText = `${amount.toLocaleString()} ${settings.label}`;
+    
+    // Format the price
+    if (currentRegion === 'USD') {
+        document.getElementById('live-price').innerText = `$${finalPrice.toFixed(2)}`;
+        document.getElementById('live-currency').innerText = ""; // Hide USD text since we use $
+    } else {
+        document.getElementById('live-price').innerText = Math.floor(finalPrice).toLocaleString();
+    }
+}
+
+// --- 6. DUAL PILL REFERRAL ---
+let usesReferral = false;
+function toggleReferral(isYes) {
+    usesReferral = isYes;
+    const btnNo = document.getElementById('ref-no');
+    const btnYes = document.getElementById('ref-yes');
+    const box = document.getElementById('ref-box');
+
+    if (isYes) {
+        btnNo.classList.remove('active');
+        btnYes.classList.add('active');
+        box.classList.add('open');
+        setTimeout(() => document.getElementById('referral-code').focus(), 150);
+    } else {
+        btnYes.classList.remove('active');
+        btnNo.classList.add('active');
+        box.classList.remove('open');
+        document.getElementById('referral-code').value = "";
+    }
+}
+
+// --- 7. CHECKOUT TO WHATSAPP ---
+function processOrder() {
+    const settings = config[currentService];
+    const amount = parseInt(document.getElementById('manual-input').value) || 0;
+    const targetLink = document.getElementById('target-link').value.trim();
+    const finalPrice = document.getElementById('live-price').innerText;
+    const curr = currentRegion === 'USD' ? '' : rates[currentRegion].symbol;
+    
+    const referrer = usesReferral ? document.getElementById('referral-code').value.trim() || "None" : "Direct";
+
+    if (amount < settings.min) {
+        alert(`Minimum order is ${settings.min.toLocaleString()}`); return;
+    }
+    if (!targetLink) {
+        alert("Please enter the target username or link."); 
+        document.getElementById('target-link').focus();
+        return;
     }
 
-    function showPaymentStep() {
-        if (document.getElementById('step-payment')) return;
+    let msg = `*NEW CUSTOM ALGORITHM BOOST*\n\n`;
+    msg += `*Service:* ${settings.label}\n`;
+    msg += `*Amount:* ${amount.toLocaleString()}\n`;
+    msg += `*Total Price:* ${finalPrice} ${curr}\n`;
+    msg += `*Target:* ${targetLink}\n`;
+    msg += `*Referrer:* ${referrer}\n`;
 
-        const step = createStep('step-payment');
-        step.innerHTML = `
-            ${createPrompt('Finally, how would you like to <span class="highlight">pay?</span>')}
-            <div class="payment-selector">
-                <div class="payment-option" data-method="MTN"><img src="../mtn.png" alt="MTN"></div>
-                <div class="payment-option" data-method="Airtel"><img src="../airtel.png" alt="Airtel"></div>
-            </div>
-        `;
-        step.querySelectorAll('.payment-option').forEach(opt => {
-            opt.addEventListener('click', () => {
-                order.paymentMethod = opt.dataset.method;
-                step.querySelectorAll('.payment-option').forEach(p => p.classList.remove('selected'));
-                opt.classList.add('selected');
-                showCtaStep();
-            });
-        });
-    }
+    const phone = "256762193386"; // VIP Number
+    window.location.href = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+}
 
-    function showCtaStep() {
-        let step = document.getElementById('step-cta');
-        if (step) step.remove();
-
-        step = createStep('step-cta');
-
-        let message = `Order for Cartelug:\n\n`;
-        message += `*Service:* ${serviceName}\n`;
-        message += `*Package:* ${order.package}\n`;
-        message += `*Price:* ${order.price}\n`;
-        message += `*Payment Method:* ${order.paymentMethod}\n`;
-        message += `*Name:* ${order.clientName}`;
-
-        const encodedMessage = encodeURIComponent(message);
-        const href = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
-
-        const ctaButton = document.createElement('a');
-        ctaButton.href = href;
-        ctaButton.target = "_blank";
-        ctaButton.className = 'cta-button';
-        ctaButton.innerHTML = `<i class="fab fa-whatsapp"></i> Complete Order on WhatsApp`;
-        step.appendChild(ctaButton);
-    }
-
-    // ---- Initialize Flow ----
-    showCurrencyStep();
-});
+// Helper: Converts hex colors so we can create transparent glows
+function hexToRgb(hex) {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : null;
+}
