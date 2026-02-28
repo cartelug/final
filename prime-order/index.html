@@ -210,9 +210,17 @@
                         <p>We connect your account <u>before</u> you pay. Zero risk.</p>
                     </div>
                 </div>
-<div class="input-group">
-    <label>Referral Code (Optional)</label>
-    <input type="text" id="referralCode" placeholder="e.g Friend's Name">
+<div class="referral-module">
+    <label class="ref-label">Did a friend refer you?</label>
+    
+    <div class="pill-toggle-group">
+        <button type="button" class="pill-btn active" id="btn-ref-no" onclick="switchReferral(false)">No</button>
+        <button type="button" class="pill-btn" id="btn-ref-yes" onclick="switchReferral(true)">Yes</button>
+    </div>
+
+    <div class="ref-input-slide" id="ref-input-slide">
+        <input type="text" id="referralCode" placeholder="Enter Friend's Name or Code">
+    </div>
 </div>
                 <div class="input-group">
                     <label>Full Name</label>

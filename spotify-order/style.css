@@ -415,3 +415,42 @@ body.spotify-mode {
 .wizard-card.glass-panel:focus-within {
     animation-play-state: paused;
 }
+/* =========================================
+   DUAL-PILL REFERRAL TOGGLE (NETFLIX RED)
+   ========================================= */
+.referral-module {
+    margin-bottom: 24px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 16px;
+    border-radius: 16px;
+}
+.ref-label {
+    display: block; color: #b3b3b3; font-size: 0.95rem; font-weight: 500; margin-bottom: 12px;
+}
+.pill-toggle-group {
+    display: flex; background: rgba(0, 0, 0, 0.4); border-radius: 100px; padding: 4px; border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.pill-btn {
+    flex: 1; background: transparent; border: none; color: #8a8a93; font-family: 'Inter', sans-serif; font-weight: 600; font-size: 1rem; padding: 10px 0; border-radius: 100px; cursor: pointer; transition: all 0.3s ease; -webkit-tap-highlight-color: transparent;
+}
+.pill-btn.active {
+    background: #1DB954; /* SPOTIFY GREEN */
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(29, 185, 84, 0.4);
+}
+.ref-input-slide input { border: 1px solid rgba(29, 185, 84, 0.3); }
+.ref-input-slide input:focus { border-color: #1DB954; }
+
+.ref-input-slide {
+    max-height: 0; overflow: hidden; opacity: 0; transition: all 0.4s ease; margin-top: 0;
+}
+.ref-input-slide.open {
+    max-height: 80px; opacity: 1; margin-top: 16px;
+}
+.ref-input-slide input {
+    width: 100%; background: #0a0a0c; border: 1px solid rgba(229, 9, 20, 0.3); color: #fff; padding: 14px 16px; border-radius: 12px; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.3s;
+}
+.ref-input-slide input:focus {
+    border-color: #e50914;
+}
