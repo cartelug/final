@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TikTok Growth Builder | AccessUG</title>
+    <title>TikTok Elite | AccessUG</title>
     <link rel="icon" href="../IMAGES/tiktok.png" type="image/png">
     
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,187 +11,153 @@
     
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="light-theme">
+<body class="fintech-light">
 
-    <div class="region-overlay" id="region-overlay">
-        <div class="overlay-content">
-            <h2>🌍 Where are you ordering from?</h2>
-            <div class="country-cards">
-                <div class="country-card" onclick="selectRegion('UGX')">
-                    <span class="flag">🇺🇬</span>
-                    <h3>Uganda</h3>
-                    <p>Prices in UGX</p>
-                </div>
-                <div class="country-card" onclick="selectRegion('USD')">
-                    <span class="flag">🇸🇸</span>
-                    <h3>South Sudan</h3>
-                    <p>Prices in USD</p>
-                </div>
-                <div class="country-card" onclick="selectRegion('USD')">
-                    <span class="flag">🇨🇩</span>
-                    <h3>DR Congo</h3>
-                    <p>Prices in USD</p>
-                </div>
+    <div class="region-sheet" id="region-sheet">
+        <div class="sheet-content">
+            <h2>🌍 Select your region</h2>
+            <p>Pricing adjusts automatically based on your location.</p>
+            
+            <div class="region-list">
+                <button class="region-btn" onclick="selectRegion('UGX')">
+                    <span class="r-flag">🇺🇬</span>
+                    <div class="r-info">
+                        <strong>Uganda</strong>
+                        <span>Prices in UGX</span>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <button class="region-btn" onclick="selectRegion('USD')">
+                    <span class="r-flag">🇸🇸</span>
+                    <div class="r-info">
+                        <strong>South Sudan</strong>
+                        <span>Prices in USD</span>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <button class="region-btn" onclick="selectRegion('USD')">
+                    <span class="r-flag">🇨🇩</span>
+                    <div class="r-info">
+                        <strong>DR Congo</strong>
+                        <span>Prices in USD</span>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </div>
     </div>
 
-    <div class="mesh-background"></div>
-
-    <nav class="builder-nav">
-        <a href="../index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
+    <div class="app-wrapper">
+        
+        <nav class="app-topbar">
+            <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Home</a>
+            <button class="mini-region-btn" onclick="resetRegion()"><i class="fas fa-globe"></i> <span id="current-region-badge">UGX</span></button>
         </nav>
 
-    <main class="builder-container">
-        
-        <header class="builder-header">
-            <div class="header-icon"><i class="fab fa-tiktok"></i></div>
+        <header class="app-header">
+            <div class="brand-icon"><i class="fab fa-tiktok"></i></div>
             <h1>Boost Your Page</h1>
-            <p>Choose what you would like to boost.</p>
+            <p>Select Followers, Likes, or bundle both for a 10% discount.</p>
         </header>
 
-        <div class="builder-layout">
+        <main class="modules-container">
             
-            <div class="controls-column">
+            <div class="glass-card" id="card-followers">
+                <div class="card-top" onclick="toggleService('followers')">
+                    <div class="c-title">
+                        <div class="icon-box icon-cyan"><i class="fas fa-users"></i></div>
+                        <div>
+                            <h3>Followers</h3>
+                            <span>Algorithm authority</span>
+                        </div>
+                    </div>
+                    <div class="fintech-switch" id="switch-followers"></div>
+                </div>
                 
-                <div class="service-module" id="mod-followers">
-                    <div class="module-header" onclick="toggleService('followers')">
-                        <div class="mh-info">
-                            <div class="mh-icon" style="color: #20D5D2; background: rgba(32, 213, 210, 0.1);"><i class="fas fa-users"></i></div>
-                            <div>
-                                <h3>Followers</h3>
-                                <p>Permanent algorithm authority.</p>
-                            </div>
-                        </div>
-                        <div class="ios-switch" id="switch-followers"></div>
+                <div class="card-expand" id="expand-followers">
+                    <div class="metric-display">
+                        <span class="m-val" id="val-followers">1,000</span>
+                        <span class="m-label">Followers</span>
                     </div>
-                    <div class="module-body" id="body-followers">
-                        <div class="slider-group">
-                            <div class="sg-header">
-                                <label>How many followers?</label>
-                                <div class="sg-value"><span id="val-followers">1,000</span></div>
-                            </div>
-                            <input type="range" class="pro-slider cyan-slider" id="slider-followers" min="0" step="1" oninput="updateMath()">
+                    <input type="range" class="fintech-slider cyan-track" id="slider-followers" min="0" step="1" oninput="updateCalculations()">
+                    <div class="slider-labels" id="labels-followers">
                         </div>
-                    </div>
                 </div>
-
-                <div class="service-module" id="mod-likes">
-                    <div class="module-header" onclick="toggleService('likes')">
-                        <div class="mh-info">
-                            <div class="mh-icon" style="color: #FE2C55; background: rgba(254, 44, 85, 0.1);"><i class="fas fa-heart"></i></div>
-                            <div>
-                                <h3>Likes</h3>
-                                <p>Massive social proof for your videos.</p>
-                            </div>
-                        </div>
-                        <div class="ios-switch" id="switch-likes"></div>
-                    </div>
-                    <div class="module-body" id="body-likes">
-                        <div class="slider-group">
-                            <div class="sg-header">
-                                <label>How many likes?</label>
-                                <div class="sg-value"><span id="val-likes">1,000</span></div>
-                            </div>
-                            <input type="range" class="pro-slider pink-slider" id="slider-likes" min="0" step="1" oninput="updateMath()">
-                        </div>
-                        <div class="slider-group split-group">
-                            <div class="sg-header">
-                                <label>Spread across how many videos?</label>
-                                <div class="sg-value"><span id="split-likes">5</span> Videos</div>
-                            </div>
-                            <input type="range" class="pro-slider gray-slider" id="slider-split-likes" min="1" max="10" step="1" value="5" oninput="updateMath()">
-                            <p class="split-hint" id="hint-likes"><i class="fas fa-magic"></i> That's calculated automatically.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="service-module" id="mod-views">
-                    <div class="module-header" onclick="toggleService('views')">
-                        <div class="mh-info">
-                            <div class="mh-icon" style="color: #a855f7; background: rgba(168, 85, 247, 0.1);"><i class="fas fa-play"></i></div>
-                            <div>
-                                <h3>Views</h3>
-                                <p>Trigger the For You Page (FYP).</p>
-                            </div>
-                        </div>
-                        <div class="ios-switch" id="switch-views"></div>
-                    </div>
-                    <div class="module-body" id="body-views">
-                        <div class="slider-group">
-                            <div class="sg-header">
-                                <label>How many views?</label>
-                                <div class="sg-value"><span id="val-views">5,000</span></div>
-                            </div>
-                            <input type="range" class="pro-slider purple-slider" id="slider-views" min="0" step="1" oninput="updateMath()">
-                        </div>
-                        <div class="slider-group split-group">
-                            <div class="sg-header">
-                                <label>Spread across how many videos?</label>
-                                <div class="sg-value"><span id="split-views">1</span> Video</div>
-                            </div>
-                            <input type="range" class="pro-slider gray-slider" id="slider-split-views" min="1" max="10" step="1" value="1" oninput="updateMath()">
-                            <p class="split-hint" id="hint-views"><i class="fas fa-magic"></i> All views go to 1 video.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="meta-section">
-                    <div class="input-modern">
-                        <label>Where do we send this?</label>
-                        <div class="im-wrapper">
-                            <i class="fab fa-tiktok"></i>
-                            <input type="text" id="target-link" placeholder="Enter your TikTok @username">
-                        </div>
-                    </div>
-
-                    <div class="referral-accordion">
-                        <div class="ref-trigger" onclick="toggleReferralUI()">
-                            <span><i class="fas fa-user-friends"></i> Did a friend refer you?</span>
-                            <i class="fas fa-chevron-down" id="ref-chevron"></i>
-                        </div>
-                        <div class="ref-content" id="ref-content">
-                            <input type="text" id="referral-code" placeholder="Enter their name here...">
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
-            <div class="receipt-column">
-                <div class="live-quote-card">
-                    <h2>Your Bill</h2>
+            <div class="glass-card" id="card-likes">
+                <div class="card-top" onclick="toggleService('likes')">
+                    <div class="c-title">
+                        <div class="icon-box icon-pink"><i class="fas fa-heart"></i></div>
+                        <div>
+                            <h3>Likes</h3>
+                            <span>Social proof & engagement</span>
+                        </div>
+                    </div>
+                    <div class="fintech-switch" id="switch-likes"></div>
+                </div>
+                
+                <div class="card-expand" id="expand-likes">
+                    <div class="metric-display">
+                        <span class="m-val" id="val-likes">1,000</span>
+                        <span class="m-label">Likes</span>
+                    </div>
+                    <input type="range" class="fintech-slider pink-track" id="slider-likes" min="0" step="1" oninput="updateCalculations()">
                     
-                    <div class="quote-items" id="quote-items">
+                    <div class="split-controller">
+                        <label>Distribute across how many posts?</label>
+                        <div class="split-flex">
+                            <input type="range" class="fintech-slider dark-track" id="slider-split-likes" min="1" max="10" step="1" value="5" oninput="updateCalculations()">
+                            <div class="split-val"><span id="split-likes">5</span> Posts</div>
                         </div>
-
-                    <div class="quote-discount" id="quote-discount" style="display: none;">
-                        <span class="qd-label" id="discount-label"><i class="fas fa-tag"></i> Combo Discount</span>
-                        <span class="qd-amount" id="discount-amount">- 0 UGX</span>
+                        <p class="hint-text"><i class="fas fa-bolt"></i> Approx. <b id="likes-per-post">200</b> likes per post.</p>
                     </div>
-
-                    <div class="quote-total">
-                        <span class="qt-label">Total Investment</span>
-                        <div class="qt-price">
-                            <span class="old-price" id="old-price"></span>
-                            <span id="final-price">0</span> <span class="curr" id="final-curr">UGX</span>
-                        </div>
-                    </div>
-
-                    <button class="btn-checkout" onclick="deployOrder()">
-                        Place Order Now <i class="fas fa-lock"></i>
-                    </button>
-                    <p class="checkout-hint">You will pay via Mobile Money on WhatsApp after confirmation.</p>
                 </div>
             </div>
 
+            <div class="glass-card meta-card">
+                <div class="input-group">
+                    <label>Target Account Username</label>
+                    <div class="input-wrapper">
+                        <i class="fab fa-tiktok"></i>
+                        <input type="text" id="target-link" placeholder="@username">
+                    </div>
+                </div>
+
+                <div class="referral-accordion">
+                    <div class="ref-header" onclick="toggleReferral()">
+                        <span><i class="fas fa-gift"></i> Have a referral name?</span>
+                        <i class="fas fa-plus" id="ref-icon"></i>
+                    </div>
+                    <div class="ref-body" id="ref-body">
+                        <input type="text" id="referral-code" placeholder="Enter friend's name...">
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 120px;"></div>
+
+        </main>
+
+        <div class="sticky-pay-bar">
+            <div class="pay-info">
+                <div class="discount-badge" id="discount-badge"><i class="fas fa-tag"></i> 10% Combo Saved</div>
+                <div class="total-block">
+                    <span class="t-label">Total to pay</span>
+                    <div class="t-price">
+                        <span class="old-price" id="old-price"></span>
+                        <span id="final-price">0</span> <span id="final-curr" class="curr">UGX</span>
+                    </div>
+                </div>
+            </div>
+            <button class="pay-btn" onclick="deployOrder()">
+                Place Order <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
 
-        <div class="reset-region-wrap">
-            <a class="reset-region-link" onclick="resetRegion()">Change country</a>
-        </div>
-
-    </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
