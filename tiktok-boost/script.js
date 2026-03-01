@@ -1,23 +1,23 @@
 /**
  * ==========================================================================
- * ACCESSUG TIKTOK ENGINE - STRICT LOGIC CONTROLLER
+ * ACCESSUG TIKTOK ENGINE (V5 - BENTO LOGIC)
  * ==========================================================================
- * Architecture:
- * - Reactive state management.
- * - Exact mathematical matrix rendering (UGX/USD).
- * - Exact Google Sheets `URLSearchParams` + `no-cors` synchronization.
- * - Formatted WhatsApp output matching Netflix legacy logic.
- * - Dual-Pill Referrer system.
+ * Strict Architecture:
+ * 1. "Tap & Done" Bento Grid Selection (-1 = Skip, 0-3 = Packages)
+ * 2. Hard Limits: $100 / 360,000 UGX
+ * 3. 10% Combo Auto-Discount
+ * 4. 1k Likes = 2k Free Views (Baked into math)
+ * 5. Google Sheets `URLSearchParams` -> WhatsApp Bridge
  * ==========================================================================
  */
 
-const Config = {
-    // Exact URL provided for Google Sheets App Script
+const AppConfig = {
+    // ---> REPLACE WITH YOUR LIVE GOOGLE SHEETS WEB APP URL <---
     googleSheetUrl: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
     whatsappNumber: '256762193386',
     
-    // Strict nonlinear mathematical constraints
-    matrices: {
+    // Strict Pricing Arrays
+    prices: {
         'UGX': {
             followers: [ 
                 { v: 1000, p: 75000 }, { v: 4000, p: 141000 }, 
@@ -27,7 +27,7 @@ const Config = {
                 { v: 1000, p: 50000 }, { v: 4000, p: 83000 }, 
                 { v: 7000, p: 116000 }, { v: 10000, p: 150000 } 
             ],
-            rules: { minFloor: 50000, maxCeiling: 360000, curr: 'UGX' }
+            rules: { floor: 50000, ceiling: 360000, symbol: 'UGX' }
         },
         'USD': {
             followers: [ 
@@ -38,348 +38,362 @@ const Config = {
                 { v: 2500, p: 35 }, { v: 5000, p: 50 }, 
                 { v: 7500, p: 75 }, { v: 10000, p: 100 } 
             ],
-            rules: { minFloor: 35, maxCeiling: 100, curr: '$' }
+            rules: { floor: 35, ceiling: 100, symbol: '$' }
         }
     }
 };
 
-const State = {
-    region: 'UGX',
-    folIndex: -1,     // -1 indicates unselected
-    likesIndex: -1,
-    splitCount: 5,
-    hasReferrer: false, // Tracks the [No] [Yes] pill state
-    isTransmitting: false,
-    finalComputedPrice: 0 // Stored for payload
+const AppState = {
+    country: 'UGX',
+    folSelection: -1,   // -1 = Skipped/None
+    likSelection: -1,   // -1 = Skipped/None
+    videoSplits: 5,
+    hasReferrer: false,
+    isProcessing: false,
+    finalMathematicalPrice: 0 // Clean integer for sheets
 };
 
-const Engine = {
-    
-    // --- 1. INITIALIZATION ---
+const CoreApp = {
+
+    // --- 1. BOOTSTRAP ---
     init() {
-        const savedRegion = localStorage.getItem('accessug_tiktok_region');
+        const savedRegion = localStorage.getItem('accessug_loc_v5');
         if (savedRegion) {
-            this.initRegion(savedRegion, false);
+            this.setCountry(savedRegion, false);
         } else {
-            this.openRegionSheet();
+            this.openCountryModal();
         }
 
-        // Global Enter Key Listener for rapid checkout
-        document.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !State.isTransmitting) {
-                if(document.activeElement.tagName === 'INPUT') {
-                    this.transmitPayload();
-                }
-            }
+        // Enter key listener for rapid checkout
+        document.getElementById('target-username').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
+        });
+        document.getElementById('referrer-name').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
         });
     },
 
-    // --- 2. REGION CALIBRATION ---
-    openRegionSheet() {
-        document.getElementById('region-sheet').setAttribute('aria-hidden', 'false');
+    // --- 2. COUNTRY MANAGEMENT ---
+    openCountryModal() {
+        document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
     },
 
-    initRegion(reg, save = true) {
-        if(save) localStorage.setItem('accessug_tiktok_region', reg);
-        State.region = reg;
+    setCountry(code, saveToMemory = true) {
+        if(saveToMemory) localStorage.setItem('accessug_loc_v5', code);
+        AppState.country = code;
         
-        document.getElementById('region-sheet').setAttribute('aria-hidden', 'true');
-        document.getElementById('current-region-display').innerText = reg;
+        document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
+        document.getElementById('ui-region-badge').innerText = code;
         
-        // Reset selections on region swap
-        State.folIndex = -1;
-        State.likesIndex = -1;
-        State.splitCount = 5;
+        // Reset selections to defaults (Select lowest tier of followers, skip likes)
+        AppState.folSelection = 0;
+        AppState.likSelection = -1;
+        AppState.videoSplits = 5;
         
-        this.renderTracks();
-        this.calculateYield();
+        this.renderBentoGrids();
+        this.calculateMath();
     },
 
-    // --- 3. UI GENERATION (The Fluid Tracks) ---
-    renderTracks() {
-        const matrix = Config.matrices[State.region];
+    // --- 3. BENTO UI RENDERING ---
+    renderBentoGrids() {
+        const matrix = AppConfig.prices[AppState.country];
         const formatVol = (v) => v >= 1000 ? (v/1000) + 'k' : v;
-        const formatPrice = (p) => State.region === 'USD' ? `$${p}` : `${p.toLocaleString()} UGX`;
+        const formatPrice = (p) => AppState.country === 'USD' ? `$${p}` : `${p.toLocaleString()} UGX`;
 
-        // 3a. Generate Followers Track
-        const folTrack = document.getElementById('track-followers');
-        // Inject "None" tile first
-        folTrack.innerHTML = `
-            <div class="mix-tile ${State.folIndex === -1 ? 'active-tile' : ''}" onclick="Engine.selectItem('fol', -1)">
-                <span class="tile-vol">None</span>
-                <span class="tile-price">Skip Module</span>
+        // 3a. Render Followers Grid
+        const gridFol = document.getElementById('grid-followers');
+        gridFol.innerHTML = '';
+        
+        // Generate the 4 Pricing Buttons
+        matrix.followers.forEach((tier, index) => {
+            let activeClass = AppState.folSelection === index ? 'selected-cyan' : '';
+            gridFol.innerHTML += `
+                <div class="pack-btn ${activeClass}" onclick="CoreApp.selectTier('fol', ${index})">
+                    <span class="p-vol">${formatVol(tier.v)}</span>
+                    <span class="p-price">${formatPrice(tier.p)}</span>
+                </div>
+            `;
+        });
+        
+        // Append the Explicit "Skip" Button
+        let skipFolClass = AppState.folSelection === -1 ? 'selected-skip' : '';
+        gridFol.innerHTML += `
+            <div class="pack-btn skip-btn ${skipFolClass}" onclick="CoreApp.selectTier('fol', -1)" style="grid-column: span 2;">
+                <span class="p-vol">I don't need Followers</span>
             </div>
         `;
+
+        // 3b. Render Likes Grid
+        const gridLik = document.getElementById('grid-likes');
+        gridLik.innerHTML = '';
         
-        matrix.followers.forEach((tier, idx) => {
-            let active = State.folIndex === idx ? 'active-tile' : '';
-            folTrack.innerHTML += `
-                <div class="mix-tile ${active}" onclick="Engine.selectItem('fol', ${idx})">
-                    <span class="tile-vol">${formatVol(tier.v)}</span>
-                    <span class="tile-price">${formatPrice(tier.p)}</span>
+        // Generate the 4 Pricing Buttons
+        matrix.likes.forEach((tier, index) => {
+            let activeClass = AppState.likSelection === index ? 'selected-pink' : '';
+            let freeViews = formatVol(tier.v * 2);
+            gridLik.innerHTML += `
+                <div class="pack-btn ${activeClass}" onclick="CoreApp.selectTier('lik', ${index})">
+                    <span class="p-vol">${formatVol(tier.v)}</span>
+                    <span class="p-views">+ ${freeViews} Views</span>
+                    <span class="p-price">${formatPrice(tier.p)}</span>
                 </div>
             `;
         });
 
-        // 3b. Generate Likes Track
-        const likTrack = document.getElementById('track-likes');
-        likTrack.innerHTML = `
-            <div class="mix-tile ${State.likesIndex === -1 ? 'active-tile' : ''}" onclick="Engine.selectItem('lik', -1)">
-                <span class="tile-vol">None</span>
-                <span class="tile-price">Skip Module</span>
+        // Append the Explicit "Skip" Button
+        let skipLikClass = AppState.likSelection === -1 ? 'selected-skip' : '';
+        gridLik.innerHTML += `
+            <div class="pack-btn skip-btn ${skipLikClass}" onclick="CoreApp.selectTier('lik', -1)" style="grid-column: span 2;">
+                <span class="p-vol">I don't need Likes</span>
             </div>
         `;
-        
-        matrix.likes.forEach((tier, idx) => {
-            let active = State.likesIndex === idx ? 'active-tile' : '';
-            
-            // Generate Bonus Views text directly inside tile
-            let views = tier.v * 2;
-            let displayViews = views >= 1000 ? (views/1000) + 'k' : views;
-            
-            likTrack.innerHTML += `
-                <div class="mix-tile ${active}" onclick="Engine.selectItem('lik', ${idx})">
-                    <span class="tile-vol">${formatVol(tier.v)}</span>
-                    <span class="tile-sub">+ ${displayViews} Views</span>
-                    <span class="tile-price">${formatPrice(tier.p)}</span>
-                </div>
-            `;
-        });
 
-        // Manage Stepper Visibility
-        const stepper = document.getElementById('distribution-module');
-        if (State.likesIndex > -1) {
-            stepper.style.display = 'flex';
+        // Toggle Video Splitter UI Visibility
+        const splitterUI = document.getElementById('split-ui-box');
+        if (AppState.likSelection > -1) {
+            splitterUI.style.display = 'flex';
         } else {
-            stepper.style.display = 'none';
+            splitterUI.style.display = 'none';
         }
     },
 
-    // --- 4. HAPTIC INTERACTIONS ---
-    selectItem(type, idx) {
-        if (State.isTransmitting) return;
+    // --- 4. TACTILE INTERACTIONS ---
+    selectTier(type, index) {
+        if (AppState.isProcessing) return;
         
-        if (type === 'fol') State.folIndex = idx;
-        if (type === 'lik') State.likesIndex = idx;
+        if (type === 'fol') AppState.folSelection = index;
+        if (type === 'lik') AppState.likSelection = index;
         
-        this.renderTracks();
-        this.calculateYield();
-        this.fireHaptic();
+        this.renderBentoGrids();
+        this.calculateMath();
+        this.triggerVibration();
     },
 
-    modifySplit(direction) {
-        if (State.isTransmitting) return;
+    adjustSplit(direction) {
+        if (AppState.isProcessing) return;
         
-        State.splitCount += direction;
-        if (State.splitCount < 1) State.splitCount = 1;
-        if (State.splitCount > 10) State.splitCount = 10;
+        AppState.videoSplits += direction;
+        if (AppState.videoSplits < 1) AppState.videoSplits = 1;
+        if (AppState.videoSplits > 10) AppState.videoSplits = 10;
         
-        document.getElementById('split-counter-display').innerText = State.splitCount;
-        this.calculateYield();
-        this.fireHaptic();
+        document.getElementById('split-counter-ui').innerText = AppState.videoSplits;
+        this.calculateMath();
+        this.triggerVibration();
     },
 
-    setReferrerState(hasReferrer) {
-        if (State.isTransmitting) return;
-        State.hasReferrer = hasReferrer;
+    toggleReferrer(hasFriend) {
+        if (AppState.isProcessing) return;
+        AppState.hasReferrer = hasFriend;
         
-        const pillNo = document.getElementById('ref-pill-no');
-        const pillYes = document.getElementById('ref-pill-yes');
+        const btnNo = document.getElementById('ref-no');
+        const btnYes = document.getElementById('ref-yes');
         const drawer = document.getElementById('referrer-drawer');
         
-        if (hasReferrer) {
-            pillNo.classList.remove('active');
-            pillYes.classList.add('active');
+        if (hasFriend) {
+            btnNo.classList.remove('active');
+            btnYes.classList.add('active');
             drawer.classList.add('is-open');
-            // Auto focus input for seamless UX
-            setTimeout(() => document.getElementById('referrer-name').focus(), 300);
+            setTimeout(() => document.getElementById('referrer-name').focus(), 250);
         } else {
-            pillYes.classList.remove('active');
-            pillNo.classList.add('active');
+            btnYes.classList.remove('active');
+            btnNo.classList.add('active');
             drawer.classList.remove('is-open');
-            document.getElementById('referrer-name').value = ''; // Clear value
+            document.getElementById('referrer-name').value = ''; 
         }
     },
 
-    fireHaptic() {
+    triggerVibration() {
         if (navigator.vibrate) navigator.vibrate(10);
     },
 
-    // --- 5. MATHEMATICAL ENGINE (Caps & Combos) ---
-    calculateYield() {
-        const matrix = Config.matrices[State.region];
-        let rawPrice = 0;
-        let activeNodes = 0;
+    // --- 5. THE CORE MATHEMATICS ENGINE ---
+    calculateMath() {
+        const matrix = AppConfig.prices[AppState.country];
+        let runningTotal = 0;
+        let activeCategories = 0;
 
-        // Process Followers
-        if (State.folIndex > -1) {
-            rawPrice += matrix.followers[State.folIndex].p;
-            activeNodes++;
+        // Add Followers Math
+        if (AppState.folSelection > -1) {
+            runningTotal += matrix.followers[AppState.folSelection].p;
+            activeCategories++;
         }
         
-        // Process Likes & Distribute Math
-        if (State.likesIndex > -1) {
-            const lTier = matrix.likes[State.likesIndex];
-            rawPrice += lTier.p;
-            activeNodes++;
+        // Add Likes Math & Update Split Text
+        if (AppState.likSelection > -1) {
+            const likObj = matrix.likes[AppState.likSelection];
+            runningTotal += likObj.p;
+            activeCategories++;
             
-            const freeViews = lTier.v * 2;
-            const lPerVid = Math.floor(lTier.v / State.splitCount);
-            const vPerVid = Math.floor(freeViews / State.splitCount);
-            
-            document.getElementById('split-math-readout').innerText = `~${lPerVid.toLocaleString()} likes & ${vPerVid.toLocaleString()} views per video`;
+            // Generate split helper text
+            const likesPerPost = Math.floor(likObj.v / AppState.videoSplits);
+            document.getElementById('split-math-output').innerText = `~${likesPerPost.toLocaleString()} Likes per video`;
         }
 
-        // Apply Rules
-        let finalOutput = rawPrice;
-        const uiCombo = document.getElementById('ui-tag-combo');
-        const uiVip = document.getElementById('ui-tag-vip');
-        const uiStrike = document.getElementById('ui-price-strike');
+        // Apply Business Rules
+        let finalPrice = runningTotal;
+        
+        const tagCombo = document.getElementById('ui-badge-combo');
+        const tagMax = document.getElementById('ui-badge-max');
+        const textStrike = document.getElementById('ui-strike-price');
 
-        uiCombo.style.display = 'none';
-        uiVip.style.display = 'none';
-        uiStrike.innerText = '';
+        tagCombo.style.display = 'none';
+        tagMax.style.display = 'none';
+        textStrike.innerText = '';
 
-        // 1. Combo Discount
-        if (activeNodes === 2 && rawPrice > 0) {
-            finalOutput = rawPrice * 0.90;
-            uiCombo.style.display = 'flex';
-            uiStrike.innerText = State.region === 'USD' ? `$${rawPrice}` : rawPrice.toLocaleString();
+        // Rule 1: 10% Bundle Discount
+        if (activeCategories === 2 && runningTotal > 0) {
+            finalPrice = runningTotal * 0.90;
+            tagCombo.style.display = 'flex';
+            textStrike.innerText = AppState.country === 'USD' ? `$${runningTotal}` : runningTotal.toLocaleString();
         }
 
-        // 2. Strict Absolute Limits
-        if (activeNodes > 0) {
-            if (finalOutput < matrix.rules.minFloor) finalOutput = matrix.rules.minFloor;
-            
-            if (finalOutput >= matrix.rules.maxCeiling) {
-                finalOutput = matrix.rules.maxCeiling;
-                uiCombo.style.display = 'none'; // Overwrite Combo UI
-                uiVip.style.display = 'flex';   // Trigger VIP UI
-                uiStrike.innerText = ''; 
+        // Rule 2: Strict Min Floor & Max Ceiling Overrides
+        if (activeCategories > 0) {
+            if (finalPrice < matrix.rules.floor) finalPrice = matrix.rules.floor;
+            if (finalPrice >= matrix.rules.ceiling) {
+                finalPrice = matrix.rules.ceiling;
+                tagCombo.style.display = 'none'; // Max Tag takes priority
+                tagMax.style.display = 'flex';
+                textStrike.innerText = ''; // Clear for cleanliness
             }
         } else {
-            finalOutput = 0;
+            finalPrice = 0;
         }
 
-        // Render Math
-        if (State.region === 'USD') {
-            document.getElementById('ui-price-final').innerText = `$${finalOutput}`;
-            document.getElementById('ui-price-currency').innerText = '';
+        // Output to DOM
+        if (AppState.country === 'USD') {
+            document.getElementById('ui-final-price').innerText = `$${finalPrice}`;
+            document.getElementById('ui-final-curr').innerText = '';
         } else {
-            document.getElementById('ui-price-final').innerText = finalOutput.toLocaleString();
-            document.getElementById('ui-price-currency').innerText = 'UGX';
+            document.getElementById('ui-final-price').innerText = finalPrice.toLocaleString();
+            document.getElementById('ui-final-curr').innerText = 'UGX';
         }
         
-        // Store for global access during submit
-        State.finalComputedPrice = finalOutput;
+        // Save to state for payload
+        AppState.finalMathematicalPrice = finalPrice;
     },
 
-    // --- 6. SHADOW-SYNC TO SHEETS & WHATSAPP ---
-    async transmitPayload() {
-        if (State.isTransmitting) return;
+    // --- 6. SHADOW-SYNC & WHATSAPP BRIDGE ---
+    async processCheckout() {
+        if (AppState.isProcessing) return;
 
-        // Validation Check
-        if (State.folIndex === -1 && State.likesIndex === -1) {
-            alert("Please select a Follower or Like package to proceed.");
+        // 1. Validations
+        if (AppState.folSelection === -1 && AppState.likSelection === -1) {
+            this.showToast("Please select a Follower or Like package to buy.", "error");
             return;
         }
 
-        const targetClient = document.getElementById('client-target').value.trim();
-        if (!targetClient) {
-            alert("Please provide the target TikTok username.");
-            document.getElementById('client-target').focus();
+        const clientUsername = document.getElementById('target-username').value.trim();
+        if (!clientUsername) {
+            this.showToast("We need your TikTok Username.", "error");
+            document.getElementById('target-username').focus();
             return;
         }
 
-        // Process Referrer String
-        let referrerVal = "Direct";
-        if (State.hasReferrer) {
+        // 2. Format Referrer
+        let referrerText = "Direct";
+        if (AppState.hasReferrer) {
             const inputVal = document.getElementById('referrer-name').value.trim();
-            if (inputVal) referrerVal = inputVal;
+            if (inputVal) referrerText = inputVal;
         }
 
-        // UI Loading Transformation
-        this.setUIState(true);
+        // 3. Engage Loading UI
+        this.setLoading(true);
 
-        // Compile String Data
-        const matrix = Config.matrices[State.region];
-        let packageDesc = "";
-        let waDesc = "";
+        // 4. Construct Strings
+        const matrix = AppConfig.prices[AppState.country];
+        let sheetPackageStr = "";
+        let waPackageStr = "";
         
-        if (State.folIndex > -1) {
-            let folAmt = matrix.followers[State.folIndex].v;
-            packageDesc += `${folAmt} Followers. `;
-            waDesc += `🚀 *Followers:* ${folAmt.toLocaleString()}\n`;
+        if (AppState.folSelection > -1) {
+            let folVol = matrix.followers[AppState.folSelection].v;
+            sheetPackageStr += `${folVol} Followers. `;
+            waPackageStr += `🚀 *Followers:* ${folVol.toLocaleString()}\n`;
         }
         
-        if (State.likesIndex > -1) {
-            let likAmt = matrix.likes[State.likesIndex].v;
-            let vAmt = likAmt * 2;
-            packageDesc += `${likAmt} Likes (Split ${State.splitCount}) + ${vAmt} Free Views.`;
-            waDesc += `❤️ *Likes:* ${likAmt.toLocaleString()} (Across ${State.splitCount} videos)\n`;
-            waDesc += `👁️ *Free Views:* ${vAmt.toLocaleString()}\n`;
+        if (AppState.likSelection > -1) {
+            let likVol = matrix.likes[AppState.likSelection].v;
+            let freeViews = likVol * 2;
+            sheetPackageStr += `${likVol} Likes (Split ${AppState.videoSplits}) + ${freeViews} Views.`;
+            waPackageStr += `❤️ *Likes:* ${likVol.toLocaleString()} (Split across ${AppState.videoSplits} videos)\n`;
+            waPackageStr += `👁️ *Free Views:* ${freeViews.toLocaleString()}\n`;
         }
 
-        const finalBill = document.getElementById('ui-price-final').innerText + " " + document.getElementById('ui-price-currency').innerText;
+        const finalBillDisplay = document.getElementById('ui-final-price').innerText + " " + document.getElementById('ui-final-curr').innerText;
 
-        // --- EXACT GOOGLE SHEETS INTEGRATION (URLSearchParams) ---
-        // Rule: Date(auto), ClientName, Service, Package, Price, Referrer
+        // --- GOOGLE SHEETS INTEGRATION (EXACT MATCH TO TEMPLATE) ---
+        // Expected Columns: Date, ClientName, Service, Package, Price, Referrer
         const formData = new URLSearchParams();
-        formData.append('ClientName', targetClient); // Input serves as Name/ID
-        formData.append('Service', `TikTok Boost [${State.region}]`);
-        formData.append('Package', packageDesc.trim());
-        // Clean mathematical price format for Sheet calculation
-        formData.append('Price', State.finalComputedPrice.toString()); 
-        formData.append('Referrer', referrerVal);
+        formData.append('ClientName', clientUsername);
+        formData.append('Service', `TikTok Boost [${AppState.country}]`);
+        formData.append('Package', sheetPackageStr.trim());
+        formData.append('Price', AppState.finalMathematicalPrice.toString()); // Clean number
+        formData.append('Referrer', referrerText);
 
         try {
-            // Shadow Sync (No-CORS background fetch)
-            await fetch(Config.googleSheetUrl, { 
+            await fetch(AppConfig.googleSheetUrl, { 
                 method: 'POST', 
                 body: formData, 
                 mode: 'no-cors' 
             });
         } catch (e) { 
-            console.log("Sheet sync delayed/failed, proceeding to WhatsApp for redundancy."); 
+            console.log("Sheet sync bypassed, proceeding to WhatsApp."); 
         }
 
-        // --- FORMATTED WHATSAPP BRIDGE (Netflix Template Match) ---
-        const displayTotal = State.region === 'USD' ? `$${State.finalComputedPrice}` : `${State.finalComputedPrice.toLocaleString()} UGX`;
+        // --- WHATSAPP REDIRECTION (EXACT MATCH TO TEMPLATE) ---
+        const waTotalDisplay = AppState.country === 'USD' ? `$${AppState.finalMathematicalPrice}` : `${AppState.finalMathematicalPrice.toLocaleString()} UGX`;
         
-        let message = `*NEW ORDER [${targetClient.toUpperCase()}]*\n\n`;
+        let message = `*NEW ORDER [${clientUsername.toUpperCase()}]*\n\n`;
         message += `*Service:* TikTok Boost\n`;
-        message += `*Package:* ${packageDesc.trim()}\n`;
-        message += `*Price:* ${displayTotal}\n`;
-        message += `*Referrer:* ${referrerVal}\n`;
-        message += `*Name:* ${targetClient}`;
+        message += `*Package:* \n${waPackageStr}\n`;
+        message += `*Price:* ${waTotalDisplay}\n`;
+        message += `*Referrer:* ${referrerText}\n`;
+        message += `*Username:* ${clientUsername}`;
 
-        window.location.href = `https://wa.me/${Config.whatsappNumber}?text=${encodeURIComponent(message)}`;
+        window.location.href = `https://wa.me/${AppConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
         
         // Failsafe UI reset
-        setTimeout(() => this.setUIState(false), 5000);
+        setTimeout(() => this.setLoading(false), 5000);
     },
 
-    // --- 7. UTILITY ---
-    setUIState(isLoading) {
-        State.isTransmitting = isLoading;
-        const btn = document.getElementById('btn-execute');
-        const btnLabel = document.getElementById('btn-label');
+    // --- 7. UTILITIES ---
+    setLoading(isLoading) {
+        AppState.isProcessing = isLoading;
+        const btnNode = document.getElementById('btn-submit');
+        const btnText = document.getElementById('btn-text');
         const btnIcon = document.getElementById('btn-icon');
         const btnSpinner = document.getElementById('btn-spinner');
 
         if (isLoading) {
-            btn.disabled = true;
-            btnLabel.innerText = "Securing...";
+            btnNode.disabled = true;
+            btnText.innerText = "Securing Order...";
             btnIcon.style.display = 'none';
             btnSpinner.style.display = 'block';
         } else {
-            btn.disabled = false;
-            btnLabel.innerText = "Place Order";
+            btnNode.disabled = false;
+            btnText.innerText = "Place Order";
             btnIcon.style.display = 'inline-block';
             btnSpinner.style.display = 'none';
         }
+    },
+
+    showToast(message, type = 'error') {
+        const wrapper = document.getElementById('toast-wrapper');
+        const toast = document.createElement('div');
+        toast.className = `toast-msg ${type}-toast`;
+        
+        const iconClass = type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle';
+        toast.innerHTML = `<i class="fas ${iconClass}"></i> <span>${message}</span>`;
+        
+        wrapper.appendChild(toast);
+        this.triggerVibration();
+
+        setTimeout(() => {
+            toast.classList.add('fade-out');
+            toast.addEventListener('animationend', () => toast.remove());
+        }, 3500);
     }
 };
 
-// Initialize Architecture (Fixed invocation)
-Engine.init();
+// Ignite the Engine
+CoreApp.init();
