@@ -76,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(GOOGLE_SCRIPT_URL !== "YOUR_WEB_APP_URL") {
             const formData = new FormData();
             formData.append('Timestamp', new Date().toISOString());
-            formData.append('Platform', 'Facebook Authority');
+            formData.append('Platform', 'Facebook');
             formData.append('Tier', selectedData.tier);
             formData.append('PriceUSD', selectedData.usd);
             formData.append('PageLink', pageLink);
