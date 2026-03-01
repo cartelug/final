@@ -1,12 +1,12 @@
 /* ==========================================================================
-   ACCESSUG INSTAGRAM ENGINE - STYLESHEET (BENTO UI)
+   ACCESSUG YOUTUBE ENGINE - STYLESHEET (CINEMATIC RED AESTHETIC)
    ========================================================================== */
 
 :root {
     /* Soft, friendly, premium color palette */
-    --bg-page: #f8fafc;
+    --bg-page: #fef2f2; /* Very faint red tint */
     --bg-card: #ffffff;
-    --bg-card-hover: #f9fafb;
+    --bg-card-hover: #f8fafc;
     
     --text-main: #0f172a;
     --text-muted: #64748b;
@@ -14,16 +14,17 @@
     --border-light: #e2e8f0;
     --border-strong: #cbd5e1;
     
-    /* Instagram Specific Brand Colors */
-    --brand-ig-purple: #8b5cf6;
-    --brand-ig-purple-bg: #f3e8ff;
-    --brand-ig-pink: #d946ef;
-    --brand-ig-pink-bg: #fae8ff;
-    --brand-ig-gold: #f59e0b;
-    --brand-ig-gold-bg: #fef3c7;
+    /* YouTube Specific Brand Colors */
+    --brand-yt-red: #ef4444;
+    --brand-yt-red-bg: #fee2e2;
+    --brand-yt-dark: #1e293b;
+    --brand-yt-dark-bg: #f1f5f9;
+    --brand-yt-orange: #f97316;
     
     --brand-green: #10b981;
     --brand-green-bg: #d1fae5;
+    --brand-gold: #f59e0b;
+    --brand-gold-bg: #fef3c7;
     
     /* Layout */
     --app-max-width: 540px;
@@ -44,15 +45,13 @@ body { background-color: var(--bg-page); color: var(--text-main); font-family: '
 button, input { font-family: inherit; border: none; outline: none; background: none; }
 button { cursor: pointer; }
 
-/* --- 2. INSTAGRAM SUNSET BACKGROUND --- */
-.ambient-glow-background { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #f8fafc; }
-.glow-shape { position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.35; animation: floatBg 25s infinite alternate ease-in-out; }
-/* Sunset Gold */
-.shape-blue { width: 50vw; height: 50vw; background: #fde68a; top: -10%; left: -10%; }
-/* Magenta Pink */
-.shape-pink { width: 60vw; height: 60vw; background: #fbcfe8; bottom: -10%; right: -10%; animation-delay: -5s; animation-direction: alternate-reverse; }
-/* Deep Purple (Added for IG feel) */
-.ambient-glow-background::after { content:''; position: absolute; width: 40vw; height: 40vw; border-radius: 50%; background: #e9d5ff; filter: blur(90px); top: 40%; left: 30%; opacity: 0.3; animation: floatBg 20s infinite alternate ease-in-out; }
+/* --- 2. AMBIENT CINEMATIC BACKGROUND --- */
+.ambient-glow-background { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #fef2f2; }
+.glow-shape { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.25; animation: floatBg 25s infinite alternate ease-in-out; }
+/* Cinematic Red */
+.shape-blue { width: 50vw; height: 50vw; background: #fca5a5; top: -10%; left: -10%; }
+/* Warm Orange */
+.shape-pink { width: 60vw; height: 60vw; background: #fdba74; bottom: -10%; right: -10%; animation-delay: -5s; animation-direction: alternate-reverse; }
 @keyframes floatBg { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(10vw, 10vh) scale(1.1); } }
 
 /* --- 3. TOAST ALERTS (Errors/Success) --- */
@@ -77,8 +76,8 @@ button { cursor: pointer; }
 .modal-header p { color: var(--text-muted); font-size: 1rem; line-height: 1.4; }
 
 .modal-button-stack { display: flex; flex-direction: column; gap: 12px; }
-.loc-btn { display: flex; align-items: center; background: var(--bg-page); border: 1.5px solid var(--border-light); padding: 18px 20px; border-radius: var(--radius-md); transition: 0.2s var(--smooth); text-align: left; }
-.loc-btn:active { transform: scale(0.97); background: var(--border-light); border-color: var(--border-strong); }
+.loc-btn { display: flex; align-items: center; background: #f8fafc; border: 1.5px solid var(--border-light); padding: 18px 20px; border-radius: var(--radius-md); transition: 0.2s var(--smooth); text-align: left; }
+.loc-btn:active { transform: scale(0.97); background: #f1f5f9; border-color: var(--border-strong); }
 .loc-flag { font-size: 2rem; margin-right: 16px; }
 .loc-text { flex: 1; display: flex; flex-direction: column; }
 .loc-name { font-size: 1.15rem; font-weight: 700; color: var(--text-main); margin-bottom: 2px; }
@@ -90,17 +89,17 @@ button { cursor: pointer; }
 .app-layout { max-width: var(--app-max-width); margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; position: relative; }
 
 /* TOP NAV */
-.app-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; position: sticky; top: 0; z-index: 90; background: rgba(244, 245, 248, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(15,23,42,0.03); }
+.app-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; position: sticky; top: 0; z-index: 90; background: rgba(254, 242, 242, 0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(15,23,42,0.03); }
 .nav-back { width: 44px; height: 44px; background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border: 1px solid var(--border-light); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-main); text-decoration: none; font-size: 1.1rem; transition: 0.2s; }
 .nav-back:active { transform: scale(0.9); }
 .nav-brand { font-family: 'Clash Display', sans-serif; font-weight: 700; font-size: 1.2rem; display: flex; align-items: center; gap: 8px; color: var(--text-main); }
 .nav-region-btn { background: rgba(255,255,255,0.7); backdrop-filter: blur(10px); border: 1px solid var(--border-light); padding: 10px 16px; border-radius: var(--radius-pill); font-weight: 700; color: var(--text-main); display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); transition: 0.2s; }
 .nav-region-btn:active { transform: scale(0.95); }
 
-/* HEADER TITLE WITH INSTAGRAM GRADIENT */
+/* HEADER TITLE WITH YOUTUBE GRADIENT */
 .app-header { padding: 10px 24px 30px; }
 .hero-title { font-family: 'Clash Display', sans-serif; font-size: 2.8rem; line-height: 1.1; margin-bottom: 12px; letter-spacing: -0.02em; color: var(--text-main); }
-.text-gradient { background: linear-gradient(45deg, var(--brand-ig-gold), var(--brand-ig-pink), var(--brand-ig-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+.text-gradient { background: linear-gradient(135deg, var(--brand-yt-orange), var(--brand-yt-red)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
 .hero-text { color: var(--text-muted); font-size: 1.05rem; font-weight: 500; line-height: 1.5; }
 
 /* --- 6. STORE PACKAGES (The Cards) --- */
@@ -111,8 +110,8 @@ button { cursor: pointer; }
 .bento-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; padding: 24px 24px 0; }
 .minimal-header { margin-bottom: 16px; }
 .b-icon-wrap { width: 56px; height: 56px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-.insta-purple-theme { background: var(--brand-ig-purple-bg); color: var(--brand-ig-purple); }
-.insta-pink-theme { background: var(--brand-ig-pink-bg); color: var(--brand-ig-pink); }
+.yt-red-theme { background: var(--brand-yt-red-bg); color: var(--brand-yt-red); }
+.yt-dark-theme { background: var(--brand-yt-dark-bg); color: var(--brand-yt-dark); }
 .b-title-wrap h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 2px; color: var(--text-main); }
 .b-title-wrap p { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); }
 
@@ -122,29 +121,29 @@ button { cursor: pointer; }
 .pack-btn:active { transform: scale(0.96); }
 
 .p-vol { font-family: 'Clash Display', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--text-main); line-height: 1; transition: 0.2s; }
-.p-views { font-size: 0.75rem; font-weight: 700; color: var(--brand-green); text-transform: uppercase; margin-top: 4px; transition: 0.2s; }
+.p-views { font-size: 0.7rem; font-weight: 700; color: var(--brand-green); text-transform: uppercase; margin-top: 4px; transition: 0.2s; }
 .p-price { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); margin-top: 4px; transition: 0.2s; }
 
 /* Skip Button */
 .pack-btn.skip-btn { border: 2px dashed var(--border-strong); background: transparent; justify-content: center; min-height: 80px; }
 .skip-btn .p-vol { font-size: 1.2rem; color: var(--text-muted); }
-.skip-btn:active { background: var(--bg-page); }
+.skip-btn:active { background: #f1f5f9; }
 
 /* Selected States */
-.pack-btn.selected-purple { background: var(--brand-ig-purple-bg); border-color: var(--brand-ig-purple); }
-.pack-btn.selected-purple .p-vol { color: #6d28d9; }
-.pack-btn.selected-purple .p-price { color: #5b21b6; }
+.pack-btn.selected-red { background: var(--brand-yt-red-bg); border-color: var(--brand-yt-red); }
+.pack-btn.selected-red .p-vol { color: #b91c1c; }
+.pack-btn.selected-red .p-price { color: #991b1b; }
 
-.pack-btn.selected-pink { background: var(--brand-ig-pink-bg); border-color: var(--brand-ig-pink); }
-.pack-btn.selected-pink .p-vol { color: #a21caf; }
-.pack-btn.selected-pink .p-price { color: #86198f; }
+.pack-btn.selected-dark { background: var(--brand-yt-dark-bg); border-color: var(--brand-yt-dark); }
+.pack-btn.selected-dark .p-vol { color: #0f172a; }
+.pack-btn.selected-dark .p-price { color: #334155; }
 
-.pack-btn.skip-btn.selected-skip { border: 2px solid var(--border-strong); background: var(--bg-page); opacity: 0.6; }
+.pack-btn.skip-btn.selected-skip { border: 2px solid var(--border-strong); background: #f8fafc; opacity: 0.6; }
 
 /* Split Controls */
 .split-controls { margin: -8px 24px 24px; background: #f8fafc; padding: 16px; border-radius: var(--radius-md); display: flex; justify-content: space-between; align-items: center; gap: 12px; animation: slideDown 0.3s var(--smooth); border: 1px solid var(--border-light); }
 .split-info label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--text-main); margin-bottom: 4px; }
-.split-info span { font-size: 0.8rem; color: var(--brand-gold); font-weight: 600; }
+.split-info span { font-size: 0.75rem; color: var(--brand-yt-red); font-weight: 600; }
 .split-stepper { display: flex; align-items: center; gap: 12px; background: var(--bg-card); padding: 4px; border-radius: var(--radius-pill); border: 1px solid var(--border-light); box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
 .split-stepper button { width: 36px; height: 36px; border-radius: 50%; background: #f1f5f9; color: var(--text-main); font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
 .split-stepper button:active { transform: scale(0.9); background: var(--border-light); }

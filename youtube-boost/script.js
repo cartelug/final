@@ -1,12 +1,12 @@
 /**
  * ==========================================================================
- * ACCESSUG INSTAGRAM ENGINE (V5 - BENTO LOGIC)
+ * ACCESSUG YOUTUBE ENGINE (V5 - BENTO LOGIC)
  * ==========================================================================
  * Strict Architecture:
  * 1. "Tap & Done" Bento Grid Selection (-1 = Skip, 0-3 = Packages)
  * 2. Hard Limits: $100 / 360,000 UGX
  * 3. 10% Combo Auto-Discount
- * 4. 1k Likes = 2k Free Views (Calculated for Reels/Videos)
+ * 4. YouTube Specifics: 1k Views = 200 Free Likes
  * 5. Google Sheets `URLSearchParams` -> WhatsApp Bridge
  * ==========================================================================
  */
@@ -16,7 +16,7 @@ const AppConfig = {
     googleSheetUrl: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
     whatsappNumber: '256762193386',
     
-    // Strict Pricing Arrays (Same constraints, adapted for IG context)
+    // Strict Pricing Arrays (Adapted for YouTube Subs/Views keeping the math identical)
     prices: {
         'UGX': {
             followers: [ 
@@ -45,19 +45,19 @@ const AppConfig = {
 
 const AppState = {
     country: 'UGX',
-    folSelection: -1,   // -1 = Skipped/None
-    likSelection: -1,   // -1 = Skipped/None
+    folSelection: -1,   // -1 = Skipped/None (Maps to Subscribers)
+    likSelection: -1,   // -1 = Skipped/None (Maps to Views)
     videoSplits: 5,
     hasReferrer: false,
     isProcessing: false,
     finalMathematicalPrice: 0 // Clean integer stored for sheets
 };
 
-const InstaApp = {
+const YtApp = {
 
     // --- 1. BOOTSTRAP ---
     init() {
-        const savedRegion = localStorage.getItem('accessug_loc_ig');
+        const savedRegion = localStorage.getItem('accessug_loc_yt');
         if (savedRegion) {
             this.setCountry(savedRegion, false);
         } else {
@@ -79,7 +79,7 @@ const InstaApp = {
     },
 
     setCountry(code, saveToMemory = true) {
-        if(saveToMemory) localStorage.setItem('accessug_loc_ig', code);
+        if(saveToMemory) localStorage.setItem('accessug_loc_yt', code);
         AppState.country = code;
         
         document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
@@ -100,51 +100,50 @@ const InstaApp = {
         const formatVol = (v) => v >= 1000 ? (v/1000) + 'k' : v;
         const formatPrice = (p) => AppState.country === 'USD' ? `$${p}` : `${p.toLocaleString()} UGX`;
 
-        // 3a. Render Followers Grid
+        // 3a. Render Subscribers Grid (Mapped to 'followers' object)
         const gridFol = document.getElementById('grid-followers');
         gridFol.innerHTML = '';
         
-        // Generate the 4 Pricing Buttons
         matrix.followers.forEach((tier, index) => {
-            let activeClass = AppState.folSelection === index ? 'selected-purple' : '';
+            let activeClass = AppState.folSelection === index ? 'selected-red' : '';
             gridFol.innerHTML += `
-                <div class="pack-btn ${activeClass}" onclick="InstaApp.selectTier('fol', ${index})">
+                <div class="pack-btn ${activeClass}" onclick="YtApp.selectTier('fol', ${index})">
                     <span class="p-vol">${formatVol(tier.v)}</span>
                     <span class="p-price">${formatPrice(tier.p)}</span>
                 </div>
             `;
         });
         
-        // Append the Explicit "Skip" Button
         let skipFolClass = AppState.folSelection === -1 ? 'selected-skip' : '';
         gridFol.innerHTML += `
-            <div class="pack-btn skip-btn ${skipFolClass}" onclick="InstaApp.selectTier('fol', -1)" style="grid-column: span 2;">
-                <span class="p-vol">I don't need Followers</span>
+            <div class="pack-btn skip-btn ${skipFolClass}" onclick="YtApp.selectTier('fol', -1)" style="grid-column: span 2;">
+                <span class="p-vol">I don't need Subscribers</span>
             </div>
         `;
 
-        // 3b. Render Likes Grid
+        // 3b. Render Views Grid (Mapped to 'likes' object) Includes Free Likes
         const gridLik = document.getElementById('grid-likes');
         gridLik.innerHTML = '';
         
-        // Generate the 4 Pricing Buttons
         matrix.likes.forEach((tier, index) => {
-            let activeClass = AppState.likSelection === index ? 'selected-pink' : '';
-            let freeViews = formatVol(tier.v * 2);
+            let activeClass = AppState.likSelection === index ? 'selected-dark' : '';
+            
+            // YouTube specific logic: Include 20% free likes with views to simulate high engagement
+            let freeLikes = formatVol(tier.v * 0.2);
+            
             gridLik.innerHTML += `
-                <div class="pack-btn ${activeClass}" onclick="InstaApp.selectTier('lik', ${index})">
+                <div class="pack-btn ${activeClass}" onclick="YtApp.selectTier('lik', ${index})">
                     <span class="p-vol">${formatVol(tier.v)}</span>
-                    <span class="p-views">+ ${freeViews} Views</span>
+                    <span class="p-views">+ ${freeLikes} Free Likes</span>
                     <span class="p-price">${formatPrice(tier.p)}</span>
                 </div>
             `;
         });
 
-        // Append the Explicit "Skip" Button
         let skipLikClass = AppState.likSelection === -1 ? 'selected-skip' : '';
         gridLik.innerHTML += `
-            <div class="pack-btn skip-btn ${skipLikClass}" onclick="InstaApp.selectTier('lik', -1)" style="grid-column: span 2;">
-                <span class="p-vol">I don't need Likes</span>
+            <div class="pack-btn skip-btn ${skipLikClass}" onclick="YtApp.selectTier('lik', -1)" style="grid-column: span 2;">
+                <span class="p-vol">I don't need Views</span>
             </div>
         `;
 
@@ -212,21 +211,23 @@ const InstaApp = {
         let runningTotal = 0;
         let activeCategories = 0;
 
-        // Add Followers Math
+        // Add Subscribers Math
         if (AppState.folSelection > -1) {
             runningTotal += matrix.followers[AppState.folSelection].p;
             activeCategories++;
         }
         
-        // Add Likes Math & Update Split Text
+        // Add Views Math & Update Split Text
         if (AppState.likSelection > -1) {
             const likObj = matrix.likes[AppState.likSelection];
             runningTotal += likObj.p;
             activeCategories++;
             
-            // Generate split helper text
-            const likesPerPost = Math.floor(likObj.v / AppState.videoSplits);
-            document.getElementById('split-math-output').innerText = `~${likesPerPost.toLocaleString()} Likes per post/reel`;
+            // YouTube specific split helper text
+            const viewsPerPost = Math.floor(likObj.v / AppState.videoSplits);
+            const likesPerPost = Math.floor((likObj.v * 0.2) / AppState.videoSplits);
+            
+            document.getElementById('split-math-output').innerText = `~${viewsPerPost.toLocaleString()} Views & ${likesPerPost.toLocaleString()} Likes per video`;
         }
 
         // Apply Business Rules
@@ -252,9 +253,9 @@ const InstaApp = {
             if (finalPrice < matrix.rules.floor) finalPrice = matrix.rules.floor;
             if (finalPrice >= matrix.rules.ceiling) {
                 finalPrice = matrix.rules.ceiling;
-                tagCombo.style.display = 'none'; // Max Tag takes priority
+                tagCombo.style.display = 'none'; 
                 tagMax.style.display = 'flex';
-                textStrike.innerText = ''; // Clear for cleanliness
+                textStrike.innerText = ''; 
             }
         } else {
             finalPrice = 0;
@@ -269,7 +270,7 @@ const InstaApp = {
             document.getElementById('ui-final-curr').innerText = 'UGX';
         }
         
-        // Save to state for sheet transmission
+        // Save to state for payload
         AppState.finalMathematicalPrice = finalPrice;
     },
 
@@ -279,13 +280,13 @@ const InstaApp = {
 
         // 1. Validations
         if (AppState.folSelection === -1 && AppState.likSelection === -1) {
-            this.showToast("Please select a Follower or Like package.", "error");
+            this.showToast("Please select a Subscriber or Views package.", "error");
             return;
         }
 
         const clientUsername = document.getElementById('target-username').value.trim();
         if (!clientUsername) {
-            this.showToast("Please enter your Instagram Username.", "error");
+            this.showToast("Please enter your YouTube Channel Link.", "error");
             document.getElementById('target-username').focus();
             return;
         }
@@ -300,24 +301,25 @@ const InstaApp = {
         // 3. Engage Loading UI
         this.setLoading(true);
 
-        // 4. Construct Strings
+        // 4. Construct Strings (YouTube specific metrics)
         const matrix = AppConfig.prices[AppState.country];
         let sheetPackageStr = "";
         let waPackageStr = "";
         
         if (AppState.folSelection > -1) {
             let folVol = matrix.followers[AppState.folSelection].v;
-            sheetPackageStr += `${folVol} Followers. `;
-            waPackageStr += `🚀 *Followers:* ${folVol.toLocaleString()}\n`;
+            sheetPackageStr += `${folVol} Subscribers. `;
+            waPackageStr += `🚀 *Subscribers:* ${folVol.toLocaleString()}\n`;
         }
         
         if (AppState.likSelection > -1) {
             let likVol = matrix.likes[AppState.likSelection].v;
-            let freeViews = likVol * 2;
+            let freeLikes = likVol * 0.2;
             let splits = AppState.videoSplits;
-            sheetPackageStr += `${likVol} Likes (Split ${splits}) + ${freeViews} Views.`;
-            waPackageStr += `❤️ *Likes:* ${likVol.toLocaleString()} (Across ${splits} posts)\n`;
-            waPackageStr += `👁️ *Free Views:* ${freeViews.toLocaleString()}\n`;
+            
+            sheetPackageStr += `${likVol} Views (Split ${splits}) + ${freeLikes} Likes.`;
+            waPackageStr += `▶️ *Views:* ${likVol.toLocaleString()} (Across ${splits} videos)\n`;
+            waPackageStr += `👍 *Free Likes:* ${freeLikes.toLocaleString()}\n`;
         }
 
         const finalBillDisplay = document.getElementById('ui-final-price').innerText + " " + document.getElementById('ui-final-curr').innerText;
@@ -326,7 +328,7 @@ const InstaApp = {
         // Requires: Date (auto in Apps Script), ClientName, Service, Package, Price, Referrer
         const formData = new URLSearchParams();
         formData.append('ClientName', clientUsername);
-        formData.append('Service', `Instagram Boost [${AppState.country}]`);
+        formData.append('Service', `YouTube Boost [${AppState.country}]`);
         formData.append('Package', sheetPackageStr.trim());
         formData.append('Price', AppState.finalMathematicalPrice.toString()); // Raw number for math
         formData.append('Referrer', referrerText);
@@ -338,18 +340,18 @@ const InstaApp = {
                 mode: 'no-cors' 
             });
         } catch (e) { 
-            console.log("Sheet sync bypassed/failed, proceeding to WhatsApp for redundancy."); 
+            console.log("Sheet sync bypassed/failed, proceeding to WhatsApp."); 
         }
 
         // --- WHATSAPP REDIRECTION (LEGACY TEMPLATE MATCH) ---
         const waTotalDisplay = AppState.country === 'USD' ? `$${AppState.finalMathematicalPrice}` : `${AppState.finalMathematicalPrice.toLocaleString()} UGX`;
         
-        let message = `*NEW INSTAGRAM ORDER [${clientUsername.toUpperCase()}]*\n\n`;
-        message += `*Service:* Instagram Boost\n`;
+        let message = `*NEW YOUTUBE ORDER [${clientUsername.toUpperCase()}]*\n\n`;
+        message += `*Service:* YouTube Monetization\n`;
         message += `*Package:* \n${waPackageStr}\n`;
         message += `*Price:* ${waTotalDisplay}\n`;
         message += `*Referrer:* ${referrerText}\n`;
-        message += `*Username:* ${clientUsername}`;
+        message += `*Channel Link:* ${clientUsername}`;
 
         window.location.href = `https://wa.me/${AppConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
         
@@ -390,11 +392,11 @@ const InstaApp = {
         this.triggerVibration();
 
         setTimeout(() => {
-            toast.classList.add('fade-out');
+            toast.classList.add('hide-toast');
             toast.addEventListener('animationend', () => toast.remove());
         }, 3500);
     }
 };
 
 // Ignite the Engine
-InstaApp.init();
+YtApp.init();

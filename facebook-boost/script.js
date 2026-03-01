@@ -1,12 +1,12 @@
 /**
  * ==========================================================================
- * ACCESSUG INSTAGRAM ENGINE (V5 - BENTO LOGIC)
+ * ACCESSUG FACEBOOK ENGINE (V5 - META BENTO LOGIC)
  * ==========================================================================
  * Strict Architecture:
  * 1. "Tap & Done" Bento Grid Selection (-1 = Skip, 0-3 = Packages)
  * 2. Hard Limits: $100 / 360,000 UGX
  * 3. 10% Combo Auto-Discount
- * 4. 1k Likes = 2k Free Views (Calculated for Reels/Videos)
+ * 4. Facebook Specifics: 1k Likes = 2k Free Views + 100 Free Shares
  * 5. Google Sheets `URLSearchParams` -> WhatsApp Bridge
  * ==========================================================================
  */
@@ -16,7 +16,7 @@ const AppConfig = {
     googleSheetUrl: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
     whatsappNumber: '256762193386',
     
-    // Strict Pricing Arrays (Same constraints, adapted for IG context)
+    // Strict Pricing Arrays mapped to exact requests
     prices: {
         'UGX': {
             followers: [ 
@@ -53,11 +53,11 @@ const AppState = {
     finalMathematicalPrice: 0 // Clean integer stored for sheets
 };
 
-const InstaApp = {
+const FbApp = {
 
     // --- 1. BOOTSTRAP ---
     init() {
-        const savedRegion = localStorage.getItem('accessug_loc_ig');
+        const savedRegion = localStorage.getItem('accessug_loc_fb');
         if (savedRegion) {
             this.setCountry(savedRegion, false);
         } else {
@@ -79,7 +79,7 @@ const InstaApp = {
     },
 
     setCountry(code, saveToMemory = true) {
-        if(saveToMemory) localStorage.setItem('accessug_loc_ig', code);
+        if(saveToMemory) localStorage.setItem('accessug_loc_fb', code);
         AppState.country = code;
         
         document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
@@ -104,46 +104,46 @@ const InstaApp = {
         const gridFol = document.getElementById('grid-followers');
         gridFol.innerHTML = '';
         
-        // Generate the 4 Pricing Buttons
         matrix.followers.forEach((tier, index) => {
-            let activeClass = AppState.folSelection === index ? 'selected-purple' : '';
+            let activeClass = AppState.folSelection === index ? 'selected-navy' : '';
             gridFol.innerHTML += `
-                <div class="pack-btn ${activeClass}" onclick="InstaApp.selectTier('fol', ${index})">
+                <div class="pack-btn ${activeClass}" onclick="FbApp.selectTier('fol', ${index})">
                     <span class="p-vol">${formatVol(tier.v)}</span>
                     <span class="p-price">${formatPrice(tier.p)}</span>
                 </div>
             `;
         });
         
-        // Append the Explicit "Skip" Button
         let skipFolClass = AppState.folSelection === -1 ? 'selected-skip' : '';
         gridFol.innerHTML += `
-            <div class="pack-btn skip-btn ${skipFolClass}" onclick="InstaApp.selectTier('fol', -1)" style="grid-column: span 2;">
+            <div class="pack-btn skip-btn ${skipFolClass}" onclick="FbApp.selectTier('fol', -1)" style="grid-column: span 2;">
                 <span class="p-vol">I don't need Followers</span>
             </div>
         `;
 
-        // 3b. Render Likes Grid
+        // 3b. Render Likes Grid (Includes Shares Logic)
         const gridLik = document.getElementById('grid-likes');
         gridLik.innerHTML = '';
         
-        // Generate the 4 Pricing Buttons
         matrix.likes.forEach((tier, index) => {
-            let activeClass = AppState.likSelection === index ? 'selected-pink' : '';
+            let activeClass = AppState.likSelection === index ? 'selected-blue' : '';
+            
+            // Facebook specific logic: 2x Views and 10% Shares
             let freeViews = formatVol(tier.v * 2);
+            let freeShares = formatVol(tier.v * 0.1); 
+            
             gridLik.innerHTML += `
-                <div class="pack-btn ${activeClass}" onclick="InstaApp.selectTier('lik', ${index})">
+                <div class="pack-btn ${activeClass}" onclick="FbApp.selectTier('lik', ${index})">
                     <span class="p-vol">${formatVol(tier.v)}</span>
-                    <span class="p-views">+ ${freeViews} Views</span>
+                    <span class="p-views">+ ${freeViews} Views & ${freeShares} Shares</span>
                     <span class="p-price">${formatPrice(tier.p)}</span>
                 </div>
             `;
         });
 
-        // Append the Explicit "Skip" Button
         let skipLikClass = AppState.likSelection === -1 ? 'selected-skip' : '';
         gridLik.innerHTML += `
-            <div class="pack-btn skip-btn ${skipLikClass}" onclick="InstaApp.selectTier('lik', -1)" style="grid-column: span 2;">
+            <div class="pack-btn skip-btn ${skipLikClass}" onclick="FbApp.selectTier('lik', -1)" style="grid-column: span 2;">
                 <span class="p-vol">I don't need Likes</span>
             </div>
         `;
@@ -224,9 +224,11 @@ const InstaApp = {
             runningTotal += likObj.p;
             activeCategories++;
             
-            // Generate split helper text
+            // Facebook specific split helper text
             const likesPerPost = Math.floor(likObj.v / AppState.videoSplits);
-            document.getElementById('split-math-output').innerText = `~${likesPerPost.toLocaleString()} Likes per post/reel`;
+            const sharesPerPost = Math.floor((likObj.v * 0.1) / AppState.videoSplits);
+            
+            document.getElementById('split-math-output').innerText = `~${likesPerPost.toLocaleString()} Likes & ${sharesPerPost.toLocaleString()} Shares per post`;
         }
 
         // Apply Business Rules
@@ -252,9 +254,9 @@ const InstaApp = {
             if (finalPrice < matrix.rules.floor) finalPrice = matrix.rules.floor;
             if (finalPrice >= matrix.rules.ceiling) {
                 finalPrice = matrix.rules.ceiling;
-                tagCombo.style.display = 'none'; // Max Tag takes priority
+                tagCombo.style.display = 'none'; 
                 tagMax.style.display = 'flex';
-                textStrike.innerText = ''; // Clear for cleanliness
+                textStrike.innerText = ''; 
             }
         } else {
             finalPrice = 0;
@@ -269,7 +271,7 @@ const InstaApp = {
             document.getElementById('ui-final-curr').innerText = 'UGX';
         }
         
-        // Save to state for sheet transmission
+        // Save to state for payload
         AppState.finalMathematicalPrice = finalPrice;
     },
 
@@ -285,7 +287,7 @@ const InstaApp = {
 
         const clientUsername = document.getElementById('target-username').value.trim();
         if (!clientUsername) {
-            this.showToast("Please enter your Instagram Username.", "error");
+            this.showToast("Please enter your Facebook Profile/Page link.", "error");
             document.getElementById('target-username').focus();
             return;
         }
@@ -300,7 +302,7 @@ const InstaApp = {
         // 3. Engage Loading UI
         this.setLoading(true);
 
-        // 4. Construct Strings
+        // 4. Construct Strings (Facebook specific metrics)
         const matrix = AppConfig.prices[AppState.country];
         let sheetPackageStr = "";
         let waPackageStr = "";
@@ -314,10 +316,13 @@ const InstaApp = {
         if (AppState.likSelection > -1) {
             let likVol = matrix.likes[AppState.likSelection].v;
             let freeViews = likVol * 2;
+            let freeShares = likVol * 0.1;
             let splits = AppState.videoSplits;
-            sheetPackageStr += `${likVol} Likes (Split ${splits}) + ${freeViews} Views.`;
+            
+            sheetPackageStr += `${likVol} Likes (Split ${splits}) + ${freeViews} Views + ${freeShares} Shares.`;
             waPackageStr += `❤️ *Likes:* ${likVol.toLocaleString()} (Across ${splits} posts)\n`;
             waPackageStr += `👁️ *Free Views:* ${freeViews.toLocaleString()}\n`;
+            waPackageStr += `🔄 *Free Shares:* ${freeShares.toLocaleString()}\n`;
         }
 
         const finalBillDisplay = document.getElementById('ui-final-price').innerText + " " + document.getElementById('ui-final-curr').innerText;
@@ -326,7 +331,7 @@ const InstaApp = {
         // Requires: Date (auto in Apps Script), ClientName, Service, Package, Price, Referrer
         const formData = new URLSearchParams();
         formData.append('ClientName', clientUsername);
-        formData.append('Service', `Instagram Boost [${AppState.country}]`);
+        formData.append('Service', `Facebook Boost [${AppState.country}]`);
         formData.append('Package', sheetPackageStr.trim());
         formData.append('Price', AppState.finalMathematicalPrice.toString()); // Raw number for math
         formData.append('Referrer', referrerText);
@@ -338,18 +343,18 @@ const InstaApp = {
                 mode: 'no-cors' 
             });
         } catch (e) { 
-            console.log("Sheet sync bypassed/failed, proceeding to WhatsApp for redundancy."); 
+            console.log("Sheet sync bypassed/failed, proceeding to WhatsApp."); 
         }
 
         // --- WHATSAPP REDIRECTION (LEGACY TEMPLATE MATCH) ---
         const waTotalDisplay = AppState.country === 'USD' ? `$${AppState.finalMathematicalPrice}` : `${AppState.finalMathematicalPrice.toLocaleString()} UGX`;
         
-        let message = `*NEW INSTAGRAM ORDER [${clientUsername.toUpperCase()}]*\n\n`;
-        message += `*Service:* Instagram Boost\n`;
+        let message = `*NEW FACEBOOK ORDER [${clientUsername.toUpperCase()}]*\n\n`;
+        message += `*Service:* Facebook Boost\n`;
         message += `*Package:* \n${waPackageStr}\n`;
         message += `*Price:* ${waTotalDisplay}\n`;
         message += `*Referrer:* ${referrerText}\n`;
-        message += `*Username:* ${clientUsername}`;
+        message += `*Username/Link:* ${clientUsername}`;
 
         window.location.href = `https://wa.me/${AppConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
         
@@ -390,11 +395,11 @@ const InstaApp = {
         this.triggerVibration();
 
         setTimeout(() => {
-            toast.classList.add('fade-out');
+            toast.classList.add('hide-toast');
             toast.addEventListener('animationend', () => toast.remove());
         }, 3500);
     }
 };
 
 // Ignite the Engine
-InstaApp.init();
+FbApp.init();
