@@ -1,4 +1,4 @@
-// --- 1. THE EXACT TIER MATRIX ---
+// --- 1. THE EXACT TIER MATRIX & RULES ---
 const pricing = {
     'UGX': {
         followers: [ 
@@ -16,7 +16,6 @@ const pricing = {
             {amount: 3000, price: 35}, {amount: 5000, price: 50}, 
             {amount: 8000, price: 75}, {amount: 10000, price: 100} 
         ],
-        // Adjusted to ensure Max is exactly 10,000 while keeping prices relative
         likes: [ 
             {amount: 2500, price: 35}, {amount: 5000, price: 50}, 
             {amount: 7500, price: 75}, {amount: 10000, price: 100} 
@@ -33,69 +32,66 @@ let state = {
     }
 };
 
-// --- 2. INITIALIZATION ---
+// --- 2. BOOT SEQUENCE ---
 window.onload = () => {
-    let savedRegion = localStorage.getItem('tiktokRegion');
-    if (savedRegion) {
-        selectRegion(savedRegion, false);
+    let saved = localStorage.getItem('accessug_loc');
+    if (saved) {
+        selectRegion(saved, false);
     } else {
-        document.getElementById('region-sheet').classList.add('visible');
+        document.getElementById('region-sheet').classList.add('active');
     }
 };
 
-function selectRegion(region, save = true) {
-    if(save) localStorage.setItem('tiktokRegion', region);
-    state.region = region;
+function selectRegion(reg, save = true) {
+    if(save) localStorage.setItem('accessug_loc', reg);
+    state.region = reg;
     
-    document.getElementById('region-sheet').classList.remove('visible');
-    document.getElementById('nav-region-badge').innerText = region;
+    document.getElementById('region-sheet').classList.remove('active');
+    document.getElementById('nav-region').innerText = reg;
     
-    // Reset defaults on region switch
+    // Default config
     state.services.followers.active = true;
     state.services.likes.active = false;
     state.services.followers.index = 0;
     state.services.likes.index = 0;
     
-    document.getElementById('card-followers').classList.add('active-card');
-    document.getElementById('card-likes').classList.remove('active-card');
+    document.getElementById('card-followers').classList.add('is-selected');
+    document.getElementById('card-likes').classList.remove('is-selected');
     
-    renderTiers();
-    updateCalculations();
+    renderPills();
+    calculateBill();
 }
 
 function resetRegion() {
-    localStorage.removeItem('tiktokRegion');
-    document.getElementById('region-sheet').classList.add('visible');
+    localStorage.removeItem('accessug_loc');
+    document.getElementById('region-sheet').classList.add('active');
 }
 
-// --- 3. RENDERING THE HAPTIC PILLS ---
-function renderTiers() {
+// --- 3. UI GENERATION ---
+function renderPills() {
     const data = pricing[state.region];
-    
-    const formatAmt = (val) => val >= 1000 ? (val/1000) + 'k' : val;
-    const formatPrice = (price) => state.region === 'USD' ? `$${price}` : `${price.toLocaleString()} UGX`;
+    const formatVol = (v) => v >= 1000 ? (v/1000) + 'k' : v;
+    const formatPrice = (p) => state.region === 'USD' ? `$${p}` : `${p.toLocaleString()} UGX`;
 
-    // Render Followers
-    const folContainer = document.getElementById('tiers-followers');
-    folContainer.innerHTML = '';
+    const folGrid = document.getElementById('grid-followers');
+    folGrid.innerHTML = '';
     data.followers.forEach((tier, idx) => {
-        let isSelected = state.services.followers.index === idx ? 'selected' : '';
-        folContainer.innerHTML += `
-            <div class="tier-pill ${isSelected}" onclick="setTier('followers', ${idx})">
-                <span>${formatAmt(tier.amount)}</span>
+        let sel = state.services.followers.index === idx ? 'active-pill' : '';
+        folGrid.innerHTML += `
+            <div class="price-pill ${sel}" onclick="setTier('followers', ${idx})">
+                <span>${formatVol(tier.amount)}</span>
                 <small>${formatPrice(tier.price)}</small>
             </div>
         `;
     });
 
-    // Render Likes
-    const likesContainer = document.getElementById('tiers-likes');
-    likesContainer.innerHTML = '';
+    const likesGrid = document.getElementById('grid-likes');
+    likesGrid.innerHTML = '';
     data.likes.forEach((tier, idx) => {
-        let isSelected = state.services.likes.index === idx ? 'selected' : '';
-        likesContainer.innerHTML += `
-            <div class="tier-pill ${isSelected}" onclick="setTier('likes', ${idx})">
-                <span>${formatAmt(tier.amount)}</span>
+        let sel = state.services.likes.index === idx ? 'active-pill' : '';
+        likesGrid.innerHTML += `
+            <div class="price-pill ${sel}" onclick="setTier('likes', ${idx})">
+                <span>${formatVol(tier.amount)}</span>
                 <small>${formatPrice(tier.price)}</small>
             </div>
         `;
@@ -103,147 +99,149 @@ function renderTiers() {
 }
 
 // --- 4. INTERACTIONS ---
-function toggleService(service) {
-    const card = document.getElementById(`card-${service}`);
-    state.services[service].active = !state.services[service].active;
+function toggleProduct(mod) {
+    const el = document.getElementById(`card-${mod}`);
+    state.services[mod].active = !state.services[mod].active;
     
-    if (state.services[service].active) {
-        card.classList.add('active-card');
+    if (state.services[mod].active) {
+        el.classList.add('is-selected');
     } else {
-        card.classList.remove('active-card');
+        el.classList.remove('is-selected');
     }
-    updateCalculations();
+    calculateBill();
 }
 
-function setTier(service, index) {
-    state.services[service].index = index;
-    // Force the service active if they tap a pill
-    state.services[service].active = true; 
-    document.getElementById(`card-${service}`).classList.add('active-card');
+function setTier(mod, idx) {
+    event.stopPropagation(); // Prevents collapsing the card
+    state.services[mod].index = idx;
     
-    renderTiers(); // Re-render to update selected classes
-    updateCalculations();
+    if (!state.services[mod].active) toggleProduct(mod);
+    
+    renderPills();
+    calculateBill();
 }
 
-function adjustSplit(direction) {
-    let current = state.services.likes.split;
-    current += direction;
-    if (current < 1) current = 1;
-    if (current > 10) current = 10;
+function changeSplit(dir) {
+    state.services.likes.split += dir;
+    if (state.services.likes.split < 1) state.services.likes.split = 1;
+    if (state.services.likes.split > 10) state.services.likes.split = 10;
     
-    state.services.likes.split = current;
-    document.getElementById('split-val').innerText = current;
-    updateCalculations();
+    document.getElementById('split-number').innerText = state.services.likes.split;
+    calculateBill();
 }
 
 function toggleReferral() {
-    const header = document.querySelector('.ref-trigger');
-    const body = document.getElementById('ref-expand');
+    document.getElementById('ref-input-area').classList.toggle('open');
     const icon = document.getElementById('ref-icon');
-    
-    header.classList.toggle('active');
-    body.classList.toggle('open');
-    if(body.classList.contains('open')) {
-        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
-    } else {
-        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-    }
+    icon.classList.contains('fa-chevron-down') ? icon.classList.replace('fa-chevron-down', 'fa-chevron-up') : icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
 }
 
 // --- 5. THE STRICT CALCULATOR ---
-function updateCalculations() {
-    const regionData = pricing[state.region];
+function calculateBill() {
+    const data = pricing[state.region];
     
-    // Get Current Volumes & Prices
-    const folTier = regionData.followers[state.services.followers.index];
-    const likesTier = regionData.likes[state.services.likes.index];
+    const fTier = data.followers[state.services.followers.index];
+    const lTier = data.likes[state.services.likes.index];
 
-    // Update Likes Split Math Text
-    const perPost = Math.floor(likesTier.amount / state.services.likes.split);
-    document.getElementById('likes-per-post-hint').innerHTML = `<i class="fas fa-bolt"></i> Approx. <b>${perPost.toLocaleString()}</b> likes per post`;
+    // FREE VIEWS LOGIC (1k likes = 2k views)
+    const freeViews = lTier.amount * 2;
+    document.getElementById('free-views-text').innerText = `Includes ${freeViews.toLocaleString()} Free Views!`;
 
-    // Calculate Subtotal
-    let subtotal = 0;
+    // SPLIT LOGIC
+    const likesPerPost = Math.floor(lTier.amount / state.services.likes.split);
+    const viewsPerPost = Math.floor(freeViews / state.services.likes.split);
+    document.getElementById('likes-per-video').innerText = `~${likesPerPost.toLocaleString()} likes & ${viewsPerPost.toLocaleString()} views per video`;
+
+    // BILLING MATH
+    let rawTotal = 0;
     let activeCount = 0;
 
     if (state.services.followers.active) {
-        subtotal += folTier.price;
+        rawTotal += fTier.price;
         activeCount++;
     }
     if (state.services.likes.active) {
-        subtotal += likesTier.price;
+        rawTotal += lTier.price;
         activeCount++;
     }
 
-    const discountPill = document.getElementById('discount-pill');
+    let finalTotal = rawTotal;
+    const badgeCombo = document.getElementById('combo-badge');
     const oldPriceEl = document.getElementById('old-price');
-    const finalPriceEl = document.getElementById('final-price');
-    const finalCurrEl = document.getElementById('final-curr');
 
-    let finalTotal = subtotal;
+    badgeCombo.style.display = 'none';
+    oldPriceEl.innerText = '';
 
-    // Apply 10% Combo Discount if both are selected
-    if (activeCount === 2 && subtotal > 0) {
-        finalTotal = subtotal * 0.90;
-        discountPill.style.display = 'block';
-        oldPriceEl.innerText = state.region === 'USD' ? `$${subtotal}` : subtotal.toLocaleString();
-    } else {
-        discountPill.style.display = 'none';
-        oldPriceEl.innerText = '';
+    // Apply 10% Discount
+    if (activeCount === 2 && rawTotal > 0) {
+        finalTotal = rawTotal * 0.90;
+        badgeCombo.style.display = 'block';
+        oldPriceEl.innerText = state.region === 'USD' ? `$${rawTotal}` : rawTotal.toLocaleString();
     }
 
-    // STRICT RULES (Floors and Caps)
-    let rules = regionData.rules;
+    // STRICT CAPS & FLOORS
     if (activeCount > 0) {
-        if (finalTotal < rules.min) finalTotal = rules.min;
-        if (finalTotal > rules.maxCap) finalTotal = rules.maxCap;
+        if (finalTotal < data.rules.min) finalTotal = data.rules.min;
+        if (finalTotal >= data.rules.maxCap) {
+            finalTotal = data.rules.maxCap;
+            badgeCombo.innerHTML = `<i class="fas fa-crown"></i> VIP Limit Unlocked`; // Changes text if they hit max cap
+            badgeCombo.style.display = 'block';
+            oldPriceEl.innerText = ''; // Clears old price for cleanliness
+        }
     } else {
         finalTotal = 0;
     }
 
-    // Render Final Display
+    // OUTPUT
     if (state.region === 'USD') {
-        finalPriceEl.innerText = `$${finalTotal}`;
-        finalCurrEl.innerText = '';
+        document.getElementById('final-price').innerText = `$${finalTotal}`;
+        document.getElementById('final-curr').innerText = '';
     } else {
-        finalPriceEl.innerText = finalTotal.toLocaleString();
-        finalCurrEl.innerText = 'UGX';
+        document.getElementById('final-price').innerText = finalTotal.toLocaleString();
+        document.getElementById('final-curr').innerText = 'UGX';
     }
 }
 
-// --- 6. CHECKOUT ---
-function deployOrder() {
+// --- 6. CHECKOUT TO WHATSAPP ---
+function submitOrder() {
     let activeCount = Object.keys(state.services).filter(k => state.services[k].active).length;
     if (activeCount === 0) {
         alert("Please select Followers or Likes to continue."); return;
     }
 
-    const targetLink = document.getElementById('target-link').value.trim();
-    if (!targetLink) {
-        alert("Please enter the target username."); 
-        document.getElementById('target-link').focus(); return;
+    const target = document.getElementById('target-username').value.trim();
+    if (!target) {
+        alert("Please enter your TikTok username."); 
+        document.getElementById('target-username').focus(); return;
     }
 
-    const regionData = pricing[state.region];
-    const folVol = regionData.followers[state.services.followers.index].amount;
-    const likesVol = regionData.likes[state.services.likes.index].amount;
-
-    const ref = document.getElementById('referral-code').value.trim() || "None";
-    const finalStr = document.getElementById('final-price').innerText + " " + document.getElementById('final-curr').innerText;
-
-    let msg = `*TIKTOK ELITE VIP [${state.region}]*\n\n`;
+    const data = pricing[state.region];
+    const fAmt = data.followers[state.services.followers.index].amount;
+    const lAmt = data.likes[state.services.likes.index].amount;
+    const vAmt = lAmt * 2; // Free views
     
-    if (state.services.followers.active) {
-        msg += `🚀 *Followers:* ${folVol.toLocaleString()}\n`;
-    }
+    const ref = document.getElementById('referral-code').value.trim() || "None";
+    const finalBill = document.getElementById('final-price').innerText + " " + document.getElementById('final-curr').innerText;
+
+    let msg = `*NEW TIKTOK ORDER [${state.region}]*\n\n`;
+    
+    if (state.services.followers.active) msg += `🚀 *Followers:* ${fAmt.toLocaleString()}\n`;
     if (state.services.likes.active) {
-        msg += `❤️ *Likes:* ${likesVol.toLocaleString()} (Across ${state.services.likes.split} posts)\n`;
+        msg += `❤️ *Likes:* ${lAmt.toLocaleString()} (Across ${state.services.likes.split} posts)\n`;
+        msg += `👁️ *Free Views:* ${vAmt.toLocaleString()}\n`;
     }
 
-    if (activeCount === 2) msg += `\n🎁 *10% Bundle Discount Applied*\n`;
+    if (activeCount === 2) {
+        let raw = data.followers[state.services.followers.index].price + data.likes[state.services.likes.index].price;
+        if ((raw * 0.90) >= data.rules.maxCap) {
+            msg += `\n👑 *VIP Max Cap Applied*\n`;
+        } else {
+            msg += `\n🎁 *10% Bundle Discount*\n`;
+        }
+    }
 
-    msg += `\n*Total Due:* ${finalStr.trim()}\n`;
-    msg += `*Target Profile:* ${targetLink}\n`;
+    msg += `\n*Total Due:* ${finalBill.trim()}\n`;
+    msg += `*Username:* ${target}\n`;
     msg += `*Referrer:* ${ref}`;
 
     const phone = "256762193386"; 
