@@ -1,113 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Elite TikTok Boost | AccessUG</title>
-    <link rel="icon" href="../IMAGES/tiktok.png" type="image/png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
+    <title>Elite TikTok Growth | AccessUG</title>
     
+    <link rel="preconnect" href="https://api.fontshare.com">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="elite-canvas">
+<body class="spatial-light-theme">
 
-    <div class="ambient-canvas">
-        <div class="fluid-orb orb-1"></div>
-        <div class="fluid-orb orb-2"></div>
-        <div class="canvas-noise"></div>
-    </div>
+    <div id="toast-container" class="toast-container"></div>
 
-    <div class="region-veil" id="region-sheet">
-        <div class="region-sheet-content">
-            <div class="drag-handle"></div>
-            <h2>Select Region</h2>
-            <p>Pricing aligns automatically.</p>
+    <div class="spatial-veil" id="region-veil" aria-hidden="true">
+        <div class="veil-card">
+            <div class="veil-drag-indicator"></div>
+            <div class="veil-header">
+                <div class="veil-icon-wrapper">
+                    <i class="fas fa-globe-africa"></i>
+                </div>
+                <h2>Global Calibration</h2>
+                <p>Select your operational zone to synchronize market pricing.</p>
+            </div>
             
-            <div class="region-options">
-                <button class="r-tile" onclick="initRegion('UGX')">
-                    <span class="r-emoji">🇺🇬</span>
-                    <div class="r-meta"><strong>Uganda</strong><span>UGX Pricing</span></div>
+            <div class="veil-options">
+                <button class="zone-btn" onclick="App.setRegion('UGX')" aria-label="Select Uganda">
+                    <span class="zone-flag">🇺🇬</span>
+                    <div class="zone-data">
+                        <span class="zone-title">Uganda</span>
+                        <span class="zone-sub">Billing in UGX</span>
+                    </div>
+                    <div class="zone-action"><i class="fas fa-arrow-right"></i></div>
                 </button>
-                <button class="r-tile" onclick="initRegion('USD')">
-                    <span class="r-flag">🇸🇸</span>
-                    <div class="r-meta"><strong>South Sudan</strong><span>USD Pricing</span></div>
+
+                <button class="zone-btn" onclick="App.setRegion('USD')" aria-label="Select South Sudan">
+                    <span class="zone-flag">🇸🇸</span>
+                    <div class="zone-data">
+                        <span class="zone-title">South Sudan</span>
+                        <span class="zone-sub">Billing in USD</span>
+                    </div>
+                    <div class="zone-action"><i class="fas fa-arrow-right"></i></div>
                 </button>
-                <button class="r-tile" onclick="initRegion('USD')">
-                    <span class="r-flag">🇨🇩</span>
-                    <div class="r-meta"><strong>DR Congo</strong><span>USD Pricing</span></div>
+
+                <button class="zone-btn" onclick="App.setRegion('USD')" aria-label="Select DR Congo">
+                    <span class="zone-flag">🇨🇩</span>
+                    <div class="zone-data">
+                        <span class="zone-title">DR Congo</span>
+                        <span class="zone-sub">Billing in USD</span>
+                    </div>
+                    <div class="zone-action"><i class="fas fa-arrow-right"></i></div>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="mixing-console">
+    <div class="ambient-aura-engine" aria-hidden="true">
+        <div class="aura-mesh mesh-primary"></div>
+        <div class="aura-mesh mesh-secondary"></div>
+        <div class="aura-mesh mesh-tertiary"></div>
+        <div class="chromatic-noise"></div>
+    </div>
+
+    <div class="app-shell" id="app-root">
         
-        <header class="console-header">
-            <div class="header-top">
-                <a href="../index.html" class="btn-back"><i class="fas fa-arrow-left"></i></a>
-                <button class="btn-region" onclick="openRegionSheet()"><i class="fas fa-globe"></i> <span id="current-region">UGX</span></button>
+        <nav class="dynamic-island-nav">
+            <a href="../index.html" class="island-back" aria-label="Go Back">
+                <i class="fas fa-chevron-left"></i>
+            </a>
+            <div class="island-center">
+                <i class="fab fa-tiktok"></i>
+                <span>AccessUG</span>
             </div>
-            <div class="header-titles">
-                <div class="tt-icon"><i class="fab fa-tiktok"></i></div>
-                <h1>Algorithm Boost</h1>
-                <p>Tap a tile to select. Bundle for an instant 10% discount.</p>
-            </div>
+            <button class="island-region" onclick="App.openRegionVeil()" aria-label="Change Region">
+                <i class="fas fa-map-marker-alt"></i> <span id="ui-current-region">UGX</span>
+            </button>
+        </nav>
+
+        <header class="app-hero">
+            <h1 class="hero-title">Upgrade Your <br><span class="text-gradient">Algorithm.</span></h1>
+            <p class="hero-subtitle">Select an asset below. Bundle Followers and Likes to instantly unlock a 10% synergy discount.</p>
         </header>
 
-        <main class="console-tracks">
+        <main class="commerce-stack">
             
-            <div class="track-section">
-                <div class="track-label">
-                    <h3><i class="fas fa-user-astronaut"></i> Followers</h3>
-                    <span>Permanent Authority</span>
-                </div>
-                <div class="horizontal-track" id="track-followers">
+            <section class="asset-module" id="module-followers">
+                <div class="module-header" onclick="App.toggleService('followers')">
+                    <div class="header-left">
+                        <div class="module-icon bg-cyan"><i class="fas fa-user-plus"></i></div>
+                        <div class="module-text">
+                            <h2>Elite Followers</h2>
+                            <p>Permanent algorithmic authority.</p>
+                        </div>
                     </div>
-            </div>
-
-            <div class="track-section">
-                <div class="track-label">
-                    <h3><i class="fas fa-heart"></i> Likes</h3>
-                    <span id="bonus-views-label">Includes Free Views</span>
-                </div>
-                <div class="horizontal-track" id="track-likes">
+                    <div class="bionic-switch" id="switch-followers">
+                        <div class="switch-thumb"></div>
                     </div>
-            </div>
+                </div>
+                
+                <div class="module-body" id="body-followers">
+                    <div class="tier-matrix" id="matrix-followers">
+                        </div>
+                </div>
+            </section>
 
-            <div class="buffer-space"></div>
+            <section class="asset-module" id="module-likes">
+                <div class="module-header" onclick="App.toggleService('likes')">
+                    <div class="header-left">
+                        <div class="module-icon bg-pink"><i class="fas fa-heart"></i></div>
+                        <div class="module-text">
+                            <h2>Viral Likes</h2>
+                            <p>Massive social proof. Includes Free Views.</p>
+                        </div>
+                    </div>
+                    <div class="bionic-switch" id="switch-likes">
+                        <div class="switch-thumb"></div>
+                    </div>
+                </div>
+                
+                <div class="module-body" id="body-likes">
+                    <div class="intelligence-banner">
+                        <div class="ib-icon"><i class="fas fa-bolt"></i></div>
+                        <div class="ib-content">
+                            <strong>Yield Bonus Active</strong>
+                            <span>Every Like package includes 2x Free Views.</span>
+                        </div>
+                    </div>
+
+                    <div class="tier-matrix" id="matrix-likes">
+                        </div>
+                </div>
+            </section>
+
+            <section class="asset-module input-module">
+                <div class="module-text" style="margin-bottom: 16px;">
+                    <h2>Target Destination</h2>
+                    <p>Where are we sending this upgrade?</p>
+                </div>
+                <div class="neo-input-group" id="input-group-target">
+                    <div class="neo-icon"><i class="fas fa-at"></i></div>
+                    <input type="text" id="client-identifier" class="neo-input" placeholder="Your Name or TikTok Username" autocomplete="off" spellcheck="false">
+                    <div class="neo-focus-ring"></div>
+                </div>
+            </section>
+
+            <div class="scroll-pad"></div>
         </main>
 
-        <div class="action-dock">
-            <div class="dock-inner">
+        <footer class="checkout-dock" id="checkout-dock">
+            <div class="dock-container">
                 
-                <div class="input-layer">
-                    <i class="fas fa-user-circle"></i>
-                    <input type="text" id="client-name" placeholder="Your Name or TikTok Handle" autocomplete="off">
+                <div class="dock-status-layer">
+                    <div class="status-badge combo-badge" id="badge-combo">
+                        <i class="fas fa-check-circle"></i> 10% Bundle Discount
+                    </div>
+                    <div class="status-badge vip-badge" id="badge-vip">
+                        <i class="fas fa-crown"></i> VIP Max Cap Applied
+                    </div>
                 </div>
 
-                <div class="math-layer">
-                    <div class="math-tags">
-                        <span class="math-tag combo-tag" id="tag-combo"><i class="fas fa-magic"></i> 10% Saved</span>
-                        <span class="math-tag vip-tag" id="tag-vip"><i class="fas fa-crown"></i> VIP Cap Applied</span>
+                <div class="dock-action-layer">
+                    <div class="dock-math">
+                        <span class="math-title">Total Investment</span>
+                        <div class="math-values">
+                            <span class="math-strikethrough" id="ui-old-price"></span>
+                            <span class="math-final" id="ui-final-price">0</span>
+                            <span class="math-currency" id="ui-final-curr">UGX</span>
+                        </div>
                     </div>
                     
-                    <div class="math-readout">
-                        <span class="old-price" id="math-old"></span>
-                        <span class="final-price" id="math-final">0</span>
-                        <span class="currency" id="math-curr">UGX</span>
-                    </div>
+                    <button class="btn-execute" id="btn-execute" onclick="App.processOrder()">
+                        <span class="btn-text" id="btn-execute-text">Secure Order</span>
+                        <i class="fas fa-lock btn-icon" id="btn-execute-icon"></i>
+                        <svg class="btn-spinner" id="btn-execute-spinner" viewBox="0 0 50 50">
+                            <circle class="path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                        </svg>
+                    </button>
                 </div>
-
-                <button class="btn-execute" id="btn-execute" onclick="executePayload()">
-                    <span id="btn-text">Secure Order</span>
-                    <i class="fas fa-lock" id="btn-icon"></i>
-                    <div class="spinner" id="btn-spinner"></div>
-                </button>
                 
             </div>
-        </div>
+        </footer>
 
     </div>
 
