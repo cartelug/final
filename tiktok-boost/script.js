@@ -1,340 +1,383 @@
 /**
  * ==========================================================================
- * 1000x ELITE DIGITAL ARCHITECTURE - TIKTOK GROWTH ENGINE
+ * ACCESSUG TIKTOK ENGINE
  * ==========================================================================
- * Strict Rules Engaged:
- * 1. Exact nonlinear pricing arrays mapped.
- * 2. 10% Combo logic embedded.
- * 3. $100 / 360,000 UGX hard ceilings enforced.
- * 4. Min floors ($35 / 50k) enforced.
- * 5. 1k Likes = 2k Views logic baked into UI.
- * 6. One-input form ("Client Name / Target").
- * 7. Google Sheets columns matched exactly.
+ * Features:
+ * - Strict Pricing Arrays (No sliding math, snaps to exact points)
+ * - Dynamic Free Views Injection (1k Likes = 2k Views)
+ * - Combo Discounting (10% if both active)
+ * - Absolute Limits ($35/50k Min, $100/360k Max)
+ * - Asynchronous Google Sheets Sync (Strict Column Order)
+ * - WhatsApp Bridge
  * ==========================================================================
  */
 
-const Config = {
-    sheetsEndpoint: 'YOUR_GOOGLE_SCRIPT_URL_HERE', // <-- REQUIRED: Insert Web App URL
-    waPhone: '256762193386',
-    matrices: {
+const AccessConfig = {
+    // ---> IMPORTANT: REPLACE WITH YOUR GOOGLE SCRIPT WEB APP URL <---
+    googleSheetUrl: 'YOUR_GOOGLE_SCRIPT_URL_HERE', 
+    whatsappNumber: '256762193386',
+    
+    // The exact mathematical arrays provided by the business logic
+    prices: {
         'UGX': {
             followers: [ 
-                { v: 1000, p: 75000 }, { v: 4000, p: 141000 }, 
-                { v: 7000, p: 208000 }, { v: 10000, p: 250000 } 
+                { volume: 1000, cost: 75000 }, 
+                { volume: 4000, cost: 141000 }, 
+                { volume: 7000, cost: 208000 }, 
+                { volume: 10000, cost: 250000 } 
             ],
             likes: [ 
-                { v: 1000, p: 50000 }, { v: 4000, p: 83000 }, 
-                { v: 7000, p: 116000 }, { v: 10000, p: 150000 } 
+                { volume: 1000, cost: 50000 }, 
+                { volume: 4000, cost: 83000 }, 
+                { volume: 7000, cost: 116000 }, 
+                { volume: 10000, cost: 150000 } 
             ],
-            rules: { min: 50000, max: 360000, curr: 'UGX' }
+            rules: { minFloor: 50000, maxCeiling: 360000, currency: 'UGX' }
         },
         'USD': {
             followers: [ 
-                { v: 3000, p: 35 }, { v: 5000, p: 50 }, 
-                { v: 8000, p: 75 }, { v: 10000, p: 100 } 
+                { volume: 3000, cost: 35 }, 
+                { volume: 5000, cost: 50 }, 
+                { volume: 8000, cost: 75 }, 
+                { volume: 10000, cost: 100 } 
             ],
             likes: [ 
-                { v: 2500, p: 35 }, { v: 5000, p: 50 }, 
-                { v: 7500, p: 75 }, { v: 10000, p: 100 } 
+                { volume: 2500, cost: 35 }, 
+                { volume: 5000, cost: 50 }, 
+                { volume: 7500, cost: 75 }, 
+                { volume: 10000, cost: 100 } 
             ],
-            rules: { min: 35, max: 100, curr: '$' }
+            rules: { minFloor: 35, maxCeiling: 100, currency: '$' }
         }
     }
 };
 
-const State = {
-    region: 'UGX',
-    assets: {
-        followers: { active: true, index: 0 },
-        likes: { active: false, index: 0 }
+// Global App State
+const AppState = {
+    countryMode: 'UGX',
+    packages: {
+        followers: { isActive: true, selectedIndex: 0 },
+        likes: { isActive: false, selectedIndex: 0, splitVideos: 5 }
     },
-    isProcessing: false
+    isSubmitting: false
 };
 
-const App = {
+const TikTokApp = {
     
-    // --- 1. BOOTSTRAP & INITIALIZATION ---
+    // --- 1. BOOTSTRAP ---
     init() {
-        const cachedRegion = localStorage.getItem('accessug_elite_region');
-        if (cachedRegion) {
-            this.setRegion(cachedRegion, false);
+        // Check if user has visited before
+        const savedCountry = localStorage.getItem('access_tiktok_country');
+        if (savedCountry) {
+            this.setCountry(savedCountry, false);
         } else {
-            this.openRegionVeil();
+            this.openCountryModal();
         }
-        
-        // Setup Haptic Input Listeners
-        document.getElementById('client-identifier').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.processOrder();
+
+        // Add easy 'Enter' key submit for the input
+        document.getElementById('user-tiktok-name').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.submitOrder();
         });
     },
 
-    // --- 2. REGION CALIBRATION ---
-    openRegionVeil() {
-        document.getElementById('region-veil').setAttribute('aria-hidden', 'false');
+    // --- 2. COUNTRY MANAGEMENT ---
+    openCountryModal() {
+        document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
     },
 
-    setRegion(reg, save = true) {
-        if(save) localStorage.setItem('accessug_elite_region', reg);
-        State.region = reg;
+    setCountry(countryCode, saveToStorage = true) {
+        if (saveToStorage) localStorage.setItem('access_tiktok_country', countryCode);
+        AppState.countryMode = countryCode;
         
-        document.getElementById('region-veil').setAttribute('aria-hidden', 'true');
-        document.getElementById('ui-current-region').innerText = reg;
+        // Close modal and update top nav text
+        document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
+        document.getElementById('nav-currency-label').innerText = countryCode;
         
-        // Reset state for new regional matrix
-        State.assets.followers.active = true;
-        State.assets.likes.active = false;
-        State.assets.followers.index = 0;
-        State.assets.likes.index = 0;
+        // Reset selections to defaults when switching countries
+        AppState.packages.followers.isActive = true;
+        AppState.packages.likes.isActive = false;
+        AppState.packages.followers.selectedIndex = 0;
+        AppState.packages.likes.selectedIndex = 0;
         
-        this.renderUI();
+        this.renderInterface();
     },
 
-    // --- 3. REACTIVE UI RENDERING ---
-    renderUI() {
-        // Toggle Module Classes
-        const folMod = document.getElementById('module-followers');
-        const likMod = document.getElementById('module-likes');
+    // --- 3. UI RENDERING (Building the buttons) ---
+    renderInterface() {
+        // Toggle the visual state of the massive cards
+        const cardFol = document.getElementById('section-followers');
+        const cardLik = document.getElementById('section-likes');
         
-        State.assets.followers.active ? folMod.classList.add('is-active') : folMod.classList.remove('is-active');
-        State.assets.likes.active ? likMod.classList.add('is-active') : likMod.classList.remove('is-active');
+        AppState.packages.followers.isActive ? cardFol.classList.add('active-card') : cardFol.classList.remove('active-card');
+        AppState.packages.likes.isActive ? cardLik.classList.add('active-card') : cardLik.classList.remove('active-card');
 
-        // Build Matrices
-        this.buildMatrix('followers');
-        this.buildMatrix('likes');
+        // Draw the buttons
+        this.drawButtons('followers');
+        this.drawButtons('likes');
 
-        // Run Math Engine
-        this.computeYield();
+        // Calculate and update the bottom bar
+        this.runCalculations();
     },
 
-    buildMatrix(asset) {
-        const matrixData = Config.matrices[State.region][asset];
-        const container = document.getElementById(`matrix-${asset}`);
-        container.innerHTML = '';
+    drawButtons(serviceName) {
+        const matrix = AccessConfig.prices[AppState.countryMode][serviceName];
+        const container = document.getElementById(`grid-${serviceName}`);
+        container.innerHTML = ''; // Clear old buttons
 
-        matrixData.forEach((tier, idx) => {
-            const isSelected = State.assets[asset].index === idx ? 'selected' : '';
+        matrix.forEach((tier, idx) => {
+            // Check if this specific button is the selected one
+            const isSelected = AppState.packages[serviceName].selectedIndex === idx ? 'is-selected' : '';
             
-            // Formatting logic
-            const volDisplay = tier.v >= 1000 ? (tier.v / 1000) + 'k' : tier.v;
-            const priceDisplay = State.region === 'USD' ? `$${tier.p}` : `${tier.p.toLocaleString()} UGX`;
+            // Format numbers nicely (e.g., 1000 -> 1k)
+            const displayVolume = tier.volume >= 1000 ? (tier.volume / 1000) + 'k' : tier.volume;
+            const displayPrice = AppState.countryMode === 'USD' ? `$${tier.cost}` : `${tier.cost.toLocaleString()} UGX`;
             
-            // If it's Likes, inject the Free Views logic directly into the cell
-            let viewsHtml = '';
-            if (asset === 'likes') {
-                const freeViews = (tier.v * 2) >= 1000 ? ((tier.v * 2) / 1000) + 'k' : (tier.v * 2);
-                viewsHtml = `<span class="mc-views">+ ${freeViews} Views</span>`;
-            }
-
             container.innerHTML += `
-                <div class="matrix-cell ${isSelected}" onclick="App.selectTier('${asset}', ${idx})">
-                    <span class="mc-vol">${volDisplay}</span>
-                    ${viewsHtml}
-                    <span class="mc-price">${priceDisplay}</span>
+                <div class="pack-btn ${isSelected}" onclick="TikTokApp.pickPackage('${serviceName}', ${idx})">
+                    <span class="p-amount">${displayVolume}</span>
+                    <span class="p-price">${displayPrice}</span>
                 </div>
             `;
         });
     },
 
-    // --- 4. HAPTIC INTERACTIONS ---
-    toggleService(asset) {
-        if(State.isProcessing) return;
-        State.assets[asset].active = !State.assets[asset].active;
-        this.renderUI();
-        this.triggerHaptic();
+    // --- 4. USER INTERACTIONS ---
+    toggleService(serviceName) {
+        if (AppState.isSubmitting) return;
+        AppState.packages[serviceName].isActive = !AppState.packages[serviceName].isActive;
+        this.renderInterface();
     },
 
-    selectTier(asset, idx) {
-        if(State.isProcessing) return;
-        event.stopPropagation(); // Prevent module toggle
-        State.assets[asset].index = idx;
+    pickPackage(serviceName, idx) {
+        if (AppState.isSubmitting) return;
+        event.stopPropagation(); // Stops the big card from toggling off
         
-        // Auto-activate if cell clicked while inactive
-        if (!State.assets[asset].active) State.assets[asset].active = true;
+        AppState.packages[serviceName].selectedIndex = idx;
         
-        this.renderUI();
-        this.triggerHaptic();
+        // If they click a button inside an inactive card, turn the card on automatically
+        if (!AppState.packages[serviceName].isActive) {
+            AppState.packages[serviceName].isActive = true;
+        }
+        
+        this.renderInterface();
     },
 
-    triggerHaptic() {
-        if (navigator.vibrate) navigator.vibrate(15);
+    changeSplit(direction) {
+        if (AppState.isSubmitting) return;
+        
+        let currentSplit = AppState.packages.likes.splitVideos;
+        currentSplit += direction;
+        
+        // Keep split between 1 and 10 videos
+        if (currentSplit < 1) currentSplit = 1;
+        if (currentSplit > 10) currentSplit = 10;
+        
+        AppState.packages.likes.splitVideos = currentSplit;
+        document.getElementById('split-display').innerText = currentSplit;
+        
+        this.runCalculations(); // Update the math text
     },
 
-    // --- 5. THE SMART-YIELD MATH ENGINE ---
-    computeYield() {
-        const data = Config.matrices[State.region];
-        const folTier = data.followers[State.assets.followers.index];
-        const likTier = data.likes[State.assets.likes.index];
+    // --- 5. THE BRAIN (Math, Discounts, Limits) ---
+    runCalculations() {
+        const matrix = AccessConfig.prices[AppState.countryMode];
+        const folData = matrix.followers[AppState.packages.followers.selectedIndex];
+        const likData = matrix.likes[AppState.packages.likes.selectedIndex];
 
-        let rawSubtotal = 0;
-        let activeNodes = 0;
-
-        if (State.assets.followers.active) {
-            rawSubtotal += folTier.p;
-            activeNodes++;
-        }
-        if (State.assets.likes.active) {
-            rawSubtotal += likTier.p;
-            activeNodes++;
-        }
-
-        let finalPayload = rawSubtotal;
+        // 1. Calculate Free Views and Video Splitting text
+        const freeViewsAmount = likData.volume * 2;
+        const splitCount = AppState.packages.likes.splitVideos;
         
-        // UI Handles
-        const domCombo = document.getElementById('badge-combo');
-        const domVip = document.getElementById('badge-vip');
-        const domOldPrice = document.getElementById('ui-old-price');
-        const domFinalPrice = document.getElementById('ui-final-price');
-        const domCurr = document.getElementById('ui-final-curr');
+        document.getElementById('free-views-text').innerText = `You get ${freeViewsAmount.toLocaleString()} free views with this package.`;
+        
+        const likesPerVideo = Math.floor(likData.volume / splitCount);
+        const viewsPerVideo = Math.floor(freeViewsAmount / splitCount);
+        document.getElementById('split-math-text').innerText = `Around ${likesPerVideo.toLocaleString()} likes & ${viewsPerVideo.toLocaleString()} views per video`;
 
-        // Reset Visibilities
-        domCombo.style.display = 'none';
-        domVip.style.display = 'none';
-        domOldPrice.innerText = '';
+        // 2. Calculate Base Price
+        let rawPrice = 0;
+        let activeServices = 0;
 
-        // Strategy 1: Apply 10% Combo Synergy
-        if (activeNodes === 2 && rawSubtotal > 0) {
-            finalPayload = rawSubtotal * 0.90;
-            domCombo.style.display = 'flex';
-            domOldPrice.innerText = State.region === 'USD' ? `$${rawSubtotal}` : rawSubtotal.toLocaleString();
+        if (AppState.packages.followers.isActive) {
+            rawPrice += folData.cost;
+            activeServices++;
+        }
+        if (AppState.packages.likes.isActive) {
+            rawPrice += likData.cost;
+            activeServices++;
         }
 
-        // Strategy 2: Enforce Strict Caps & Floors
-        if (activeNodes > 0) {
-            if (finalPayload < data.rules.min) finalPayload = data.rules.min;
-            if (finalPayload >= data.rules.max) {
-                finalPayload = data.rules.max;
-                domCombo.style.display = 'none'; // VIP overrides Combo visual
-                domVip.style.display = 'flex';
-                domOldPrice.innerText = ''; // Clean UI
+        let finalPriceToPay = rawPrice;
+        
+        // UI Elements
+        const uiComboTag = document.getElementById('tag-combo');
+        const uiMaxTag = document.getElementById('tag-max');
+        const uiOldPrice = document.getElementById('ui-old-price');
+        const uiFinalPrice = document.getElementById('ui-final-price');
+        const uiCurrency = document.getElementById('ui-currency');
+
+        // Reset UI
+        uiComboTag.style.display = 'none';
+        uiMaxTag.style.display = 'none';
+        uiOldPrice.innerText = '';
+
+        // 3. Apply 10% Bundle Discount
+        if (activeServices === 2 && rawPrice > 0) {
+            finalPriceToPay = rawPrice * 0.90;
+            uiComboTag.style.display = 'flex';
+            uiOldPrice.innerText = AppState.countryMode === 'USD' ? `$${rawPrice}` : rawPrice.toLocaleString();
+        }
+
+        // 4. Enforce Hard Limits
+        if (activeServices > 0) {
+            // Floor Check
+            if (finalPriceToPay < matrix.rules.minFloor) {
+                finalPriceToPay = matrix.rules.minFloor;
+            }
+            // Ceiling Check
+            if (finalPriceToPay >= matrix.rules.maxCeiling) {
+                finalPriceToPay = matrix.rules.maxCeiling;
+                uiComboTag.style.display = 'none'; // Max Tag takes priority over Combo Tag
+                uiMaxTag.style.display = 'flex';
+                uiOldPrice.innerText = ''; 
             }
         } else {
-            finalPayload = 0;
+            finalPriceToPay = 0;
         }
 
-        // Strategy 3: Render Math to Interface
-        if (State.region === 'USD') {
-            domFinalPrice.innerText = `$${finalPayload}`;
-            domCurr.innerText = '';
+        // 5. Render Final Numbers
+        if (AppState.countryMode === 'USD') {
+            uiFinalPrice.innerText = `$${finalPriceToPay}`;
+            uiCurrency.innerText = '';
         } else {
-            domFinalPrice.innerText = finalPayload.toLocaleString();
-            domCurr.innerText = 'UGX';
+            uiFinalPrice.innerText = finalPriceToPay.toLocaleString();
+            uiCurrency.innerText = 'UGX';
         }
     },
 
-    // --- 6. SHADOW-SYNC & PAYLOAD DELIVERY ---
-    processOrder() {
-        if (State.isProcessing) return;
+    // --- 6. FORM SUBMISSION & API SYNC ---
+    submitOrder() {
+        if (AppState.isSubmitting) return;
 
-        let activeNodes = Object.keys(State.assets).filter(k => State.assets[k].active).length;
-        if (activeNodes === 0) {
-            this.showToast('Please activate an asset to proceed.', 'error');
+        // Validate Services
+        let activeServices = Object.keys(AppState.packages).filter(key => AppState.packages[key].isActive).length;
+        if (activeServices === 0) {
+            this.triggerToast("Please choose Followers or Likes first.", "error");
             return;
         }
 
-        const clientInput = document.getElementById('client-identifier').value.trim();
-        if (!clientInput) {
-            this.showToast('Target destination required.', 'error');
-            document.getElementById('client-identifier').focus();
+        // Validate Input
+        const clientIdentifier = document.getElementById('user-tiktok-name').value.trim();
+        if (!clientIdentifier) {
+            this.triggerToast("We need your TikTok Username.", "error");
+            document.getElementById('user-tiktok-name').focus();
             return;
         }
 
-        this.setLoadingState(true);
+        // Engage Loading State
+        this.setLoading(true);
 
-        // Compile Deep Data
-        const data = Config.matrices[State.region];
-        let packageString = "";
-        let whatsappBody = "";
+        // Compile Data for Google Sheets
+        const matrix = AccessConfig.prices[AppState.countryMode];
+        let sheetPackageString = "";
+        let waMessageBody = "";
         
-        if (State.assets.followers.active) {
-            let fVal = data.followers[State.assets.followers.index].v;
-            packageString += `${fVal} Followers. `;
-            whatsappBody += `🚀 *Followers:* ${fVal.toLocaleString()}\n`;
+        if (AppState.packages.followers.isActive) {
+            let fVol = matrix.followers[AppState.packages.followers.selectedIndex].volume;
+            sheetPackageString += `${fVol} Followers. `;
+            waMessageBody += `🚀 *Followers:* ${fVol.toLocaleString()}\n`;
         }
-        if (State.assets.likes.active) {
-            let lVal = data.likes[State.assets.likes.index].v;
-            let vVal = lVal * 2; // 2x Free Views Rule
-            packageString += `${lVal} Likes + ${vVal} Free Views.`;
-            whatsappBody += `❤️ *Likes:* ${lVal.toLocaleString()}\n`;
-            whatsappBody += `👁️ *Free Views:* ${vVal.toLocaleString()}\n`;
+        
+        if (AppState.packages.likes.isActive) {
+            let lVol = matrix.likes[AppState.packages.likes.selectedIndex].volume;
+            let vVol = lVol * 2;
+            let splits = AppState.packages.likes.splitVideos;
+            sheetPackageString += `${lVol} Likes (Split ${splits}) + ${vVol} Views.`;
+            waMessageBody += `❤️ *Likes:* ${lVol.toLocaleString()} (Across ${splits} videos)\n`;
+            waMessageBody += `👁️ *Free Views:* ${vVol.toLocaleString()}\n`;
         }
 
-        const finalInvestment = document.getElementById('ui-final-price').innerText + " " + document.getElementById('ui-final-curr').innerText;
+        const finalBillText = document.getElementById('ui-final-price').innerText + " " + document.getElementById('ui-currency').innerText;
 
-        // --- EXACT GOOGLE SHEETS ALIGNMENT ---
-        // Rule constraints: Date (auto), Client Name, Service, Package, Price, Referrer
-        const formData = new FormData();
-        formData.append('Client Name', clientInput); // Single input serves as Name/ID
-        formData.append('Service', `TikTok [${State.region}]`);
-        formData.append('Package', packageString.trim());
-        formData.append('Price', finalInvestment.trim());
-        formData.append('Referrer', 'Direct'); // Handled automatically per strict rules
+        // Construct Google Sheet Columns exactly as requested:
+        // [Date (auto)], [Client Name], [Service], [Package], [Price], [Referrer]
+        const sheetData = new FormData();
+        sheetData.append('Client Name', clientIdentifier);
+        sheetData.append('Service', `TikTok Boost [${AppState.countryMode}]`);
+        sheetData.append('Package', sheetPackageString.trim());
+        sheetData.append('Price', finalBillText.trim());
+        sheetData.append('Referrer', 'Direct UI'); // Safe default
 
-        // Async Transmission
-        fetch(Config.sheetsEndpoint, { method: 'POST', body: formData })
+        // Async fetch to Google
+        fetch(AccessConfig.sheetsEndpoint, { method: 'POST', body: sheetData })
             .then(response => {
-                // Build VIP WhatsApp Bridge
-                let msg = `*ELITE ALGORITHM PUSH [${State.region}]*\n\n`;
-                msg += `*Target:* ${clientInput}\n\n`;
-                msg += whatsappBody;
                 
-                if (activeNodes === 2) {
-                    let raw = data.followers[State.assets.followers.index].p + data.likes[State.assets.likes.index].p;
-                    if ((raw * 0.90) >= data.rules.max) {
-                        msg += `\n👑 *VIP Max Cap Secured*\n`;
+                // Build clean WhatsApp message based on previous template structures
+                let waMessage = `*NEW TIKTOK ORDER [${AppState.countryMode}]*\n\n`;
+                waMessage += `*Username:* ${clientIdentifier}\n\n`;
+                waMessage += waMessageBody;
+                
+                if (activeServices === 2) {
+                    let rawCost = matrix.followers[AppState.packages.followers.selectedIndex].cost + matrix.likes[AppState.packages.likes.selectedIndex].cost;
+                    if ((rawCost * 0.90) >= matrix.rules.maxCeiling) {
+                        waMessage += `\n👑 *VIP Best Price Applied*\n`;
                     } else {
-                        msg += `\n🎁 *10% Synergy Discount*\n`;
+                        waMessage += `\n🎁 *10% Bundle Discount*\n`;
                     }
                 }
 
-                msg += `\n*Total Investment:* ${finalInvestment.trim()}`;
+                waMessage += `\n*Total Due:* ${finalBillText.trim()}`;
 
-                window.location.href = `https://wa.me/${Config.waPhone}?text=${encodeURIComponent(msg)}`;
+                // Redirect to WhatsApp
+                window.location.href = `https://wa.me/${AccessConfig.whatsappNumber}?text=${encodeURIComponent(waMessage)}`;
             })
             .catch(error => {
-                console.error('Shadow-Sync Error:', error);
-                this.showToast('Network interference. Please retry.', 'error');
-                this.setLoadingState(false);
+                console.error('Sheet Sync Failed:', error);
+                this.triggerToast("Check your internet connection and try again.", "error");
+                this.setLoading(false);
             });
     },
 
-    // --- 7. UTILITIES ---
-    setLoadingState(isLoading) {
-        State.isProcessing = isLoading;
-        const btnText = document.getElementById('btn-execute-text');
-        const btnIcon = document.getElementById('btn-execute-icon');
-        const btnSpinner = document.getElementById('btn-execute-spinner');
-        const btnNode = document.getElementById('btn-execute');
+    // --- 7. UTILITY FUNCTIONS ---
+    setLoading(isLoading) {
+        AppState.isSubmitting = isLoading;
+        const btnNode = document.getElementById('btn-submit-order');
+        const btnText = document.getElementById('btn-submit-text');
+        const btnIcon = document.getElementById('btn-submit-icon');
+        const btnSpinner = document.getElementById('btn-loading-spinner');
 
         if (isLoading) {
             btnNode.disabled = true;
-            btnText.innerText = "Encrypting...";
+            btnText.innerText = "Saving Order...";
             btnIcon.style.display = 'none';
             btnSpinner.style.display = 'block';
         } else {
             btnNode.disabled = false;
-            btnText.innerText = "Secure Order";
+            btnText.innerText = "Order Now";
             btnIcon.style.display = 'inline-block';
             btnSpinner.style.display = 'none';
         }
     },
 
-    showToast(message, type = 'success') {
-        const container = document.getElementById('toast-container');
+    triggerToast(message, type = 'error') {
+        const wrapper = document.getElementById('toast-wrapper');
         const toast = document.createElement('div');
-        toast.className = `toast ${type}`;
+        toast.className = `toast-msg ${type}-toast`;
         
-        const icon = type === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle';
-        toast.innerHTML = `<i class="fas ${icon}"></i> <span>${message}</span>`;
+        const iconClass = type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+        toast.innerHTML = `<i class="fas ${iconClass}"></i> <span>${message}</span>`;
         
-        container.appendChild(toast);
-        this.triggerHaptic();
+        wrapper.appendChild(toast);
+
+        // Vibrate if on mobile for errors
+        if (navigator.vibrate) navigator.vibrate(20);
 
         setTimeout(() => {
-            toast.classList.add('toast-leave');
+            toast.classList.add('hide-toast');
             toast.addEventListener('animationend', () => toast.remove());
-        }, 3000);
+        }, 3500);
     }
 };
 
-// Initialize App
-App.init();
+// Start the App
+TikTokApp.init();
