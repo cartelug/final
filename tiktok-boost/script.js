@@ -1,4 +1,4 @@
-// --- 1. THE EXACT PRICING NODES (Caps & Snaps) ---
+// --- 1. THE EXACT TIER MATRIX ---
 const pricing = {
     'UGX': {
         followers: [ 
@@ -16,9 +16,10 @@ const pricing = {
             {amount: 3000, price: 35}, {amount: 5000, price: 50}, 
             {amount: 8000, price: 75}, {amount: 10000, price: 100} 
         ],
+        // Adjusted to ensure Max is exactly 10,000 while keeping prices relative
         likes: [ 
-            {amount: 7000, price: 35}, {amount: 10000, price: 50}, 
-            {amount: 15000, price: 75}, {amount: 20000, price: 100} 
+            {amount: 2500, price: 35}, {amount: 5000, price: 50}, 
+            {amount: 7500, price: 75}, {amount: 10000, price: 100} 
         ],
         rules: { min: 35, maxCap: 100 }
     }
@@ -27,12 +28,12 @@ const pricing = {
 let state = {
     region: 'UGX',
     services: {
-        followers: { active: true, index: 0, volume: 0, price: 0 },
-        likes: { active: false, index: 0, volume: 0, price: 0, split: 5 }
+        followers: { active: true, index: 0 },
+        likes: { active: false, index: 0, split: 5 }
     }
 };
 
-// --- 2. INITIALIZATION & OVERLAY ---
+// --- 2. INITIALIZATION ---
 window.onload = () => {
     let savedRegion = localStorage.getItem('tiktokRegion');
     if (savedRegion) {
@@ -47,16 +48,18 @@ function selectRegion(region, save = true) {
     state.region = region;
     
     document.getElementById('region-sheet').classList.remove('visible');
-    document.getElementById('current-region-badge').innerText = region;
+    document.getElementById('nav-region-badge').innerText = region;
     
-    setupSliders();
-    
-    // Default: Followers ON, Likes OFF
-    document.getElementById('card-followers').classList.add('active-card');
-    document.getElementById('card-likes').classList.remove('active-card');
+    // Reset defaults on region switch
     state.services.followers.active = true;
     state.services.likes.active = false;
+    state.services.followers.index = 0;
+    state.services.likes.index = 0;
     
+    document.getElementById('card-followers').classList.add('active-card');
+    document.getElementById('card-likes').classList.remove('active-card');
+    
+    renderTiers();
     updateCalculations();
 }
 
@@ -65,16 +68,41 @@ function resetRegion() {
     document.getElementById('region-sheet').classList.add('visible');
 }
 
-function setupSliders() {
+// --- 3. RENDERING THE HAPTIC PILLS ---
+function renderTiers() {
     const data = pricing[state.region];
-    document.getElementById('slider-followers').max = data.followers.length - 1;
-    document.getElementById('slider-followers').value = 0;
     
-    document.getElementById('slider-likes').max = data.likes.length - 1;
-    document.getElementById('slider-likes').value = 0;
+    const formatAmt = (val) => val >= 1000 ? (val/1000) + 'k' : val;
+    const formatPrice = (price) => state.region === 'USD' ? `$${price}` : `${price.toLocaleString()} UGX`;
+
+    // Render Followers
+    const folContainer = document.getElementById('tiers-followers');
+    folContainer.innerHTML = '';
+    data.followers.forEach((tier, idx) => {
+        let isSelected = state.services.followers.index === idx ? 'selected' : '';
+        folContainer.innerHTML += `
+            <div class="tier-pill ${isSelected}" onclick="setTier('followers', ${idx})">
+                <span>${formatAmt(tier.amount)}</span>
+                <small>${formatPrice(tier.price)}</small>
+            </div>
+        `;
+    });
+
+    // Render Likes
+    const likesContainer = document.getElementById('tiers-likes');
+    likesContainer.innerHTML = '';
+    data.likes.forEach((tier, idx) => {
+        let isSelected = state.services.likes.index === idx ? 'selected' : '';
+        likesContainer.innerHTML += `
+            <div class="tier-pill ${isSelected}" onclick="setTier('likes', ${idx})">
+                <span>${formatAmt(tier.amount)}</span>
+                <small>${formatPrice(tier.price)}</small>
+            </div>
+        `;
+    });
 }
 
-// --- 3. UI INTERACTIONS ---
+// --- 4. INTERACTIONS ---
 function toggleService(service) {
     const card = document.getElementById(`card-${service}`);
     state.services[service].active = !state.services[service].active;
@@ -87,57 +115,67 @@ function toggleService(service) {
     updateCalculations();
 }
 
+function setTier(service, index) {
+    state.services[service].index = index;
+    // Force the service active if they tap a pill
+    state.services[service].active = true; 
+    document.getElementById(`card-${service}`).classList.add('active-card');
+    
+    renderTiers(); // Re-render to update selected classes
+    updateCalculations();
+}
+
+function adjustSplit(direction) {
+    let current = state.services.likes.split;
+    current += direction;
+    if (current < 1) current = 1;
+    if (current > 10) current = 10;
+    
+    state.services.likes.split = current;
+    document.getElementById('split-val').innerText = current;
+    updateCalculations();
+}
+
 function toggleReferral() {
-    const header = document.querySelector('.ref-header');
-    const body = document.getElementById('ref-body');
+    const header = document.querySelector('.ref-trigger');
+    const body = document.getElementById('ref-expand');
     const icon = document.getElementById('ref-icon');
     
     header.classList.toggle('active');
     body.classList.toggle('open');
     if(body.classList.contains('open')) {
-        icon.classList.replace('fa-plus', 'fa-minus');
+        icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
     } else {
-        icon.classList.replace('fa-minus', 'fa-plus');
+        icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
     }
 }
 
-// --- 4. THE SMART CALCULATOR ENGINE ---
+// --- 5. THE STRICT CALCULATOR ---
 function updateCalculations() {
-    let regionData = pricing[state.region];
+    const regionData = pricing[state.region];
     
-    // 1. Get Slider Values
-    state.services.followers.index = parseInt(document.getElementById('slider-followers').value);
-    state.services.likes.index = parseInt(document.getElementById('slider-likes').value);
-    state.services.likes.split = parseInt(document.getElementById('slider-split-likes').value);
+    // Get Current Volumes & Prices
+    const folTier = regionData.followers[state.services.followers.index];
+    const likesTier = regionData.likes[state.services.likes.index];
 
-    // 2. Map to actual Volume and Price
-    state.services.followers.volume = regionData.followers[state.services.followers.index].amount;
-    state.services.followers.price = regionData.followers[state.services.followers.index].price;
-    
-    state.services.likes.volume = regionData.likes[state.services.likes.index].amount;
-    state.services.likes.price = regionData.likes[state.services.likes.index].price;
+    // Update Likes Split Math Text
+    const perPost = Math.floor(likesTier.amount / state.services.likes.split);
+    document.getElementById('likes-per-post-hint').innerHTML = `<i class="fas fa-bolt"></i> Approx. <b>${perPost.toLocaleString()}</b> likes per post`;
 
-    // 3. Update Text Displays
-    document.getElementById('val-followers').innerText = state.services.followers.volume.toLocaleString();
-    document.getElementById('val-likes').innerText = state.services.likes.volume.toLocaleString();
-    
-    document.getElementById('split-likes').innerText = state.services.likes.split;
-    document.getElementById('likes-per-post').innerText = Math.floor(state.services.likes.volume / state.services.likes.split).toLocaleString();
-
-    // 4. Calculate Subtotal & Discounts
+    // Calculate Subtotal
     let subtotal = 0;
     let activeCount = 0;
 
     if (state.services.followers.active) {
-        subtotal += state.services.followers.price;
+        subtotal += folTier.price;
         activeCount++;
     }
     if (state.services.likes.active) {
-        subtotal += state.services.likes.price;
+        subtotal += likesTier.price;
         activeCount++;
     }
 
-    const discountBadge = document.getElementById('discount-badge');
+    const discountPill = document.getElementById('discount-pill');
     const oldPriceEl = document.getElementById('old-price');
     const finalPriceEl = document.getElementById('final-price');
     const finalCurrEl = document.getElementById('final-curr');
@@ -147,14 +185,14 @@ function updateCalculations() {
     // Apply 10% Combo Discount if both are selected
     if (activeCount === 2 && subtotal > 0) {
         finalTotal = subtotal * 0.90;
-        discountBadge.style.display = 'block';
+        discountPill.style.display = 'block';
         oldPriceEl.innerText = state.region === 'USD' ? `$${subtotal}` : subtotal.toLocaleString();
     } else {
-        discountBadge.style.display = 'none';
+        discountPill.style.display = 'none';
         oldPriceEl.innerText = '';
     }
 
-    // 5. ENFORCE STRICT LIMITS (Min Floor & Max Cap)
+    // STRICT RULES (Floors and Caps)
     let rules = regionData.rules;
     if (activeCount > 0) {
         if (finalTotal < rules.min) finalTotal = rules.min;
@@ -163,7 +201,7 @@ function updateCalculations() {
         finalTotal = 0;
     }
 
-    // 6. Update Final Display
+    // Render Final Display
     if (state.region === 'USD') {
         finalPriceEl.innerText = `$${finalTotal}`;
         finalCurrEl.innerText = '';
@@ -173,7 +211,7 @@ function updateCalculations() {
     }
 }
 
-// --- 5. CHECKOUT TO WHATSAPP ---
+// --- 6. CHECKOUT ---
 function deployOrder() {
     let activeCount = Object.keys(state.services).filter(k => state.services[k].active).length;
     if (activeCount === 0) {
@@ -186,13 +224,21 @@ function deployOrder() {
         document.getElementById('target-link').focus(); return;
     }
 
+    const regionData = pricing[state.region];
+    const folVol = regionData.followers[state.services.followers.index].amount;
+    const likesVol = regionData.likes[state.services.likes.index].amount;
+
     const ref = document.getElementById('referral-code').value.trim() || "None";
     const finalStr = document.getElementById('final-price').innerText + " " + document.getElementById('final-curr').innerText;
 
-    let msg = `*TIKTOK ELITE ORDER [${state.region}]*\n\n`;
+    let msg = `*TIKTOK ELITE VIP [${state.region}]*\n\n`;
     
-    if (state.services.followers.active) msg += `🚀 *Followers:* ${state.services.followers.volume.toLocaleString()}\n`;
-    if (state.services.likes.active) msg += `❤️ *Likes:* ${state.services.likes.volume.toLocaleString()} (Across ${state.services.likes.split} posts)\n`;
+    if (state.services.followers.active) {
+        msg += `🚀 *Followers:* ${folVol.toLocaleString()}\n`;
+    }
+    if (state.services.likes.active) {
+        msg += `❤️ *Likes:* ${likesVol.toLocaleString()} (Across ${state.services.likes.split} posts)\n`;
+    }
 
     if (activeCount === 2) msg += `\n🎁 *10% Bundle Discount Applied*\n`;
 

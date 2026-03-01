@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>TikTok Elite | AccessUG</title>
+    <title>Elite TikTok Boost | AccessUG</title>
     <link rel="icon" href="../IMAGES/tiktok.png" type="image/png">
     
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,150 +11,145 @@
     
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="fintech-light">
+<body class="ultra-light-theme">
 
     <div class="region-sheet" id="region-sheet">
         <div class="sheet-content">
-            <h2>🌍 Select your region</h2>
-            <p>Pricing adjusts automatically based on your location.</p>
+            <div class="sheet-indicator"></div>
+            <h2>Where are you from?</h2>
+            <p>Select your region to load local pricing.</p>
             
-            <div class="region-list">
+            <div class="region-grid">
                 <button class="region-btn" onclick="selectRegion('UGX')">
                     <span class="r-flag">🇺🇬</span>
-                    <div class="r-info">
+                    <div class="r-text">
                         <strong>Uganda</strong>
-                        <span>Prices in UGX</span>
+                        <span>Pay in UGX</span>
                     </div>
-                    <i class="fas fa-chevron-right"></i>
                 </button>
-                
                 <button class="region-btn" onclick="selectRegion('USD')">
                     <span class="r-flag">🇸🇸</span>
-                    <div class="r-info">
+                    <div class="r-text">
                         <strong>South Sudan</strong>
-                        <span>Prices in USD</span>
+                        <span>Pay in USD</span>
                     </div>
-                    <i class="fas fa-chevron-right"></i>
                 </button>
-
                 <button class="region-btn" onclick="selectRegion('USD')">
                     <span class="r-flag">🇨🇩</span>
-                    <div class="r-info">
+                    <div class="r-text">
                         <strong>DR Congo</strong>
-                        <span>Prices in USD</span>
+                        <span>Pay in USD</span>
                     </div>
-                    <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="app-wrapper">
+    <div class="app-container">
         
-        <nav class="app-topbar">
-            <a href="../index.html" class="back-link"><i class="fas fa-arrow-left"></i> Home</a>
-            <button class="mini-region-btn" onclick="resetRegion()"><i class="fas fa-globe"></i> <span id="current-region-badge">UGX</span></button>
+        <nav class="app-nav">
+            <a href="../index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Home</a>
+            <button class="current-region-btn" onclick="resetRegion()"><i class="fas fa-globe"></i> <span id="nav-region-badge">UGX</span></button>
         </nav>
 
-        <header class="app-header">
-            <div class="brand-icon"><i class="fab fa-tiktok"></i></div>
+        <header class="hero-header">
+            <div class="hero-icon"><i class="fab fa-tiktok"></i></div>
             <h1>Boost Your Page</h1>
-            <p>Select Followers, Likes, or bundle both for a 10% discount.</p>
+            <p>Select a package. Bundle Followers and Likes for an instant 10% discount.</p>
         </header>
 
-        <main class="modules-container">
+        <main class="service-modules">
             
-            <div class="glass-card" id="card-followers">
-                <div class="card-top" onclick="toggleService('followers')">
-                    <div class="c-title">
-                        <div class="icon-box icon-cyan"><i class="fas fa-users"></i></div>
-                        <div>
+            <div class="premium-card" id="card-followers">
+                <div class="card-header" onclick="toggleService('followers')">
+                    <div class="ch-left">
+                        <div class="icon-blob cyan-blob"><i class="fas fa-users"></i></div>
+                        <div class="ch-titles">
                             <h3>Followers</h3>
-                            <span>Algorithm authority</span>
+                            <p>Permanent authority</p>
                         </div>
                     </div>
-                    <div class="fintech-switch" id="switch-followers"></div>
+                    <div class="haptic-toggle" id="toggle-followers"></div>
                 </div>
                 
-                <div class="card-expand" id="expand-followers">
-                    <div class="metric-display">
-                        <span class="m-val" id="val-followers">1,000</span>
-                        <span class="m-label">Followers</span>
-                    </div>
-                    <input type="range" class="fintech-slider cyan-track" id="slider-followers" min="0" step="1" oninput="updateCalculations()">
-                    <div class="slider-labels" id="labels-followers">
+                <div class="card-body" id="body-followers">
+                    <label class="section-label">Select Volume</label>
+                    <div class="tier-grid" id="tiers-followers">
                         </div>
                 </div>
             </div>
 
-            <div class="glass-card" id="card-likes">
-                <div class="card-top" onclick="toggleService('likes')">
-                    <div class="c-title">
-                        <div class="icon-box icon-pink"><i class="fas fa-heart"></i></div>
-                        <div>
+            <div class="premium-card" id="card-likes">
+                <div class="card-header" onclick="toggleService('likes')">
+                    <div class="ch-left">
+                        <div class="icon-blob pink-blob"><i class="fas fa-heart"></i></div>
+                        <div class="ch-titles">
                             <h3>Likes</h3>
-                            <span>Social proof & engagement</span>
+                            <p>Instant social proof</p>
                         </div>
                     </div>
-                    <div class="fintech-switch" id="switch-likes"></div>
+                    <div class="haptic-toggle" id="toggle-likes"></div>
                 </div>
                 
-                <div class="card-expand" id="expand-likes">
-                    <div class="metric-display">
-                        <span class="m-val" id="val-likes">1,000</span>
-                        <span class="m-label">Likes</span>
-                    </div>
-                    <input type="range" class="fintech-slider pink-track" id="slider-likes" min="0" step="1" oninput="updateCalculations()">
-                    
-                    <div class="split-controller">
-                        <label>Distribute across how many posts?</label>
-                        <div class="split-flex">
-                            <input type="range" class="fintech-slider dark-track" id="slider-split-likes" min="1" max="10" step="1" value="5" oninput="updateCalculations()">
-                            <div class="split-val"><span id="split-likes">5</span> Posts</div>
+                <div class="card-body" id="body-likes">
+                    <label class="section-label">Select Volume (Max 10k)</label>
+                    <div class="tier-grid" id="tiers-likes">
                         </div>
-                        <p class="hint-text"><i class="fas fa-bolt"></i> Approx. <b id="likes-per-post">200</b> likes per post.</p>
+
+                    <div class="stepper-section">
+                        <div class="stepper-info">
+                            <label>Distribute across posts</label>
+                            <span id="likes-per-post-hint"><i class="fas fa-bolt"></i> 200 likes per post</span>
+                        </div>
+                        <div class="stepper-control">
+                            <button class="step-btn" onclick="adjustSplit(-1)"><i class="fas fa-minus"></i></button>
+                            <div class="step-value"><span id="split-val">5</span></div>
+                            <button class="step-btn" onclick="adjustSplit(1)"><i class="fas fa-plus"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="glass-card meta-card">
-                <div class="input-group">
+            <div class="meta-section">
+                <div class="premium-input-group">
                     <label>Target Account Username</label>
-                    <div class="input-wrapper">
+                    <div class="input-shell">
                         <i class="fab fa-tiktok"></i>
-                        <input type="text" id="target-link" placeholder="@username">
+                        <input type="text" id="target-link" placeholder="Enter @username" autocomplete="off">
                     </div>
                 </div>
 
-                <div class="referral-accordion">
-                    <div class="ref-header" onclick="toggleReferral()">
-                        <span><i class="fas fa-gift"></i> Have a referral name?</span>
-                        <i class="fas fa-plus" id="ref-icon"></i>
+                <div class="premium-referral">
+                    <div class="ref-trigger" onclick="toggleReferral()">
+                        <span><i class="fas fa-gift"></i> I have a referral name</span>
+                        <i class="fas fa-chevron-down" id="ref-icon"></i>
                     </div>
-                    <div class="ref-body" id="ref-body">
+                    <div class="ref-expand" id="ref-expand">
                         <input type="text" id="referral-code" placeholder="Enter friend's name...">
                     </div>
                 </div>
             </div>
 
-            <div style="height: 120px;"></div>
-
+            <div style="height: 140px;"></div>
         </main>
 
-        <div class="sticky-pay-bar">
-            <div class="pay-info">
-                <div class="discount-badge" id="discount-badge"><i class="fas fa-tag"></i> 10% Combo Saved</div>
-                <div class="total-block">
-                    <span class="t-label">Total to pay</span>
-                    <div class="t-price">
-                        <span class="old-price" id="old-price"></span>
-                        <span id="final-price">0</span> <span id="final-curr" class="curr">UGX</span>
+        <div class="checkout-dock">
+            <div class="dock-content">
+                <div class="dock-math">
+                    <div class="discount-pill" id="discount-pill">
+                        <i class="fas fa-check-circle"></i> 10% Combo Applied
+                    </div>
+                    <span class="total-label">Total Investment</span>
+                    <div class="price-lockup">
+                        <span class="strikethrough" id="old-price"></span>
+                        <span class="final-price" id="final-price">0</span>
+                        <span class="currency" id="final-curr">UGX</span>
                     </div>
                 </div>
+                <button class="deploy-btn" onclick="deployOrder()">
+                    Place Order <i class="fas fa-lock"></i>
+                </button>
             </div>
-            <button class="pay-btn" onclick="deployOrder()">
-                Place Order <i class="fas fa-arrow-right"></i>
-            </button>
         </div>
 
     </div>
