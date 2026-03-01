@@ -3,201 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#f8fafc">
-    <meta name="description" content="Get TikTok Followers and Likes instantly. Simple, fast, and secure.">
-    <title>Boost Your TikTok | AccessUG</title>
+    <meta name="theme-color" content="#ffffff">
+    
+    <title>Grow Your TikTok | AccessUG</title>
+    <meta name="description" content="Get premium TikTok Followers and Likes instantly. Elevate your algorithmic authority with real engagement.">
+    <meta name="robots" content="index, follow">
+    
+    <link rel="icon" href="../IMAGES/tiktok.png" type="image/png">
+    <link rel="apple-touch-icon" href="../IMAGES/tiktok.png">
     
     <link rel="preconnect" href="https://api.fontshare.com">
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="smooth-scroll-app">
+<body class="spatial-light-theme">
 
-    <div id="toast-wrapper" class="toast-wrapper" aria-live="polite"></div>
+    <div class="ambient-canvas" aria-hidden="true">
+        <div class="fluid-orb orb-primary"></div>
+        <div class="fluid-orb orb-secondary"></div>
+        <div class="canvas-noise-filter"></div>
+    </div>
 
-    <div class="country-modal-overlay" id="country-modal" aria-hidden="true">
-        <div class="country-card-container">
-            <div class="drag-pill"></div>
-            <div class="modal-header-simple">
-                <div class="modal-icon-large">🌍</div>
-                <h2>Choose Your Country</h2>
-                <p>We need to know your country to show you the right prices.</p>
-            </div>
+    <div class="region-veil" id="region-sheet" aria-hidden="true" role="dialog">
+        <div class="region-sheet-content">
+            <div class="drag-indicator"></div>
             
-            <div class="country-button-list">
-                <button class="country-select-btn" onclick="TikTokApp.setCountry('UGX')" aria-label="Select Uganda">
-                    <span class="flag-emoji">🇺🇬</span>
-                    <div class="country-text-info">
-                        <span class="c-name">Uganda</span>
-                        <span class="c-currency">Pay in UGX</span>
+            <header class="sheet-header">
+                <h2>Select Region</h2>
+                <p>Pricing adjusts automatically based on your location.</p>
+            </header>
+            
+            <div class="region-options-list">
+                <button class="region-tile" onclick="Engine.initRegion('UGX')" aria-label="Select Uganda">
+                    <span class="r-emoji">🇺🇬</span>
+                    <div class="r-meta">
+                        <strong>Uganda</strong>
+                        <span>Pay in UGX</span>
                     </div>
-                    <div class="c-arrow"><i class="fas fa-chevron-right"></i></div>
+                    <div class="r-arrow"><i class="fas fa-chevron-right"></i></div>
                 </button>
 
-                <button class="country-select-btn" onclick="TikTokApp.setCountry('USD')" aria-label="Select South Sudan">
-                    <span class="flag-emoji">🇸🇸</span>
-                    <div class="country-text-info">
-                        <span class="c-name">South Sudan</span>
-                        <span class="c-currency">Pay in USD</span>
+                <button class="region-tile" onclick="Engine.initRegion('USD')" aria-label="Select South Sudan">
+                    <span class="r-emoji">🇸🇸</span>
+                    <div class="r-meta">
+                        <strong>South Sudan</strong>
+                        <span>Pay in USD</span>
                     </div>
-                    <div class="c-arrow"><i class="fas fa-chevron-right"></i></div>
+                    <div class="r-arrow"><i class="fas fa-chevron-right"></i></div>
                 </button>
 
-                <button class="country-select-btn" onclick="TikTokApp.setCountry('USD')" aria-label="Select DR Congo">
-                    <span class="flag-emoji">🇨🇩</span>
-                    <div class="country-text-info">
-                        <span class="c-name">DR Congo</span>
-                        <span class="c-currency">Pay in USD</span>
+                <button class="region-tile" onclick="Engine.initRegion('USD')" aria-label="Select DR Congo">
+                    <span class="r-emoji">🇨🇩</span>
+                    <div class="r-meta">
+                        <strong>DR Congo</strong>
+                        <span>Pay in USD</span>
                     </div>
-                    <div class="c-arrow"><i class="fas fa-chevron-right"></i></div>
+                    <div class="r-arrow"><i class="fas fa-chevron-right"></i></div>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="ambient-glow-background" aria-hidden="true">
-        <div class="glow-shape shape-blue"></div>
-        <div class="glow-shape shape-pink"></div>
-    </div>
-
-    <div class="mobile-app-frame" id="app-root">
+    <div class="mixing-console" id="app-root">
         
-        <nav class="app-top-nav">
-            <a href="../index.html" class="nav-back-button" aria-label="Go Back to Home">
+        <nav class="console-nav">
+            <a href="../index.html" class="nav-btn-back" aria-label="Go Back">
                 <i class="fas fa-arrow-left"></i>
             </a>
-            <div class="nav-brand-title">
-                <i class="fab fa-tiktok"></i>
-                <span>AccessUG</span>
+            <div class="nav-brand">
+                <i class="fab fa-tiktok brand-icon"></i>
+                <span class="brand-text">AccessUG</span>
             </div>
-            <button class="nav-country-changer" onclick="TikTokApp.openCountryModal()" aria-label="Change Country">
-                <span id="nav-currency-label">UGX</span> <i class="fas fa-caret-down"></i>
+            <button class="nav-btn-region" onclick="Engine.openRegionSheet()" aria-label="Change Region">
+                <i class="fas fa-globe"></i> <span id="current-region-display">UGX</span>
             </button>
         </nav>
 
-        <header class="simple-page-header">
-            <h1 class="main-title">Grow Your Page</h1>
-            <p class="main-subtitle">Pick the packages you want. If you buy Followers and Likes together, you get a 10% discount automatically.</p>
+        <header class="console-header">
+            <h1 class="hero-title">
+                <span class="text-gradient">Grow</span> Your TikTok
+            </h1>
+            <p class="hero-subtitle">Swipe and tap a package below. Buy Followers and Likes together for an instant 10% discount.</p>
         </header>
 
-        <main class="store-layout">
+        <main class="console-tracks">
             
-            <section class="package-section" id="section-followers">
-                <div class="section-top-bar" onclick="TikTokApp.toggleService('followers')">
-                    <div class="top-bar-left">
-                        <div class="service-icon-box blue-box"><i class="fas fa-user-plus"></i></div>
-                        <div class="service-text-info">
-                            <h2>Get Followers</h2>
-                            <p>Make your page look trusted.</p>
+            <section class="track-section" aria-label="Followers Packages">
+                <header class="track-header">
+                    <div class="track-title-lockup">
+                        <div class="track-icon bg-cyan"><i class="fas fa-user-plus"></i></div>
+                        <div class="track-text">
+                            <h3>Get Followers</h3>
+                            <span>Build algorithmic trust</span>
                         </div>
                     </div>
-                    <div class="app-toggle-switch" id="switch-followers">
-                        <div class="switch-circle"></div>
-                    </div>
-                </div>
+                </header>
                 
-                <div class="section-expandable-area" id="area-followers">
-                    <div class="area-inner-padding">
-                        <label class="simple-label">How many followers do you want?</label>
-                        <div class="big-button-grid" id="grid-followers">
-                            </div>
+                <div class="horizontal-scroll-track" id="track-followers">
+                    </div>
+            </section>
+
+            <section class="track-section" aria-label="Likes Packages">
+                <header class="track-header">
+                    <div class="track-title-lockup">
+                        <div class="track-icon bg-pink"><i class="fas fa-heart"></i></div>
+                        <div class="track-text">
+                            <h3>Get Likes</h3>
+                            <span class="highlight-gold"><i class="fas fa-gift"></i> Includes Free Views</span>
+                        </div>
+                    </div>
+                </header>
+                
+                <div class="horizontal-scroll-track" id="track-likes">
+                    </div>
+
+                <div class="distribution-stepper" id="distribution-module">
+                    <div class="stepper-info">
+                        <label>Split across how many videos?</label>
+                        <span id="split-math-readout">~200 likes per video</span>
+                    </div>
+                    <div class="stepper-controls">
+                        <button onclick="Engine.modifySplit(-1)" aria-label="Decrease videos"><i class="fas fa-minus"></i></button>
+                        <span class="step-value" id="split-counter-display">5</span>
+                        <button onclick="Engine.modifySplit(1)" aria-label="Increase videos"><i class="fas fa-plus"></i></button>
                     </div>
                 </div>
             </section>
 
-            <section class="package-section" id="section-likes">
-                <div class="section-top-bar" onclick="TikTokApp.toggleService('likes')">
-                    <div class="top-bar-left">
-                        <div class="service-icon-box pink-box"><i class="fas fa-heart"></i></div>
-                        <div class="service-text-info">
-                            <h2>Get Likes</h2>
-                            <p>Look famous and get engagement.</p>
+            <section class="track-section details-section" aria-label="Client Details">
+                <header class="track-header">
+                    <div class="track-title-lockup">
+                        <div class="track-icon bg-dark"><i class="fas fa-at"></i></div>
+                        <div class="track-text">
+                            <h3>Your Details</h3>
+                            <span>Where are we sending this?</span>
                         </div>
                     </div>
-                    <div class="app-toggle-switch" id="switch-likes">
-                        <div class="switch-circle"></div>
-                    </div>
-                </div>
+                </header>
                 
-                <div class="section-expandable-area" id="area-likes">
-                    <div class="area-inner-padding">
+                <div class="details-form-card">
+                    
+                    <div class="input-group">
+                        <label for="client-target">TikTok Username</label>
+                        <div class="neo-input-wrapper">
+                            <i class="fab fa-tiktok input-icon"></i>
+                            <input type="text" id="client-target" placeholder="@yourname" autocomplete="off" autocorrect="off">
+                            <div class="focus-border"></div>
+                        </div>
+                    </div>
+
+                    <div class="referrer-module">
+                        <label class="module-label">Did a friend refer you?</label>
+                        <div class="pill-toggle-group">
+                            <button class="toggle-pill active" id="ref-pill-no" onclick="Engine.setReferrerState(false)">No</button>
+                            <button class="toggle-pill" id="ref-pill-yes" onclick="Engine.setReferrerState(true)">Yes</button>
+                        </div>
                         
-                        <div class="free-gift-box">
-                            <div class="gift-icon"><i class="fas fa-gift"></i></div>
-                            <div class="gift-text">
-                                <strong>Free Views Included!</strong>
-                                <span id="free-views-text">You get 2,000 free views with this package.</span>
+                        <div class="referrer-input-drawer" id="referrer-drawer">
+                            <div class="neo-input-wrapper">
+                                <i class="fas fa-user-friends input-icon"></i>
+                                <input type="text" id="referrer-name" placeholder="Enter their name..." autocomplete="off">
+                                <div class="focus-border"></div>
                             </div>
                         </div>
-
-                        <label class="simple-label">How many likes do you want?</label>
-                        <div class="big-button-grid" id="grid-likes">
-                            </div>
-
-                        <div class="split-videos-box">
-                            <div class="split-text">
-                                <label>Split across how many videos?</label>
-                                <span id="split-math-text">Around 200 likes per video</span>
-                            </div>
-                            <div class="plus-minus-controls">
-                                <button onclick="TikTokApp.changeSplit(-1)"><i class="fas fa-minus"></i></button>
-                                <span class="split-number" id="split-display">5</span>
-                                <button onclick="TikTokApp.changeSplit(1)"><i class="fas fa-plus"></i></button>
-                            </div>
-                        </div>
-
                     </div>
+
                 </div>
             </section>
 
-            <section class="package-section input-section">
-                <div class="section-top-bar no-click">
-                    <div class="service-text-info">
-                        <h2>Your Details</h2>
-                        <p>Where should we send the followers/likes?</p>
-                    </div>
-                </div>
-                <div class="area-inner-padding" style="padding-top: 0;">
-                    <div class="big-input-wrapper">
-                        <i class="fas fa-at input-icon"></i>
-                        <input type="text" id="user-tiktok-name" class="big-clean-input" placeholder="Type your TikTok Username here..." autocomplete="off">
-                    </div>
-                </div>
-            </section>
-
-            <div class="bottom-padding-spacer"></div>
+            <div class="scroll-bottom-padding"></div>
         </main>
 
-        <footer class="floating-order-bar" id="order-bar">
-            <div class="order-bar-inner">
+        <footer class="action-dock">
+            <div class="dock-container">
                 
-                <div class="tag-row">
-                    <div class="discount-tag" id="tag-combo">
-                        <i class="fas fa-star"></i> 10% Discount Added
+                <div class="dock-data-layer">
+                    <div class="dock-tags">
+                        <span class="status-tag tag-combo" id="ui-tag-combo"><i class="fas fa-magic"></i> 10% Bundle Saved</span>
+                        <span class="status-tag tag-vip" id="ui-tag-vip"><i class="fas fa-crown"></i> Best Price Cap</span>
                     </div>
-                    <div class="max-cap-tag" id="tag-max">
-                        <i class="fas fa-crown"></i> Best Price Limit Reached
+                    
+                    <div class="dock-pricing">
+                        <span class="price-strike" id="ui-price-strike"></span>
+                        <span class="price-final" id="ui-price-final">0</span>
+                        <span class="price-currency" id="ui-price-currency">UGX</span>
                     </div>
                 </div>
 
-                <div class="price-and-button-row">
-                    <div class="price-side">
-                        <span class="price-title">Your Total Price</span>
-                        <div class="price-numbers">
-                            <span class="crossed-out-price" id="ui-old-price"></span>
-                            <span class="huge-final-price" id="ui-final-price">0</span>
-                            <span class="currency-text" id="ui-currency">UGX</span>
-                        </div>
-                    </div>
+                <button class="btn-execute-order" id="btn-execute" onclick="Engine.transmitPayload()">
+                    <span class="btn-label" id="btn-label">Place Order</span>
+                    <i class="fas fa-lock btn-icon" id="btn-icon"></i>
                     
-                    <button class="big-order-button" id="btn-submit-order" onclick="TikTokApp.submitOrder()">
-                        <span class="btn-text" id="btn-submit-text">Order Now</span>
-                        <i class="fas fa-arrow-right btn-icon" id="btn-submit-icon"></i>
-                        <div class="loading-circle" id="btn-loading-spinner" style="display: none;"></div>
-                    </button>
-                </div>
+                    <div class="svg-spinner-wrapper" id="btn-spinner">
+                        <svg class="svg-spinner" viewBox="0 0 50 50">
+                            <circle class="spinner-path" cx="25" cy="25" r="20" fill="none" stroke-width="5"></circle>
+                        </svg>
+                    </div>
+                </button>
                 
             </div>
         </footer>
