@@ -129,7 +129,7 @@ button { cursor: pointer; }
 #track-likes .mix-tile.active-tile .tile-vol { color: #e11d48; }
 
 /* Distribution Stepper */
-.distribution-stepper { margin: -8px 24px 0; background: var(--color-surface-pure); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--color-border-soft); display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: none; /* Controlled by JS */ }
+.distribution-stepper { margin: -8px 24px 0; background: var(--color-surface-pure); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--color-border-soft); display: flex; justify-content: space-between; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
 .stepper-info label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--color-text-heavy); margin-bottom: 4px; }
 .stepper-info span { font-size: 0.8rem; color: var(--brand-gold); font-weight: 600; }
 .stepper-controls { display: flex; align-items: center; gap: 12px; background: #f1f5f9; padding: 4px; border-radius: var(--radius-pill); border: 1px solid var(--color-border-soft); }

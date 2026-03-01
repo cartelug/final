@@ -12,7 +12,7 @@
  */
 
 const Config = {
-    // ---> CRITICAL: YOUR GOOGLE APPS SCRIPT WEB APP URL HERE <---
+    // Exact URL provided for Google Sheets App Script
     googleSheetUrl: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
     whatsappNumber: '256762193386',
     
@@ -49,7 +49,8 @@ const State = {
     likesIndex: -1,
     splitCount: 5,
     hasReferrer: false, // Tracks the [No] [Yes] pill state
-    isTransmitting: false
+    isTransmitting: false,
+    finalComputedPrice: 0 // Stored for payload
 };
 
 const Engine = {
@@ -319,7 +320,10 @@ const Engine = {
             waDesc += `👁️ *Free Views:* ${vAmt.toLocaleString()}\n`;
         }
 
+        const finalBill = document.getElementById('ui-price-final').innerText + " " + document.getElementById('ui-price-currency').innerText;
+
         // --- EXACT GOOGLE SHEETS INTEGRATION (URLSearchParams) ---
+        // Rule: Date(auto), ClientName, Service, Package, Price, Referrer
         const formData = new URLSearchParams();
         formData.append('ClientName', targetClient); // Input serves as Name/ID
         formData.append('Service', `TikTok Boost [${State.region}]`);
@@ -347,7 +351,7 @@ const Engine = {
         message += `*Package:* ${packageDesc.trim()}\n`;
         message += `*Price:* ${displayTotal}\n`;
         message += `*Referrer:* ${referrerVal}\n`;
-        message += `*Name/Target:* ${targetClient}`;
+        message += `*Name:* ${targetClient}`;
 
         window.location.href = `https://wa.me/${Config.whatsappNumber}?text=${encodeURIComponent(message)}`;
         
@@ -377,6 +381,5 @@ const Engine = {
     }
 };
 
-// Initialize Architecture
-Engine = TikTokApp; // Alias for HTML bindings
+// Initialize Architecture (Fixed invocation)
 Engine.init();
