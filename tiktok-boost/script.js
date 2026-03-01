@@ -1,4 +1,4 @@
-// --- 1. THE EXACT TIER MATRIX & IMMUTABLE RULES ---
+// --- 1. THE EXACT TIER MATRIX (Strict Data Core) ---
 const pricing = {
     'UGX': {
         followers: [ 
@@ -9,7 +9,7 @@ const pricing = {
             {amount: 1000, price: 50000}, {amount: 4000, price: 83000}, 
             {amount: 7000, price: 116000}, {amount: 10000, price: 150000} 
         ],
-        rules: { min: 50000, maxCap: 360000 }
+        rules: { min: 50000, maxCap: 360000, curr: 'UGX' }
     },
     'USD': {
         followers: [ 
@@ -20,77 +20,73 @@ const pricing = {
             {amount: 2500, price: 35}, {amount: 5000, price: 50}, 
             {amount: 7500, price: 75}, {amount: 10000, price: 100} 
         ],
-        rules: { min: 35, maxCap: 100 }
+        rules: { min: 35, maxCap: 100, curr: '$' }
     }
 };
 
 let state = {
     region: 'UGX',
-    services: {
-        followers: { active: true, index: 0 },
-        likes: { active: false, index: 0, split: 5 }
-    }
+    folIndex: -1, // -1 means none selected
+    likesIndex: -1
 };
 
-// --- 2. BOOT & REGION LOGIC ---
+// --- 2. BOOT SEQUENCE ---
 window.onload = () => {
-    let saved = localStorage.getItem('accessug_region');
+    let saved = localStorage.getItem('elite_region');
     if (saved) {
-        selectRegion(saved, false);
+        initRegion(saved, false);
     } else {
-        document.getElementById('region-sheet').classList.add('active');
+        openRegionSheet();
     }
 };
 
-function selectRegion(reg, save = true) {
-    if(save) localStorage.setItem('accessug_region', reg);
-    state.region = reg;
-    
-    document.getElementById('region-sheet').classList.remove('active');
-    document.getElementById('nav-region-label').innerText = reg;
-    
-    // Hard reset UI states
-    state.services.followers.active = true;
-    state.services.likes.active = false;
-    state.services.followers.index = 0;
-    state.services.likes.index = 0;
-    
-    document.getElementById('card-followers').classList.add('is-active');
-    document.getElementById('card-likes').classList.remove('is-active');
-    
-    renderPills();
-    executeCoreMath();
-}
-
-function resetRegion() {
-    localStorage.removeItem('accessug_region');
+function openRegionSheet() {
     document.getElementById('region-sheet').classList.add('active');
 }
 
-// --- 3. DYNAMIC UI GENERATION ---
-function renderPills() {
+function initRegion(reg, save = true) {
+    if(save) localStorage.setItem('elite_region', reg);
+    state.region = reg;
+    
+    document.getElementById('region-sheet').classList.remove('active');
+    document.getElementById('current-region').innerText = reg;
+    
+    // Reset selection on region change
+    state.folIndex = -1;
+    state.likesIndex = -1;
+    
+    renderTracks();
+    computeMath();
+}
+
+// --- 3. FLUID UI GENERATION ---
+function renderTracks() {
     const data = pricing[state.region];
     const formatVol = (v) => v >= 1000 ? (v/1000) + 'k' : v;
     const formatPrice = (p) => state.region === 'USD' ? `$${p}` : `${p.toLocaleString()} UGX`;
 
-    const folGrid = document.getElementById('grid-followers');
-    folGrid.innerHTML = '';
+    // Render Followers Track
+    const folTrack = document.getElementById('track-followers');
+    folTrack.innerHTML = `<div class="mix-tile ${state.folIndex === -1 ? 'active-tile' : ''}" onclick="selectFol(-1)"><span>None</span><small>Skip</small></div>`;
+    
     data.followers.forEach((tier, idx) => {
-        let sel = state.services.followers.index === idx ? 'active-pill' : '';
-        folGrid.innerHTML += `
-            <div class="h-pill ${sel}" onclick="setTier('followers', ${idx})">
+        let active = state.folIndex === idx ? 'active-tile' : '';
+        folTrack.innerHTML += `
+            <div class="mix-tile ${active}" onclick="selectFol(${idx})">
                 <span>${formatVol(tier.amount)}</span>
                 <small>${formatPrice(tier.price)}</small>
             </div>
         `;
     });
 
-    const likesGrid = document.getElementById('grid-likes');
-    likesGrid.innerHTML = '';
+    // Render Likes Track
+    const likesTrack = document.getElementById('track-likes');
+    likesTrack.innerHTML = `<div class="mix-tile ${state.likesIndex === -1 ? 'active-tile' : ''}" onclick="selectLikes(-1)"><span>None</span><small>Skip</small></div>`;
+    
     data.likes.forEach((tier, idx) => {
-        let sel = state.services.likes.index === idx ? 'active-pill' : '';
-        likesGrid.innerHTML += `
-            <div class="h-pill ${sel}" onclick="setTier('likes', ${idx})">
+        let active = state.likesIndex === idx ? 'active-tile' : '';
+        likesTrack.innerHTML += `
+            <div class="mix-tile ${active}" onclick="selectLikes(${idx})">
                 <span>${formatVol(tier.amount)}</span>
                 <small>${formatPrice(tier.price)}</small>
             </div>
@@ -98,91 +94,80 @@ function renderPills() {
     });
 }
 
-// --- 4. HAPTIC INTERACTIONS ---
-function toggleAsset(mod) {
-    const el = document.getElementById(`card-${mod}`);
-    state.services[mod].active = !state.services[mod].active;
-    
-    if (state.services[mod].active) el.classList.add('is-active');
-    else el.classList.remove('is-active');
-    
-    executeCoreMath();
+// --- 4. HAPTIC SELECTIONS ---
+function selectFol(idx) {
+    state.folIndex = idx;
+    renderTracks();
+    computeMath();
 }
 
-function setTier(mod, idx) {
-    event.stopPropagation();
-    state.services[mod].index = idx;
-    if (!state.services[mod].active) toggleAsset(mod);
-    
-    renderPills();
-    executeCoreMath();
+function selectLikes(idx) {
+    state.likesIndex = idx;
+    renderTracks();
+    computeMath();
 }
 
-function modifySplit(dir) {
-    state.services.likes.split += dir;
-    if (state.services.likes.split < 1) state.services.likes.split = 1;
-    if (state.services.likes.split > 10) state.services.likes.split = 10;
-    document.getElementById('split-number').innerText = state.services.likes.split;
-    executeCoreMath();
-}
-
-function toggleReferral() {
-    document.getElementById('ref-drop').classList.toggle('open');
-    const icon = document.getElementById('ref-chevron');
-    icon.classList.contains('fa-chevron-down') ? icon.classList.replace('fa-chevron-down', 'fa-chevron-up') : icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
-}
-
-// --- 5. THE CORE ENGINE (MATH, DISCOUNTS, CAPS) ---
-function executeCoreMath() {
+// --- 5. THE YIELD ENGINE (Math & Rules) ---
+function computeMath() {
     const data = pricing[state.region];
-    const fTier = data.followers[state.services.followers.index];
-    const lTier = data.likes[state.services.likes.index];
-
-    // YIELD BONUS LOGIC (Likes * 2 = Free Views)
-    const freeViews = lTier.amount * 2;
-    document.getElementById('free-views-text').innerText = `Includes ${freeViews.toLocaleString()} Free Views`;
-
-    const likesPerPost = Math.floor(lTier.amount / state.services.likes.split);
-    const viewsPerPost = Math.floor(freeViews / state.services.likes.split);
-    document.getElementById('likes-per-video').innerText = `~${likesPerPost.toLocaleString()} likes & ${viewsPerPost.toLocaleString()} views per video`;
-
-    // BILLING CALCULATION
     let rawTotal = 0;
     let activeCount = 0;
+    
+    let bonusViews = 0;
 
-    if (state.services.followers.active) { rawTotal += fTier.price; activeCount++; }
-    if (state.services.likes.active) { rawTotal += lTier.price; activeCount++; }
+    // Check Followers
+    if (state.folIndex > -1) {
+        rawTotal += data.followers[state.folIndex].price;
+        activeCount++;
+    }
+    
+    // Check Likes & Views
+    if (state.likesIndex > -1) {
+        rawTotal += data.likes[state.likesIndex].price;
+        activeCount++;
+        bonusViews = data.likes[state.likesIndex].amount * 2;
+    }
+
+    // Update Views Text dynamically
+    const viewsLabel = document.getElementById('bonus-views-label');
+    if (bonusViews > 0) {
+        viewsLabel.innerHTML = `+ ${bonusViews.toLocaleString()} Free Views`;
+        viewsLabel.style.color = '#10B981'; // Green
+    } else {
+        viewsLabel.innerHTML = `Includes Free Views`;
+        viewsLabel.style.color = '#f59e0b'; // Gold
+    }
 
     let finalTotal = rawTotal;
-    const badgeCombo = document.getElementById('badge-combo');
-    const badgeVip = document.getElementById('badge-vip');
-    const oldPriceEl = document.getElementById('math-strike');
+    const tagCombo = document.getElementById('tag-combo');
+    const tagVip = document.getElementById('tag-vip');
+    const oldPriceEl = document.getElementById('math-old');
 
-    badgeCombo.style.display = 'none';
-    badgeVip.style.display = 'none';
+    tagCombo.style.display = 'none';
+    tagVip.style.display = 'none';
     oldPriceEl.innerText = '';
 
-    // Apply 10% Combo Filter
+    // Apply 10% Bundle Discount
     if (activeCount === 2 && rawTotal > 0) {
         finalTotal = rawTotal * 0.90;
-        badgeCombo.style.display = 'block';
+        tagCombo.style.display = 'inline-block';
         oldPriceEl.innerText = state.region === 'USD' ? `$${rawTotal}` : rawTotal.toLocaleString();
     }
 
-    // STRICT RULES FILTER (Min / Max Cap Overrides)
+    // Execute Hard Caps & Floors
     if (activeCount > 0) {
         if (finalTotal < data.rules.min) finalTotal = data.rules.min;
         if (finalTotal >= data.rules.maxCap) {
             finalTotal = data.rules.maxCap;
-            badgeCombo.style.display = 'none';
-            badgeVip.style.display = 'block'; // Triggers VIP Tag
+            tagCombo.style.display = 'none'; // Overwrite combo tag
+            tagVip.style.display = 'inline-block'; // Trigger VIP tag
             oldPriceEl.innerText = ''; 
         }
     } else {
         finalTotal = 0;
     }
 
-    // OUTPUT RENDERING
+    // Render to Screen
     if (state.region === 'USD') {
         document.getElementById('math-final').innerText = `$${finalTotal}`;
         document.getElementById('math-curr').innerText = '';
@@ -192,85 +177,90 @@ function executeCoreMath() {
     }
 }
 
-// --- 6. SHADOW-SYNC DATABASE LINK (Validate & Send) ---
-function executeOrder() {
-    let activeCount = Object.keys(state.services).filter(k => state.services[k].active).length;
-    if (activeCount === 0) {
-        alert("Please activate Followers or Likes to proceed."); return;
+// --- 6. SHADOW-SYNC DATABASE & PAYLOAD ---
+function executePayload() {
+    if (state.folIndex === -1 && state.likesIndex === -1) {
+        alert("Please select a Follower or Like package to proceed."); return;
     }
 
-    const name = document.getElementById('client-name').value.trim();
-    const phone = document.getElementById('client-phone').value.trim();
-    const target = document.getElementById('target-account').value.trim();
-    
-    if (!name) { alert("Please enter your Full Name."); document.getElementById('client-name').focus(); return; }
-    if (!phone) { alert("Please enter your WhatsApp Number."); document.getElementById('client-phone').focus(); return; }
-    if (!target) { alert("Please provide the target TikTok account."); document.getElementById('target-account').focus(); return; }
+    const clientData = document.getElementById('client-name').value.trim();
+    if (!clientData) {
+        alert("Please enter your Name or TikTok Handle."); 
+        document.getElementById('client-name').focus(); return;
+    }
 
-    // UI Transformation to Loading State
-    const btn = document.getElementById('deploy-btn');
-    const btnLabel = document.getElementById('btn-label');
+    // Loading State
+    const btn = document.getElementById('btn-execute');
+    const btnText = document.getElementById('btn-text');
     const btnIcon = document.getElementById('btn-icon');
-    const btnLoader = document.getElementById('btn-loader');
+    const btnSpinner = document.getElementById('btn-spinner');
 
     btn.disabled = true;
-    btnLabel.innerText = "Processing...";
+    btnText.innerText = "Processing...";
     btnIcon.style.display = 'none';
-    btnLoader.style.display = 'block';
+    btnSpinner.style.display = 'block';
 
-    // Construct Payload
+    // Compile Exact Data
     const data = pricing[state.region];
-    const fAmt = data.followers[state.services.followers.index].amount;
-    const lAmt = data.likes[state.services.likes.index].amount;
-    const vAmt = lAmt * 2; 
+    let packageStr = "";
+    let waPackageStr = "";
     
-    const finalBill = document.getElementById('math-final').innerText + " " + document.getElementById('math-curr').innerText;
-    const ref = document.getElementById('referral-code').value.trim() || "None";
-    
-    let planString = `TikTok Elite [${state.region}]: `;
-    if (state.services.followers.active) planString += `${fAmt} Followers. `;
-    if (state.services.likes.active) planString += `${lAmt} Likes (${state.services.likes.split} posts) + ${vAmt} Free Views. `;
-    planString += `Total: ${finalBill.trim()}`;
+    if (state.folIndex > -1) {
+        let fAmt = data.followers[state.folIndex].amount;
+        packageStr += `${fAmt} Followers. `;
+        waPackageStr += `🚀 *Followers:* ${fAmt.toLocaleString()}\n`;
+    }
+    if (state.likesIndex > -1) {
+        let lAmt = data.likes[state.likesIndex].amount;
+        let vAmt = lAmt * 2;
+        packageStr += `${lAmt} Likes + ${vAmt} Free Views.`;
+        waPackageStr += `❤️ *Likes:* ${lAmt.toLocaleString()}\n`;
+        waPackageStr += `👁️ *Bonus Views:* ${vAmt.toLocaleString()}\n`;
+    }
 
-    // --- YOUR GOOGLE SCRIPT URL ---
+    const finalBill = document.getElementById('math-final').innerText + " " + document.getElementById('math-curr').innerText;
+
+    // --- EXACT GOOGLE SHEETS MAPPING ---
+    // Rule: Date, Client Name, Service, Package, Price, Referrer
+    const formData = new FormData();
+    formData.append('Client Name', clientData);
+    formData.append('Service', 'TikTok Boost');
+    formData.append('Package', packageStr.trim());
+    formData.append('Price', finalBill.trim());
+    formData.append('Referrer', 'N/A'); // Safely passing logic to preserve sheet structure
+
+    // REPLACE WITH YOUR WEB APP URL
     const scriptURL = 'YOUR_GOOGLE_SCRIPT_URL_HERE'; 
 
-    const formData = new FormData();
-    formData.append('name', name);
-    formData.append('phone', phone);
-    formData.append('device', target); 
-    formData.append('plan', planString);
-    formData.append('referral', ref);
-
-    // Asynchronous Database Sync
     fetch(scriptURL, { method: 'POST', body: formData })
         .then(response => {
-            // Build Formatted WhatsApp Transfer
-            let msg = `*NEW ELITE PROTOCOL [${state.region}]*\n\n`;
-            msg += `*Client:* ${name}\n`;
-            msg += `*Contact:* ${phone}\n\n`;
+            // Build WhatsApp Payload
+            let msg = `*NEW TIKTOK ORDER [${state.region}]*\n\n`;
+            msg += `*Client/Account:* ${clientData}\n\n`;
+            msg += waPackageStr;
             
-            if (state.services.followers.active) msg += `🚀 *Followers:* ${fAmt.toLocaleString()}\n`;
-            if (state.services.likes.active) {
-                msg += `❤️ *Likes:* ${lAmt.toLocaleString()} (Across ${state.services.likes.split} posts)\n`;
-                msg += `👁️ *Bonus Views:* ${vAmt.toLocaleString()}\n`;
+            if (state.folIndex > -1 && state.likesIndex > -1) {
+                let raw = data.followers[state.folIndex].price + data.likes[state.likesIndex].price;
+                if ((raw * 0.90) >= data.rules.maxCap) {
+                    msg += `\n👑 *VIP Max Cap Applied*\n`;
+                } else {
+                    msg += `\n🎁 *10% Bundle Discount*\n`;
+                }
             }
 
-            msg += `\n*Total Due:* ${finalBill.trim()}\n`;
-            msg += `*Target:* ${target}\n`;
-            msg += `*Referrer:* ${ref}`;
+            msg += `\n*Total Due:* ${finalBill.trim()}`;
 
             const waPhone = "256762193386"; 
             window.location.href = `https://wa.me/${waPhone}?text=${encodeURIComponent(msg)}`;
         })
         .catch(error => {
-            console.error('Transmission Error', error.message);
-            alert("Network interference detected. Please verify connection and retry.");
+            console.error('Transmission Error', error);
+            alert("Network connection weak. Please verify your internet and try again.");
             
-            // Revert UI State
+            // Revert UI
             btn.disabled = false;
-            btnLabel.innerText = "Place Order";
+            btnText.innerText = "Secure Order";
             btnIcon.style.display = 'inline-block';
-            btnLoader.style.display = 'none';
+            btnSpinner.style.display = 'none';
         });
 }

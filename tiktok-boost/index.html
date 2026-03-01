@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Elite TikTok Growth | AccessUG</title>
+    <title>Elite TikTok Boost | AccessUG</title>
     <link rel="icon" href="../IMAGES/tiktok.png" type="image/png">
     
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -11,176 +11,101 @@
     
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="elite-light-mode">
+<body class="elite-canvas">
 
-    <div class="liquid-aura">
-        <div class="aura-orb orb-cyan"></div>
-        <div class="aura-orb orb-pink"></div>
-        <div class="aura-orb orb-violet"></div>
-        <div class="glass-noise"></div>
+    <div class="ambient-canvas">
+        <div class="fluid-orb orb-1"></div>
+        <div class="fluid-orb orb-2"></div>
+        <div class="canvas-noise"></div>
     </div>
 
-    <div class="spatial-overlay" id="region-sheet">
-        <div class="spatial-card">
-            <div class="modal-indicator"></div>
-            <div class="modal-icon">🌍</div>
-            <h2>Calibrate Region</h2>
-            <p>Select your location to synchronize pricing.</p>
+    <div class="region-veil" id="region-sheet">
+        <div class="region-sheet-content">
+            <div class="drag-handle"></div>
+            <h2>Select Region</h2>
+            <p>Pricing aligns automatically.</p>
             
-            <div class="region-grid">
-                <button class="glass-btn" onclick="selectRegion('UGX')">
-                    <span class="flag-icon">🇺🇬</span>
-                    <div class="btn-meta">
-                        <strong>Uganda</strong>
-                        <span>UGX Currency</span>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
+            <div class="region-options">
+                <button class="r-tile" onclick="initRegion('UGX')">
+                    <span class="r-emoji">🇺🇬</span>
+                    <div class="r-meta"><strong>Uganda</strong><span>UGX Pricing</span></div>
                 </button>
-                <button class="glass-btn" onclick="selectRegion('USD')">
-                    <span class="flag-icon">🇸🇸</span>
-                    <div class="btn-meta">
-                        <strong>South Sudan</strong>
-                        <span>USD Currency</span>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
+                <button class="r-tile" onclick="initRegion('USD')">
+                    <span class="r-flag">🇸🇸</span>
+                    <div class="r-meta"><strong>South Sudan</strong><span>USD Pricing</span></div>
                 </button>
-                <button class="glass-btn" onclick="selectRegion('USD')">
-                    <span class="flag-icon">🇨🇩</span>
-                    <div class="btn-meta">
-                        <strong>DR Congo</strong>
-                        <span>USD Currency</span>
-                    </div>
-                    <i class="fas fa-arrow-right"></i>
+                <button class="r-tile" onclick="initRegion('USD')">
+                    <span class="r-flag">🇨🇩</span>
+                    <div class="r-meta"><strong>DR Congo</strong><span>USD Pricing</span></div>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="app-shell">
+    <div class="mixing-console">
         
-        <nav class="dynamic-nav">
-            <a href="../index.html" class="nav-return"><i class="fas fa-chevron-left"></i> <span>Home</span></a>
-            <button class="nav-region-toggle" onclick="resetRegion()">
-                <i class="fas fa-globe"></i> <span id="nav-region-label">UGX</span>
-            </button>
-        </nav>
-
-        <header class="app-header">
-            <div class="header-crest"><i class="fab fa-tiktok"></i></div>
-            <h1>Algorithm Push</h1>
-            <p>Select an asset. Bundle Followers & Likes for a 10% efficiency discount.</p>
+        <header class="console-header">
+            <div class="header-top">
+                <a href="../index.html" class="btn-back"><i class="fas fa-arrow-left"></i></a>
+                <button class="btn-region" onclick="openRegionSheet()"><i class="fas fa-globe"></i> <span id="current-region">UGX</span></button>
+            </div>
+            <div class="header-titles">
+                <div class="tt-icon"><i class="fab fa-tiktok"></i></div>
+                <h1>Algorithm Boost</h1>
+                <p>Tap a tile to select. Bundle for an instant 10% discount.</p>
+            </div>
         </header>
 
-        <main class="module-stack">
+        <main class="console-tracks">
             
-            <div class="asset-card" id="card-followers">
-                <div class="asset-trigger" onclick="toggleAsset('followers')">
-                    <div class="trigger-core">
-                        <div class="asset-icon bg-cyan"><i class="fas fa-user-astronaut"></i></div>
-                        <div class="asset-title">
-                            <h3>Followers</h3>
-                            <p>Permanent algorithm authority.</p>
-                        </div>
+            <div class="track-section">
+                <div class="track-label">
+                    <h3><i class="fas fa-user-astronaut"></i> Followers</h3>
+                    <span>Permanent Authority</span>
+                </div>
+                <div class="horizontal-track" id="track-followers">
                     </div>
-                    <div class="bionic-ring" id="ring-followers"></div>
-                </div>
-                
-                <div class="asset-engine" id="engine-followers">
-                    <label class="engine-label">Select Volume</label>
-                    <div class="haptic-grid" id="grid-followers">
-                        </div>
-                </div>
             </div>
 
-            <div class="asset-card" id="card-likes">
-                <div class="asset-trigger" onclick="toggleAsset('likes')">
-                    <div class="trigger-core">
-                        <div class="asset-icon bg-pink"><i class="fas fa-heart"></i></div>
-                        <div class="asset-title">
-                            <h3>Likes</h3>
-                            <p>Instant viral social proof.</p>
-                        </div>
-                    </div>
-                    <div class="bionic-ring" id="ring-likes"></div>
+            <div class="track-section">
+                <div class="track-label">
+                    <h3><i class="fas fa-heart"></i> Likes</h3>
+                    <span id="bonus-views-label">Includes Free Views</span>
                 </div>
-                
-                <div class="asset-engine" id="engine-likes">
-                    <label class="engine-label">Select Volume (Max 10k)</label>
-                    <div class="haptic-grid" id="grid-likes">
-                        </div>
-                    
-                    <div class="bonus-banner">
-                        <div class="bonus-icon"><i class="fas fa-bolt"></i></div>
-                        <div class="bonus-text">
-                            <strong>Yield Bonus Unlocked</strong>
-                            <span id="free-views-text">Includes 2,000 Free Views</span>
-                        </div>
+                <div class="horizontal-track" id="track-likes">
                     </div>
-
-                    <div class="distribution-module">
-                        <div class="dist-meta">
-                            <label>Distribute across videos</label>
-                            <span id="likes-per-video">~200 likes & 400 views per video</span>
-                        </div>
-                        <div class="stepper-control">
-                            <button onclick="modifySplit(-1)"><i class="fas fa-minus"></i></button>
-                            <span class="step-val" id="split-number">5</span>
-                            <button onclick="modifySplit(1)"><i class="fas fa-plus"></i></button>
-                        </div>
-                    </div>
-                </div>
             </div>
 
-            <div class="asset-card data-card">
-                <h3 class="data-title">Deployment Details</h3>
-                
-                <div class="input-matrix">
-                    <div class="neo-input">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="client-name" placeholder="Full Name">
-                    </div>
-                    <div class="neo-input">
-                        <i class="fab fa-whatsapp"></i>
-                        <input type="tel" id="client-phone" placeholder="WhatsApp Number">
-                    </div>
-                    <div class="neo-input target-input">
-                        <i class="fab fa-tiktok"></i>
-                        <input type="text" id="target-account" placeholder="TikTok @username">
-                    </div>
-                </div>
-
-                <div class="referral-system">
-                    <div class="ref-header" onclick="toggleReferral()">
-                        <div class="ref-title"><i class="fas fa-gift"></i> Have a referral name?</div>
-                        <i class="fas fa-chevron-down" id="ref-chevron"></i>
-                    </div>
-                    <div class="ref-drop" id="ref-drop">
-                        <input type="text" id="referral-code" placeholder="Enter friend's name...">
-                    </div>
-                </div>
-            </div>
-
-            <div class="scroll-buffer"></div>
+            <div class="buffer-space"></div>
         </main>
 
-        <div class="checkout-dock">
-            <div class="dock-core">
-                <div class="dock-math">
-                    <div class="status-badge combo" id="badge-combo"><i class="fas fa-check-circle"></i> 10% Bundle Saved</div>
-                    <div class="status-badge vip" id="badge-vip"><i class="fas fa-crown"></i> VIP Cap Applied</div>
+        <div class="action-dock">
+            <div class="dock-inner">
+                
+                <div class="input-layer">
+                    <i class="fas fa-user-circle"></i>
+                    <input type="text" id="client-name" placeholder="Your Name or TikTok Handle" autocomplete="off">
+                </div>
+
+                <div class="math-layer">
+                    <div class="math-tags">
+                        <span class="math-tag combo-tag" id="tag-combo"><i class="fas fa-magic"></i> 10% Saved</span>
+                        <span class="math-tag vip-tag" id="tag-vip"><i class="fas fa-crown"></i> VIP Cap Applied</span>
+                    </div>
                     
-                    <span class="math-label">Total Investment</span>
-                    <div class="math-lockup">
-                        <span class="math-strike" id="math-strike"></span>
-                        <span class="math-final" id="math-final">0</span>
-                        <span class="math-curr" id="math-curr">UGX</span>
+                    <div class="math-readout">
+                        <span class="old-price" id="math-old"></span>
+                        <span class="final-price" id="math-final">0</span>
+                        <span class="currency" id="math-curr">UGX</span>
                     </div>
                 </div>
-                <button class="deploy-btn" id="deploy-btn" onclick="executeOrder()">
-                    <span id="btn-label">Place Order</span>
-                    <i class="fas fa-fingerprint" id="btn-icon"></i>
-                    <div class="loader-ring" id="btn-loader"></div>
+
+                <button class="btn-execute" id="btn-execute" onclick="executePayload()">
+                    <span id="btn-text">Secure Order</span>
+                    <i class="fas fa-lock" id="btn-icon"></i>
+                    <div class="spinner" id="btn-spinner"></div>
                 </button>
+                
             </div>
         </div>
 
