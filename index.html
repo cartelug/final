@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en" class="obsidian-theme">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>AccessUG | Premium Digital Services</title>
-    <meta name="description" content="Uganda's premium digital upgrades. Connect First, Pay via Mobile Money. Netflix, Prime, Spotify.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AccessUG | Elite Digital Upgrades</title>
+    <meta name="description" content="Uganda's premium digital upgrades. Connect First, Pay via Mobile money. Netflix, Prime, Spotify.">
     
     <link rel="icon" href="IMAGES/logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,225 +16,240 @@
 </head>
 <body>
 
-    <div class="ambient-glow"></div>
-
-    <div class="cursor-spotlight" id="spotlight"></div>
-
-    <div id="lightbox" class="lightbox-overlay">
-        <span class="lightbox-close">&times;</span>
-        <img id="lightbox-img" src="" alt="Client Proof">
-    </div>
-
-    <nav class="glass-nav" id="navbar">
-        <div class="container nav-grid">
-            <a href="/" class="brand-monolith">
-                <img src="IMAGES/logo.png" alt="AccessUG" class="brand-icon">
-                <span class="brand-text">ACCESS<span class="text-emerald">UG</span></span>
+    <nav class="premium-nav" id="navbar">
+        <div class="container nav-flex">
+            <a href="/" class="brand-lockup">
+                <img src="IMAGES/logo.png" alt="AccessUG" class="brand-logo">
+                <span class="brand-name">ACCESS<span class="text-accent">UG</span></span>
             </a>
-            <div class="nav-links">
+            <div class="nav-links desktop-only">
                 <a href="#vault" class="nav-item">Services</a>
                 <a href="#framework" class="nav-item">How it works</a>
-                <a href="#intel" class="nav-item">Client Proof</a>
+                <a href="#intel" class="nav-item">Proof</a>
             </div>
+            <a href="#vault" class="btn-nav-action mobile-only">Get Started</a>
         </div>
     </nav>
 
-    <main class="smooth-scroll-wrapper">
-        
-        <section class="stage-hero">
-            <div class="hero-mesh-bg"></div>
-            
-            <div class="container hero-content">
-                <div class="trust-badge fade-up">
-                    <span class="pulse-dot"></span>
-                    <span class="badge-text">2,300+ Active Users in East Africa</span>
+    <main>
+        <section class="hero-section">
+            <div class="hero-glow"></div>
+            <div class="container hero-grid">
+                
+                <div class="trust-badge reveal-up">
+                    <div class="pulse-dot"></div>
+                    <span>2,300+ ACTIVE USERS IN EAST AFRICA</span>
                 </div>
                 
-                <h1 class="display-massive fade-up delay-1">
-                    The Premium Standard.<br>
-                    <span class="text-gradient">Zero Risk.</span>
+                <h1 class="hero-title reveal-up delay-1">
+                    Connect First.<br>
+                    <span class="text-gradient">Pay After.</span>
                 </h1>
                 
-                <p class="lead-text fade-up delay-2">
-                    Connect to the world's best digital services instantly.<br> 
-                    Pay via Mobile Money <strong>only after</strong> you are connected.
+                <p class="hero-subtitle reveal-up delay-2">
+                    Uganda's elite digital standard. Access premium entertainment instantly. Pay via Mobile Money only when you're fully connected.
                 </p>
 
-                <div class="action-cluster fade-up delay-3">
+                <div class="momo-trust reveal-up delay-3">
+                    <img src="IMAGES/mtn.png" alt="MTN Mobile Money" class="momo-icon mtn">
+                    <img src="IMAGES/airtel.png" alt="Airtel Money" class="momo-icon airtel">
+                </div>
+                
+                <div class="hero-actions reveal-up delay-4">
                     <a href="#vault" class="btn-primary-glow">
-                        <span>Get Connected</span>
+                        <span>Unlock Access</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
-
-                <div class="momo-showcase fade-up delay-4">
-                    <span class="momo-label">Supported Payment Networks</span>
-                    <div class="momo-icons">
-                        <img src="IMAGES/mtn.png" alt="MTN Mobile Money">
-                        <img src="IMAGES/airtel.png" alt="Airtel Money">
-                    </div>
-                </div>
             </div>
         </section>
 
-        <section id="vault" class="stage-vault">
-            <div class="container relative-z">
-                <div class="section-header fade-up">
-                    <h2 class="heading-large">The <span class="text-emerald">Vault.</span></h2>
-                    <p class="subtitle">Select your upgrade. Instant setup.</p>
+        <section id="vault" class="vault-section">
+            <div class="container">
+                <div class="section-header reveal-up">
+                    <h2 class="section-title">Premium <span class="text-gradient">Vault</span></h2>
+                    <p class="section-desc">Select your upgrade. Instant delivery.</p>
                 </div>
 
-                <div class="glass-filter fade-up delay-1" id="filter-dock">
+                <div class="filter-dock reveal-up delay-1">
                     <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="music">Music</button>
                     <button class="filter-btn" data-filter="streaming">Streaming</button>
-                    <button class="filter-btn" data-filter="social">Social Boosts</button>
-                    <button class="filter-btn" data-filter="pro">Pro Tools</button>
+                    <button class="filter-btn" data-filter="music">Music</button>
+                    <button class="filter-btn" data-filter="social">Socials</button>
                 </div>
             </div>
 
-            <div class="carousel-container fade-up delay-2">
-                <div class="native-snap-track" id="vault-track">
+            <div class="vault-track-container reveal-up delay-2">
+                <div class="vault-track" id="vault-track">
                     
-                    <div class="premium-card" data-category="streaming">
+                    <div class="service-card" data-category="streaming">
+                        <div class="card-discount">30% OFF</div>
                         <div class="card-header">
-                            <div class="brand-icon-box"><img src="IMAGES/netflix.png" alt="Netflix"></div>
-                            <span class="status-pill highlight">Top Seller</span>
+                            <div class="brand-icon-wrapper"><img src="IMAGES/netflix.png" alt="Netflix"></div>
+                            <span class="tier-badge">Ultra HD</span>
                         </div>
-                        <div class="card-body">
-                            <h3>Netflix 4K Ultra</h3>
-                            <ul class="spec-list">
-                                <li><i class="fas fa-check"></i> Premium 4K Quality</li>
-                                <li><i class="fas fa-check"></i> Smart TV & Mobile</li>
-                                <li><i class="fas fa-check"></i> Instant VIP Setup</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                            <a href="netflix-order/" class="btn-card-action">Select Service</a>
-                        </div>
+                        <h3 class="card-title">Netflix</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> 4K Ultra HD</li>
+                            <li><i class="fas fa-check-circle"></i> 2+ Devices</li>
+                            <li><i class="fas fa-check-circle"></i> Downloads for Offline Use</li>
+                            <li><i class="fas fa-check-circle"></i> Watch on Phone and TV</li>
+                        </ul>
+                        <a href="netflix-order/" class="btn-get-now">
+                            <span>Get Now</span>
+                            <i class="fas fa-bolt"></i>
+                        </a>
                     </div>
 
-                    <div class="premium-card" data-category="streaming">
+                    <div class="service-card" data-category="streaming">
+                        <div class="card-discount">25% OFF</div>
                         <div class="card-header">
-                            <div class="brand-icon-box"><img src="IMAGES/prime-video.png" alt="Prime"></div>
-                            <span class="status-pill standard">Best Value</span>
+                            <div class="brand-icon-wrapper"><img src="IMAGES/prime-video.png" alt="Prime"></div>
+                            <span class="tier-badge blue">Premium</span>
                         </div>
-                        <div class="card-body">
-                            <h3>Prime Video</h3>
-                            <ul class="spec-list">
-                                <li><i class="fas fa-check"></i> Amazon Originals</li>
-                                <li><i class="fas fa-check"></i> 4K HDR Quality</li>
-                                <li><i class="fas fa-check"></i> Offline Downloads</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                            <a href="prime-order/" class="btn-card-action">Select Service</a>
-                        </div>
+                        <h3 class="card-title">Prime Video</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> 4K Ultra HD</li>
+                            <li><i class="fas fa-check-circle"></i> 2+ Devices</li>
+                            <li><i class="fas fa-check-circle"></i> Downloads for Offline Use</li>
+                            <li><i class="fas fa-check-circle"></i> Watch on Phone and TV</li>
+                            <li><i class="fas fa-check-circle"></i> Amazon Originals</li>
+                        </ul>
+                        <a href="prime-order/" class="btn-get-now">
+                            <span>Get Now</span>
+                            <i class="fas fa-bolt"></i>
+                        </a>
                     </div>
 
-                    <div class="premium-card" data-category="music">
+                    <div class="service-card" data-category="music">
+                        <div class="card-discount">20% OFF</div>
                         <div class="card-header">
-                            <div class="brand-icon-box"><img src="IMAGES/spotify.png" alt="Spotify"></div>
-                            <span class="status-pill standard">Trending</span>
+                            <div class="brand-icon-wrapper"><img src="IMAGES/spotify.png" alt="Spotify"></div>
+                            <span class="tier-badge green">Premium</span>
                         </div>
-                        <div class="card-body">
-                            <h3>Spotify Premium</h3>
-                            <ul class="spec-list">
-                                <li><i class="fas fa-check"></i> Zero Interruptions</li>
-                                <li><i class="fas fa-check"></i> Keep Existing Playlists</li>
-                                <li><i class="fas fa-check"></i> Lossless Audio</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                            <a href="spotify-order/" class="btn-card-action">Select Service</a>
-                        </div>
+                        <h3 class="card-title">Spotify</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Ad-Free Music</li>
+                            <li><i class="fas fa-check-circle"></i> Download for Listening Offline</li>
+                            <li><i class="fas fa-check-circle"></i> High Quality Audio</li>
+                        </ul>
+                        <a href="spotify-order/" class="btn-get-now">
+                            <span>Get Now</span>
+                            <i class="fas fa-bolt"></i>
+                        </a>
                     </div>
 
-                    <div class="premium-card" data-category="social">
+                    <div class="service-card" data-category="social">
+                        <div class="card-discount">25% OFF</div>
                         <div class="card-header">
-                            <div class="brand-icon-box"><img src="IMAGES/tiktok.png" alt="TikTok"></div>
-                            <span class="status-pill standard">Viral Growth</span>
+                            <div class="brand-icon-wrapper"><img src="IMAGES/tiktok.png" alt="TikTok"></div>
+                            <span class="tier-badge pink">Viral</span>
                         </div>
-                        <div class="card-body">
-                            <h3>TikTok Boost</h3>
-                            <ul class="spec-list">
-                                <li><i class="fas fa-check"></i> Authentic Followers</li>
-                                <li><i class="fas fa-check"></i> View & Like Surges</li>
-                                <li><i class="fas fa-check"></i> Algorithm Trigger</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                            <a href="tiktok-boost/" class="btn-card-action">Select Service</a>
-                        </div>
+                        <h3 class="card-title">TikTok Boost</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Massive Follower Growth</li>
+                            <li><i class="fas fa-check-circle"></i> Instant View Spikes</li>
+                            <li><i class="fas fa-check-circle"></i> Algorithm Triggering</li>
+                        </ul>
+                        <a href="tiktok-boost/" class="btn-get-now">
+                            <span>Get Now</span>
+                            <i class="fas fa-bolt"></i>
+                        </a>
                     </div>
 
-                    <div class="premium-card" data-category="social">
+                    <div class="service-card" data-category="social">
+                        <div class="card-discount">20% OFF</div>
                         <div class="card-header">
-                            <div class="brand-icon-box"><img src="IMAGES/instagram.png" alt="Instagram"></div>
-                            <span class="status-pill standard">Authority</span>
+                            <div class="brand-icon-wrapper"><img src="IMAGES/instagram.png" alt="Instagram"></div>
+                            <span class="tier-badge orange">Influence</span>
                         </div>
-                        <div class="card-body">
-                            <h3>Instagram Boost</h3>
-                            <ul class="spec-list">
-                                <li><i class="fas fa-check"></i> Profile Scaling</li>
-                                <li><i class="fas fa-check"></i> High Retention Rate</li>
-                                <li><i class="fas fa-check"></i> Reel Engagement</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                            <a href="instagram-boost/" class="btn-card-action">Select Service</a>
-                        </div>
+                        <h3 class="card-title">Instagram Boost</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Premium Followers</li>
+                            <li><i class="fas fa-check-circle"></i> Reel Engagement Spikes</li>
+                            <li><i class="fas fa-check-circle"></i> Profile Authority Lift</li>
+                        </ul>
+                        <a href="instagram-boost/" class="btn-get-now">
+                            <span>Get Now</span>
+                            <i class="fas fa-bolt"></i>
+                        </a>
                     </div>
 
-                    <div class="premium-card locked" data-category="pro">
+                    <div class="service-card" data-category="social">
+                        <div class="card-discount">30% OFF</div>
                         <div class="card-header">
-                            <div class="brand-icon-box"><i class="fas fa-paint-brush" style="color:#fff; font-size:24px;"></i></div>
-                            <span class="status-pill locked-pill">Coming Soon</span>
+                            <div class="brand-icon-wrapper"><i class="fab fa-facebook" style="font-size:32px; color:#1877F2;"></i></div>
+                            <span class="tier-badge blue">Pages</span>
                         </div>
-                        <div class="card-body">
-                            <h3>Canva Pro</h3>
-                            <ul class="spec-list">
-                                <li><i class="fas fa-lock"></i> Brand Kits</li>
-                                <li><i class="fas fa-lock"></i> Premium Assets</li>
-                            </ul>
+                        <h3 class="card-title">Facebook Boost</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Page Like Surges</li>
+                            <li><i class="fas fa-check-circle"></i> Post Viral Shares</li>
+                            <li><i class="fas fa-check-circle"></i> Targeted Reach</li>
+                        </ul>
+                        <a href="facebook-boost/" class="btn-get-now">
+                            <span>Get Now</span>
+                            <i class="fas fa-bolt"></i>
+                        </a>
+                    </div>
+
+                    <div class="service-card" data-category="social">
+                        <div class="card-discount">25% OFF</div>
+                        <div class="card-header">
+                            <div class="brand-icon-wrapper"><img src="IMAGES/youtube.png" alt="YouTube"></div>
+                            <span class="tier-badge red">Monetize</span>
                         </div>
-                        <div class="card-footer">
-                            <button class="btn-card-action disabled" disabled>Locked</button>
-                        </div>
+                        <h3 class="card-title">YouTube Boost</h3>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Watch Hour Completion</li>
+                            <li><i class="fas fa-check-circle"></i> Real Subscribers</li>
+                            <li><i class="fas fa-check-circle"></i> Safe & Compliant</li>
+                        </ul>
+                        <a href="youtube-boost/" class="btn-get-now">
+                            <span>Get Now</span>
+                            <i class="fas fa-bolt"></i>
+                        </a>
                     </div>
 
                 </div>
             </div>
         </section>
 
-        <section id="framework" class="stage-framework">
-            <div class="container relative-z">
+        <section id="framework" class="framework-section">
+            <div class="container">
                 <div class="framework-grid">
-                    <div class="framework-copy fade-up">
-                        <h2 class="heading-large">The <span class="text-emerald">Protocol.</span></h2>
-                        <p class="subtitle">Engineered for absolute trust. Three simple steps to upgrade your digital life.</p>
+                    <div class="framework-text reveal-up">
+                        <h2 class="section-title">Zero Risk <span class="text-gradient">Protocol</span></h2>
+                        <p class="section-desc">Experience it first. Pay only when satisfied.</p>
                     </div>
                     
                     <div class="process-timeline">
-                        <div class="process-node fade-up delay-1">
-                            <div class="node-icon">01</div>
-                            <div class="node-content">
-                                <h4>Select & Configure</h4>
-                                <p>Choose your desired service from the vault and specify your device requirements.</p>
+                        <div class="process-step reveal-up delay-1">
+                            <div class="step-number">01</div>
+                            <div class="step-info">
+                                <h4>Select Service</h4>
+                                <p>Choose your premium upgrade from our vault.</p>
                             </div>
                         </div>
-                        <div class="process-node fade-up delay-2">
-                            <div class="node-icon">02</div>
-                            <div class="node-content">
+                        <div class="process-step reveal-up delay-2">
+                            <div class="step-number">02</div>
+                            <div class="step-info">
+                                <h4>Request Access</h4>
+                                <p>Provide basic details to initiate the secure connection.</p>
+                            </div>
+                        </div>
+                        <div class="process-step reveal-up delay-3">
+                            <div class="step-number">03</div>
+                            <div class="step-info">
                                 <h4>Instant Connection</h4>
-                                <p>Our concierge team provisions your account and guides you through login via WhatsApp.</p>
+                                <p>Our engineers link your devices instantly via VIP WhatsApp.</p>
                             </div>
                         </div>
-                        <div class="process-node active-node fade-up delay-3">
-                            <div class="node-icon"><i class="fas fa-shield-alt"></i></div>
-                            <div class="node-content">
-                                <h4 class="text-emerald">Verify & Pay</h4>
-                                <p>Once you are actively streaming or utilizing the service, you securely settle the invoice via MTN or Airtel Money.</p>
+                        <div class="process-step highlight reveal-up delay-4">
+                            <div class="step-number"><i class="fas fa-check"></i></div>
+                            <div class="step-info">
+                                <h4>Pay After Success</h4>
+                                <p>Send your Mobile Money payment <b>only after</b> you are logged in and watching.</p>
                             </div>
                         </div>
                     </div>
@@ -242,53 +257,57 @@
             </div>
         </section>
 
-        <section id="intel" class="stage-intel">
-            <div class="container relative-z">
-                <div class="section-header text-center fade-up">
-                    <h2 class="heading-large">Verified <span class="text-emerald">Logs.</span></h2>
-                    <p class="subtitle">Real interactions. Real connections.</p>
+        <section id="intel" class="intel-section">
+            <div class="container">
+                <div class="section-header text-center reveal-up">
+                    <h2 class="section-title">Verified <span class="text-gradient">Intel</span></h2>
+                    <p class="section-desc">Real connections. Real trust.</p>
                 </div>
             </div>
             
-            <div class="seamless-marquee fade-up delay-1" id="swipe-marquee">
-                <div class="marquee-track" id="marquee-track">
-                    <img src="IMAGES/trust1.png" alt="Client Log" class="intel-asset">
-                    <img src="IMAGES/trust2.png" alt="Client Log" class="intel-asset">
-                    <img src="IMAGES/trust3.png" alt="Client Log" class="intel-asset">
-                    <img src="IMAGES/trust4.png" alt="Client Log" class="intel-asset">
-                    <img src="IMAGES/trust5.png" alt="Client Log" class="intel-asset">
-                    <img src="IMAGES/trust1.png" alt="Client Log" class="intel-asset">
-                    <img src="IMAGES/trust2.png" alt="Client Log" class="intel-asset">
-                    <img src="IMAGES/trust3.png" alt="Client Log" class="intel-asset">
-                    <img src="IMAGES/trust4.png" alt="Client Log" class="intel-asset">
-                    <img src="IMAGES/trust5.png" alt="Client Log" class="intel-asset">
+            <div class="marquee-wrapper reveal-up delay-1">
+                <div class="marquee-track">
+                    <img src="IMAGES/trust1.png" alt="Client Proof" class="intel-img">
+                    <img src="IMAGES/trust2.png" alt="Client Proof" class="intel-img">
+                    <img src="IMAGES/trust3.png" alt="Client Proof" class="intel-img">
+                    <img src="IMAGES/trust4.png" alt="Client Proof" class="intel-img">
+                    <img src="IMAGES/trust5.png" alt="Client Proof" class="intel-img">
+                    <img src="IMAGES/trust1.png" alt="Client Proof" class="intel-img">
+                    <img src="IMAGES/trust2.png" alt="Client Proof" class="intel-img">
+                    <img src="IMAGES/trust3.png" alt="Client Proof" class="intel-img">
+                    <img src="IMAGES/trust4.png" alt="Client Proof" class="intel-img">
+                    <img src="IMAGES/trust5.png" alt="Client Proof" class="intel-img">
                 </div>
             </div>
         </section>
-
     </main>
+
+    <div id="lightbox" class="lightbox">
+        <div class="lightbox-close"><i class="fas fa-times"></i></div>
+        <img id="lightbox-img" src="" alt="Proof Zoom">
+    </div>
 
     <footer class="premium-footer">
         <div class="container footer-grid">
             <div class="footer-brand">
                 <img src="IMAGES/logo.png" alt="AccessUG">
-                <p>The elite digital standard. Access first, settle later.</p>
+                <p>Uganda's elite digital standard. Connect first, pay after.</p>
             </div>
             <div class="footer-links">
-                <h4>Ecosystem</h4>
-                <a href="netflix-order/">Netflix 4K Ultra</a>
+                <h4>Vault</h4>
+                <a href="netflix-order/">Netflix 4K</a>
                 <a href="prime-order/">Amazon Prime</a>
                 <a href="spotify-order/">Spotify Premium</a>
             </div>
             <div class="footer-links">
-                <h4>Command</h4>
+                <h4>Legal & Support</h4>
                 <a href="contact/">VIP Support</a>
                 <a href="terms-of-service/">Terms of Protocol</a>
                 <a href="privacy-policy/">Privacy Doctrine</a>
             </div>
         </div>
-        <div class="footer-legal">
-            <p>&copy; 2026 AccessUG. Systems Operational.</p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AccessUG. All systems operational.</p>
         </div>
     </footer>
 
