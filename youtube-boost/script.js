@@ -1,32 +1,32 @@
 /**
  * ==========================================================================
- * ACCESSUG ELITE YOUTUBE ENGINE (CINEMATIC OBSIDIAN)
- * Features: Trust Slider, Plain Text WhatsApp Sync, Lock-in
+ * ACCESSUG ELITE YOUTUBE ENGINE (V15 - BENTO UI)
+ * Features: Native Bottom Sheets, Floating Labels, Text Sanitization
  * ==========================================================================
  */
 
 const SysConfig = {
-    // ⚠️ Replace with your deployed Web App URL
+    // ⚠️ Update this with your live Google Sheets Web App URL
     sheetURL: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
     whatsapp: '256762193386',
     
     // Core YouTube Tiers
     matrix: {
         'UGX': [
-            { id: 0, title: "Starter", price: 262500, perks: ["1k Subscribers", "5k Views", "2k Likes", "1-5 Videos"] },
-            { id: 1, title: "Kickstart", price: 412500, perks: ["2k Subscribers", "7k Views", "3.5k Likes", "1-5 Videos"] },
-            { id: 2, title: "Growth", price: 600000, isHot: true, perks: ["3.5k Subscribers", "9k Views", "5k Likes", "1-10 Videos"] },
-            { id: 3, title: "Authority", price: 862500, perks: ["5.5k Subscribers", "11k Views", "6.5k Likes", "1-10 Videos"] },
-            { id: 4, title: "Viral", price: 1162500, perks: ["7.5k Subscribers", "13k Views", "8k Likes", "1-10 Videos"] },
-            { id: 5, title: "Domination", price: 1500000, isMax: true, perks: ["10k Subscribers", "15k Views", "10k Likes", "1-10 Videos"] }
+            { id: 0, title: "Starter", price: 262500, perks: ["1k Subs", "5k Views", "2k Likes"] },
+            { id: 1, title: "Kickstart", price: 412500, perks: ["2k Subs", "7k Views", "3.5k Likes"] },
+            { id: 2, title: "Growth", price: 600000, isHot: true, perks: ["3.5k Subs", "9k Views", "5k Likes"] },
+            { id: 3, title: "Authority", price: 862500, perks: ["5.5k Subs", "11k Views", "6.5k Likes"] },
+            { id: 4, title: "Viral", price: 1162500, perks: ["7.5k Subs", "13k Views", "8k Likes"] },
+            { id: 5, title: "Domination", price: 1500000, isMax: true, perks: ["10k Subs", "15k Views", "10k Likes"] }
         ],
         'USD': [
-            { id: 0, title: "Starter", price: 70, perks: ["1k Subscribers", "5k Views", "2k Likes", "1-5 Videos"] },
-            { id: 1, title: "Kickstart", price: 110, perks: ["2k Subscribers", "7k Views", "3.5k Likes", "1-5 Videos"] },
-            { id: 2, title: "Growth", price: 160, isHot: true, perks: ["3.5k Subscribers", "9k Views", "5k Likes", "1-10 Videos"] },
-            { id: 3, title: "Authority", price: 230, perks: ["5.5k Subscribers", "11k Views", "6.5k Likes", "1-10 Videos"] },
-            { id: 4, title: "Viral", price: 310, perks: ["7.5k Subscribers", "13k Views", "8k Likes", "1-10 Videos"] },
-            { id: 5, title: "Domination", price: 400, isMax: true, perks: ["10k Subscribers", "15k Views", "10k Likes", "1-10 Videos"] }
+            { id: 0, title: "Starter", price: 70, perks: ["1k Subs", "5k Views", "2k Likes"] },
+            { id: 1, title: "Kickstart", price: 110, perks: ["2k Subs", "7k Views", "3.5k Likes"] },
+            { id: 2, title: "Growth", price: 160, isHot: true, perks: ["3.5k Subs", "9k Views", "5k Likes"] },
+            { id: 3, title: "Authority", price: 230, perks: ["5.5k Subs", "11k Views", "6.5k Likes"] },
+            { id: 4, title: "Viral", price: 310, perks: ["7.5k Subs", "13k Views", "8k Likes"] },
+            { id: 5, title: "Domination", price: 400, isMax: true, perks: ["10k Subs", "15k Views", "10k Likes"] }
         ]
     }
 };
@@ -51,10 +51,10 @@ const YtApp = {
             document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
         }
 
-        // Live Event Listeners
-        document.getElementById('client-name').addEventListener('input', () => this.validateFlow());
-        document.getElementById('client-number').addEventListener('input', () => this.validateFlow());
-        document.getElementById('yt-link').addEventListener('input', () => this.validateFlow());
+        // Live Event Listeners for Floating Labels & Validation
+        ['client-name', 'client-number', 'yt-link'].forEach(id => {
+            document.getElementById(id).addEventListener('input', () => this.validateFlow());
+        });
     },
 
     setCountry(currency, code, save = true) {
@@ -67,10 +67,11 @@ const YtApp = {
         
         document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
         
-        const phoneInput = document.getElementById('client-number');
-        if (code === 'UG') phoneInput.placeholder = "E.g. +256 700 000 000";
-        else if (code === 'SS') phoneInput.placeholder = "E.g. +211 000 000 000";
-        else if (code === 'CD') phoneInput.placeholder = "E.g. +243 000 000 000";
+        // Smart Label Updates based on region
+        const phoneLabel = document.getElementById('phone-label');
+        if (code === 'UG') phoneLabel.innerText = "WhatsApp Number (+256...)";
+        else if (code === 'SS') phoneLabel.innerText = "WhatsApp Number (+211...)";
+        else if (code === 'CD') phoneLabel.innerText = "WhatsApp Number (+243...)";
 
         State.selectedId = -1; 
         
@@ -80,36 +81,34 @@ const YtApp = {
     },
 
     renderGrid() {
-        const grid = document.getElementById('package-list');
+        const grid = document.getElementById('package-grid');
         grid.innerHTML = '';
         
         const tiers = SysConfig.matrix[State.geo];
         const sym = State.geo === 'USD' ? '$' : '';
         const cur = State.geo === 'UGX' ? 'UGX' : 'USD';
 
-        tiers.forEach((tier) => {
+        tiers.forEach((tier, index) => {
             const isAct = State.selectedId === tier.id ? 'active' : '';
+            const isFull = (index === tiers.length - 1 && tiers.length % 2 !== 0) ? 'full-width' : '';
             
             let tag = '';
-            if(tier.isHot) tag = `<div class="badge-tag hot">Most Popular</div>`;
-            if(tier.isMax) tag = `<div class="badge-tag max">Max Authority</div>`;
+            if(tier.isHot) tag = `<div class="t-tag">Popular</div>`;
+            if(tier.isMax) tag = `<div class="t-tag max">Domination</div>`;
 
-            let icons = ['fa-users', 'fa-eye', 'fa-thumbs-up', 'fa-video'];
-            let listHTML = tier.perks.map((p, i) => `<li><i class="fas ${icons[i]} f-icon"></i> ${p}</li>`).join('');
+            let icons = ['fa-users', 'fa-eye', 'fa-thumbs-up'];
+            let statsHTML = tier.perks.map((p, i) => `<div class="stat"><i class="fas ${icons[i]}"></i> ${p}</div>`).join('');
 
             grid.innerHTML += `
-                <div class="pack-card ${isAct}" onclick="YtApp.selectTier(${tier.id})">
+                <div class="tier-card ${isAct} ${isFull}" onclick="YtApp.selectTier(${tier.id})">
                     ${tag}
-                    <div class="pack-header">
-                        <h3 class="pack-name">${tier.title}</h3>
-                        <div class="pack-price-box">
-                            <span class="pack-price">${sym}${tier.price.toLocaleString()}</span>
-                            <span class="pack-curr">${cur}</span>
-                        </div>
+                    <div>
+                        <div class="t-name">${tier.title}</div>
+                        <div class="t-price">${sym}${tier.price.toLocaleString()} <span class="t-cur">${cur}</span></div>
                     </div>
-                    <ul class="pack-features">
-                        ${listHTML}
-                    </ul>
+                    <div class="t-stats">
+                        ${statsHTML}
+                    </div>
                 </div>
             `;
         });
@@ -121,11 +120,12 @@ const YtApp = {
         this.updateDock();
         this.validateFlow();
         
-        if (navigator.vibrate) navigator.vibrate(15);
+        if (navigator.vibrate) navigator.vibrate(10);
         
+        // Auto scroll to form softly
         setTimeout(() => {
-            document.getElementById('details-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 150);
+            document.getElementById('details-module').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 200);
     },
 
     toggleReferral() {
@@ -176,13 +176,13 @@ const YtApp = {
 
         if (State.selectedId > -1 && nameVal.length > 2 && numVal.length > 8 && linkVal.length > 2) {
             btn.disabled = false;
-            txt.innerText = "Place Order";
+            txt.innerText = "Checkout Securely";
         } else {
             btn.disabled = true;
-            if (State.selectedId === -1) txt.innerText = "Select Package";
-            else if (nameVal.length <= 2) txt.innerText = "Enter Your Name";
-            else if (numVal.length <= 8) txt.innerText = "Enter WhatsApp Number";
-            else txt.innerText = "Enter YouTube Handle/Link";
+            if (State.selectedId === -1) txt.innerText = "Select a Tier";
+            else if (nameVal.length <= 2) txt.innerText = "Enter Name";
+            else if (numVal.length <= 8) txt.innerText = "Enter Valid Number";
+            else txt.innerText = "Enter Target Channel";
         }
     },
 
@@ -206,8 +206,8 @@ const YtApp = {
     },
 
     nextSlide(stepNumber) {
-        document.querySelectorAll('.slider-pane').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.dot').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.slider-panel').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.slide-dots .dot').forEach(el => el.classList.remove('active'));
         
         document.getElementById(`slide-${stepNumber}`).classList.add('active');
         document.getElementById(`dot-${stepNumber}`).classList.add('active');
@@ -219,7 +219,7 @@ const YtApp = {
         const pageLink = document.getElementById('yt-link').value.trim();
         const refInput = document.getElementById('ref-code').value.trim();
         
-        // Plain text sanitizer
+        // Clean the number for Sheets plain text format
         const cleanNumber = rawNumber.replace(/\D/g, ''); 
         const sheetNumber = "'" + cleanNumber; 
 
@@ -228,7 +228,7 @@ const YtApp = {
         const tier = SysConfig.matrix[State.geo][State.selectedId];
         const displayPrice = State.geo === 'USD' ? `$${tier.price}` : `${tier.price.toLocaleString()} UGX`;
 
-        // 1. Google Sheets Sync
+        // 1. SILENT GOOGLE SHEETS POST
         const payload = new URLSearchParams();
         payload.append('ClientName', clientName);
         payload.append('Number', sheetNumber);
@@ -240,24 +240,23 @@ const YtApp = {
         try {
             fetch(SysConfig.sheetURL, { method: 'POST', body: payload, mode: 'no-cors' });
         } catch (err) {
-            console.log("Sheet sync bypassed");
+            console.log("Sheet logic skipped");
         }
 
-        // 2. WhatsApp Bridge
+        // 2. WHATSAPP BRIDGE
         let msg = `🚀 *NEW YOUTUBE BOOST*\n\n`;
         msg += `*Client Name:* ${clientName}\n`;
         msg += `*WhatsApp:* ${cleanNumber}\n`;
         msg += `*Package:* ${tier.title} Tier\n`;
         msg += `*Total:* ${displayPrice}\n\n`;
-        msg += `🎥 *Channel Link:* ${pageLink}\n`;
+        msg += `🎥 *Channel Target:* ${pageLink}\n`;
         msg += `🎁 *Referrer:* ${finalReferrer}\n\n`;
-        msg += `_I have accepted the terms and am ready to pay the 30% deposit._`;
+        msg += `_I have agreed to the terms and am ready to pay the 30% deposit._`;
 
         const btn = document.getElementById('btn-final-confirm');
-        document.getElementById('final-btn-text').innerText = "Securing...";
+        document.getElementById('final-btn-text').innerText = "Routing...";
         btn.querySelector('i').classList.replace('fa-whatsapp', 'fa-circle-notch');
         btn.querySelector('i').classList.add('fa-spin');
-        btn.style.opacity = '0.8';
         btn.style.pointerEvents = 'none';
         
         setTimeout(() => {
@@ -265,10 +264,9 @@ const YtApp = {
             
             setTimeout(() => {
                 this.closeTrustModal();
-                document.getElementById('final-btn-text').innerText = "Confirm & Proceed";
+                document.getElementById('final-btn-text').innerText = "Proceed to WhatsApp";
                 btn.querySelector('i').classList.replace('fa-circle-notch', 'fa-whatsapp');
                 btn.querySelector('i').classList.remove('fa-spin');
-                btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
             }, 2000);
         }, 1000);
