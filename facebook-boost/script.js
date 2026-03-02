@@ -1,15 +1,16 @@
 /**
  * ==========================================================================
- * ACCESSUG ELITE FACEBOOK ENGINE (V9 - Dark Mode SaaS)
- * Features: Client Name Tracking, Dynamic Referrals, Smooth Scroll
+ * ACCESSUG ELITE FACEBOOK ENGINE (V10 - Full Sheet Sync Integration)
+ * Features: Name, WhatsApp Number, Referrals, Smooth Validation
  * ==========================================================================
  */
 
 const SysConfig = {
+    // ⚠️ Replace with your newly deployed Web App URL if it changed
     sheetURL: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
     whatsapp: '256762193386',
     
-    // Core Package Tiers (Exact Match)
+    // Core Package Tiers
     matrix: {
         'UGX': [
             { id: 0, title: "Advanced", price: 375000, perks: ["10k Followers", "3k Page Likes", "3k Reactions", "5k Post Likes"] },
@@ -45,6 +46,7 @@ const FbApp = {
 
         // Live Event Listeners for Validation
         document.getElementById('client-name').addEventListener('input', () => this.validateFlow());
+        document.getElementById('client-number').addEventListener('input', () => this.validateFlow());
         document.getElementById('fb-link').addEventListener('input', () => this.validateFlow());
     },
 
@@ -113,7 +115,7 @@ const FbApp = {
         // Haptic Feedback
         if (navigator.vibrate) navigator.vibrate(15);
         
-        // Smooth scroll to the form section for a premium feel
+        // Smooth scroll to the form section
         setTimeout(() => {
             document.getElementById('details-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 150);
@@ -160,11 +162,13 @@ const FbApp = {
 
     validateFlow() {
         const nameVal = document.getElementById('client-name').value.trim();
+        const numVal = document.getElementById('client-number').value.trim();
         const linkVal = document.getElementById('fb-link').value.trim();
         const btn = document.getElementById('btn-submit');
         const txt = document.getElementById('btn-text');
 
-        if (State.selectedId > -1 && nameVal.length > 2 && linkVal.length > 8) {
+        // Check if package is selected AND all fields meet minimum length
+        if (State.selectedId > -1 && nameVal.length > 2 && numVal.length > 8 && linkVal.length > 8) {
             btn.disabled = false;
             txt.innerText = "Place Order";
         } else {
@@ -173,6 +177,8 @@ const FbApp = {
                 txt.innerText = "Select Package";
             } else if (nameVal.length <= 2) {
                 txt.innerText = "Enter Your Name";
+            } else if (numVal.length <= 8) {
+                txt.innerText = "Enter WhatsApp Number";
             } else {
                 txt.innerText = "Enter Page Link";
             }
@@ -180,7 +186,9 @@ const FbApp = {
     },
 
     executeOrder() {
+        // 1. Capture Data
         const clientName = document.getElementById('client-name').value.trim();
+        const clientNumber = document.getElementById('client-number').value.trim();
         const pageLink = document.getElementById('fb-link').value.trim();
         const refInput = document.getElementById('ref-code').value.trim();
         
@@ -190,9 +198,10 @@ const FbApp = {
         const tier = SysConfig.matrix[State.geo][State.selectedId];
         const displayPrice = State.geo === 'USD' ? `$${tier.price}` : `${tier.price.toLocaleString()} UGX`;
 
-        // 1. SILENT GOOGLE SHEETS SYNC
+        // 2. GOOGLE SHEETS SYNC (Silently in background)
         const payload = new URLSearchParams();
-        payload.append('ClientName', clientName); // Uses the new name field
+        payload.append('ClientName', clientName);
+        payload.append('Number', clientNumber);
         payload.append('Service', `Facebook Boost [${State.geo}]`);
         payload.append('Package', `${tier.title} Tier`);
         payload.append('Price', State.calcPrice.toString());
@@ -204,9 +213,10 @@ const FbApp = {
             console.log("Sheet sync bypassed");
         }
 
-        // 2. WHATSAPP BRIDGE
+        // 3. WHATSAPP BRIDGE
         let msg = `🚀 *NEW FACEBOOK BOOST*\n\n`;
-        msg += `*Client:* ${clientName}\n`;
+        msg += `*Client Name:* ${clientName}\n`;
+        msg += `*WhatsApp:* ${clientNumber}\n`;
         msg += `*Package:* ${tier.title} Tier\n`;
         msg += `*Total:* ${displayPrice}\n\n`;
         msg += `🔗 *Page Link:* ${pageLink}\n`;
