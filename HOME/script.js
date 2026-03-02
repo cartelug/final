@@ -69,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if(firstMatch) {
-                    // Slight delay to allow display flex to render before scrolling
                     setTimeout(() => {
                         vaultTrack.scrollTo({ left: 0, behavior: 'smooth' });
                     }, 50);
@@ -84,14 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let isDown = false;
     let startX;
     let scrollLeft;
-    let autoScrollSpeed = 2; // Fast speed
+    let autoScrollSpeed = 2; 
     let autoScrollActive = true;
 
-    // Auto-scroll loop
     const autoScroll = () => {
         if (autoScrollActive && !isDown && marquee) {
             marquee.scrollLeft += autoScrollSpeed;
-            // Seamless loop reset
             if (marquee.scrollLeft >= track.scrollWidth / 2) {
                 marquee.scrollLeft = 0;
             }
@@ -102,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(autoScroll);
     }
 
-    // Mouse / Drag Events
     if(marquee) {
         marquee.addEventListener('mousedown', (e) => {
             isDown = true;
@@ -115,11 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isDown) return;
             e.preventDefault();
             const x = e.pageX - marquee.offsetLeft;
-            const walk = (x - startX) * 2; // Drag multiplier
+            const walk = (x - startX) * 2; 
             marquee.scrollLeft = scrollLeft - walk;
         });
 
-        // Touch / Swipe Events
         marquee.addEventListener('touchstart', (e) => {
             isDown = true;
             startX = e.touches[0].pageX - marquee.offsetLeft;
