@@ -1,232 +1,237 @@
 /**
  * ==========================================================================
- * ACCESSUG FACEBOOK ENGINE - V7 (Clean SaaS Logic)
+ * ACCESSUG ELITE FACEBOOK ENGINE (V9 - Dark Mode SaaS)
+ * Features: Client Name Tracking, Dynamic Referrals, Smooth Scroll
  * ==========================================================================
  */
 
-const Config = {
-    // ---> GOOGLE SHEETS WEB APP URL <---
-    sheetUrl: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
-    whatsappPhone: '256762193386',
+const SysConfig = {
+    sheetURL: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
+    whatsapp: '256762193386',
     
-    // Strict Package Data
-    tiers: {
+    // Core Package Tiers (Exact Match)
+    matrix: {
         'UGX': [
-            { id: 0, title: "Advanced", price: 375000, features: ["10k Followers", "3k Page Likes", "3k Reactions", "5k Post Likes"] },
-            { id: 1, title: "Pro", price: 506250, features: ["15k Followers", "5k Page Likes", "5k Reactions", "10k Post Likes"] },
-            { id: 2, title: "Elite", price: 618750, isHot: true, features: ["20k Followers", "7.5k Page Likes", "7.5k Reactions", "15k Post Likes"] },
-            { id: 3, title: "Ultimate", price: 750000, isMax: true, features: ["30k Followers", "10k Page Likes", "10k Reactions", "20k Post Likes"] }
+            { id: 0, title: "Advanced", price: 375000, perks: ["10k Followers", "3k Page Likes", "3k Reactions", "5k Post Likes"] },
+            { id: 1, title: "Pro", price: 506250, perks: ["15k Followers", "5k Page Likes", "5k Reactions", "10k Post Likes"] },
+            { id: 2, title: "Elite", price: 618750, isHot: true, perks: ["20k Followers", "7.5k Page Likes", "7.5k Reactions", "15k Post Likes"] },
+            { id: 3, title: "Ultimate", price: 750000, isMax: true, perks: ["30k Followers", "10k Page Likes", "10k Reactions", "20k Post Likes"] }
         ],
         'USD': [
-            { id: 0, title: "Advanced", price: 100, features: ["10k Followers", "3k Page Likes", "3k Reactions", "5k Post Likes"] },
-            { id: 1, title: "Pro", price: 135, features: ["15k Followers", "5k Page Likes", "5k Reactions", "10k Post Likes"] },
-            { id: 2, title: "Elite", price: 165, isHot: true, features: ["20k Followers", "7.5k Page Likes", "7.5k Reactions", "15k Post Likes"] },
-            { id: 3, title: "Ultimate", price: 200, isMax: true, features: ["30k Followers", "10k Page Likes", "10k Reactions", "20k Post Likes"] }
+            { id: 0, title: "Advanced", price: 100, perks: ["10k Followers", "3k Page Likes", "3k Reactions", "5k Post Likes"] },
+            { id: 1, title: "Pro", price: 135, perks: ["15k Followers", "5k Page Likes", "5k Reactions", "10k Post Likes"] },
+            { id: 2, title: "Elite", price: 165, isHot: true, perks: ["20k Followers", "7.5k Page Likes", "7.5k Reactions", "15k Post Likes"] },
+            { id: 3, title: "Ultimate", price: 200, isMax: true, perks: ["30k Followers", "10k Page Likes", "10k Reactions", "20k Post Likes"] }
         ]
     }
 };
 
 const State = {
-    region: 'UGX',
-    activeTier: -1,
-    hasRefCode: false,
-    mathPrice: 0
+    geo: 'UGX',
+    selectedId: -1,
+    refActive: false,
+    calcPrice: 0
 };
 
 const FbApp = {
 
-    // --- 1. BOOTSTRAP ---
     init() {
-        const savedLocation = localStorage.getItem('accessug_loc_fb');
-        if (savedLocation) {
-            this.setCountry(savedLocation, false);
+        const savedGeo = localStorage.getItem('accessug_loc_fb');
+        if (savedGeo) {
+            this.setCountry(savedGeo, false);
         } else {
             this.openCountryModal();
         }
 
-        // Listen for input to enable/disable button
-        document.getElementById('fb-link').addEventListener('input', () => this.checkForm());
+        // Live Event Listeners for Validation
+        document.getElementById('client-name').addEventListener('input', () => this.validateFlow());
+        document.getElementById('fb-link').addEventListener('input', () => this.validateFlow());
     },
 
-    // --- 2. REGION CONTROLS ---
     openCountryModal() {
         document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
     },
 
     setCountry(code, save = true) {
         if(save) localStorage.setItem('accessug_loc_fb', code);
-        State.region = code;
+        State.geo = code;
         
         document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
         document.getElementById('ui-region-badge').innerText = code;
         
-        // Reset choice on currency swap
-        State.activeTier = -1; 
+        State.selectedId = -1; // Reset selection to force fresh choice
         
-        this.buildPackages();
-        this.updateCart();
-        this.checkForm();
+        this.renderGrid();
+        this.updateDock();
+        this.validateFlow();
     },
 
-    // --- 3. RENDER UI ---
-    buildPackages() {
-        const listContainer = document.getElementById('package-list');
-        listContainer.innerHTML = '';
-        const data = Config.tiers[State.region];
-        const symbol = State.region === 'USD' ? '$' : '';
-        const currencyText = State.region === 'UGX' ? 'UGX' : 'USD';
+    renderGrid() {
+        const grid = document.getElementById('package-list');
+        grid.innerHTML = '';
+        
+        const tiers = SysConfig.matrix[State.geo];
+        const sym = State.geo === 'USD' ? '$' : '';
+        const cur = State.geo === 'UGX' ? 'UGX' : 'USD';
 
-        data.forEach((pkg) => {
-            const isSelected = State.activeTier === pkg.id ? 'is-active' : '';
+        tiers.forEach((tier) => {
+            const isAct = State.selectedId === tier.id ? 'active' : '';
             
-            // Generate tags
-            let tagHTML = '';
-            if(pkg.isHot) tagHTML = `<div class="tag-popular">Most Popular</div>`;
-            if(pkg.isMax) tagHTML = `<div class="tag-popular tag-max">Maximum Impact</div>`;
+            let tag = '';
+            if(tier.isHot) tag = `<div class="badge-tag hot">Most Popular</div>`;
+            if(tier.isMax) tag = `<div class="badge-tag">Max Impact</div>`;
 
-            // Generate features list
-            let featuresHTML = pkg.features.map(f => `<li><i class="fas fa-check"></i> ${f}</li>`).join('');
+            let icons = ['fa-user-plus', 'fa-thumbs-up', 'fa-heart', 'fa-comment-dots'];
+            let listHTML = tier.perks.map((p, i) => `
+                <li><i class="fas ${icons[i]} f-icon"></i> ${p}</li>
+            `).join('');
 
-            listContainer.innerHTML += `
-                <div class="pkg-card ${isSelected}" onclick="FbApp.selectPackage(${pkg.id})">
-                    ${tagHTML}
-                    <div class="pkg-header">
-                        <h3 class="pkg-title">${pkg.title}</h3>
-                        <div class="pkg-price-box">
-                            <span class="pkg-price">${symbol}${pkg.price.toLocaleString()}</span>
-                            <span class="pkg-currency">${currencyText}</span>
+            grid.innerHTML += `
+                <div class="pack-card ${isAct}" onclick="FbApp.selectTier(${tier.id})">
+                    ${tag}
+                    <div class="pack-header">
+                        <h3 class="pack-name">${tier.title}</h3>
+                        <div class="pack-price-box">
+                            <span class="pack-price">${sym}${tier.price.toLocaleString()}</span>
+                            <span class="pack-curr">${cur}</span>
                         </div>
                     </div>
-                    <ul class="pkg-features">
-                        ${featuresHTML}
+                    <ul class="pack-features">
+                        ${listHTML}
                     </ul>
                 </div>
             `;
         });
     },
 
-    // --- 4. INTERACTIONS ---
-    selectPackage(id) {
-        State.activeTier = id;
-        this.buildPackages();
-        this.updateCart();
-        this.checkForm();
-        this.vibrate();
+    selectTier(id) {
+        State.selectedId = id;
+        this.renderGrid();
+        this.updateDock();
+        this.validateFlow();
+        
+        // Haptic Feedback
+        if (navigator.vibrate) navigator.vibrate(15);
+        
+        // Smooth scroll to the form section for a premium feel
+        setTimeout(() => {
+            document.getElementById('details-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
     },
 
-    toggleReferralUI() {
-        State.hasRefCode = !State.hasRefCode;
+    toggleReferral() {
+        State.refActive = !State.refActive;
         const drawer = document.getElementById('ref-drawer');
-        const icon = document.querySelector('#btn-ref-toggle i');
+        const btn = document.getElementById('ref-btn');
         
-        if (State.hasRefCode) {
-            drawer.classList.add('is-visible');
-            icon.classList.replace('fa-gift', 'fa-times');
+        if (State.refActive) {
+            drawer.classList.add('show');
+            btn.classList.add('active');
             setTimeout(() => document.getElementById('ref-code').focus(), 300);
         } else {
-            drawer.classList.remove('is-visible');
-            icon.classList.replace('fa-times', 'fa-gift');
+            drawer.classList.remove('show');
+            btn.classList.remove('active');
             document.getElementById('ref-code').value = ''; 
         }
     },
 
-    vibrate() {
-        if (navigator.vibrate) navigator.vibrate(15);
-    },
+    updateDock() {
+        const valUI = document.getElementById('ui-val');
+        const curUI = document.getElementById('ui-curr');
 
-    // --- 5. LOGIC & VALIDATION ---
-    updateCart() {
-        const valueNode = document.getElementById('ui-price-value');
-        const currNode = document.getElementById('ui-price-currency');
-
-        if (State.activeTier === -1) {
-            valueNode.innerText = "0";
-            currNode.innerText = State.region;
-            State.mathPrice = 0;
+        if (State.selectedId === -1) {
+            valUI.innerText = "0";
+            curUI.innerText = State.geo;
+            State.calcPrice = 0;
             return;
         }
 
-        const pkg = Config.tiers[State.region][State.activeTier];
-        State.mathPrice = pkg.price;
+        const tier = SysConfig.matrix[State.geo][State.selectedId];
+        State.calcPrice = tier.price;
 
-        if (State.region === 'USD') {
-            valueNode.innerText = `$${pkg.price}`;
-            currNode.innerText = 'USD';
+        if (State.geo === 'USD') {
+            valUI.innerText = `$${tier.price}`;
+            curUI.innerText = 'USD';
         } else {
-            valueNode.innerText = pkg.price.toLocaleString();
-            currNode.innerText = 'UGX';
+            valUI.innerText = tier.price.toLocaleString();
+            curUI.innerText = 'UGX';
         }
     },
 
-    checkForm() {
-        const linkInput = document.getElementById('fb-link').value.trim();
-        const btn = document.getElementById('btn-pay');
-        const btnText = document.getElementById('btn-text');
+    validateFlow() {
+        const nameVal = document.getElementById('client-name').value.trim();
+        const linkVal = document.getElementById('fb-link').value.trim();
+        const btn = document.getElementById('btn-submit');
+        const txt = document.getElementById('btn-text');
 
-        if (State.activeTier > -1 && linkInput.length > 8) {
+        if (State.selectedId > -1 && nameVal.length > 2 && linkVal.length > 8) {
             btn.disabled = false;
-            btnText.innerText = "Place Order";
+            txt.innerText = "Place Order";
         } else {
             btn.disabled = true;
-            if (State.activeTier === -1) {
-                btnText.innerText = "Select a Package";
+            if (State.selectedId === -1) {
+                txt.innerText = "Select Package";
+            } else if (nameVal.length <= 2) {
+                txt.innerText = "Enter Your Name";
             } else {
-                btnText.innerText = "Enter Page Link";
+                txt.innerText = "Enter Page Link";
             }
         }
     },
 
-    // --- 6. CHECKOUT PROCESS ---
-    submitOrder() {
-        const linkInput = document.getElementById('fb-link').value.trim();
+    executeOrder() {
+        const clientName = document.getElementById('client-name').value.trim();
+        const pageLink = document.getElementById('fb-link').value.trim();
+        const refInput = document.getElementById('ref-code').value.trim();
         
-        // Exact Referral Logic as Requested
-        let finalReferrer = "Direct";
-        if (State.hasRefCode) {
-            const refValue = document.getElementById('ref-code').value.trim();
-            if (refValue !== "") {
-                finalReferrer = refValue;
-            }
-        }
+        // Process Referrer Logic
+        const finalReferrer = (State.refActive && refInput !== "") ? refInput : "Direct";
 
-        const pkg = Config.tiers[State.region][State.activeTier];
-        const displayPrice = State.region === 'USD' ? `$${pkg.price}` : `${pkg.price.toLocaleString()} UGX`;
+        const tier = SysConfig.matrix[State.geo][State.selectedId];
+        const displayPrice = State.geo === 'USD' ? `$${tier.price}` : `${tier.price.toLocaleString()} UGX`;
 
-        // 1. Google Sheets Background Sync
-        const formData = new URLSearchParams();
-        formData.append('ClientName', linkInput); // Use the link to identify the client order
-        formData.append('Service', `Facebook Boost [${State.region}]`);
-        formData.append('Package', `${pkg.title} Tier`);
-        formData.append('Price', State.mathPrice.toString());
-        formData.append('Referrer', finalReferrer); // Will be "Direct" or the name
+        // 1. SILENT GOOGLE SHEETS SYNC
+        const payload = new URLSearchParams();
+        payload.append('ClientName', clientName); // Uses the new name field
+        payload.append('Service', `Facebook Boost [${State.geo}]`);
+        payload.append('Package', `${tier.title} Tier`);
+        payload.append('Price', State.calcPrice.toString());
+        payload.append('Referrer', finalReferrer);
 
         try {
-            fetch(Config.sheetUrl, { method: 'POST', body: formData, mode: 'no-cors' });
-        } catch (error) {
-            console.log("Sheet sync skipped");
+            fetch(SysConfig.sheetURL, { method: 'POST', body: payload, mode: 'no-cors' });
+        } catch (err) {
+            console.log("Sheet sync bypassed");
         }
 
-        // 2. Format WhatsApp Message
+        // 2. WHATSAPP BRIDGE
         let msg = `🚀 *NEW FACEBOOK BOOST*\n\n`;
-        msg += `*Package:* ${pkg.title} Tier\n`;
-        msg += `*Price:* ${displayPrice}\n\n`;
-        msg += `🔗 *Page Link:* ${linkInput}\n`;
+        msg += `*Client:* ${clientName}\n`;
+        msg += `*Package:* ${tier.title} Tier\n`;
+        msg += `*Total:* ${displayPrice}\n\n`;
+        msg += `🔗 *Page Link:* ${pageLink}\n`;
         msg += `🎁 *Referrer:* ${finalReferrer}\n\n`;
         msg += `_I am ready to make payment. Please send the payment details._`;
 
-        // 3. Redirect
-        const waUrl = `https://wa.me/${Config.whatsappPhone}?text=${encodeURIComponent(msg)}`;
+        // UI Loading State
+        document.getElementById('btn-text').innerText = "Securing...";
+        const icon = document.querySelector('.btn-arrow');
+        icon.classList.replace('fa-arrow-right', 'fa-circle-notch');
+        icon.classList.add('fa-spin');
         
-        // Button loading state
-        document.getElementById('btn-text').innerText = "Connecting...";
-        
+        // Execute Redirect
         setTimeout(() => {
-            window.location.href = waUrl;
-            // Reset button text shortly after
-            setTimeout(() => document.getElementById('btn-text').innerText = "Place Order", 2000);
-        }, 500);
+            window.location.href = `https://wa.me/${SysConfig.whatsapp}?text=${encodeURIComponent(msg)}`;
+            
+            // Failsafe reset
+            setTimeout(() => {
+                document.getElementById('btn-text').innerText = "Place Order";
+                icon.classList.replace('fa-circle-notch', 'fa-arrow-right');
+                icon.classList.remove('fa-spin');
+            }, 2000);
+        }, 800);
     }
 };
 
-// Start App
+// Start System
 document.addEventListener('DOMContentLoaded', () => FbApp.init());

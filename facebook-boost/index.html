@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" class="dark-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#0B0E14">
     
-    <title>Boost Your Facebook | AccessUG</title>
+    <title>Boost Your Facebook | AccessUG Premium</title>
     <meta name="description" content="Get real Facebook followers and likes easily and safely.">
     
     <link rel="icon" href="../IMAGES/facebook.png" type="image/png">
@@ -19,125 +19,139 @@
 </head>
 <body>
 
+    <div class="ambient-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
     <div id="toast-wrapper" class="toast-wrapper" aria-live="polite"></div>
 
-    <div class="modal-backdrop" id="country-modal" aria-hidden="true">
-        <div class="modal-surface">
-            <div class="modal-handle"></div>
+    <div class="modal-overlay" id="country-modal" aria-hidden="true">
+        <div class="modal-glass-card">
+            <div class="modal-drag-pill"></div>
             <div class="modal-header">
-                <div class="modal-icon">🌍</div>
-                <h2>Choose your region</h2>
-                <p>We use this to show you the correct prices.</p>
+                <div class="modal-icon-glow"><i class="fas fa-globe-americas"></i></div>
+                <h2>Select Region</h2>
+                <p>We need your location to show local pricing.</p>
             </div>
             
-            <div class="modal-options">
+            <div class="region-list">
                 <button class="region-btn" onclick="FbApp.setCountry('UGX')">
-                    <span class="region-flag">🇺🇬</span>
-                    <div class="region-info">
-                        <span class="region-name">Uganda</span>
-                        <span class="region-currency">Pay in UGX</span>
+                    <span class="flag">🇺🇬</span>
+                    <div class="r-info">
+                        <span class="r-name">Uganda</span>
+                        <span class="r-curr">Pay in UGX</span>
                     </div>
-                    <i class="fas fa-arrow-right region-arrow"></i>
+                    <i class="fas fa-chevron-right arrow"></i>
                 </button>
 
                 <button class="region-btn" onclick="FbApp.setCountry('USD')">
-                    <span class="region-flag">🇸🇸</span>
-                    <div class="region-info">
-                        <span class="region-name">South Sudan</span>
-                        <span class="region-currency">Pay in USD</span>
+                    <span class="flag">🇸🇸</span>
+                    <div class="r-info">
+                        <span class="r-name">South Sudan</span>
+                        <span class="r-curr">Pay in USD</span>
                     </div>
-                    <i class="fas fa-arrow-right region-arrow"></i>
+                    <i class="fas fa-chevron-right arrow"></i>
                 </button>
 
                 <button class="region-btn" onclick="FbApp.setCountry('USD')">
-                    <span class="region-flag">🇨🇩</span>
-                    <div class="region-info">
-                        <span class="region-name">DR Congo</span>
-                        <span class="region-currency">Pay in USD</span>
+                    <span class="flag">🇨🇩</span>
+                    <div class="r-info">
+                        <span class="r-name">DR Congo</span>
+                        <span class="r-curr">Pay in USD</span>
                     </div>
-                    <i class="fas fa-arrow-right region-arrow"></i>
+                    <i class="fas fa-chevron-right arrow"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="app-container">
+    <div class="app-layout">
         
-        <nav class="top-nav">
+        <nav class="elite-nav">
             <a href="../index.html" class="nav-back">
                 <i class="fas fa-arrow-left"></i> Back
             </a>
+            <div class="nav-brand">
+                <i class="fab fa-facebook brand-icon"></i> AccessUG
+            </div>
             <button class="nav-region" onclick="FbApp.openCountryModal()">
-                <i class="fas fa-globe"></i> <span id="ui-region-badge">UGX</span>
+                <span id="ui-region-badge">UGX</span> <i class="fas fa-caret-down"></i>
             </button>
         </nav>
 
-        <header class="hero-section">
-            <div class="status-pill">
-                <span class="pulse-dot"></span> System Active & Fast
+        <header class="hero-module">
+            <div class="status-indicator">
+                <span class="status-dot"></span> Secure & Active
             </div>
-            <h1 class="hero-title">Boost your <br><span class="fb-gradient-text">Facebook</span></h1>
-            <p class="hero-subtitle">Get real followers and likes. Simple, safe, and built to grow your page fast.</p>
+            <h1 class="hero-title">Boost your <br><span class="gradient-text">Facebook</span></h1>
+            <p class="hero-subtitle">Choose a package. Enter your details. Watch your page grow instantly.</p>
         </header>
 
-        <main class="content-flow">
+        <main class="core-journey">
             
-            <section class="flow-step">
-                <div class="step-header">
-                    <div class="step-number">1</div>
-                    <h2 class="step-title">Choose a Package</h2>
-                </div>
+            <section class="journey-step">
+                <div class="step-badge">1</div>
+                <h2 class="step-title">Choose a Package</h2>
                 
-                <div class="package-list" id="package-list">
+                <div class="grid-packages" id="package-list">
                     </div>
             </section>
 
-            <section class="flow-step">
-                <div class="step-header">
-                    <div class="step-number">2</div>
-                    <h2 class="step-title">Your Details</h2>
-                </div>
+            <section class="journey-step" id="details-section">
+                <div class="step-badge">2</div>
+                <h2 class="step-title">Your Details</h2>
                 
-                <div class="form-card">
+                <div class="form-container">
+                    
                     <div class="input-group">
-                        <label for="fb-link">Facebook Page Link</label>
-                        <div class="input-box">
-                            <i class="fas fa-link input-icon"></i>
-                            <input type="url" id="fb-link" placeholder="Paste your page link here..." autocomplete="off">
+                        <label>Your Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="client-name" placeholder="E.g. John Doe" autocomplete="name">
                         </div>
-                        <p class="input-help">Example: https://facebook.com/yourpage</p>
                     </div>
 
-                    <div class="referral-section">
-                        <button class="ref-toggle" id="btn-ref-toggle" onclick="FbApp.toggleReferralUI()">
-                            <i class="fas fa-gift"></i> I have a referral code
+                    <div class="input-group mt-4">
+                        <label>Facebook Page Link</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-link input-icon"></i>
+                            <input type="url" id="fb-link" placeholder="https://facebook.com/yourpage" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <div class="referral-module mt-5">
+                        <button class="ref-trigger" id="ref-btn" onclick="FbApp.toggleReferral()">
+                            <i class="fas fa-gift"></i> Do you have a referral code?
                         </button>
                         
-                        <div class="ref-input-area" id="ref-drawer">
-                            <div class="input-box small-box">
-                                <input type="text" id="ref-code" placeholder="Enter name or code..." autocomplete="off">
+                        <div class="ref-expandable" id="ref-drawer">
+                            <div class="input-wrapper mini-wrapper">
+                                <i class="fas fa-hashtag input-icon"></i>
+                                <input type="text" id="ref-code" placeholder="Enter code or friend's name" autocomplete="off">
                             </div>
                         </div>
                     </div>
+
                 </div>
             </section>
 
-            <div class="bottom-spacer"></div>
+            <div class="bottom-padding"></div>
         </main>
 
-        <footer class="checkout-bar">
-            <div class="checkout-content">
-                <div class="checkout-text">
-                    <span class="total-caption">Total Price</span>
-                    <div class="price-display">
-                        <span id="ui-price-value" class="price-value">0</span>
-                        <span id="ui-price-currency" class="price-currency">UGX</span>
+        <footer class="action-dock">
+            <div class="dock-container">
+                <div class="dock-price">
+                    <span class="dock-label">Total to pay</span>
+                    <div class="price-lock">
+                        <span id="ui-val" class="val">0</span>
+                        <span id="ui-curr" class="curr">UGX</span>
                     </div>
                 </div>
                 
-                <button class="pay-btn" id="btn-pay" onclick="FbApp.submitOrder()" disabled>
-                    <span id="btn-text">Select a Package</span>
-                    <i class="fas fa-arrow-right"></i>
+                <button class="checkout-btn" id="btn-submit" onclick="FbApp.executeOrder()" disabled>
+                    <span id="btn-text">Select Package</span>
+                    <i class="fas fa-arrow-right btn-arrow"></i>
                 </button>
             </div>
         </footer>
