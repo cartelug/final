@@ -43,24 +43,127 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.fade-up').forEach(el => revealObserver.observe(el));
 
-    // === 4. 3D TILT PHYSICS FOR CARDS ===
-    const cards = document.querySelectorAll('[data-tilt]');
-    cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            if (!window.matchMedia("(pointer: fine)").matches) return;
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = ((y - centerY) / centerY) * -4; 
-            const rotateY = ((x - centerX) / centerX) * 4;
-            card.style.transform = `perspective(1500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-12px)`;
+    // === 4. SPATIAL CAROUSEL ENGINE & SLIDE-TO-DEPLOY ===
+    const track = document.getElementById('vault-track');
+    const cards = document.querySelectorAll('.spatial-card');
+    const silkMesh = document.getElementById('silk-mesh');
+    const filterPills = document.querySelectorAll('.filter-pill');
+
+    if(track && cards.length > 0) {
+        
+        // --- 1. Intersection Observer for Active Focus & Aura ---
+        const observerOptions = { root: track, rootMargin: '0px', threshold: 0.6 };
+        const carouselObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Remove active from all
+                    cards.forEach(c => c.classList.remove('is-active'));
+                    // Add active to centered
+                    entry.target.classList.add('is-active');
+                    
+                    // Shift Background Aura
+                    const themeColor = entry.target.getAttribute('data-theme');
+                    if(themeColor) {
+                        silkMesh.style.background = `radial-gradient(circle, ${themeColor} 0%, transparent 60%)`;
+                    }
+                }
+            });
+        }, observerOptions);
+
+        cards.forEach(card => carouselObserver.observe(card));
+
+        // Center first item on load
+        setTimeout(() => {
+            const firstActive = [...cards].find(c => c.style.display !== 'none');
+            if(firstActive) {
+                const scrollPos = firstActive.offsetLeft - (window.innerWidth / 2) + (firstActive.offsetWidth / 2);
+                track.scrollTo({ left: scrollPos, behavior: 'smooth' });
+            }
+        }, 500);
+
+        // --- 2. Filter Logic ---
+        filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                filterPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                
+                const filter = pill.getAttribute('data-filter');
+                let firstMatch = null;
+
+                cards.forEach(card => {
+                    if(filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'flex';
+                        if(!firstMatch) firstMatch = card;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                // Scroll to first matched item
+                if(firstMatch) {
+                    setTimeout(() => {
+                        const scrollPos = firstMatch.offsetLeft - (window.innerWidth / 2) + (firstMatch.offsetWidth / 2);
+                        track.scrollTo({ left: scrollPos, behavior: 'smooth' });
+                    }, 50);
+                }
+            });
         });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = `perspective(1500px) rotateX(0deg) rotateY(0deg) translateY(0px)`;
+
+        // --- 3. Slide to Deploy Logic ---
+        const slideTracks = document.querySelectorAll('.slide-track:not(.disabled)');
+        
+        slideTracks.forEach(trackElement => {
+            const thumb = trackElement.querySelector('.slide-thumb');
+            const text = trackElement.querySelector('.slide-text');
+            const targetLink = trackElement.getAttribute('data-link');
+            
+            let isDragging = false;
+            let startX = 0;
+            let currentX = 0;
+            const maxDrag = trackElement.offsetWidth - thumb.offsetWidth - 8; // 8px padding
+
+            const startDrag = (e) => {
+                isDragging = true;
+                startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+                thumb.style.transition = 'none';
+                text.style.opacity = '0.3';
+            };
+
+            const drag = (e) => {
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+                currentX = Math.min(Math.max(0, x - startX), maxDrag);
+                thumb.style.transform = `translateX(${currentX}px)`;
+            };
+
+            const endDrag = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                thumb.style.transition = 'transform 0.3s ease';
+                
+                if (currentX >= maxDrag * 0.85) { // 85% threshold to trigger
+                    thumb.style.transform = `translateX(${maxDrag}px)`;
+                    thumb.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                    setTimeout(() => {
+                        window.location.href = targetLink;
+                    }, 300);
+                } else {
+                    thumb.style.transform = `translateX(0px)`;
+                    text.style.opacity = '1';
+                }
+            };
+
+            thumb.addEventListener('mousedown', startDrag);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', endDrag);
+
+            thumb.addEventListener('touchstart', startDrag, {passive: true});
+            document.addEventListener('touchmove', drag, {passive: false});
+            document.addEventListener('touchend', endDrag);
         });
-    });
+    }
+
 
     // === 5. SWIPEABLE + FAST AUTO-SCROLL MARQUEE ===
     const marquee = document.getElementById('swipe-marquee');

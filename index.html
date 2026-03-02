@@ -84,90 +84,223 @@
             </div>
         </section>
 
-        <section id="vault" class="stage-vault">
-            <div class="vault-bg">
-                <div class="v-grid"></div>
-                <div class="v-orb orb-nx"></div>
-                <div class="v-orb orb-pm"></div>
-                <div class="v-orb orb-sp"></div>
+      <section id="vault" class="stage-vault-spatial">
+            <div class="spatial-bg" id="spatial-bg">
+                <div class="silk-mesh" id="silk-mesh"></div>
+                <div class="glass-noise"></div>
             </div>
 
-            <div class="container">
+            <div class="container relative-z">
                 <div class="section-title fade-up">
                     <h2 class="heading-large">The <span class="text-emerald">Vault.</span></h2>
-                    <p class="subtitle">Select a digital asset to deploy.</p>
+                    <p class="subtitle">Swipe to look around. Slide to join.</p>
                 </div>
 
-                <div class="monolith-grid">
+                <div class="filter-dock fade-up delay-1" id="filter-dock">
+                    <button class="filter-pill active" data-filter="all">All</button>
+                    <button class="filter-pill" data-filter="streaming">Streaming</button>
+                    <button class="filter-pill" data-filter="social">Social Boosts</button>
+                    <button class="filter-pill" data-filter="pro">Pro Tools</button>
+                </div>
+            </div>
+
+            <div class="carousel-container fade-up delay-2">
+                <div class="snap-track" id="vault-track">
                     
-                    <div class="monolith-card netflix-theme fade-up" data-tilt>
-                        <div class="card-border-light"></div>
-                        <div class="card-glass-core">
-                            <div class="card-head">
-                                <div class="brand-crest"><img src="IMAGES/netflix.png" alt="Netflix"></div>
-                                <span class="status-tag tag-red">Top Seller</span>
-                            </div>
-                            <div class="card-body">
-                                <h3>Netflix 4K Ultra</h3>
-                                <ul class="spec-matrix">
-                                    <li><i class="fas fa-check glow-tick"></i> UHD Resolution</li>
-                                    <li><i class="fas fa-check glow-tick"></i> TV, Phone & PC</li>
-                                    <li><i class="fas fa-check glow-tick"></i> WhatsApp Setup</li>
-                                </ul>
-                            </div>
-                            <div class="card-foot">
-                                <a href="netflix-order/" class="btn-deploy btn-nx">
-                                    <span class="btn-label">Get Now</span>
-                                    <div class="btn-icon"><i class="fas fa-arrow-right"></i></div>
-                                </a>
+                    <div class="spatial-card" data-category="streaming" data-theme="rgba(229,9,20,0.6)">
+                        <div class="card-inner-glow"></div>
+                        <div class="card-top">
+                            <div class="brand-crest"><img src="IMAGES/netflix.png" alt="Netflix"></div>
+                            <span class="status-tag tag-red">Top Seller</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>Netflix 4K</h3>
+                            <ul class="spec-matrix">
+                                <li><i class="fas fa-check glow-tick"></i> 4K Video Quality</li>
+                                <li><i class="fas fa-check glow-tick"></i> Works on TV & Phone</li>
+                                <li><i class="fas fa-check glow-tick"></i> Fast WhatsApp Setup</li>
+                            </ul>
+                        </div>
+                        <div class="slide-action">
+                            <div class="slide-track" data-link="netflix-order/">
+                                <span class="slide-text">Slide to Join</span>
+                                <div class="slide-thumb"><i class="fas fa-chevron-right"></i></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="monolith-card prime-theme fade-up delay-1" data-tilt>
-                        <div class="card-border-light"></div>
-                        <div class="card-glass-core">
-                            <div class="card-head">
-                                <div class="brand-crest"><img src="IMAGES/prime-video.png" alt="Prime"></div>
-                                <span class="status-tag tag-blue">Best Value</span>
-                            </div>
-                            <div class="card-body">
-                                <h3>Prime Video</h3>
-                                <ul class="spec-matrix">
-                                    <li><i class="fas fa-check glow-tick"></i> Amazon Originals</li>
-                                    <li><i class="fas fa-check glow-tick"></i> 4K HDR Streaming</li>
-                                    <li><i class="fas fa-check glow-tick"></i> Offline Downloads</li>
-                                </ul>
-                            </div>
-                            <div class="card-foot">
-                                <a href="prime-order/" class="btn-deploy btn-pm">
-                                    <span class="btn-label">Get Now</span>
-                                    <div class="btn-icon"><i class="fas fa-arrow-right"></i></div>
-                                </a>
+                    <div class="spatial-card" data-category="streaming" data-theme="rgba(0,168,225,0.6)">
+                        <div class="card-inner-glow"></div>
+                        <div class="card-top">
+                            <div class="brand-crest"><img src="IMAGES/prime-video.png" alt="Prime"></div>
+                            <span class="status-tag tag-blue">Best Value</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>Prime Video</h3>
+                            <ul class="spec-matrix">
+                                <li><i class="fas fa-check glow-tick"></i> Amazon Movies & Shows</li>
+                                <li><i class="fas fa-check glow-tick"></i> 4K Video Quality</li>
+                                <li><i class="fas fa-check glow-tick"></i> Watch Offline</li>
+                            </ul>
+                        </div>
+                        <div class="slide-action">
+                            <div class="slide-track" data-link="prime-order/">
+                                <span class="slide-text">Slide to Join</span>
+                                <div class="slide-thumb"><i class="fas fa-chevron-right"></i></div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="monolith-card spotify-theme fade-up delay-2" data-tilt>
-                        <div class="card-border-light"></div>
-                        <div class="card-glass-core">
-                            <div class="card-head">
-                                <div class="brand-crest"><img src="IMAGES/spotify.png" alt="Spotify"></div>
-                                <span class="status-tag tag-green">Trending</span>
+                    <div class="spatial-card" data-category="streaming" data-theme="rgba(29,185,84,0.6)">
+                        <div class="card-inner-glow"></div>
+                        <div class="card-top">
+                            <div class="brand-crest"><img src="IMAGES/spotify.png" alt="Spotify"></div>
+                            <span class="status-tag tag-green">Trending</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>Spotify Premium</h3>
+                            <ul class="spec-matrix">
+                                <li><i class="fas fa-check glow-tick"></i> No Ads</li>
+                                <li><i class="fas fa-check glow-tick"></i> Keep Your Playlists</li>
+                                <li><i class="fas fa-check glow-tick"></i> Best Sound Quality</li>
+                            </ul>
+                        </div>
+                        <div class="slide-action">
+                            <div class="slide-track" data-link="spotify-order/">
+                                <span class="slide-text">Slide to Join</span>
+                                <div class="slide-thumb"><i class="fas fa-chevron-right"></i></div>
                             </div>
-                            <div class="card-body">
-                                <h3>Spotify Premium</h3>
-                                <ul class="spec-matrix">
-                                    <li><i class="fas fa-check glow-tick"></i> Ad-Free Listening</li>
-                                    <li><i class="fas fa-check glow-tick"></i> Keep Playlists</li>
-                                    <li><i class="fas fa-check glow-tick"></i> Max Audio Quality</li>
-                                </ul>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card" data-category="social" data-theme="rgba(0,242,254,0.6)">
+                        <div class="card-inner-glow"></div>
+                        <div class="card-top">
+                            <div class="brand-crest"><img src="IMAGES/tiktok.png" alt="TikTok"></div>
+                            <span class="status-tag" style="color:#00f2fe; background:rgba(0,242,254,0.1); border:1px solid rgba(0,242,254,0.2);">Viral</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>TikTok Boost</h3>
+                            <ul class="spec-matrix">
+                                <li><i class="fas fa-check glow-tick"></i> Real Followers</li>
+                                <li><i class="fas fa-check glow-tick"></i> More Views & Likes</li>
+                                <li><i class="fas fa-check glow-tick"></i> Go Viral Faster</li>
+                            </ul>
+                        </div>
+                        <div class="slide-action">
+                            <div class="slide-track" data-link="tiktok-boost/">
+                                <span class="slide-text">Slide to Join</span>
+                                <div class="slide-thumb"><i class="fas fa-chevron-right"></i></div>
                             </div>
-                            <div class="card-foot">
-                                <a href="spotify-order/" class="btn-deploy btn-sp">
-                                    <span class="btn-label">Get Now</span>
-                                    <div class="btn-icon"><i class="fas fa-arrow-right"></i></div>
-                                </a>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card" data-category="social" data-theme="rgba(225,48,108,0.6)">
+                        <div class="card-inner-glow"></div>
+                        <div class="card-top">
+                            <div class="brand-crest"><img src="IMAGES/instagram.png" alt="Instagram"></div>
+                            <span class="status-tag tag-red">Popular</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>IG Boost</h3>
+                            <ul class="spec-matrix">
+                                <li><i class="fas fa-check glow-tick"></i> Grow Your Profile</li>
+                                <li><i class="fas fa-check glow-tick"></i> More Reel Views</li>
+                                <li><i class="fas fa-check glow-tick"></i> Followers Don't Drop</li>
+                            </ul>
+                        </div>
+                        <div class="slide-action">
+                            <div class="slide-track" data-link="instagram-boost/">
+                                <span class="slide-text">Slide to Join</span>
+                                <div class="slide-thumb"><i class="fas fa-chevron-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card" data-category="social" data-theme="rgba(24,119,242,0.6)">
+                        <div class="card-inner-glow"></div>
+                        <div class="card-top">
+                            <div class="brand-crest" style="font-size: 28px; color: #1877F2;"><i class="fab fa-facebook"></i></div>
+                            <span class="status-tag tag-blue">Pages</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>Facebook Boost</h3>
+                            <ul class="spec-matrix">
+                                <li><i class="fas fa-check glow-tick"></i> More Page Likes</li>
+                                <li><i class="fas fa-check glow-tick"></i> More Post Shares</li>
+                                <li><i class="fas fa-check glow-tick"></i> Reach Real People</li>
+                            </ul>
+                        </div>
+                        <div class="slide-action">
+                            <div class="slide-track" data-link="facebook-boost/">
+                                <span class="slide-text">Slide to Join</span>
+                                <div class="slide-thumb"><i class="fas fa-chevron-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card" data-category="social" data-theme="rgba(255,0,0,0.6)">
+                        <div class="card-inner-glow"></div>
+                        <div class="card-top">
+                            <div class="brand-crest"><img src="IMAGES/youtube.png" alt="YouTube"></div>
+                            <span class="status-tag tag-red">Monetize</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>YouTube Boost</h3>
+                            <ul class="spec-matrix">
+                                <li><i class="fas fa-check glow-tick"></i> More Watch Hours</li>
+                                <li><i class="fas fa-check glow-tick"></i> More Subscribers</li>
+                                <li><i class="fas fa-check glow-tick"></i> 100% Safe & Secure</li>
+                            </ul>
+                        </div>
+                        <div class="slide-action">
+                            <div class="slide-track" data-link="youtube-boost/">
+                                <span class="slide-text">Slide to Join</span>
+                                <div class="slide-thumb"><i class="fas fa-chevron-right"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card locked" data-category="pro" data-theme="rgba(0,196,204,0.3)">
+                        <div class="card-inner-glow"></div>
+                        <div class="card-top">
+                            <div class="brand-crest" style="font-size: 28px; color: #00C4CC;"><i class="fas fa-paint-brush"></i></div>
+                            <span class="status-tag" style="color:#aaa; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);">Coming Soon</span>
+                        </div>
+                        <div class="card-info">
+                            <h3 style="color:#888;">Canva Pro</h3>
+                            <ul class="spec-matrix" style="opacity: 0.5;">
+                                <li><i class="fas fa-lock"></i> Pro Designs & Images</li>
+                                <li><i class="fas fa-lock"></i> Easy Branding</li>
+                                <li><i class="fas fa-lock"></i> AI Tools</li>
+                            </ul>
+                        </div>
+                        <div class="slide-action disabled">
+                            <div class="slide-track">
+                                <span class="slide-text">Locked</span>
+                                <div class="slide-thumb"><i class="fas fa-lock"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card locked" data-category="pro" data-theme="rgba(255,255,255,0.2)">
+                        <div class="card-inner-glow"></div>
+                        <div class="card-top">
+                            <div class="brand-crest" style="font-size: 28px; color: #fff;"><i class="fas fa-video"></i></div>
+                            <span class="status-tag" style="color:#aaa; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);">Coming Soon</span>
+                        </div>
+                        <div class="card-info">
+                            <h3 style="color:#888;">CapCut Pro</h3>
+                            <ul class="spec-matrix" style="opacity: 0.5;">
+                                <li><i class="fas fa-lock"></i> Pro Video Effects</li>
+                                <li><i class="fas fa-lock"></i> Cool Filters</li>
+                                <li><i class="fas fa-lock"></i> No Watermark</li>
+                            </ul>
+                        </div>
+                        <div class="slide-action disabled">
+                            <div class="slide-track">
+                                <span class="slide-text">Locked</span>
+                                <div class="slide-thumb"><i class="fas fa-lock"></i></div>
                             </div>
                         </div>
                     </div>
