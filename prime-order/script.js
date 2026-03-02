@@ -76,7 +76,15 @@ function setRegion(regionCode) {
         paymentSelect.appendChild(opt);
     });
 
-    // 3. Clear Gatekeeper with smooth fade
+    // 3. Dynamic WhatsApp Placeholder
+    const phoneInput = document.getElementById('clientNumber');
+    if (phoneInput) {
+        if (regionCode === 'UG') phoneInput.placeholder = "e.g. +256 700 000 000";
+        else if (regionCode === 'SS') phoneInput.placeholder = "e.g. +211 000 000 000";
+        else if (regionCode === 'CD') phoneInput.placeholder = "e.g. +243 000 000 000";
+    }
+
+    // 4. Clear Gatekeeper with smooth fade
     const gatekeeper = document.getElementById('region-gatekeeper');
     gatekeeper.style.opacity = '0';
     gatekeeper.style.pointerEvents = 'none';
@@ -144,15 +152,26 @@ function goToStep(stepNumber) {
 
 async function validateAndSend() {
     const name = document.getElementById('clientName').value.trim();
+    const rawNumber = document.getElementById('clientNumber').value.trim();
     const payment = document.getElementById('paymentMethod').value;
     // Add this line to grab the referral code
     const referrer = document.getElementById('referralCode')?.value.trim() || "Direct";
 
+    // Form Validation
     if (!name) {
         alert("Please enter your Full Name.");
         document.getElementById('clientName').focus();
         return false;
     }
+    if (rawNumber.length < 8) {
+        alert("Please enter a valid WhatsApp Number.");
+        document.getElementById('clientNumber').focus();
+        return false;
+    }
+
+    // Number Sanitizer for Plain Text in Sheets
+    const cleanNumber = rawNumber.replace(/\D/g, ''); 
+    const sheetNumber = "'" + cleanNumber; 
 
     const data = regionData[currentRegion];
     
@@ -165,13 +184,14 @@ async function validateAndSend() {
     // This sends data to your sheet in the background
     const formData = new URLSearchParams();
     formData.append('ClientName', name);
+    formData.append('Number', sheetNumber); // Added newly captured number
     formData.append('Service', 'Prime Video'); // Identifies the service
     formData.append('Package', currentPlanName);
     formData.append('Price', rawPrice.replace(/,/g, '')); // Removes commas for math
     formData.append('Referrer', referrer);
 
     try {
-        // REPLACE the URL below with your Google Web App URL from Step 2
+        // Uses your Google Web App URL
         fetch("https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec", { 
             method: 'POST', 
             body: formData, 
@@ -183,11 +203,12 @@ async function validateAndSend() {
     const phone = "256762193386"; 
     
     let message = `*NEW ORDER [${data.name.toUpperCase()}]*\n\n`;
-    message += `*Service:* Netflix Premium\n`;
+    message += `*Service:* Prime Video\n`; // FIXED: Now correctly says Prime Video
     message += `*Package:* ${currentPlanName}\n`;
     message += `*Price:* ${rawPrice} ${data.currency}\n`;
-    message += `*Referrer:* ${referrer}\n`; // Included in WhatsApp for you to see
+    message += `*Referrer:* ${referrer}\n\n`; 
     message += `*Name:* ${name}\n`;
+    message += `*WhatsApp:* ${cleanNumber}\n`; // Added to message
     message += `*Payment Method:* ${payment}`;
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;

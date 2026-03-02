@@ -1,18 +1,11 @@
 /**
  * ==========================================================================
- * ACCESSUG TIKTOK ENGINE (V5 - BENTO LOGIC)
- * ==========================================================================
- * Strict Architecture:
- * 1. "Tap & Done" Bento Grid Selection (-1 = Skip, 0-3 = Packages)
- * 2. Hard Limits: $100 / 360,000 UGX
- * 3. 10% Combo Auto-Discount
- * 4. 1k Likes = 2k Free Views (Baked into math)
- * 5. Google Sheets `URLSearchParams` -> WhatsApp Bridge
+ * ACCESSUG TIKTOK ENGINE (V6 - FULL SYNC & SANITIZATION LOGIC)
  * ==========================================================================
  */
 
 const AppConfig = {
-    // ---> REPLACE WITH YOUR LIVE GOOGLE SHEETS WEB APP URL <---
+    // ⚠️ Replace with your live Google Sheets Web App URL
     googleSheetUrl: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
     whatsappNumber: '256762193386',
     
@@ -45,6 +38,7 @@ const AppConfig = {
 
 const AppState = {
     country: 'UGX',
+    countryCode: 'UG',
     folSelection: -1,   // -1 = Skipped/None
     likSelection: -1,   // -1 = Skipped/None
     videoSplits: 5,
@@ -58,18 +52,22 @@ const CoreApp = {
     // --- 1. BOOTSTRAP ---
     init() {
         const savedRegion = localStorage.getItem('accessug_loc_v5');
-        if (savedRegion) {
-            this.setCountry(savedRegion, false);
+        const savedCode = localStorage.getItem('accessug_code_v5');
+        
+        if (savedRegion && savedCode) {
+            this.setCountry(savedRegion, savedCode, false);
         } else {
             this.openCountryModal();
         }
 
         // Enter key listener for rapid checkout
-        document.getElementById('target-username').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
-        });
-        document.getElementById('referrer-name').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
+        ['client-name', 'client-number', 'target-username', 'referrer-name'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) {
+                el.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
+                });
+            }
         });
     },
 
@@ -78,12 +76,24 @@ const CoreApp = {
         document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
     },
 
-    setCountry(code, saveToMemory = true) {
-        if(saveToMemory) localStorage.setItem('accessug_loc_v5', code);
-        AppState.country = code;
+    setCountry(currency, code = 'UG', saveToMemory = true) {
+        if(saveToMemory) {
+            localStorage.setItem('accessug_loc_v5', currency);
+            localStorage.setItem('accessug_code_v5', code);
+        }
+        AppState.country = currency;
+        AppState.countryCode = code;
         
         document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
-        document.getElementById('ui-region-badge').innerText = code;
+        document.getElementById('ui-region-badge').innerText = currency;
+
+        // Dynamic WhatsApp Placeholder
+        const phoneInput = document.getElementById('client-number');
+        if (phoneInput) {
+            if (code === 'UG') phoneInput.placeholder = "e.g. +256 700 000 000";
+            else if (code === 'SS') phoneInput.placeholder = "e.g. +211 000 000 000";
+            else if (code === 'CD') phoneInput.placeholder = "e.g. +243 000 000 000";
+        }
         
         // Reset selections to defaults (Select lowest tier of followers, skip likes)
         AppState.folSelection = 0;
@@ -224,7 +234,6 @@ const CoreApp = {
             runningTotal += likObj.p;
             activeCategories++;
             
-            // Generate split helper text
             const likesPerPost = Math.floor(likObj.v / AppState.videoSplits);
             document.getElementById('split-math-output').innerText = `~${likesPerPost.toLocaleString()} Likes per video`;
         }
@@ -252,9 +261,9 @@ const CoreApp = {
             if (finalPrice < matrix.rules.floor) finalPrice = matrix.rules.floor;
             if (finalPrice >= matrix.rules.ceiling) {
                 finalPrice = matrix.rules.ceiling;
-                tagCombo.style.display = 'none'; // Max Tag takes priority
+                tagCombo.style.display = 'none'; 
                 tagMax.style.display = 'flex';
-                textStrike.innerText = ''; // Clear for cleanliness
+                textStrike.innerText = ''; 
             }
         } else {
             finalPrice = 0;
@@ -283,6 +292,20 @@ const CoreApp = {
             return;
         }
 
+        const clientName = document.getElementById('client-name').value.trim();
+        if (!clientName) {
+            this.showToast("Please enter your Full Name.", "error");
+            document.getElementById('client-name').focus();
+            return;
+        }
+
+        const rawNumber = document.getElementById('client-number').value.trim();
+        if (rawNumber.length < 8) {
+            this.showToast("Please enter a valid WhatsApp Number.", "error");
+            document.getElementById('client-number').focus();
+            return;
+        }
+
         const clientUsername = document.getElementById('target-username').value.trim();
         if (!clientUsername) {
             this.showToast("We need your TikTok Username.", "error");
@@ -290,14 +313,17 @@ const CoreApp = {
             return;
         }
 
-        // 2. Format Referrer
+        // 2. Plain text number sanitizer for Google Sheets
+        const cleanNumber = rawNumber.replace(/\D/g, ''); 
+        const sheetNumber = "'" + cleanNumber; 
+
+        // 3. Format Referrer
         let referrerText = "Direct";
         if (AppState.hasReferrer) {
             const inputVal = document.getElementById('referrer-name').value.trim();
             if (inputVal) referrerText = inputVal;
         }
 
-        // 3. Engage Loading UI
         this.setLoading(true);
 
         // 4. Construct Strings
@@ -318,16 +344,19 @@ const CoreApp = {
             waPackageStr += `❤️ *Likes:* ${likVol.toLocaleString()} (Split across ${AppState.videoSplits} videos)\n`;
             waPackageStr += `👁️ *Free Views:* ${freeViews.toLocaleString()}\n`;
         }
+        
+        // Append Target Username to Sheet description to ensure it's logged securely
+        sheetPackageStr += ` [Target: ${clientUsername}]`;
 
         const finalBillDisplay = document.getElementById('ui-final-price').innerText + " " + document.getElementById('ui-final-curr').innerText;
 
-        // --- GOOGLE SHEETS INTEGRATION (EXACT MATCH TO TEMPLATE) ---
-        // Expected Columns: Date, ClientName, Service, Package, Price, Referrer
+        // --- GOOGLE SHEETS INTEGRATION ---
         const formData = new URLSearchParams();
-        formData.append('ClientName', clientUsername);
+        formData.append('ClientName', clientName);
+        formData.append('Number', sheetNumber); // Safe Plain-Text format
         formData.append('Service', `TikTok Boost [${AppState.country}]`);
         formData.append('Package', sheetPackageStr.trim());
-        formData.append('Price', AppState.finalMathematicalPrice.toString()); // Clean number
+        formData.append('Price', AppState.finalMathematicalPrice.toString()); 
         formData.append('Referrer', referrerText);
 
         try {
@@ -340,19 +369,20 @@ const CoreApp = {
             console.log("Sheet sync bypassed, proceeding to WhatsApp."); 
         }
 
-        // --- WHATSAPP REDIRECTION (EXACT MATCH TO TEMPLATE) ---
+        // --- WHATSAPP REDIRECTION ---
         const waTotalDisplay = AppState.country === 'USD' ? `$${AppState.finalMathematicalPrice}` : `${AppState.finalMathematicalPrice.toLocaleString()} UGX`;
         
         let message = `*NEW ORDER [${clientUsername.toUpperCase()}]*\n\n`;
         message += `*Service:* TikTok Boost\n`;
+        message += `*Client Name:* ${clientName}\n`;
+        message += `*WhatsApp:* ${cleanNumber}\n`;
         message += `*Package:* \n${waPackageStr}\n`;
         message += `*Price:* ${waTotalDisplay}\n`;
         message += `*Referrer:* ${referrerText}\n`;
-        message += `*Username:* ${clientUsername}`;
+        message += `*Target Username:* ${clientUsername}`;
 
         window.location.href = `https://wa.me/${AppConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
         
-        // Failsafe UI reset
         setTimeout(() => this.setLoading(false), 5000);
     },
 
@@ -395,5 +425,4 @@ const CoreApp = {
     }
 };
 
-// Ignite the Engine
 CoreApp.init();

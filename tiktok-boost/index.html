@@ -29,7 +29,7 @@
             </div>
             
             <div class="modal-button-stack">
-                <button class="loc-btn" onclick="CoreApp.setCountry('UGX')">
+                <button class="loc-btn" onclick="CoreApp.setCountry('UGX', 'UG')">
                     <span class="loc-flag">🇺🇬</span>
                     <div class="loc-text">
                         <span class="loc-name">Uganda</span>
@@ -38,7 +38,7 @@
                     <i class="fas fa-chevron-right loc-arrow"></i>
                 </button>
 
-                <button class="loc-btn" onclick="CoreApp.setCountry('USD')">
+                <button class="loc-btn" onclick="CoreApp.setCountry('USD', 'SS')">
                     <span class="loc-flag">🇸🇸</span>
                     <div class="loc-text">
                         <span class="loc-name">South Sudan</span>
@@ -47,7 +47,7 @@
                     <i class="fas fa-chevron-right loc-arrow"></i>
                 </button>
 
-                <button class="loc-btn" onclick="CoreApp.setCountry('USD')">
+                <button class="loc-btn" onclick="CoreApp.setCountry('USD', 'CD')">
                     <span class="loc-flag">🇨🇩</span>
                     <div class="loc-text">
                         <span class="loc-name">DR Congo</span>
@@ -127,6 +127,22 @@
                 </header>
                 
                 <div class="input-wrapper">
+                    <div class="fat-input-box">
+                        <i class="fas fa-user input-prefix"></i>
+                        <input type="text" id="client-name" class="fat-input" placeholder="Your Full Name" autocomplete="name" spellcheck="false">
+                        <div class="focus-ring"></div>
+                    </div>
+                </div>
+
+                <div class="input-wrapper" style="margin-top: 12px;">
+                    <div class="fat-input-box">
+                        <i class="fab fa-whatsapp input-prefix" style="color: #25D366;"></i>
+                        <input type="tel" id="client-number" class="fat-input" placeholder="WhatsApp Number" autocomplete="tel">
+                        <div class="focus-ring"></div>
+                    </div>
+                </div>
+
+                <div class="input-wrapper" style="margin-top: 12px;">
                     <div class="fat-input-box">
                         <i class="fab fa-tiktok input-prefix"></i>
                         <input type="text" id="target-username" class="fat-input" placeholder="Your TikTok Username" autocomplete="off" spellcheck="false">

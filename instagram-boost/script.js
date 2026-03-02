@@ -1,13 +1,6 @@
 /**
  * ==========================================================================
- * ACCESSUG INSTAGRAM ENGINE (V5 - BENTO LOGIC)
- * ==========================================================================
- * Strict Architecture:
- * 1. "Tap & Done" Bento Grid Selection (-1 = Skip, 0-3 = Packages)
- * 2. Hard Limits: $100 / 360,000 UGX
- * 3. 10% Combo Auto-Discount
- * 4. 1k Likes = 2k Free Views (Calculated for Reels/Videos)
- * 5. Google Sheets `URLSearchParams` -> WhatsApp Bridge
+ * ACCESSUG INSTAGRAM ENGINE (V6 - FULL SYNC & SANITIZATION LOGIC)
  * ==========================================================================
  */
 
@@ -45,47 +38,59 @@ const AppConfig = {
 
 const AppState = {
     country: 'UGX',
-    folSelection: -1,   // -1 = Skipped/None
-    likSelection: -1,   // -1 = Skipped/None
+    countryCode: 'UG',
+    folSelection: -1,   
+    likSelection: -1,   
     videoSplits: 5,
     hasReferrer: false,
     isProcessing: false,
-    finalMathematicalPrice: 0 // Clean integer stored for sheets
+    finalMathematicalPrice: 0 
 };
 
 const InstaApp = {
 
-    // --- 1. BOOTSTRAP ---
     init() {
         const savedRegion = localStorage.getItem('accessug_loc_ig');
-        if (savedRegion) {
-            this.setCountry(savedRegion, false);
+        const savedCode = localStorage.getItem('accessug_code_ig');
+        
+        if (savedRegion && savedCode) {
+            this.setCountry(savedRegion, savedCode, false);
         } else {
             this.openCountryModal();
         }
 
-        // Enter key listener for rapid checkout
-        document.getElementById('target-username').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
-        });
-        document.getElementById('referrer-name').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
+        ['client-name', 'client-number', 'target-username', 'referrer-name'].forEach(id => {
+            const el = document.getElementById(id);
+            if(el) {
+                el.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
+                });
+            }
         });
     },
 
-    // --- 2. COUNTRY MANAGEMENT ---
     openCountryModal() {
         document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
     },
 
-    setCountry(code, saveToMemory = true) {
-        if(saveToMemory) localStorage.setItem('accessug_loc_ig', code);
-        AppState.country = code;
+    setCountry(currency, code = 'UG', saveToMemory = true) {
+        if(saveToMemory) {
+            localStorage.setItem('accessug_loc_ig', currency);
+            localStorage.setItem('accessug_code_ig', code);
+        }
+        AppState.country = currency;
+        AppState.countryCode = code;
         
         document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
-        document.getElementById('ui-region-badge').innerText = code;
+        document.getElementById('ui-region-badge').innerText = currency;
+
+        const phoneInput = document.getElementById('client-number');
+        if (phoneInput) {
+            if (code === 'UG') phoneInput.placeholder = "e.g. +256 700 000 000";
+            else if (code === 'SS') phoneInput.placeholder = "e.g. +211 000 000 000";
+            else if (code === 'CD') phoneInput.placeholder = "e.g. +243 000 000 000";
+        }
         
-        // Reset selections to clean defaults
         AppState.folSelection = 0;
         AppState.likSelection = -1;
         AppState.videoSplits = 5;
@@ -94,17 +99,14 @@ const InstaApp = {
         this.calculateMath();
     },
 
-    // --- 3. BENTO UI RENDERING ---
     renderBentoGrids() {
         const matrix = AppConfig.prices[AppState.country];
         const formatVol = (v) => v >= 1000 ? (v/1000) + 'k' : v;
         const formatPrice = (p) => AppState.country === 'USD' ? `$${p}` : `${p.toLocaleString()} UGX`;
 
-        // 3a. Render Followers Grid
         const gridFol = document.getElementById('grid-followers');
         gridFol.innerHTML = '';
         
-        // Generate the 4 Pricing Buttons
         matrix.followers.forEach((tier, index) => {
             let activeClass = AppState.folSelection === index ? 'selected-purple' : '';
             gridFol.innerHTML += `
@@ -115,7 +117,6 @@ const InstaApp = {
             `;
         });
         
-        // Append the Explicit "Skip" Button
         let skipFolClass = AppState.folSelection === -1 ? 'selected-skip' : '';
         gridFol.innerHTML += `
             <div class="pack-btn skip-btn ${skipFolClass}" onclick="InstaApp.selectTier('fol', -1)" style="grid-column: span 2;">
@@ -123,11 +124,9 @@ const InstaApp = {
             </div>
         `;
 
-        // 3b. Render Likes Grid
         const gridLik = document.getElementById('grid-likes');
         gridLik.innerHTML = '';
         
-        // Generate the 4 Pricing Buttons
         matrix.likes.forEach((tier, index) => {
             let activeClass = AppState.likSelection === index ? 'selected-pink' : '';
             let freeViews = formatVol(tier.v * 2);
@@ -140,7 +139,6 @@ const InstaApp = {
             `;
         });
 
-        // Append the Explicit "Skip" Button
         let skipLikClass = AppState.likSelection === -1 ? 'selected-skip' : '';
         gridLik.innerHTML += `
             <div class="pack-btn skip-btn ${skipLikClass}" onclick="InstaApp.selectTier('lik', -1)" style="grid-column: span 2;">
@@ -148,7 +146,6 @@ const InstaApp = {
             </div>
         `;
 
-        // Toggle Video Splitter UI Visibility
         const splitterUI = document.getElementById('split-ui-box');
         if (AppState.likSelection > -1) {
             splitterUI.style.display = 'flex';
@@ -157,7 +154,6 @@ const InstaApp = {
         }
     },
 
-    // --- 4. TACTILE INTERACTIONS ---
     selectTier(type, index) {
         if (AppState.isProcessing) return;
         
@@ -206,30 +202,25 @@ const InstaApp = {
         if (navigator.vibrate) navigator.vibrate(10);
     },
 
-    // --- 5. THE CORE MATHEMATICS ENGINE ---
     calculateMath() {
         const matrix = AppConfig.prices[AppState.country];
         let runningTotal = 0;
         let activeCategories = 0;
 
-        // Add Followers Math
         if (AppState.folSelection > -1) {
             runningTotal += matrix.followers[AppState.folSelection].p;
             activeCategories++;
         }
         
-        // Add Likes Math & Update Split Text
         if (AppState.likSelection > -1) {
             const likObj = matrix.likes[AppState.likSelection];
             runningTotal += likObj.p;
             activeCategories++;
             
-            // Generate split helper text
             const likesPerPost = Math.floor(likObj.v / AppState.videoSplits);
             document.getElementById('split-math-output').innerText = `~${likesPerPost.toLocaleString()} Likes per post/reel`;
         }
 
-        // Apply Business Rules
         let finalPrice = runningTotal;
         
         const tagCombo = document.getElementById('ui-badge-combo');
@@ -240,27 +231,24 @@ const InstaApp = {
         tagMax.style.display = 'none';
         textStrike.innerText = '';
 
-        // Rule 1: 10% Bundle Discount
         if (activeCategories === 2 && runningTotal > 0) {
             finalPrice = runningTotal * 0.90;
             tagCombo.style.display = 'flex';
             textStrike.innerText = AppState.country === 'USD' ? `$${runningTotal}` : runningTotal.toLocaleString();
         }
 
-        // Rule 2: Strict Min Floor & Max Ceiling Overrides
         if (activeCategories > 0) {
             if (finalPrice < matrix.rules.floor) finalPrice = matrix.rules.floor;
             if (finalPrice >= matrix.rules.ceiling) {
                 finalPrice = matrix.rules.ceiling;
-                tagCombo.style.display = 'none'; // Max Tag takes priority
+                tagCombo.style.display = 'none'; 
                 tagMax.style.display = 'flex';
-                textStrike.innerText = ''; // Clear for cleanliness
+                textStrike.innerText = ''; 
             }
         } else {
             finalPrice = 0;
         }
 
-        // Output to DOM
         if (AppState.country === 'USD') {
             document.getElementById('ui-final-price').innerText = `$${finalPrice}`;
             document.getElementById('ui-final-curr').innerText = '';
@@ -269,17 +257,28 @@ const InstaApp = {
             document.getElementById('ui-final-curr').innerText = 'UGX';
         }
         
-        // Save to state for sheet transmission
         AppState.finalMathematicalPrice = finalPrice;
     },
 
-    // --- 6. SHADOW-SYNC & WHATSAPP BRIDGE ---
     async processCheckout() {
         if (AppState.isProcessing) return;
 
-        // 1. Validations
         if (AppState.folSelection === -1 && AppState.likSelection === -1) {
             this.showToast("Please select a Follower or Like package.", "error");
+            return;
+        }
+
+        const clientName = document.getElementById('client-name').value.trim();
+        if (!clientName) {
+            this.showToast("Please enter your Full Name.", "error");
+            document.getElementById('client-name').focus();
+            return;
+        }
+
+        const rawNumber = document.getElementById('client-number').value.trim();
+        if (rawNumber.length < 8) {
+            this.showToast("Please enter a valid WhatsApp Number.", "error");
+            document.getElementById('client-number').focus();
             return;
         }
 
@@ -290,17 +289,17 @@ const InstaApp = {
             return;
         }
 
-        // 2. Format Referrer
+        const cleanNumber = rawNumber.replace(/\D/g, ''); 
+        const sheetNumber = "'" + cleanNumber; 
+
         let referrerText = "Direct";
         if (AppState.hasReferrer) {
             const inputVal = document.getElementById('referrer-name').value.trim();
             if (inputVal) referrerText = inputVal;
         }
 
-        // 3. Engage Loading UI
         this.setLoading(true);
 
-        // 4. Construct Strings
         const matrix = AppConfig.prices[AppState.country];
         let sheetPackageStr = "";
         let waPackageStr = "";
@@ -319,16 +318,15 @@ const InstaApp = {
             waPackageStr += `❤️ *Likes:* ${likVol.toLocaleString()} (Across ${splits} posts)\n`;
             waPackageStr += `👁️ *Free Views:* ${freeViews.toLocaleString()}\n`;
         }
+        
+        sheetPackageStr += ` [Target: ${clientUsername}]`;
 
-        const finalBillDisplay = document.getElementById('ui-final-price').innerText + " " + document.getElementById('ui-final-curr').innerText;
-
-        // --- GOOGLE SHEETS INTEGRATION (EXACT MATCH) ---
-        // Requires: Date (auto in Apps Script), ClientName, Service, Package, Price, Referrer
         const formData = new URLSearchParams();
-        formData.append('ClientName', clientUsername);
+        formData.append('ClientName', clientName);
+        formData.append('Number', sheetNumber);
         formData.append('Service', `Instagram Boost [${AppState.country}]`);
         formData.append('Package', sheetPackageStr.trim());
-        formData.append('Price', AppState.finalMathematicalPrice.toString()); // Raw number for math
+        formData.append('Price', AppState.finalMathematicalPrice.toString()); 
         formData.append('Referrer', referrerText);
 
         try {
@@ -338,14 +336,15 @@ const InstaApp = {
                 mode: 'no-cors' 
             });
         } catch (e) { 
-            console.log("Sheet sync bypassed/failed, proceeding to WhatsApp for redundancy."); 
+            console.log("Sheet sync bypassed, proceeding to WhatsApp."); 
         }
 
-        // --- WHATSAPP REDIRECTION (LEGACY TEMPLATE MATCH) ---
         const waTotalDisplay = AppState.country === 'USD' ? `$${AppState.finalMathematicalPrice}` : `${AppState.finalMathematicalPrice.toLocaleString()} UGX`;
         
         let message = `*NEW INSTAGRAM ORDER [${clientUsername.toUpperCase()}]*\n\n`;
         message += `*Service:* Instagram Boost\n`;
+        message += `*Client Name:* ${clientName}\n`;
+        message += `*WhatsApp:* ${cleanNumber}\n`;
         message += `*Package:* \n${waPackageStr}\n`;
         message += `*Price:* ${waTotalDisplay}\n`;
         message += `*Referrer:* ${referrerText}\n`;
@@ -353,11 +352,9 @@ const InstaApp = {
 
         window.location.href = `https://wa.me/${AppConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
         
-        // Failsafe UI reset
         setTimeout(() => this.setLoading(false), 5000);
     },
 
-    // --- 7. UTILITIES ---
     setLoading(isLoading) {
         AppState.isProcessing = isLoading;
         const btnNode = document.getElementById('btn-submit');
@@ -396,5 +393,4 @@ const InstaApp = {
     }
 };
 
-// Ignite the Engine
 InstaApp.init();
