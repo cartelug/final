@@ -1,6 +1,7 @@
 /**
  * ==========================================================================
- * ACCESSUG ELITE FACEBOOK ENGINE (V11 - Plain Text Number Sync & Lock-in)
+ * ACCESSUG ELITE FACEBOOK ENGINE (V12)
+ * Features: Trust Slider Modal, Username Input, Strict Number Validation
  * ==========================================================================
  */
 
@@ -43,17 +44,13 @@ const FbApp = {
         if (savedGeo && savedCode) {
             this.setCountry(savedGeo, savedCode, false);
         } else {
-            this.openCountryModal();
+            document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
         }
 
         // Live Event Listeners for Validation
         document.getElementById('client-name').addEventListener('input', () => this.validateFlow());
         document.getElementById('client-number').addEventListener('input', () => this.validateFlow());
         document.getElementById('fb-link').addEventListener('input', () => this.validateFlow());
-    },
-
-    openCountryModal() {
-        document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
     },
 
     setCountry(currency, code, save = true) {
@@ -66,13 +63,13 @@ const FbApp = {
         
         document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
         
-        // Dynamically set the WhatsApp Placeholder
+        // Dynamic WhatsApp Placeholder
         const phoneInput = document.getElementById('client-number');
         if (code === 'UG') phoneInput.placeholder = "E.g. +256 700 000 000";
         else if (code === 'SS') phoneInput.placeholder = "E.g. +211 000 000 000";
         else if (code === 'CD') phoneInput.placeholder = "E.g. +243 000 000 000";
 
-        State.selectedId = -1; // Reset selection to force fresh choice
+        State.selectedId = -1; 
         
         this.renderGrid();
         this.updateDock();
@@ -95,9 +92,7 @@ const FbApp = {
             if(tier.isMax) tag = `<div class="badge-tag">Max Impact</div>`;
 
             let icons = ['fa-user-plus', 'fa-thumbs-up', 'fa-heart', 'fa-comment-dots'];
-            let listHTML = tier.perks.map((p, i) => `
-                <li><i class="fas ${icons[i]} f-icon"></i> ${p}</li>
-            `).join('');
+            let listHTML = tier.perks.map((p, i) => `<li><i class="fas ${icons[i]} f-icon"></i> ${p}</li>`).join('');
 
             grid.innerHTML += `
                 <div class="pack-card ${isAct}" onclick="FbApp.selectTier(${tier.id})">
@@ -173,38 +168,64 @@ const FbApp = {
     validateFlow() {
         const nameVal = document.getElementById('client-name').value.trim();
         const numVal = document.getElementById('client-number').value.trim();
-        const linkVal = document.getElementById('fb-link').value.trim();
+        const linkVal = document.getElementById('fb-link').value.trim(); // Now just Username/Page Name
         const btn = document.getElementById('btn-submit');
         const txt = document.getElementById('btn-text');
 
-        if (State.selectedId > -1 && nameVal.length > 2 && numVal.length > 8 && linkVal.length > 8) {
+        // Text input validation (no longer requires URL)
+        if (State.selectedId > -1 && nameVal.length > 2 && numVal.length > 8 && linkVal.length > 2) {
             btn.disabled = false;
             txt.innerText = "Place Order";
         } else {
             btn.disabled = true;
-            if (State.selectedId === -1) {
-                txt.innerText = "Select Package";
-            } else if (nameVal.length <= 2) {
-                txt.innerText = "Enter Your Name";
-            } else if (numVal.length <= 8) {
-                txt.innerText = "Enter WhatsApp Number";
-            } else {
-                txt.innerText = "Enter Page Link";
-            }
+            if (State.selectedId === -1) txt.innerText = "Select Package";
+            else if (nameVal.length <= 2) txt.innerText = "Enter Your Name";
+            else if (numVal.length <= 8) txt.innerText = "Enter WhatsApp Number";
+            else txt.innerText = "Enter Username / Page Name";
         }
     },
 
-    executeOrder() {
-        // 1. Capture Raw Data
+    // --- NEW TRUST SLIDER LOGIC ---
+    openTrustModal() {
+        if (document.getElementById('btn-submit').disabled) return;
+        
+        // Populate Slide 3 dynamically
+        const tier = SysConfig.matrix[State.geo][State.selectedId];
+        const displayPrice = State.geo === 'USD' ? `$${tier.price}` : `${tier.price.toLocaleString()} UGX`;
+        const targetName = document.getElementById('fb-link').value.trim();
+
+        document.getElementById('sum-target').innerText = targetName;
+        document.getElementById('sum-package').innerText = `${tier.title} Tier`;
+        document.getElementById('sum-price').innerText = displayPrice;
+
+        // Reset to slide 1 & open
+        this.nextSlide(1);
+        document.getElementById('trust-modal').setAttribute('aria-hidden', 'false');
+    },
+
+    closeTrustModal() {
+        document.getElementById('trust-modal').setAttribute('aria-hidden', 'true');
+    },
+
+    nextSlide(stepNumber) {
+        // Hide all slides
+        document.querySelectorAll('.slider-pane').forEach(el => el.classList.remove('active'));
+        // Deactivate all dots
+        document.querySelectorAll('.dot').forEach(el => el.classList.remove('active'));
+        
+        // Show current
+        document.getElementById(`slide-${stepNumber}`).classList.add('active');
+        document.getElementById(`dot-${stepNumber}`).classList.add('active');
+    },
+
+    finalizeOrder() {
         const clientName = document.getElementById('client-name').value.trim();
         const rawNumber = document.getElementById('client-number').value.trim();
         const pageLink = document.getElementById('fb-link').value.trim();
         const refInput = document.getElementById('ref-code').value.trim();
         
-        // --- 2. THE PLAIN TEXT NUMBER SANITIZER ---
-        // Strips spaces, dashes, and plus signs to get pure digits (e.g. 256708735878)
+        // The Plain Text Number Sanitizer
         const cleanNumber = rawNumber.replace(/\D/g, ''); 
-        // Prepends an apostrophe so Google Sheets treats it as plain text
         const sheetNumber = "'" + cleanNumber; 
 
         // Process Referrer
@@ -213,10 +234,10 @@ const FbApp = {
         const tier = SysConfig.matrix[State.geo][State.selectedId];
         const displayPrice = State.geo === 'USD' ? `$${tier.price}` : `${tier.price.toLocaleString()} UGX`;
 
-        // 3. GOOGLE SHEETS SYNC
+        // 1. GOOGLE SHEETS SYNC
         const payload = new URLSearchParams();
         payload.append('ClientName', clientName);
-        payload.append('Number', sheetNumber); // Sends the plain text formatted number
+        payload.append('Number', sheetNumber);
         payload.append('Service', `Facebook Boost [${State.geo}]`);
         payload.append('Package', `${tier.title} Tier`);
         payload.append('Price', State.calcPrice.toString());
@@ -228,32 +249,37 @@ const FbApp = {
             console.log("Sheet sync bypassed");
         }
 
-        // 4. WHATSAPP BRIDGE
+        // 2. WHATSAPP BRIDGE
         let msg = `🚀 *NEW FACEBOOK BOOST*\n\n`;
         msg += `*Client Name:* ${clientName}\n`;
-        msg += `*WhatsApp:* ${cleanNumber}\n`; // Clean number for WhatsApp message
+        msg += `*WhatsApp:* ${cleanNumber}\n`;
         msg += `*Package:* ${tier.title} Tier\n`;
         msg += `*Total:* ${displayPrice}\n\n`;
-        msg += `🔗 *Page Link:* ${pageLink}\n`;
+        msg += `👤 *Target Page:* ${pageLink}\n`;
         msg += `🎁 *Referrer:* ${finalReferrer}\n\n`;
-        msg += `_I am ready to make payment._`;
+        msg += `_I have accepted the terms and am ready to pay the 30% deposit._`;
 
-        // UI Loading State
-        document.getElementById('btn-text').innerText = "Securing...";
-        const icon = document.querySelector('.btn-arrow');
-        icon.classList.replace('fa-arrow-right', 'fa-circle-notch');
-        icon.classList.add('fa-spin');
+        // UI Loading State on the Modal Button
+        const btn = document.getElementById('btn-final-confirm');
+        document.getElementById('final-btn-text').innerText = "Securing...";
+        btn.querySelector('i').classList.replace('fa-whatsapp', 'fa-circle-notch');
+        btn.querySelector('i').classList.add('fa-spin');
+        btn.style.opacity = '0.8';
+        btn.style.pointerEvents = 'none';
         
         // Execute Redirect
         setTimeout(() => {
             window.location.href = `https://wa.me/${SysConfig.whatsapp}?text=${encodeURIComponent(msg)}`;
             
             setTimeout(() => {
-                document.getElementById('btn-text').innerText = "Place Order";
-                icon.classList.replace('fa-circle-notch', 'fa-arrow-right');
-                icon.classList.remove('fa-spin');
+                this.closeTrustModal();
+                document.getElementById('final-btn-text').innerText = "Confirm & Proceed";
+                btn.querySelector('i').classList.replace('fa-circle-notch', 'fa-whatsapp');
+                btn.querySelector('i').classList.remove('fa-spin');
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
             }, 2000);
-        }, 800);
+        }, 1000);
     }
 };
 
