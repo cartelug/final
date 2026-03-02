@@ -43,34 +43,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.fade-up').forEach(el => revealObserver.observe(el));
 
-    // === 4. SPATIAL CAROUSEL ENGINE (Zero Lag) ===
+    // === 4. VAULT APP-DOCK FILTER (PURE NATIVE) ===
     const vaultTrack = document.getElementById('vault-track');
     const cards = document.querySelectorAll('.spatial-card');
     const filterPills = document.querySelectorAll('.dock-btn'); 
 
     if(vaultTrack && cards.length > 0) {
         
-        // --- Intersection Observer for Active Scale & Opacity ---
-        const carouselObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    cards.forEach(c => c.classList.remove('is-active'));
-                    entry.target.classList.add('is-active');
-                }
-            });
-        }, { root: vaultTrack, rootMargin: '0px', threshold: 0.6 });
-
-        cards.forEach(card => carouselObserver.observe(card));
-
-        // Center first item on load
-        setTimeout(() => {
-            const firstActive = [...cards].find(c => c.style.display !== 'none');
-            if(firstActive) {
-                const scrollPos = firstActive.offsetLeft - (window.innerWidth / 2) + (firstActive.offsetWidth / 2);
-                vaultTrack.scrollTo({ left: scrollPos, behavior: 'smooth' });
-            }
-        }, 500);
-
         // --- Dock Filter Logic ---
         filterPills.forEach(pill => {
             pill.addEventListener('click', () => {
@@ -90,9 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if(firstMatch) {
+                    // Slight delay to allow display flex to render before scrolling
                     setTimeout(() => {
-                        const scrollPos = firstMatch.offsetLeft - (window.innerWidth / 2) + (firstMatch.offsetWidth / 2);
-                        vaultTrack.scrollTo({ left: scrollPos, behavior: 'smooth' });
+                        vaultTrack.scrollTo({ left: 0, behavior: 'smooth' });
                     }, 50);
                 }
             });
