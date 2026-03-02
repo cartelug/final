@@ -1,7 +1,7 @@
 /**
  * ==========================================================================
- * ACCESSUG ELITE YOUTUBE ENGINE (V15 - BENTO UI)
- * Features: Native Bottom Sheets, Floating Labels, Text Sanitization
+ * ACCESSUG ELITE YOUTUBE ENGINE (V16 - LIGHT MODE SAAS)
+ * Features: Bottom Sheets, Floating Labels, Plain-Text Numbers
  * ==========================================================================
  */
 
@@ -10,7 +10,7 @@ const SysConfig = {
     sheetURL: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
     whatsapp: '256762193386',
     
-    // Core YouTube Tiers
+    // Exact YouTube Tiers Provided
     matrix: {
         'UGX': [
             { id: 0, title: "Starter", price: 262500, perks: ["1k Subs", "5k Views", "2k Likes"] },
@@ -219,7 +219,7 @@ const YtApp = {
         const pageLink = document.getElementById('yt-link').value.trim();
         const refInput = document.getElementById('ref-code').value.trim();
         
-        // Clean the number for Sheets plain text format
+        // Plain-Text Sanitizer for Google Sheets
         const cleanNumber = rawNumber.replace(/\D/g, ''); 
         const sheetNumber = "'" + cleanNumber; 
 
@@ -240,7 +240,7 @@ const YtApp = {
         try {
             fetch(SysConfig.sheetURL, { method: 'POST', body: payload, mode: 'no-cors' });
         } catch (err) {
-            console.log("Sheet logic skipped");
+            console.log("Sheet sync skipped");
         }
 
         // 2. WHATSAPP BRIDGE
@@ -264,7 +264,7 @@ const YtApp = {
             
             setTimeout(() => {
                 this.closeTrustModal();
-                document.getElementById('final-btn-text').innerText = "Proceed to WhatsApp";
+                document.getElementById('final-btn-text').innerText = "Proceed to Checkout";
                 btn.querySelector('i').classList.replace('fa-circle-notch', 'fa-whatsapp');
                 btn.querySelector('i').classList.remove('fa-spin');
                 btn.style.pointerEvents = 'auto';
