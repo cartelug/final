@@ -44,31 +44,27 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.fade-up').forEach(el => revealObserver.observe(el));
 
     // === 4. SPATIAL CAROUSEL ENGINE & SLIDE-TO-DEPLOY ===
-    const track = document.getElementById('vault-track');
+    const vaultTrack = document.getElementById('vault-track');
     const cards = document.querySelectorAll('.spatial-card');
     const silkMesh = document.getElementById('silk-mesh');
     const filterPills = document.querySelectorAll('.filter-pill');
 
-    if(track && cards.length > 0) {
+    if(vaultTrack && cards.length > 0) {
         
-        // --- 1. Intersection Observer for Active Focus & Aura ---
-        const observerOptions = { root: track, rootMargin: '0px', threshold: 0.6 };
+        // --- Intersection Observer for Active Focus & Aura ---
         const carouselObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // Remove active from all
                     cards.forEach(c => c.classList.remove('is-active'));
-                    // Add active to centered
                     entry.target.classList.add('is-active');
                     
-                    // Shift Background Aura
                     const themeColor = entry.target.getAttribute('data-theme');
                     if(themeColor) {
                         silkMesh.style.background = `radial-gradient(circle, ${themeColor} 0%, transparent 60%)`;
                     }
                 }
             });
-        }, observerOptions);
+        }, { root: vaultTrack, rootMargin: '0px', threshold: 0.6 });
 
         cards.forEach(card => carouselObserver.observe(card));
 
@@ -77,11 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const firstActive = [...cards].find(c => c.style.display !== 'none');
             if(firstActive) {
                 const scrollPos = firstActive.offsetLeft - (window.innerWidth / 2) + (firstActive.offsetWidth / 2);
-                track.scrollTo({ left: scrollPos, behavior: 'smooth' });
+                vaultTrack.scrollTo({ left: scrollPos, behavior: 'smooth' });
             }
         }, 500);
 
-        // --- 2. Filter Logic ---
+        // --- Filter Logic ---
         filterPills.forEach(pill => {
             pill.addEventListener('click', () => {
                 filterPills.forEach(p => p.classList.remove('active'));
@@ -99,17 +95,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                // Scroll to first matched item
                 if(firstMatch) {
                     setTimeout(() => {
                         const scrollPos = firstMatch.offsetLeft - (window.innerWidth / 2) + (firstMatch.offsetWidth / 2);
-                        track.scrollTo({ left: scrollPos, behavior: 'smooth' });
+                        vaultTrack.scrollTo({ left: scrollPos, behavior: 'smooth' });
                     }, 50);
                 }
             });
         });
 
-        // --- 3. Slide to Deploy Logic ---
+        // --- Slide to Deploy Logic ---
         const slideTracks = document.querySelectorAll('.slide-track:not(.disabled)');
         
         slideTracks.forEach(trackElement => {
@@ -117,53 +112,50 @@ document.addEventListener('DOMContentLoaded', () => {
             const text = trackElement.querySelector('.slide-text');
             const targetLink = trackElement.getAttribute('data-link');
             
-            let isDragging = false;
-            let startX = 0;
-            let currentX = 0;
-            const maxDrag = trackElement.offsetWidth - thumb.offsetWidth - 8; // 8px padding
+            let isDraggingSlide = false;
+            let slideStartX = 0;
+            let currentSlideX = 0;
+            const maxDrag = trackElement.offsetWidth - thumb.offsetWidth - 8; 
 
-            const startDrag = (e) => {
-                isDragging = true;
-                startX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
+            const startSlideDrag = (e) => {
+                isDraggingSlide = true;
+                slideStartX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
                 thumb.style.transition = 'none';
                 text.style.opacity = '0.3';
             };
 
-            const drag = (e) => {
-                if (!isDragging) return;
+            const slideDrag = (e) => {
+                if (!isDraggingSlide) return;
                 e.preventDefault();
                 const x = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-                currentX = Math.min(Math.max(0, x - startX), maxDrag);
-                thumb.style.transform = `translateX(${currentX}px)`;
+                currentSlideX = Math.min(Math.max(0, x - slideStartX), maxDrag);
+                thumb.style.transform = `translateX(${currentSlideX}px)`;
             };
 
-            const endDrag = () => {
-                if (!isDragging) return;
-                isDragging = false;
+            const endSlideDrag = () => {
+                if (!isDraggingSlide) return;
+                isDraggingSlide = false;
                 thumb.style.transition = 'transform 0.3s ease';
                 
-                if (currentX >= maxDrag * 0.85) { // 85% threshold to trigger
+                if (currentSlideX >= maxDrag * 0.85) {
                     thumb.style.transform = `translateX(${maxDrag}px)`;
                     thumb.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                    setTimeout(() => {
-                        window.location.href = targetLink;
-                    }, 300);
+                    setTimeout(() => { window.location.href = targetLink; }, 300);
                 } else {
                     thumb.style.transform = `translateX(0px)`;
                     text.style.opacity = '1';
                 }
             };
 
-            thumb.addEventListener('mousedown', startDrag);
-            document.addEventListener('mousemove', drag);
-            document.addEventListener('mouseup', endDrag);
+            thumb.addEventListener('mousedown', startSlideDrag);
+            document.addEventListener('mousemove', slideDrag);
+            document.addEventListener('mouseup', endSlideDrag);
 
-            thumb.addEventListener('touchstart', startDrag, {passive: true});
-            document.addEventListener('touchmove', drag, {passive: false});
-            document.addEventListener('touchend', endDrag);
+            thumb.addEventListener('touchstart', startSlideDrag, {passive: true});
+            document.addEventListener('touchmove', slideDrag, {passive: false});
+            document.addEventListener('touchend', endSlideDrag);
         });
     }
-
 
     // === 5. SWIPEABLE + FAST AUTO-SCROLL MARQUEE ===
     const marquee = document.getElementById('swipe-marquee');
@@ -176,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auto-scroll loop
     const autoScroll = () => {
-        if (autoScrollActive && !isDown) {
+        if (autoScrollActive && !isDown && marquee) {
             marquee.scrollLeft += autoScrollSpeed;
             // Seamless loop reset
             if (marquee.scrollLeft >= track.scrollWidth / 2) {
@@ -185,38 +177,41 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         requestAnimationFrame(autoScroll);
     };
-    requestAnimationFrame(autoScroll);
+    if (marquee && track) {
+        requestAnimationFrame(autoScroll);
+    }
 
     // Mouse / Drag Events
-    marquee.addEventListener('mousedown', (e) => {
-        isDown = true;
-        startX = e.pageX - marquee.offsetLeft;
-        scrollLeft = marquee.scrollLeft;
-    });
-    marquee.addEventListener('mouseleave', () => { isDown = false; });
-    marquee.addEventListener('mouseup', () => { isDown = false; });
-    marquee.addEventListener('mousemove', (e) => {
-        if (!isDown) return;
-        e.preventDefault();
-        const x = e.pageX - marquee.offsetLeft;
-        const walk = (x - startX) * 2; // Drag multiplier
-        marquee.scrollLeft = scrollLeft - walk;
-    });
+    if(marquee) {
+        marquee.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - marquee.offsetLeft;
+            scrollLeft = marquee.scrollLeft;
+        });
+        marquee.addEventListener('mouseleave', () => { isDown = false; });
+        marquee.addEventListener('mouseup', () => { isDown = false; });
+        marquee.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - marquee.offsetLeft;
+            const walk = (x - startX) * 2; // Drag multiplier
+            marquee.scrollLeft = scrollLeft - walk;
+        });
 
-    // Touch / Swipe Events
-    marquee.addEventListener('touchstart', (e) => {
-        isDown = true;
-        startX = e.touches[0].pageX - marquee.offsetLeft;
-        scrollLeft = marquee.scrollLeft;
-    }, { passive: true });
-    marquee.addEventListener('touchend', () => { isDown = false; });
-    marquee.addEventListener('touchmove', (e) => {
-        if (!isDown) return;
-        const x = e.touches[0].pageX - marquee.offsetLeft;
-        const walk = (x - startX) * 2;
-        marquee.scrollLeft = scrollLeft - walk;
-    }, { passive: true });
-
+        // Touch / Swipe Events
+        marquee.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - marquee.offsetLeft;
+            scrollLeft = marquee.scrollLeft;
+        }, { passive: true });
+        marquee.addEventListener('touchend', () => { isDown = false; });
+        marquee.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - marquee.offsetLeft;
+            const walk = (x - startX) * 2;
+            marquee.scrollLeft = scrollLeft - walk;
+        }, { passive: true });
+    }
 
     // === 6. TAP-TO-ZOOM LIGHTBOX ===
     const lightbox = document.getElementById('lightbox');
@@ -224,24 +219,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.querySelector('.lightbox-close');
     const intelAssets = document.querySelectorAll('.intel-asset');
 
-    intelAssets.forEach(asset => {
-        asset.addEventListener('click', () => {
-            // Check if it was a drag or a click by looking at drag state
-            if(!isDown) {
-                lightbox.classList.add('active');
-                lightboxImg.src = asset.src;
-                autoScrollActive = false; // Pause background animation
-            }
+    if(lightbox && lightboxImg) {
+        intelAssets.forEach(asset => {
+            asset.addEventListener('click', () => {
+                if(!isDown) {
+                    lightbox.classList.add('active');
+                    lightboxImg.src = asset.src;
+                    autoScrollActive = false;
+                }
+            });
         });
-    });
 
-    const closeLightbox = () => {
-        lightbox.classList.remove('active');
-        autoScrollActive = true; // Resume background animation
-    };
+        const closeLightbox = () => {
+            lightbox.classList.remove('active');
+            autoScrollActive = true; 
+        };
 
-    closeBtn.addEventListener('click', closeLightbox);
-    lightbox.addEventListener('click', (e) => {
-        if (e.target === lightbox) closeLightbox();
-    });
+        if(closeBtn) closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+    }
 });
