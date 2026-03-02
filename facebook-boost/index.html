@@ -3,20 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#f0f2f5">
+    <meta name="theme-color" content="#ffffff">
     
-    <title>Elite Facebook Authority | AccessUG</title>
-    <meta name="description" content="Scale your Facebook page to leader status. Real followers, likes, and reactions.">
+    <title>Boost Your Facebook | AccessUG</title>
+    <meta name="description" content="Get real Facebook followers and likes easily and safely.">
     
     <link rel="icon" href="../IMAGES/facebook.png" type="image/png">
     
-    <link rel="preconnect" href="https://api.fontshare.com">
-    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,600,700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="clean-bento-theme">
+<body>
 
     <div id="toast-wrapper" class="toast-wrapper" aria-live="polite"></div>
 
@@ -24,145 +25,119 @@
         <div class="modal-surface">
             <div class="modal-handle"></div>
             <div class="modal-header">
-                <div class="modal-icon-badge">🌍</div>
-                <h2>Select your region</h2>
-                <p>We need your location to display the correct local pricing.</p>
+                <div class="modal-icon">🌍</div>
+                <h2>Choose your region</h2>
+                <p>We use this to show you the correct prices.</p>
             </div>
             
-            <div class="modal-button-stack">
-                <button class="loc-btn" onclick="FbApp.setCountry('UGX')">
-                    <span class="loc-flag">🇺🇬</span>
-                    <div class="loc-text">
-                        <span class="loc-name">Uganda</span>
-                        <span class="loc-sub">Prices in UGX</span>
+            <div class="modal-options">
+                <button class="region-btn" onclick="FbApp.setCountry('UGX')">
+                    <span class="region-flag">🇺🇬</span>
+                    <div class="region-info">
+                        <span class="region-name">Uganda</span>
+                        <span class="region-currency">Pay in UGX</span>
                     </div>
-                    <i class="fas fa-chevron-right loc-arrow"></i>
+                    <i class="fas fa-arrow-right region-arrow"></i>
                 </button>
 
-                <button class="loc-btn" onclick="FbApp.setCountry('USD')">
-                    <span class="loc-flag">🇸🇸</span>
-                    <div class="loc-text">
-                        <span class="loc-name">South Sudan</span>
-                        <span class="loc-sub">Prices in USD</span>
+                <button class="region-btn" onclick="FbApp.setCountry('USD')">
+                    <span class="region-flag">🇸🇸</span>
+                    <div class="region-info">
+                        <span class="region-name">South Sudan</span>
+                        <span class="region-currency">Pay in USD</span>
                     </div>
-                    <i class="fas fa-chevron-right loc-arrow"></i>
+                    <i class="fas fa-arrow-right region-arrow"></i>
                 </button>
 
-                <button class="loc-btn" onclick="FbApp.setCountry('USD')">
-                    <span class="loc-flag">🇨🇩</span>
-                    <div class="loc-text">
-                        <span class="loc-name">DR Congo</span>
-                        <span class="loc-sub">Prices in USD</span>
+                <button class="region-btn" onclick="FbApp.setCountry('USD')">
+                    <span class="region-flag">🇨🇩</span>
+                    <div class="region-info">
+                        <span class="region-name">DR Congo</span>
+                        <span class="region-currency">Pay in USD</span>
                     </div>
-                    <i class="fas fa-chevron-right loc-arrow"></i>
+                    <i class="fas fa-arrow-right region-arrow"></i>
                 </button>
             </div>
         </div>
     </div>
 
-    <div class="app-layout" id="app-root">
+    <div class="app-container">
         
-        <nav class="app-nav">
-            <a href="../index.html" class="nav-back" aria-label="Go Back">
-                <i class="fas fa-arrow-left"></i>
+        <nav class="top-nav">
+            <a href="../index.html" class="nav-back">
+                <i class="fas fa-arrow-left"></i> Back
             </a>
-            <div class="nav-brand">
-                <i class="fab fa-facebook text-fb"></i> AccessUG
-            </div>
-            <button class="nav-region-btn" onclick="FbApp.openCountryModal()">
-                <i class="fas fa-map-marker-alt"></i> <span id="ui-region-badge">UGX</span>
+            <button class="nav-region" onclick="FbApp.openCountryModal()">
+                <i class="fas fa-globe"></i> <span id="ui-region-badge">UGX</span>
             </button>
         </nav>
 
-        <header class="app-header">
-            <div class="pulse-badge"><span class="dot"></span> Network Active</div>
-            <h1 class="hero-title">Facebook <span class="text-gradient">Authority</span></h1>
-            <p class="hero-text">Select a premium growth tier designed for serious creators, public figures, and brands.</p>
+        <header class="hero-section">
+            <div class="status-pill">
+                <span class="pulse-dot"></span> System Active & Fast
+            </div>
+            <h1 class="hero-title">Boost your <br><span class="fb-gradient-text">Facebook</span></h1>
+            <p class="hero-subtitle">Get real followers and likes. Simple, safe, and built to grow your page fast.</p>
         </header>
 
-        <main class="bento-stack">
+        <main class="content-flow">
             
-            <section class="bento-card" aria-labelledby="heading-packages">
-                <header class="bento-header">
-                    <div class="b-icon-wrap fb-blue-theme"><i class="fas fa-rocket"></i></div>
-                    <div class="b-title-wrap">
-                        <h2 id="heading-packages">1. Select Package</h2>
-                        <p>Bundled growth for maximum impact.</p>
-                    </div>
-                </header>
+            <section class="flow-step">
+                <div class="step-header">
+                    <div class="step-number">1</div>
+                    <h2 class="step-title">Choose a Package</h2>
+                </div>
                 
-                <div class="bento-grid-packages" id="grid-packages"></div>
+                <div class="package-list" id="package-list">
+                    </div>
             </section>
 
-            <section class="bento-card details-card" aria-labelledby="heading-details">
-                <header class="bento-header minimal-header">
-                    <div class="b-title-wrap">
-                        <h2 id="heading-details">2. Target Details</h2>
-                        <p>Where are we sending this boost?</p>
-                    </div>
-                </header>
+            <section class="flow-step">
+                <div class="step-header">
+                    <div class="step-number">2</div>
+                    <h2 class="step-title">Your Details</h2>
+                </div>
                 
-                <div class="input-wrapper">
-                    <label class="input-label">Facebook Page Link</label>
-                    <div class="fat-input-box">
-                        <i class="fas fa-link input-prefix"></i>
-                        <input type="url" id="target-page" class="fat-input" placeholder="https://facebook.com/yourpage" autocomplete="off" spellcheck="false">
-                        <div class="focus-ring"></div>
-                    </div>
-                </div>
-
-                <div class="input-wrapper" style="margin-top: 16px;">
-                    <label class="input-label">Target Post Links <span class="label-hint">(Depending on package limit)</span></label>
-                    <div class="fat-input-box textarea-box">
-                        <textarea id="target-posts" class="fat-input" rows="3" placeholder="Paste link 1...&#10;Paste link 2..."></textarea>
-                        <div class="focus-ring"></div>
-                    </div>
-                </div>
-
-                <div class="referrer-wrapper">
-                    <div class="referrer-question">
-                        <span>Do you have a Referral Code?</span>
-                        <div class="ref-pills">
-                            <button class="ref-pill active" id="ref-no" onclick="FbApp.toggleReferrer(false)">No</button>
-                            <button class="ref-pill" id="ref-yes" onclick="FbApp.toggleReferrer(true)">Yes</button>
+                <div class="form-card">
+                    <div class="input-group">
+                        <label for="fb-link">Facebook Page Link</label>
+                        <div class="input-box">
+                            <i class="fas fa-link input-icon"></i>
+                            <input type="url" id="fb-link" placeholder="Paste your page link here..." autocomplete="off">
                         </div>
+                        <p class="input-help">Example: https://facebook.com/yourpage</p>
                     </div>
-                    
-                    <div class="referrer-slide-box" id="referrer-drawer">
-                        <div class="fat-input-box small-fat-box">
-                            <i class="fas fa-gift input-prefix"></i>
-                            <input type="text" id="referrer-name" class="fat-input" placeholder="Enter code or name here..." autocomplete="off">
-                            <div class="focus-ring"></div>
+
+                    <div class="referral-section">
+                        <button class="ref-toggle" id="btn-ref-toggle" onclick="FbApp.toggleReferralUI()">
+                            <i class="fas fa-gift"></i> I have a referral code
+                        </button>
+                        
+                        <div class="ref-input-area" id="ref-drawer">
+                            <div class="input-box small-box">
+                                <input type="text" id="ref-code" placeholder="Enter name or code..." autocomplete="off">
+                            </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <div class="bottom-safe-space"></div>
+            <div class="bottom-spacer"></div>
         </main>
 
-        <footer class="checkout-dock">
-            <div class="dock-inner">
-                <div class="dock-details">
-                    <span class="total-label">Selected Tier</span>
-                    <div class="price-cluster">
-                        <span class="tier-name" id="ui-tier-name">None</span>
-                        <div class="price-wrap">
-                            <span class="price-massive" id="ui-final-price">0</span>
-                            <span class="price-currency" id="ui-final-curr">UGX</span>
-                        </div>
+        <footer class="checkout-bar">
+            <div class="checkout-content">
+                <div class="checkout-text">
+                    <span class="total-caption">Total Price</span>
+                    <div class="price-display">
+                        <span id="ui-price-value" class="price-value">0</span>
+                        <span id="ui-price-currency" class="price-currency">UGX</span>
                     </div>
                 </div>
-
-                <button class="action-btn" id="btn-submit" onclick="FbApp.processCheckout()" disabled>
-                    <span class="btn-text" id="btn-text">Select a Tier</span>
-                    <i class="fas fa-arrow-right btn-icon" id="btn-icon"></i>
-                    
-                    <div class="btn-spinner-wrap" id="btn-spinner" style="display: none;">
-                        <svg class="circular-spinner" viewBox="25 25 50 50">
-                            <circle class="spinner-path" cx="50" cy="50" r="20" fill="none" stroke-width="5" stroke-miterlimit="10"></circle>
-                        </svg>
-                    </div>
+                
+                <button class="pay-btn" id="btn-pay" onclick="FbApp.submitOrder()" disabled>
+                    <span id="btn-text">Select a Package</span>
+                    <i class="fas fa-arrow-right"></i>
                 </button>
             </div>
         </footer>
