@@ -43,15 +43,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.fade-up').forEach(el => revealObserver.observe(el));
 
-    // === 4. SPATIAL CAROUSEL ENGINE & SLIDE-TO-DEPLOY ===
+    // === 4. SPATIAL CAROUSEL ENGINE (GLITCH FREE) ===
     const vaultTrack = document.getElementById('vault-track');
     const cards = document.querySelectorAll('.spatial-card');
     const silkMesh = document.getElementById('silk-mesh');
-    const filterPills = document.querySelectorAll('.filter-pill');
+    const filterPills = document.querySelectorAll('.dock-btn'); // New App-Dock buttons
 
     if(vaultTrack && cards.length > 0) {
         
-        // --- Intersection Observer for Active Focus & Aura ---
+        // --- Intersection Observer for Active Focus & Light Aura ---
         const carouselObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }, 500);
 
-        // --- Filter Logic ---
+        // --- Dock Filter Logic ---
         filterPills.forEach(pill => {
             pill.addEventListener('click', () => {
                 filterPills.forEach(p => p.classList.remove('active'));
@@ -102,58 +102,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 50);
                 }
             });
-        });
-
-        // --- Slide to Deploy Logic ---
-        const slideTracks = document.querySelectorAll('.slide-track:not(.disabled)');
-        
-        slideTracks.forEach(trackElement => {
-            const thumb = trackElement.querySelector('.slide-thumb');
-            const text = trackElement.querySelector('.slide-text');
-            const targetLink = trackElement.getAttribute('data-link');
-            
-            let isDraggingSlide = false;
-            let slideStartX = 0;
-            let currentSlideX = 0;
-            const maxDrag = trackElement.offsetWidth - thumb.offsetWidth - 8; 
-
-            const startSlideDrag = (e) => {
-                isDraggingSlide = true;
-                slideStartX = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-                thumb.style.transition = 'none';
-                text.style.opacity = '0.3';
-            };
-
-            const slideDrag = (e) => {
-                if (!isDraggingSlide) return;
-                e.preventDefault();
-                const x = e.type.includes('mouse') ? e.pageX : e.touches[0].pageX;
-                currentSlideX = Math.min(Math.max(0, x - slideStartX), maxDrag);
-                thumb.style.transform = `translateX(${currentSlideX}px)`;
-            };
-
-            const endSlideDrag = () => {
-                if (!isDraggingSlide) return;
-                isDraggingSlide = false;
-                thumb.style.transition = 'transform 0.3s ease';
-                
-                if (currentSlideX >= maxDrag * 0.85) {
-                    thumb.style.transform = `translateX(${maxDrag}px)`;
-                    thumb.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
-                    setTimeout(() => { window.location.href = targetLink; }, 300);
-                } else {
-                    thumb.style.transform = `translateX(0px)`;
-                    text.style.opacity = '1';
-                }
-            };
-
-            thumb.addEventListener('mousedown', startSlideDrag);
-            document.addEventListener('mousemove', slideDrag);
-            document.addEventListener('mouseup', endSlideDrag);
-
-            thumb.addEventListener('touchstart', startSlideDrag, {passive: true});
-            document.addEventListener('touchmove', slideDrag, {passive: false});
-            document.addEventListener('touchend', endSlideDrag);
         });
     }
 
