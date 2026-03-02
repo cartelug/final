@@ -36,7 +36,7 @@
             </div>
             
             <div class="region-list">
-                <button class="region-btn" onclick="FbApp.setCountry('UGX')">
+                <button class="region-btn" onclick="FbApp.setCountry('UGX', 'UG')">
                     <span class="flag">🇺🇬</span>
                     <div class="r-info">
                         <span class="r-name">Uganda</span>
@@ -45,7 +45,7 @@
                     <i class="fas fa-chevron-right arrow"></i>
                 </button>
 
-                <button class="region-btn" onclick="FbApp.setCountry('USD')">
+                <button class="region-btn" onclick="FbApp.setCountry('USD', 'SS')">
                     <span class="flag">🇸🇸</span>
                     <div class="r-info">
                         <span class="r-name">South Sudan</span>
@@ -54,7 +54,7 @@
                     <i class="fas fa-chevron-right arrow"></i>
                 </button>
 
-                <button class="region-btn" onclick="FbApp.setCountry('USD')">
+                <button class="region-btn" onclick="FbApp.setCountry('USD', 'CD')">
                     <span class="flag">🇨🇩</span>
                     <div class="r-info">
                         <span class="r-name">DR Congo</span>
@@ -75,10 +75,7 @@
             <div class="nav-brand">
                 <i class="fab fa-facebook brand-icon"></i> AccessUG
             </div>
-            <button class="nav-region" onclick="FbApp.openCountryModal()">
-                <span id="ui-region-badge">UGX</span> <i class="fas fa-caret-down"></i>
-            </button>
-        </nav>
+            <div style="width: 60px;"></div> </nav>
 
         <header class="hero-module">
             <div class="status-indicator">
@@ -116,7 +113,7 @@
                         <label>WhatsApp Number</label>
                         <div class="input-wrapper">
                             <i class="fab fa-whatsapp input-icon" style="color: #25D366;"></i>
-                            <input type="tel" id="client-number" placeholder="E.g. +256 700 000 000" autocomplete="tel">
+                            <input type="tel" id="client-number" placeholder="Enter WhatsApp Number" autocomplete="tel">
                         </div>
                     </div>
 

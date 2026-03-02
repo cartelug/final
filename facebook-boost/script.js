@@ -1,12 +1,11 @@
 /**
  * ==========================================================================
- * ACCESSUG ELITE FACEBOOK ENGINE (V10 - Full Sheet Sync Integration)
- * Features: Name, WhatsApp Number, Referrals, Smooth Validation
+ * ACCESSUG ELITE FACEBOOK ENGINE (V11 - Plain Text Number Sync & Lock-in)
  * ==========================================================================
  */
 
 const SysConfig = {
-    // ⚠️ Replace with your newly deployed Web App URL if it changed
+    // ⚠️ Replace with your newly deployed Web App URL
     sheetURL: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
     whatsapp: '256762193386',
     
@@ -29,6 +28,7 @@ const SysConfig = {
 
 const State = {
     geo: 'UGX',
+    countryCode: 'UG',
     selectedId: -1,
     refActive: false,
     calcPrice: 0
@@ -37,9 +37,11 @@ const State = {
 const FbApp = {
 
     init() {
-        const savedGeo = localStorage.getItem('accessug_loc_fb');
-        if (savedGeo) {
-            this.setCountry(savedGeo, false);
+        const savedGeo = localStorage.getItem('accessug_curr_fb');
+        const savedCode = localStorage.getItem('accessug_code_fb');
+        
+        if (savedGeo && savedCode) {
+            this.setCountry(savedGeo, savedCode, false);
         } else {
             this.openCountryModal();
         }
@@ -54,13 +56,22 @@ const FbApp = {
         document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
     },
 
-    setCountry(code, save = true) {
-        if(save) localStorage.setItem('accessug_loc_fb', code);
-        State.geo = code;
+    setCountry(currency, code, save = true) {
+        if(save) {
+            localStorage.setItem('accessug_curr_fb', currency);
+            localStorage.setItem('accessug_code_fb', code);
+        }
+        State.geo = currency;
+        State.countryCode = code;
         
         document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
-        document.getElementById('ui-region-badge').innerText = code;
         
+        // Dynamically set the WhatsApp Placeholder
+        const phoneInput = document.getElementById('client-number');
+        if (code === 'UG') phoneInput.placeholder = "E.g. +256 700 000 000";
+        else if (code === 'SS') phoneInput.placeholder = "E.g. +211 000 000 000";
+        else if (code === 'CD') phoneInput.placeholder = "E.g. +243 000 000 000";
+
         State.selectedId = -1; // Reset selection to force fresh choice
         
         this.renderGrid();
@@ -112,10 +123,9 @@ const FbApp = {
         this.updateDock();
         this.validateFlow();
         
-        // Haptic Feedback
         if (navigator.vibrate) navigator.vibrate(15);
         
-        // Smooth scroll to the form section
+        // Smooth scroll to form
         setTimeout(() => {
             document.getElementById('details-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 150);
@@ -167,7 +177,6 @@ const FbApp = {
         const btn = document.getElementById('btn-submit');
         const txt = document.getElementById('btn-text');
 
-        // Check if package is selected AND all fields meet minimum length
         if (State.selectedId > -1 && nameVal.length > 2 && numVal.length > 8 && linkVal.length > 8) {
             btn.disabled = false;
             txt.innerText = "Place Order";
@@ -186,22 +195,28 @@ const FbApp = {
     },
 
     executeOrder() {
-        // 1. Capture Data
+        // 1. Capture Raw Data
         const clientName = document.getElementById('client-name').value.trim();
-        const clientNumber = document.getElementById('client-number').value.trim();
+        const rawNumber = document.getElementById('client-number').value.trim();
         const pageLink = document.getElementById('fb-link').value.trim();
         const refInput = document.getElementById('ref-code').value.trim();
         
-        // Process Referrer Logic
+        // --- 2. THE PLAIN TEXT NUMBER SANITIZER ---
+        // Strips spaces, dashes, and plus signs to get pure digits (e.g. 256708735878)
+        const cleanNumber = rawNumber.replace(/\D/g, ''); 
+        // Prepends an apostrophe so Google Sheets treats it as plain text
+        const sheetNumber = "'" + cleanNumber; 
+
+        // Process Referrer
         const finalReferrer = (State.refActive && refInput !== "") ? refInput : "Direct";
 
         const tier = SysConfig.matrix[State.geo][State.selectedId];
         const displayPrice = State.geo === 'USD' ? `$${tier.price}` : `${tier.price.toLocaleString()} UGX`;
 
-        // 2. GOOGLE SHEETS SYNC (Silently in background)
+        // 3. GOOGLE SHEETS SYNC
         const payload = new URLSearchParams();
         payload.append('ClientName', clientName);
-        payload.append('Number', clientNumber);
+        payload.append('Number', sheetNumber); // Sends the plain text formatted number
         payload.append('Service', `Facebook Boost [${State.geo}]`);
         payload.append('Package', `${tier.title} Tier`);
         payload.append('Price', State.calcPrice.toString());
@@ -213,15 +228,15 @@ const FbApp = {
             console.log("Sheet sync bypassed");
         }
 
-        // 3. WHATSAPP BRIDGE
+        // 4. WHATSAPP BRIDGE
         let msg = `🚀 *NEW FACEBOOK BOOST*\n\n`;
         msg += `*Client Name:* ${clientName}\n`;
-        msg += `*WhatsApp:* ${clientNumber}\n`;
+        msg += `*WhatsApp:* ${cleanNumber}\n`; // Clean number for WhatsApp message
         msg += `*Package:* ${tier.title} Tier\n`;
         msg += `*Total:* ${displayPrice}\n\n`;
         msg += `🔗 *Page Link:* ${pageLink}\n`;
         msg += `🎁 *Referrer:* ${finalReferrer}\n\n`;
-        msg += `_I am ready to make payment. Please send the payment details._`;
+        msg += `_I am ready to make payment._`;
 
         // UI Loading State
         document.getElementById('btn-text').innerText = "Securing...";
@@ -233,7 +248,6 @@ const FbApp = {
         setTimeout(() => {
             window.location.href = `https://wa.me/${SysConfig.whatsapp}?text=${encodeURIComponent(msg)}`;
             
-            // Failsafe reset
             setTimeout(() => {
                 document.getElementById('btn-text').innerText = "Place Order";
                 icon.classList.replace('fa-circle-notch', 'fa-arrow-right');
