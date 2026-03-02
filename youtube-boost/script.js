@@ -1,402 +1,278 @@
 /**
  * ==========================================================================
- * ACCESSUG YOUTUBE ENGINE (V5 - BENTO LOGIC)
- * ==========================================================================
- * Strict Architecture:
- * 1. "Tap & Done" Bento Grid Selection (-1 = Skip, 0-3 = Packages)
- * 2. Hard Limits: $100 / 360,000 UGX
- * 3. 10% Combo Auto-Discount
- * 4. YouTube Specifics: 1k Views = 200 Free Likes
- * 5. Google Sheets `URLSearchParams` -> WhatsApp Bridge
+ * ACCESSUG ELITE YOUTUBE ENGINE (CINEMATIC OBSIDIAN)
+ * Features: Trust Slider, Plain Text WhatsApp Sync, Lock-in
  * ==========================================================================
  */
 
-const AppConfig = {
-    // ---> THE LIVE GOOGLE SHEETS WEB APP URL <---
-    googleSheetUrl: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
-    whatsappNumber: '256762193386',
+const SysConfig = {
+    // ⚠️ Replace with your deployed Web App URL
+    sheetURL: 'https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec', 
+    whatsapp: '256762193386',
     
-    // Strict Pricing Arrays (Adapted for YouTube Subs/Views keeping the math identical)
-    prices: {
-        'UGX': {
-            followers: [ 
-                { v: 1000, p: 75000 }, { v: 4000, p: 141000 }, 
-                { v: 7000, p: 208000 }, { v: 10000, p: 250000 } 
-            ],
-            likes: [ 
-                { v: 1000, p: 50000 }, { v: 4000, p: 83000 }, 
-                { v: 7000, p: 116000 }, { v: 10000, p: 150000 } 
-            ],
-            rules: { floor: 50000, ceiling: 360000, symbol: 'UGX' }
-        },
-        'USD': {
-            followers: [ 
-                { v: 3000, p: 35 }, { v: 5000, p: 50 }, 
-                { v: 8000, p: 75 }, { v: 10000, p: 100 } 
-            ],
-            likes: [ 
-                { v: 2500, p: 35 }, { v: 5000, p: 50 }, 
-                { v: 7500, p: 75 }, { v: 10000, p: 100 } 
-            ],
-            rules: { floor: 35, ceiling: 100, symbol: '$' }
-        }
+    // Core YouTube Tiers
+    matrix: {
+        'UGX': [
+            { id: 0, title: "Starter", price: 262500, perks: ["1k Subscribers", "5k Views", "2k Likes", "1-5 Videos"] },
+            { id: 1, title: "Kickstart", price: 412500, perks: ["2k Subscribers", "7k Views", "3.5k Likes", "1-5 Videos"] },
+            { id: 2, title: "Growth", price: 600000, isHot: true, perks: ["3.5k Subscribers", "9k Views", "5k Likes", "1-10 Videos"] },
+            { id: 3, title: "Authority", price: 862500, perks: ["5.5k Subscribers", "11k Views", "6.5k Likes", "1-10 Videos"] },
+            { id: 4, title: "Viral", price: 1162500, perks: ["7.5k Subscribers", "13k Views", "8k Likes", "1-10 Videos"] },
+            { id: 5, title: "Domination", price: 1500000, isMax: true, perks: ["10k Subscribers", "15k Views", "10k Likes", "1-10 Videos"] }
+        ],
+        'USD': [
+            { id: 0, title: "Starter", price: 70, perks: ["1k Subscribers", "5k Views", "2k Likes", "1-5 Videos"] },
+            { id: 1, title: "Kickstart", price: 110, perks: ["2k Subscribers", "7k Views", "3.5k Likes", "1-5 Videos"] },
+            { id: 2, title: "Growth", price: 160, isHot: true, perks: ["3.5k Subscribers", "9k Views", "5k Likes", "1-10 Videos"] },
+            { id: 3, title: "Authority", price: 230, perks: ["5.5k Subscribers", "11k Views", "6.5k Likes", "1-10 Videos"] },
+            { id: 4, title: "Viral", price: 310, perks: ["7.5k Subscribers", "13k Views", "8k Likes", "1-10 Videos"] },
+            { id: 5, title: "Domination", price: 400, isMax: true, perks: ["10k Subscribers", "15k Views", "10k Likes", "1-10 Videos"] }
+        ]
     }
 };
 
-const AppState = {
-    country: 'UGX',
-    folSelection: -1,   // -1 = Skipped/None (Maps to Subscribers)
-    likSelection: -1,   // -1 = Skipped/None (Maps to Views)
-    videoSplits: 5,
-    hasReferrer: false,
-    isProcessing: false,
-    finalMathematicalPrice: 0 // Clean integer stored for sheets
+const State = {
+    geo: 'UGX',
+    countryCode: 'UG',
+    selectedId: -1,
+    refActive: false,
+    calcPrice: 0
 };
 
 const YtApp = {
 
-    // --- 1. BOOTSTRAP ---
     init() {
-        const savedRegion = localStorage.getItem('accessug_loc_yt');
-        if (savedRegion) {
-            this.setCountry(savedRegion, false);
+        const savedGeo = localStorage.getItem('accessug_curr_yt');
+        const savedCode = localStorage.getItem('accessug_code_yt');
+        
+        if (savedGeo && savedCode) {
+            this.setCountry(savedGeo, savedCode, false);
         } else {
-            this.openCountryModal();
+            document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
         }
 
-        // Enter key listener for rapid checkout
-        document.getElementById('target-username').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
-        });
-        document.getElementById('referrer-name').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && !AppState.isProcessing) this.processCheckout();
-        });
+        // Live Event Listeners
+        document.getElementById('client-name').addEventListener('input', () => this.validateFlow());
+        document.getElementById('client-number').addEventListener('input', () => this.validateFlow());
+        document.getElementById('yt-link').addEventListener('input', () => this.validateFlow());
     },
 
-    // --- 2. COUNTRY MANAGEMENT ---
-    openCountryModal() {
-        document.getElementById('country-modal').setAttribute('aria-hidden', 'false');
-    },
-
-    setCountry(code, saveToMemory = true) {
-        if(saveToMemory) localStorage.setItem('accessug_loc_yt', code);
-        AppState.country = code;
+    setCountry(currency, code, save = true) {
+        if(save) {
+            localStorage.setItem('accessug_curr_yt', currency);
+            localStorage.setItem('accessug_code_yt', code);
+        }
+        State.geo = currency;
+        State.countryCode = code;
         
         document.getElementById('country-modal').setAttribute('aria-hidden', 'true');
-        document.getElementById('ui-region-badge').innerText = code;
         
-        // Reset selections to clean defaults
-        AppState.folSelection = 0;
-        AppState.likSelection = -1;
-        AppState.videoSplits = 5;
+        const phoneInput = document.getElementById('client-number');
+        if (code === 'UG') phoneInput.placeholder = "E.g. +256 700 000 000";
+        else if (code === 'SS') phoneInput.placeholder = "E.g. +211 000 000 000";
+        else if (code === 'CD') phoneInput.placeholder = "E.g. +243 000 000 000";
+
+        State.selectedId = -1; 
         
-        this.renderBentoGrids();
-        this.calculateMath();
+        this.renderGrid();
+        this.updateDock();
+        this.validateFlow();
     },
 
-    // --- 3. BENTO UI RENDERING ---
-    renderBentoGrids() {
-        const matrix = AppConfig.prices[AppState.country];
-        const formatVol = (v) => v >= 1000 ? (v/1000) + 'k' : v;
-        const formatPrice = (p) => AppState.country === 'USD' ? `$${p}` : `${p.toLocaleString()} UGX`;
-
-        // 3a. Render Subscribers Grid (Mapped to 'followers' object)
-        const gridFol = document.getElementById('grid-followers');
-        gridFol.innerHTML = '';
+    renderGrid() {
+        const grid = document.getElementById('package-list');
+        grid.innerHTML = '';
         
-        matrix.followers.forEach((tier, index) => {
-            let activeClass = AppState.folSelection === index ? 'selected-red' : '';
-            gridFol.innerHTML += `
-                <div class="pack-btn ${activeClass}" onclick="YtApp.selectTier('fol', ${index})">
-                    <span class="p-vol">${formatVol(tier.v)}</span>
-                    <span class="p-price">${formatPrice(tier.p)}</span>
+        const tiers = SysConfig.matrix[State.geo];
+        const sym = State.geo === 'USD' ? '$' : '';
+        const cur = State.geo === 'UGX' ? 'UGX' : 'USD';
+
+        tiers.forEach((tier) => {
+            const isAct = State.selectedId === tier.id ? 'active' : '';
+            
+            let tag = '';
+            if(tier.isHot) tag = `<div class="badge-tag hot">Most Popular</div>`;
+            if(tier.isMax) tag = `<div class="badge-tag max">Max Authority</div>`;
+
+            let icons = ['fa-users', 'fa-eye', 'fa-thumbs-up', 'fa-video'];
+            let listHTML = tier.perks.map((p, i) => `<li><i class="fas ${icons[i]} f-icon"></i> ${p}</li>`).join('');
+
+            grid.innerHTML += `
+                <div class="pack-card ${isAct}" onclick="YtApp.selectTier(${tier.id})">
+                    ${tag}
+                    <div class="pack-header">
+                        <h3 class="pack-name">${tier.title}</h3>
+                        <div class="pack-price-box">
+                            <span class="pack-price">${sym}${tier.price.toLocaleString()}</span>
+                            <span class="pack-curr">${cur}</span>
+                        </div>
+                    </div>
+                    <ul class="pack-features">
+                        ${listHTML}
+                    </ul>
                 </div>
             `;
         });
+    },
+
+    selectTier(id) {
+        State.selectedId = id;
+        this.renderGrid();
+        this.updateDock();
+        this.validateFlow();
         
-        let skipFolClass = AppState.folSelection === -1 ? 'selected-skip' : '';
-        gridFol.innerHTML += `
-            <div class="pack-btn skip-btn ${skipFolClass}" onclick="YtApp.selectTier('fol', -1)" style="grid-column: span 2;">
-                <span class="p-vol">I don't need Subscribers</span>
-            </div>
-        `;
-
-        // 3b. Render Views Grid (Mapped to 'likes' object) Includes Free Likes
-        const gridLik = document.getElementById('grid-likes');
-        gridLik.innerHTML = '';
+        if (navigator.vibrate) navigator.vibrate(15);
         
-        matrix.likes.forEach((tier, index) => {
-            let activeClass = AppState.likSelection === index ? 'selected-dark' : '';
-            
-            // YouTube specific logic: Include 20% free likes with views to simulate high engagement
-            let freeLikes = formatVol(tier.v * 0.2);
-            
-            gridLik.innerHTML += `
-                <div class="pack-btn ${activeClass}" onclick="YtApp.selectTier('lik', ${index})">
-                    <span class="p-vol">${formatVol(tier.v)}</span>
-                    <span class="p-views">+ ${freeLikes} Free Likes</span>
-                    <span class="p-price">${formatPrice(tier.p)}</span>
-                </div>
-            `;
-        });
+        setTimeout(() => {
+            document.getElementById('details-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+    },
 
-        let skipLikClass = AppState.likSelection === -1 ? 'selected-skip' : '';
-        gridLik.innerHTML += `
-            <div class="pack-btn skip-btn ${skipLikClass}" onclick="YtApp.selectTier('lik', -1)" style="grid-column: span 2;">
-                <span class="p-vol">I don't need Views</span>
-            </div>
-        `;
-
-        // Toggle Video Splitter UI Visibility
-        const splitterUI = document.getElementById('split-ui-box');
-        if (AppState.likSelection > -1) {
-            splitterUI.style.display = 'flex';
+    toggleReferral() {
+        State.refActive = !State.refActive;
+        const drawer = document.getElementById('ref-drawer');
+        const btn = document.getElementById('ref-btn');
+        
+        if (State.refActive) {
+            drawer.classList.add('show');
+            btn.classList.add('active');
+            setTimeout(() => document.getElementById('ref-code').focus(), 300);
         } else {
-            splitterUI.style.display = 'none';
+            drawer.classList.remove('show');
+            btn.classList.remove('active');
+            document.getElementById('ref-code').value = ''; 
         }
     },
 
-    // --- 4. TACTILE INTERACTIONS ---
-    selectTier(type, index) {
-        if (AppState.isProcessing) return;
-        
-        if (type === 'fol') AppState.folSelection = index;
-        if (type === 'lik') AppState.likSelection = index;
-        
-        this.renderBentoGrids();
-        this.calculateMath();
-        this.triggerVibration();
-    },
+    updateDock() {
+        const valUI = document.getElementById('ui-val');
+        const curUI = document.getElementById('ui-curr');
 
-    adjustSplit(direction) {
-        if (AppState.isProcessing) return;
-        
-        AppState.videoSplits += direction;
-        if (AppState.videoSplits < 1) AppState.videoSplits = 1;
-        if (AppState.videoSplits > 10) AppState.videoSplits = 10;
-        
-        document.getElementById('split-counter-ui').innerText = AppState.videoSplits;
-        this.calculateMath();
-        this.triggerVibration();
-    },
-
-    toggleReferrer(hasFriend) {
-        if (AppState.isProcessing) return;
-        AppState.hasReferrer = hasFriend;
-        
-        const btnNo = document.getElementById('ref-no');
-        const btnYes = document.getElementById('ref-yes');
-        const drawer = document.getElementById('referrer-drawer');
-        
-        if (hasFriend) {
-            btnNo.classList.remove('active');
-            btnYes.classList.add('active');
-            drawer.classList.add('is-open');
-            setTimeout(() => document.getElementById('referrer-name').focus(), 250);
-        } else {
-            btnYes.classList.remove('active');
-            btnNo.classList.add('active');
-            drawer.classList.remove('is-open');
-            document.getElementById('referrer-name').value = ''; 
-        }
-    },
-
-    triggerVibration() {
-        if (navigator.vibrate) navigator.vibrate(10);
-    },
-
-    // --- 5. THE CORE MATHEMATICS ENGINE ---
-    calculateMath() {
-        const matrix = AppConfig.prices[AppState.country];
-        let runningTotal = 0;
-        let activeCategories = 0;
-
-        // Add Subscribers Math
-        if (AppState.folSelection > -1) {
-            runningTotal += matrix.followers[AppState.folSelection].p;
-            activeCategories++;
-        }
-        
-        // Add Views Math & Update Split Text
-        if (AppState.likSelection > -1) {
-            const likObj = matrix.likes[AppState.likSelection];
-            runningTotal += likObj.p;
-            activeCategories++;
-            
-            // YouTube specific split helper text
-            const viewsPerPost = Math.floor(likObj.v / AppState.videoSplits);
-            const likesPerPost = Math.floor((likObj.v * 0.2) / AppState.videoSplits);
-            
-            document.getElementById('split-math-output').innerText = `~${viewsPerPost.toLocaleString()} Views & ${likesPerPost.toLocaleString()} Likes per video`;
-        }
-
-        // Apply Business Rules
-        let finalPrice = runningTotal;
-        
-        const tagCombo = document.getElementById('ui-badge-combo');
-        const tagMax = document.getElementById('ui-badge-max');
-        const textStrike = document.getElementById('ui-strike-price');
-
-        tagCombo.style.display = 'none';
-        tagMax.style.display = 'none';
-        textStrike.innerText = '';
-
-        // Rule 1: 10% Bundle Discount
-        if (activeCategories === 2 && runningTotal > 0) {
-            finalPrice = runningTotal * 0.90;
-            tagCombo.style.display = 'flex';
-            textStrike.innerText = AppState.country === 'USD' ? `$${runningTotal}` : runningTotal.toLocaleString();
-        }
-
-        // Rule 2: Strict Min Floor & Max Ceiling Overrides
-        if (activeCategories > 0) {
-            if (finalPrice < matrix.rules.floor) finalPrice = matrix.rules.floor;
-            if (finalPrice >= matrix.rules.ceiling) {
-                finalPrice = matrix.rules.ceiling;
-                tagCombo.style.display = 'none'; 
-                tagMax.style.display = 'flex';
-                textStrike.innerText = ''; 
-            }
-        } else {
-            finalPrice = 0;
-        }
-
-        // Output to DOM
-        if (AppState.country === 'USD') {
-            document.getElementById('ui-final-price').innerText = `$${finalPrice}`;
-            document.getElementById('ui-final-curr').innerText = '';
-        } else {
-            document.getElementById('ui-final-price').innerText = finalPrice.toLocaleString();
-            document.getElementById('ui-final-curr').innerText = 'UGX';
-        }
-        
-        // Save to state for payload
-        AppState.finalMathematicalPrice = finalPrice;
-    },
-
-    // --- 6. SHADOW-SYNC & WHATSAPP BRIDGE ---
-    async processCheckout() {
-        if (AppState.isProcessing) return;
-
-        // 1. Validations
-        if (AppState.folSelection === -1 && AppState.likSelection === -1) {
-            this.showToast("Please select a Subscriber or Views package.", "error");
+        if (State.selectedId === -1) {
+            valUI.innerText = "0";
+            curUI.innerText = State.geo;
+            State.calcPrice = 0;
             return;
         }
 
-        const clientUsername = document.getElementById('target-username').value.trim();
-        if (!clientUsername) {
-            this.showToast("Please enter your YouTube Channel Link.", "error");
-            document.getElementById('target-username').focus();
-            return;
+        const tier = SysConfig.matrix[State.geo][State.selectedId];
+        State.calcPrice = tier.price;
+
+        if (State.geo === 'USD') {
+            valUI.innerText = `$${tier.price}`;
+            curUI.innerText = 'USD';
+        } else {
+            valUI.innerText = tier.price.toLocaleString();
+            curUI.innerText = 'UGX';
         }
+    },
 
-        // 2. Format Referrer
-        let referrerText = "Direct";
-        if (AppState.hasReferrer) {
-            const inputVal = document.getElementById('referrer-name').value.trim();
-            if (inputVal) referrerText = inputVal;
+    validateFlow() {
+        const nameVal = document.getElementById('client-name').value.trim();
+        const numVal = document.getElementById('client-number').value.trim();
+        const linkVal = document.getElementById('yt-link').value.trim();
+        const btn = document.getElementById('btn-submit');
+        const txt = document.getElementById('btn-text');
+
+        if (State.selectedId > -1 && nameVal.length > 2 && numVal.length > 8 && linkVal.length > 2) {
+            btn.disabled = false;
+            txt.innerText = "Place Order";
+        } else {
+            btn.disabled = true;
+            if (State.selectedId === -1) txt.innerText = "Select Package";
+            else if (nameVal.length <= 2) txt.innerText = "Enter Your Name";
+            else if (numVal.length <= 8) txt.innerText = "Enter WhatsApp Number";
+            else txt.innerText = "Enter YouTube Handle/Link";
         }
+    },
 
-        // 3. Engage Loading UI
-        this.setLoading(true);
-
-        // 4. Construct Strings (YouTube specific metrics)
-        const matrix = AppConfig.prices[AppState.country];
-        let sheetPackageStr = "";
-        let waPackageStr = "";
+    openTrustModal() {
+        if (document.getElementById('btn-submit').disabled) return;
         
-        if (AppState.folSelection > -1) {
-            let folVol = matrix.followers[AppState.folSelection].v;
-            sheetPackageStr += `${folVol} Subscribers. `;
-            waPackageStr += `🚀 *Subscribers:* ${folVol.toLocaleString()}\n`;
-        }
+        const tier = SysConfig.matrix[State.geo][State.selectedId];
+        const displayPrice = State.geo === 'USD' ? `$${tier.price}` : `${tier.price.toLocaleString()} UGX`;
+        const targetName = document.getElementById('yt-link').value.trim();
+
+        document.getElementById('sum-target').innerText = targetName;
+        document.getElementById('sum-package').innerText = `${tier.title} Tier`;
+        document.getElementById('sum-price').innerText = displayPrice;
+
+        this.nextSlide(1);
+        document.getElementById('trust-modal').setAttribute('aria-hidden', 'false');
+    },
+
+    closeTrustModal() {
+        document.getElementById('trust-modal').setAttribute('aria-hidden', 'true');
+    },
+
+    nextSlide(stepNumber) {
+        document.querySelectorAll('.slider-pane').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.dot').forEach(el => el.classList.remove('active'));
         
-        if (AppState.likSelection > -1) {
-            let likVol = matrix.likes[AppState.likSelection].v;
-            let freeLikes = likVol * 0.2;
-            let splits = AppState.videoSplits;
-            
-            sheetPackageStr += `${likVol} Views (Split ${splits}) + ${freeLikes} Likes.`;
-            waPackageStr += `▶️ *Views:* ${likVol.toLocaleString()} (Across ${splits} videos)\n`;
-            waPackageStr += `👍 *Free Likes:* ${freeLikes.toLocaleString()}\n`;
-        }
+        document.getElementById(`slide-${stepNumber}`).classList.add('active');
+        document.getElementById(`dot-${stepNumber}`).classList.add('active');
+    },
 
-        const finalBillDisplay = document.getElementById('ui-final-price').innerText + " " + document.getElementById('ui-final-curr').innerText;
+    finalizeOrder() {
+        const clientName = document.getElementById('client-name').value.trim();
+        const rawNumber = document.getElementById('client-number').value.trim();
+        const pageLink = document.getElementById('yt-link').value.trim();
+        const refInput = document.getElementById('ref-code').value.trim();
+        
+        // Plain text sanitizer
+        const cleanNumber = rawNumber.replace(/\D/g, ''); 
+        const sheetNumber = "'" + cleanNumber; 
 
-        // --- GOOGLE SHEETS INTEGRATION (EXACT MATCH) ---
-        // Requires: Date (auto in Apps Script), ClientName, Service, Package, Price, Referrer
-        const formData = new URLSearchParams();
-        formData.append('ClientName', clientUsername);
-        formData.append('Service', `YouTube Boost [${AppState.country}]`);
-        formData.append('Package', sheetPackageStr.trim());
-        formData.append('Price', AppState.finalMathematicalPrice.toString()); // Raw number for math
-        formData.append('Referrer', referrerText);
+        const finalReferrer = (State.refActive && refInput !== "") ? refInput : "Direct";
+
+        const tier = SysConfig.matrix[State.geo][State.selectedId];
+        const displayPrice = State.geo === 'USD' ? `$${tier.price}` : `${tier.price.toLocaleString()} UGX`;
+
+        // 1. Google Sheets Sync
+        const payload = new URLSearchParams();
+        payload.append('ClientName', clientName);
+        payload.append('Number', sheetNumber);
+        payload.append('Service', `YouTube Boost [${State.geo}]`);
+        payload.append('Package', `${tier.title} Tier`);
+        payload.append('Price', State.calcPrice.toString());
+        payload.append('Referrer', finalReferrer);
 
         try {
-            await fetch(AppConfig.googleSheetUrl, { 
-                method: 'POST', 
-                body: formData, 
-                mode: 'no-cors' 
-            });
-        } catch (e) { 
-            console.log("Sheet sync bypassed/failed, proceeding to WhatsApp."); 
+            fetch(SysConfig.sheetURL, { method: 'POST', body: payload, mode: 'no-cors' });
+        } catch (err) {
+            console.log("Sheet sync bypassed");
         }
 
-        // --- WHATSAPP REDIRECTION (LEGACY TEMPLATE MATCH) ---
-        const waTotalDisplay = AppState.country === 'USD' ? `$${AppState.finalMathematicalPrice}` : `${AppState.finalMathematicalPrice.toLocaleString()} UGX`;
+        // 2. WhatsApp Bridge
+        let msg = `🚀 *NEW YOUTUBE BOOST*\n\n`;
+        msg += `*Client Name:* ${clientName}\n`;
+        msg += `*WhatsApp:* ${cleanNumber}\n`;
+        msg += `*Package:* ${tier.title} Tier\n`;
+        msg += `*Total:* ${displayPrice}\n\n`;
+        msg += `🎥 *Channel Link:* ${pageLink}\n`;
+        msg += `🎁 *Referrer:* ${finalReferrer}\n\n`;
+        msg += `_I have accepted the terms and am ready to pay the 30% deposit._`;
+
+        const btn = document.getElementById('btn-final-confirm');
+        document.getElementById('final-btn-text').innerText = "Securing...";
+        btn.querySelector('i').classList.replace('fa-whatsapp', 'fa-circle-notch');
+        btn.querySelector('i').classList.add('fa-spin');
+        btn.style.opacity = '0.8';
+        btn.style.pointerEvents = 'none';
         
-        let message = `*NEW YOUTUBE ORDER [${clientUsername.toUpperCase()}]*\n\n`;
-        message += `*Service:* YouTube Monetization\n`;
-        message += `*Package:* \n${waPackageStr}\n`;
-        message += `*Price:* ${waTotalDisplay}\n`;
-        message += `*Referrer:* ${referrerText}\n`;
-        message += `*Channel Link:* ${clientUsername}`;
-
-        window.location.href = `https://wa.me/${AppConfig.whatsappNumber}?text=${encodeURIComponent(message)}`;
-        
-        // Failsafe UI reset
-        setTimeout(() => this.setLoading(false), 5000);
-    },
-
-    // --- 7. UTILITIES ---
-    setLoading(isLoading) {
-        AppState.isProcessing = isLoading;
-        const btnNode = document.getElementById('btn-submit');
-        const btnText = document.getElementById('btn-text');
-        const btnIcon = document.getElementById('btn-icon');
-        const btnSpinner = document.getElementById('btn-spinner');
-
-        if (isLoading) {
-            btnNode.disabled = true;
-            btnText.innerText = "Securing Order...";
-            btnIcon.style.display = 'none';
-            btnSpinner.style.display = 'block';
-        } else {
-            btnNode.disabled = false;
-            btnText.innerText = "Place Order";
-            btnIcon.style.display = 'inline-block';
-            btnSpinner.style.display = 'none';
-        }
-    },
-
-    showToast(message, type = 'error') {
-        const wrapper = document.getElementById('toast-wrapper');
-        const toast = document.createElement('div');
-        toast.className = `toast-msg ${type}-toast`;
-        
-        const iconClass = type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle';
-        toast.innerHTML = `<i class="fas ${iconClass}"></i> <span>${message}</span>`;
-        
-        wrapper.appendChild(toast);
-        this.triggerVibration();
-
         setTimeout(() => {
-            toast.classList.add('hide-toast');
-            toast.addEventListener('animationend', () => toast.remove());
-        }, 3500);
+            window.location.href = `https://wa.me/${SysConfig.whatsapp}?text=${encodeURIComponent(msg)}`;
+            
+            setTimeout(() => {
+                this.closeTrustModal();
+                document.getElementById('final-btn-text').innerText = "Confirm & Proceed";
+                btn.querySelector('i').classList.replace('fa-circle-notch', 'fa-whatsapp');
+                btn.querySelector('i').classList.remove('fa-spin');
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }, 2000);
+        }, 1000);
     }
 };
 
-// Ignite the Engine
-YtApp.init();
+document.addEventListener('DOMContentLoaded', () => YtApp.init());
