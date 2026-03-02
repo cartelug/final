@@ -43,25 +43,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll('.fade-up').forEach(el => revealObserver.observe(el));
 
-    // === 4. SPATIAL CAROUSEL ENGINE (GLITCH FREE) ===
+    // === 4. SPATIAL CAROUSEL ENGINE (Zero Lag) ===
     const vaultTrack = document.getElementById('vault-track');
     const cards = document.querySelectorAll('.spatial-card');
-    const silkMesh = document.getElementById('silk-mesh');
-    const filterPills = document.querySelectorAll('.dock-btn'); // New App-Dock buttons
+    const filterPills = document.querySelectorAll('.dock-btn'); 
 
     if(vaultTrack && cards.length > 0) {
         
-        // --- Intersection Observer for Active Focus & Light Aura ---
+        // --- Intersection Observer for Active Scale & Opacity ---
         const carouselObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     cards.forEach(c => c.classList.remove('is-active'));
                     entry.target.classList.add('is-active');
-                    
-                    const themeColor = entry.target.getAttribute('data-theme');
-                    if(themeColor) {
-                        silkMesh.style.background = `radial-gradient(circle, ${themeColor} 0%, transparent 60%)`;
-                    }
                 }
             });
         }, { root: vaultTrack, rootMargin: '0px', threshold: 0.6 });

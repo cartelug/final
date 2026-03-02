@@ -51,8 +51,11 @@
             <div class="container hero-content">
                 
                 <div class="trust-pill shimmer-pill fade-up">
-                    <span class="pill-icon">✦</span>
-                    <span class="pill-text">Premium Digital Assets • 2,100+ Active</span>
+                    <div class="cyber-core">
+                        <div class="core-inner"></div>
+                        <div class="core-ring"></div>
+                    </div>
+                    <span class="pill-text">Premium Digital Assets • 2,300+ Active Users</span>
                 </div>
                 
                 <h1 class="display-massive fade-up delay-1">
@@ -85,15 +88,41 @@
             </div>
         </section>
 
-        <section id="vault" class="stage-vault-spatial">
-            <div class="spatial-bg" id="spatial-bg">
-                <div class="silk-mesh" id="silk-mesh"></div>
-                <div class="glass-noise"></div>
+        <section id="vault" class="stage-vault-spatial premium-light">
+            
+            <div class="spatial-bg">
+                <div class="cream-mesh-gradient"></div>
+                
+                <div class="stickman-art stickman-left">
+                    <div class="floating-notes">
+                        <span style="--d:0s;">🎵</span><span style="--d:1s;">🎶</span><span style="--d:2s;">🎵</span>
+                    </div>
+                    <svg viewBox="0 0 100 150" class="svg-stickman">
+                        <g class="bop-head">
+                            <circle cx="50" cy="30" r="15" class="stick-line"/>
+                            <path d="M 30 30 A 20 20 0 0 1 70 30" class="stick-accent"/>
+                            <rect x="25" y="25" width="8" height="15" rx="4" class="stick-fill"/>
+                            <rect x="67" y="25" width="8" height="15" rx="4" class="stick-fill"/>
+                        </g>
+                        <path d="M 50 45 L 50 100 M 50 60 L 25 80 M 50 60 L 75 80 M 50 100 L 30 140 M 50 100 L 70 140" class="stick-line"/>
+                    </svg>
+                </div>
+
+                <div class="stickman-art stickman-right">
+                    <div class="popcorn-fly">
+                        <span style="--d:0s;">🍿</span><span style="--d:0.8s;">🍿</span><span style="--d:1.5s;">🍿</span>
+                    </div>
+                    <svg viewBox="0 0 120 120" class="svg-stickman">
+                        <circle cx="80" cy="30" r="15" class="stick-line"/>
+                        <path d="M 80 45 L 80 90 L 40 90 M 80 60 L 50 65 L 50 45" class="stick-line"/>
+                        <rect x="30" y="20" width="20" height="35" rx="3" class="stick-screen"/>
+                    </svg>
+                </div>
             </div>
 
             <div class="container relative-z">
                 <div class="section-title fade-up">
-                    <h2 class="heading-large">Our <span class="text-emerald">Services.</span></h2>
+                    <h2 class="heading-large text-dark">Our <span class="text-emerald">Services.</span></h2>
                 </div>
 
                 <div class="swipe-guide fade-up delay-1">
@@ -101,7 +130,7 @@
                     <p>← Swipe to explore services →</p>
                 </div>
 
-                <div class="glass-dock fade-up delay-1" id="filter-dock">
+                <div class="glass-dock light-dock fade-up delay-1" id="filter-dock">
                     <button class="dock-btn active" data-filter="all"><span>♾️</span> All</button>
                     <button class="dock-btn" data-filter="music"><span>🎵</span> Music</button>
                     <button class="dock-btn" data-filter="streaming"><span>🎬</span> Streaming Movies</button>
@@ -113,8 +142,7 @@
             <div class="carousel-container fade-up delay-2">
                 <div class="snap-track" id="vault-track">
                     
-                    <div class="spatial-card" data-category="streaming" data-theme="rgba(229,9,20,0.6)">
-                        <div class="card-inner-glow"></div>
+                    <div class="spatial-card" data-category="streaming">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/netflix.png" alt="Netflix"></div>
                             <span class="status-tag tag-red">Top Seller</span>
@@ -132,8 +160,7 @@
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="streaming" data-theme="rgba(0,168,225,0.6)">
-                        <div class="card-inner-glow"></div>
+                    <div class="spatial-card" data-category="streaming">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/prime-video.png" alt="Prime"></div>
                             <span class="status-tag tag-blue">Best Value</span>
@@ -151,8 +178,7 @@
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="music" data-theme="rgba(29,185,84,0.6)">
-                        <div class="card-inner-glow"></div>
+                    <div class="spatial-card" data-category="music">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/spotify.png" alt="Spotify"></div>
                             <span class="status-tag tag-green">Trending</span>
@@ -170,8 +196,7 @@
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="social" data-theme="rgba(0,242,254,0.6)">
-                        <div class="card-inner-glow"></div>
+                    <div class="spatial-card" data-category="social">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/tiktok.png" alt="TikTok"></div>
                             <span class="status-tag" style="color:#00f2fe; background:rgba(0,242,254,0.1); border:1px solid rgba(0,242,254,0.2);">Viral</span>
@@ -189,8 +214,7 @@
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="social" data-theme="rgba(225,48,108,0.6)">
-                        <div class="card-inner-glow"></div>
+                    <div class="spatial-card" data-category="social">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/instagram.png" alt="Instagram"></div>
                             <span class="status-tag tag-red">Popular</span>
@@ -208,8 +232,7 @@
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="social" data-theme="rgba(24,119,242,0.6)">
-                        <div class="card-inner-glow"></div>
+                    <div class="spatial-card" data-category="social">
                         <div class="card-top">
                             <div class="brand-crest" style="font-size: 28px; color: #1877F2;"><i class="fab fa-facebook"></i></div>
                             <span class="status-tag tag-blue">Pages</span>
@@ -227,8 +250,7 @@
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="social" data-theme="rgba(255,0,0,0.6)">
-                        <div class="card-inner-glow"></div>
+                    <div class="spatial-card" data-category="social">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/youtube.png" alt="YouTube"></div>
                             <span class="status-tag tag-red">Monetize</span>
@@ -246,8 +268,7 @@
                         </div>
                     </div>
 
-                    <div class="spatial-card locked" data-category="pro" data-theme="rgba(0,196,204,0.3)">
-                        <div class="card-inner-glow"></div>
+                    <div class="spatial-card locked" data-category="pro">
                         <div class="card-top">
                             <div class="brand-crest" style="font-size: 28px; color: #00C4CC;"><i class="fas fa-paint-brush"></i></div>
                             <span class="status-tag" style="color:#aaa; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);">Coming Soon</span>
@@ -265,8 +286,7 @@
                         </div>
                     </div>
 
-                    <div class="spatial-card locked" data-category="pro" data-theme="rgba(255,255,255,0.2)">
-                        <div class="card-inner-glow"></div>
+                    <div class="spatial-card locked" data-category="pro">
                         <div class="card-top">
                             <div class="brand-crest" style="font-size: 28px; color: #fff;"><i class="fas fa-video"></i></div>
                             <span class="status-tag" style="color:#aaa; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);">Coming Soon</span>
