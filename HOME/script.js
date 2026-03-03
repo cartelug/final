@@ -1,136 +1,159 @@
 /**
- * ACCESSUG - ELITE INTERACTION ENGINE V2
- * Performance optimized: Removed heavy DOM manip, utilizing hardware acceleration.
+ * ACCESSUG - OBSIDIAN INTERACTIVE ENGINE
+ * Location: HOME/script.js
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    'use strict';
 
-    // 1. HARDWARE-ACCELERATED FLARE CURSOR
-    const flare = document.getElementById('flare');
-    if (window.matchMedia("(pointer: fine)").matches && flare) {
-        let mouseX = 0, mouseY = 0;
-        let flareX = 0, flareY = 0;
-        
+    // === 1. DYNAMIC SPOTLIGHT ===
+    const spotlight = document.getElementById('spotlight');
+    if (window.matchMedia("(pointer: fine)").matches) {
         window.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+            requestAnimationFrame(() => {
+                spotlight.style.left = `${e.clientX}px`;
+                spotlight.style.top = `${e.clientY}px`;
+            });
         });
-        
-        // Smooth interpolation for premium feel
-        const animateFlare = () => {
-            flareX += (mouseX - flareX) * 0.15;
-            flareY += (mouseY - flareY) * 0.15;
-            flare.style.transform = `translate3d(calc(${flareX}px - 50%), calc(${flareY}px - 50%), 0)`;
-            requestAnimationFrame(animateFlare);
-        };
-        requestAnimationFrame(animateFlare);
-
-        document.addEventListener('mouseleave', () => flare.style.opacity = '0');
-        document.addEventListener('mouseenter', () => flare.style.opacity = '1');
-    } else if (flare) {
-        flare.style.display = 'none'; // Disable on mobile/touch for performance
+        document.addEventListener('mouseleave', () => spotlight.style.opacity = '0');
+        document.addEventListener('mouseenter', () => spotlight.style.opacity = '1');
+    } else {
+        spotlight.style.display = 'none';
     }
 
-    // 2. GLASS NAV SCROLL OBSERVER (Better performance than scroll listener)
+    // === 2. PRECISION NAVBAR ===
     const navbar = document.getElementById('navbar');
-    const heroSection = document.querySelector('.scene-hero');
-    
-    if(navbar && heroSection) {
-        const navObserver = new IntersectionObserver(([entry]) => {
-            if (!entry.isIntersecting) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        }, { rootMargin: '-80px 0px 0px 0px' });
-        navObserver.observe(heroSection);
-    }
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    }, { passive: true });
 
-    // 3. PREMIUM REVEAL ANIMATIONS
-    const revealOptions = { root: null, rootMargin: '0px 0px -5% 0px', threshold: 0.1 };
+    // === 3. HIGH-PERFORMANCE OBSERVER ===
+    const observerOptions = { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0 };
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target); 
+                observer.unobserve(entry.target);
             }
         });
-    }, revealOptions);
+    }, observerOptions);
 
-    document.querySelectorAll('.reveal-up').forEach(el => revealObserver.observe(el));
+    document.querySelectorAll('.fade-up').forEach(el => revealObserver.observe(el));
 
-    // 4. VAULT FILTERING (Optimized)
+    // === 4. VAULT APP-DOCK FILTER (PURE NATIVE) ===
     const vaultTrack = document.getElementById('vault-track');
-    const cards = document.querySelectorAll('.elite-card');
-    const tabs = document.querySelectorAll('.tab-btn'); 
+    const cards = document.querySelectorAll('.spatial-card');
+    const filterPills = document.querySelectorAll('.dock-btn'); 
 
-    if (vaultTrack && cards.length > 0) {
-        tabs.forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                const target = e.currentTarget;
-                tabs.forEach(t => t.classList.remove('active'));
-                target.classList.add('active');
+    if(vaultTrack && cards.length > 0) {
+        
+        // --- Dock Filter Logic ---
+        filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                filterPills.forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
                 
-                const filter = target.getAttribute('data-filter');
+                const filter = pill.getAttribute('data-filter');
+                let firstMatch = null;
 
                 cards.forEach(card => {
-                    // Quick fade out
-                    card.style.opacity = '0';
-                    card.style.transform = 'scale(0.95)';
-                    
-                    setTimeout(() => {
-                        if (filter === 'all' || card.getAttribute('data-category') === filter) {
-                            card.style.display = 'flex';
-                            requestAnimationFrame(() => {
-                                card.style.opacity = '1';
-                                card.style.transform = 'scale(1) translateY(0)';
-                            });
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    }, 300);
+                    if(filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'flex';
+                        if(!firstMatch) firstMatch = card;
+                    } else {
+                        card.style.display = 'none';
+                    }
                 });
 
-                // Reset scroll position smoothly
-                setTimeout(() => {
-                    vaultTrack.scrollTo({ left: 0, behavior: 'smooth' });
-                }, 350);
+                if(firstMatch) {
+                    setTimeout(() => {
+                        vaultTrack.scrollTo({ left: 0, behavior: 'smooth' });
+                    }, 50);
+                }
             });
         });
     }
 
-    // 5. LIGHTBOX ZOOM LOGIC
+    // === 5. SWIPEABLE + FAST AUTO-SCROLL MARQUEE ===
+    const marquee = document.getElementById('swipe-marquee');
+    const track = document.getElementById('marquee-track');
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+    let autoScrollSpeed = 2; 
+    let autoScrollActive = true;
+
+    const autoScroll = () => {
+        if (autoScrollActive && !isDown && marquee) {
+            marquee.scrollLeft += autoScrollSpeed;
+            if (marquee.scrollLeft >= track.scrollWidth / 2) {
+                marquee.scrollLeft = 0;
+            }
+        }
+        requestAnimationFrame(autoScroll);
+    };
+    if (marquee && track) {
+        requestAnimationFrame(autoScroll);
+    }
+
+    if(marquee) {
+        marquee.addEventListener('mousedown', (e) => {
+            isDown = true;
+            startX = e.pageX - marquee.offsetLeft;
+            scrollLeft = marquee.scrollLeft;
+        });
+        marquee.addEventListener('mouseleave', () => { isDown = false; });
+        marquee.addEventListener('mouseup', () => { isDown = false; });
+        marquee.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - marquee.offsetLeft;
+            const walk = (x - startX) * 2; 
+            marquee.scrollLeft = scrollLeft - walk;
+        });
+
+        marquee.addEventListener('touchstart', (e) => {
+            isDown = true;
+            startX = e.touches[0].pageX - marquee.offsetLeft;
+            scrollLeft = marquee.scrollLeft;
+        }, { passive: true });
+        marquee.addEventListener('touchend', () => { isDown = false; });
+        marquee.addEventListener('touchmove', (e) => {
+            if (!isDown) return;
+            const x = e.touches[0].pageX - marquee.offsetLeft;
+            const walk = (x - startX) * 2;
+            marquee.scrollLeft = scrollLeft - walk;
+        }, { passive: true });
+    }
+
+    // === 6. TAP-TO-ZOOM LIGHTBOX ===
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const closeBtn = document.querySelector('.lightbox-close');
     const intelAssets = document.querySelectorAll('.intel-asset');
 
-    if (lightbox && lightboxImg) {
+    if(lightbox && lightboxImg) {
         intelAssets.forEach(asset => {
             asset.addEventListener('click', () => {
-                lightbox.classList.add('active');
-                lightboxImg.src = asset.src;
-                document.body.style.overflow = 'hidden'; // Lock background
+                if(!isDown) {
+                    lightbox.classList.add('active');
+                    lightboxImg.src = asset.src;
+                    autoScrollActive = false;
+                }
             });
         });
 
         const closeLightbox = () => {
             lightbox.classList.remove('active');
-            setTimeout(() => { lightboxImg.src = ''; }, 400); // Clear after fade out
-            document.body.style.overflow = '';
+            autoScrollActive = true; 
         };
 
         if(closeBtn) closeBtn.addEventListener('click', closeLightbox);
         lightbox.addEventListener('click', (e) => {
             if (e.target === lightbox) closeLightbox();
-        });
-        
-        // Escape key to close
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                closeLightbox();
-            }
         });
     }
 });
