@@ -130,11 +130,15 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 /* Glass Dock Filter */
 .glass-dock { display: flex; gap: 8px; justify-content: flex-start; overflow-x: auto; padding: 10px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 100px; margin: 0 auto 40px; width: max-content; max-width: 100%; scrollbar-width: none; backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); }
 .glass-dock::-webkit-scrollbar { display: none; }
+/* Premium Glass Dock Icons */
 .dock-btn { display: flex; align-items: center; gap: 8px; background: transparent; border: none; color: var(--clr-muted); padding: 10px 20px; border-radius: 100px; font-family: var(--font-body); font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; white-space: nowrap; }
-.dock-btn span { font-size: 1.1rem; }
-.dock-btn:hover { color: #fff; }
-.dock-btn.active { background: rgba(0,255,178,0.1); color: var(--clr-emerald); box-shadow: inset 0 0 0 1px rgba(0,255,178,0.3); text-shadow: 0 0 15px rgba(0,255,178,0.4); }
+.dock-btn i { font-size: 1.1rem; color: rgba(255,255,255,0.3); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
+.dock-btn:hover { color: #fff; }
+.dock-btn:hover i { color: #fff; transform: scale(1.15) translateY(-2px); text-shadow: 0 0 10px rgba(255,255,255,0.5); }
+
+.dock-btn.active { background: rgba(0,255,178,0.1); color: var(--clr-emerald); box-shadow: inset 0 0 0 1px rgba(0,255,178,0.3); text-shadow: 0 0 15px rgba(0,255,178,0.4); }
+.dock-btn.active i { color: var(--clr-emerald); text-shadow: 0 0 15px var(--clr-emerald); transform: scale(1.1); }
 /* PURE NATIVE HORIZONTAL SCROLL (iOS Flawless) */
 .carousel-container { position: relative; width: 100%; z-index: 10; padding: 20px 0; }
 .native-snap-track { display: flex; gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 10px 24px; -webkit-overflow-scrolling: touch; scrollbar-width: none; align-items: stretch; }
