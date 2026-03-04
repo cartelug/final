@@ -77,97 +77,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === 5. SWIPEABLE + FAST AUTO-SCROLL MARQUEE (PERFORMANCE OPTIMIZED) ===
-    const marquee = document.getElementById('swipe-marquee');
-    const track = document.getElementById('marquee-track');
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-    let autoScrollSpeed = 2; 
-    let autoScrollActive = false; // Start false, let observer handle it
-    let animationFrameId;
-
-    const autoScroll = () => {
-        if (autoScrollActive && !isDown && marquee) {
-            marquee.scrollLeft += autoScrollSpeed;
-            if (marquee.scrollLeft >= track.scrollWidth / 2) {
-                marquee.scrollLeft = 0;
-            }
-        }
-        animationFrameId = requestAnimationFrame(autoScroll);
-    };
-
-    if (marquee && track) {
-        // Only run CPU-intensive animation when the marquee is actually visible
-        const marqueeObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    autoScrollActive = true;
-                    autoScroll(); // Start animation loop
-                } else {
-                    autoScrollActive = false;
-                    cancelAnimationFrame(animationFrameId); // Stop draining CPU
-                }
-            });
+// === 5. LIVE CHAT POP-IN SEQUENCER ===
+    // This creates the "someone is texting you" stagger effect
+    const chatObserverOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 };
+    
+    const chatObserver = new IntersectionObserver((entries, observer) => {
+        // Find all entries that are intersecting
+        const visibleEntries = entries.filter(entry => entry.isIntersecting);
+        
+        // Add a slight delay to each one based on its position so they pop one by one
+        visibleEntries.forEach((entry, index) => {
+            setTimeout(() => {
+                entry.target.classList.add('is-visible');
+            }, index * 200); // 200ms delay between each bubble
+            
+            observer.unobserve(entry.target);
         });
-        marqueeObserver.observe(marquee);
-    }
+    }, chatObserverOptions);
 
-    if(marquee) {
-        marquee.addEventListener('mousedown', (e) => {
-            isDown = true;
-            startX = e.pageX - marquee.offsetLeft;
-            scrollLeft = marquee.scrollLeft;
-        });
-        marquee.addEventListener('mouseleave', () => { isDown = false; });
-        marquee.addEventListener('mouseup', () => { isDown = false; });
-        marquee.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - marquee.offsetLeft;
-            const walk = (x - startX) * 2; 
-            marquee.scrollLeft = scrollLeft - walk;
-        });
+    document.querySelectorAll('.reveal-chat').forEach(chat => {
+        chatObserver.observe(chat);
+    });
 
-        marquee.addEventListener('touchstart', (e) => {
-            isDown = true;
-            startX = e.touches[0].pageX - marquee.offsetLeft;
-            scrollLeft = marquee.scrollLeft;
-        }, { passive: true });
-        marquee.addEventListener('touchend', () => { isDown = false; });
-        marquee.addEventListener('touchmove', (e) => {
-            if (!isDown) return;
-            const x = e.touches[0].pageX - marquee.offsetLeft;
-            const walk = (x - startX) * 2;
-            marquee.scrollLeft = scrollLeft - walk;
-        }, { passive: true });
-    }
-
-    // === 6. TAP-TO-ZOOM LIGHTBOX ===
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    const closeBtn = document.querySelector('.lightbox-close');
-    const intelAssets = document.querySelectorAll('.intel-asset');
-
-    if(lightbox && lightboxImg) {
-        intelAssets.forEach(asset => {
-            asset.addEventListener('click', () => {
-                if(!isDown) {
-                    lightbox.classList.add('active');
-                    lightboxImg.src = asset.src;
-                    autoScrollActive = false;
-                }
-            });
-        });
-
-        const closeLightbox = () => {
-            lightbox.classList.remove('active');
-            autoScrollActive = true; 
-        };
-
-        if(closeBtn) closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-    }
-});
+}); // End of DOMContentLoaded

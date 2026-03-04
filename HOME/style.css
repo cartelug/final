@@ -196,40 +196,56 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 
 
 /* ==========================================================================
-   STAGE 4: CLIENT INTEL
+   STAGE 4: LIVE CHAT & COMMUNITY (MOBILE EXPERT DESIGN)
    ========================================================================== */
-.stage-intel { position: relative; padding: 120px 0; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.02); }
-.intel-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(ellipse at top center, rgba(0,255,178,0.04) 0%, var(--clr-bg) 60%); }
+.stage-intel { position: relative; padding: 100px 0; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.02); }
 
-.cinematic-marquee { width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw; padding: 40px 0; overflow-x: hidden; cursor: grab; z-index: 2; }
-.cinematic-marquee:active { cursor: grabbing; }
-.cinematic-marquee::before, .cinematic-marquee::after { content: ""; position: absolute; top: 0; width: 15vw; height: 100%; z-index: 3; pointer-events: none; }
-.cinematic-marquee::before { left: 0; background: linear-gradient(to right, var(--clr-bg), transparent); }
-.cinematic-marquee::after { right: 0; background: linear-gradient(to left, var(--clr-bg), transparent); }
+/* --- 1. CHAT INTERFACE --- */
+.chat-interface { display: flex; flex-direction: column; gap: 16px; max-width: 500px; margin: 0 auto 80px; padding: 20px; background: rgba(10,10,12,0.4); border: 1px solid var(--border-light); border-radius: 32px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
 
-.marquee-track { display: flex; gap: 32px; width: max-content; padding: 0 32px; }
-.intel-asset { height: 380px; border-radius: 24px; border: 1px solid var(--border-light); object-fit: cover; box-shadow: 0 20px 50px rgba(0,0,0,0.8); cursor: pointer; transition: transform 0.2s; }
-.intel-asset:hover { transform: scale(1.02); }
+.chat-msg { display: flex; flex-direction: column; max-width: 85%; }
+.msg-bubble { padding: 16px 20px; font-size: 1.05rem; line-height: 1.4; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+.msg-time { font-size: 0.75rem; color: var(--clr-muted); margin-top: 6px; font-weight: 500; display: flex; align-items: center; gap: 4px; }
 
-/* Lightbox Overlay */
-.lightbox-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 10000; display: flex; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
-.lightbox-overlay.active { opacity: 1; pointer-events: all; }
-.lightbox-close { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 3rem; cursor: pointer; font-family: var(--font-display); transition: color 0.3s; }
-.lightbox-close:hover { color: var(--clr-emerald); }
-#lightbox-img { max-width: 90vw; max-height: 90vh; border-radius: 16px; box-shadow: 0 0 50px rgba(0,0,0,1); object-fit: contain; }
+/* Client Bubble (Left) */
+.client { align-self: flex-start; }
+.client .msg-bubble { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 24px 24px 24px 4px; color: #fff; }
+.client .msg-time { margin-left: 8px; }
 
-/* --- OBSIDIAN FOOTER --- */
-.obsidian-footer { position: relative; padding: 80px 0 32px; border-top: 1px solid var(--border-light); background: #020202; z-index: 5; }
-.footer-matrix { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px; margin-bottom: 64px; }
-.f-brand img { width: 40px; margin-bottom: 24px; }
-.f-brand p { color: var(--clr-muted); max-width: 250px; }
-.f-head { font-size: 1.1rem; margin-bottom: 24px; color: var(--clr-text); }
-.f-links { display: flex; flex-direction: column; gap: 16px; }
-.f-links a { color: var(--clr-muted); font-weight: 500; transition: color 0.3s; }
-.f-links a:hover { color: var(--clr-emerald); }
-.footer-bottom { text-align: center; padding-top: 32px; border-top: 1px solid var(--border-light); color: var(--clr-muted); font-size: 0.9rem; }
+/* System/AccessUG Bubble (Right) */
+.system { align-self: flex-end; align-items: flex-end; }
+.system .msg-bubble { background: linear-gradient(135deg, rgba(0,255,178,0.1), rgba(0,196,138,0.05)); border: 1px solid rgba(0,255,178,0.3); border-radius: 24px 24px 4px 24px; color: #fff; text-shadow: 0 0 10px rgba(0,255,178,0.2); }
+.system .msg-time { margin-right: 8px; justify-content: flex-end; }
 
-/* --- ANIMATIONS --- */
-.fade-up { opacity: 0; transform: translateY(40px); transition: 1s var(--curve-smooth); will-change: opacity, transform; }
-.fade-up.is-visible { opacity: 1; transform: translateY(0); }
-.delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; } .delay-4 { transition-delay: 0.4s; }
+/* Chat Pop Animation */
+.reveal-chat { opacity: 0; transform: translateY(20px) scale(0.95); transition: opacity 0.6s var(--curve-smooth), transform 0.6s var(--curve-smooth); will-change: opacity, transform; }
+.reveal-chat.is-visible { opacity: 1; transform: translateY(0) scale(1); }
+
+
+/* --- 2. GLOWING COMMUNITY ZONE --- */
+.community-zone { position: relative; padding: 80px 0; border-radius: 40px; margin: 0 16px; background: rgba(5,5,5,0.6); overflow: hidden; border: 1px solid rgba(255,255,255,0.03); }
+
+/* The Award-Winning Aura Gradient */
+.social-aura { position: absolute; top: 50%; left: 50%; width: 150vw; height: 150vw; max-width: 800px; max-height: 800px; transform: translate(-50%, -50%); background: radial-gradient(circle, #ff007f 0%, #fd1d1d 25%, #fcb045 50%, #833ab4 75%, transparent 100%); filter: blur(80px); opacity: 0.15; z-index: 0; animation: breathe-aura 8s ease-in-out infinite alternate; pointer-events: none; will-change: transform, opacity; }
+@keyframes breathe-aura { 0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); opacity: 0.1; } 100% { transform: translate(-50%, -50%) scale(1.2) rotate(15deg); opacity: 0.25; } }
+
+.text-gradient-fire { background: linear-gradient(to right, #ff007f, #fcb045); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(255,0,127,0.4); }
+
+.social-cards { display: flex; flex-direction: column; gap: 20px; max-width: 400px; margin: 40px auto 0; position: relative; z-index: 2; }
+
+/* Glass Social Cards */
+.social-card { display: flex; align-items: center; justify-content: space-between; padding: 20px 24px; background: rgba(20,20,25,0.7); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: 24px; border: 1px solid rgba(255,255,255,0.1); text-decoration: none; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s; overflow: hidden; position: relative; }
+.social-card::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transform: skewX(-20deg); transition: 0.5s; }
+.social-card:hover::before { left: 200%; }
+.social-card:active { transform: scale(0.95); }
+
+.sc-icon { width: 50px; height: 50px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+.ig-card .sc-icon { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.fb-card .sc-icon { background: linear-gradient(45deg, #1877F2, #0A53BE); }
+
+.sc-info { flex-grow: 1; text-align: left; margin-left: 20px; }
+.sc-info h3 { font-size: 1.3rem; margin-bottom: 4px; letter-spacing: 0.5px; }
+.stat-badge { font-size: 0.85rem; color: #fff; background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 100px; font-weight: 600; }
+
+.sc-arrow { font-size: 1.2rem; color: rgba(255,255,255,0.3); transition: color 0.3s, transform 0.3s; }
+.social-card:hover .sc-arrow { color: #fff; transform: translateX(5px); }
