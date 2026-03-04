@@ -1,11 +1,11 @@
 /**
- * ACCESSUG - OBSIDIAN INTERACTIVE ENGINE
+ * ACCESSUG - MASTER INTERACTIVE ENGINE (100% Optimized)
  * Location: HOME/script.js
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // === 1. DYNAMIC SPOTLIGHT ===
+    // === 1. DYNAMIC SPOTLIGHT (GPU Accelerated) ===
     const spotlight = document.getElementById('spotlight');
     if (window.matchMedia("(pointer: fine)").matches) {
         window.addEventListener('mousemove', (e) => {
@@ -30,18 +30,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, { passive: true });
 
-    // === 3. HIGH-PERFORMANCE OBSERVER ===
-    const observerOptions = { root: null, rootMargin: '0px 0px -15% 0px', threshold: 0 };
+    // === 3. MASTER SCROLL ANIMATION ENGINE ===
+    // This watches EVERY element with an animation class and triggers it beautifully
+    const observerOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0 };
+    
     const revealObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Add the visible class to trigger CSS transition
                 entry.target.classList.add('is-visible');
+                
+                // If it's a counter, trigger the number spinning math
+                if (entry.target.querySelector('.anim-counter') && !entry.target.classList.contains('counted')) {
+                    entry.target.classList.add('counted');
+                    runCounters(entry.target);
+                }
+                
+                // Stop observing once animated to save CPU
                 observer.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    document.querySelectorAll('.fade-up').forEach(el => revealObserver.observe(el));
+    // Grab all elements that need to animate on scroll
+    const animElements = document.querySelectorAll('.fade-up, .scale-in, .slide-in-right, .fade-in');
+    animElements.forEach(el => revealObserver.observe(el));
+
 
     // === 4. VAULT APP-DOCK FILTER (PURE NATIVE) ===
     const vaultTrack = document.getElementById('vault-track');
@@ -49,7 +63,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterPills = document.querySelectorAll('.dock-btn'); 
 
     if(vaultTrack && cards.length > 0) {
-        
         filterPills.forEach(pill => {
             pill.addEventListener('click', () => {
                 filterPills.forEach(p => p.classList.remove('active'));
@@ -76,26 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-// === MASTER SCROLLYTELLING ENGINE ===
-    const triggers = document.querySelectorAll('.scroll-trigger');
-    const slides = document.querySelectorAll('.hud-slide');
-    const nodes = {
-        1: ['node-kla'], // Genesis: Kampala active
-        2: ['node-kla', 'node-juba', 'node-gulu'], // Scale: Juba and Gulu light up
-        3: ['node-kla', 'node-juba'], // Payments
-        4: [] // Trust: Map dims for focus
-    };
-
-    // Advanced Counter Logic
-    const runHudCounters = (slide) => {
-        const counters = slide.querySelectorAll('.dynamic-counter');
+    // === 5. NUMBER COUNTER ENGINE (For Intel Pillars) ===
+    const runCounters = (parentSection) => {
+        const counters = parentSection.querySelectorAll('.anim-counter');
         counters.forEach(counter => {
-            if (counter.classList.contains('counted')) return; // Only count once
-            counter.classList.add('counted');
-            
             const target = +counter.getAttribute('data-target');
             let current = 0;
-            const increment = target / 60; // Smooth 60 frames
+            const increment = target / 60; // 60 frames = 1 second speed
 
             const update = () => {
                 current += increment;
@@ -110,31 +110,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    // Observer to track which scroll zone the user is in
-    const storyObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const step = entry.target.getAttribute('data-step');
-                
-                // 1. Swap the active text slide
-                slides.forEach(s => s.classList.remove('active-slide'));
-                const activeSlide = document.getElementById(`slide-${step}`);
-                if(activeSlide) {
-                    activeSlide.classList.add('active-slide');
-                    runHudCounters(activeSlide); // Fire numbers if they exist
-                }
-
-                // 2. Update the glowing map nodes
-                document.querySelectorAll('.map-node').forEach(n => n.classList.remove('active-node'));
-                if(nodes[step]) {
-                    nodes[step].forEach(nodeId => {
-                        const nodeEl = document.getElementById(nodeId);
-                        if(nodeEl) nodeEl.classList.add('active-node');
-                    });
-                }
-            }
-        });
-    }, { root: null, rootMargin: '-40% 0px -40% 0px', threshold: 0 }); // Triggers right in the middle of the screen
-
-    triggers.forEach(trigger => storyObserver.observe(trigger));
 });
