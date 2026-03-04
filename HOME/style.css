@@ -96,8 +96,11 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .btn-border { position: absolute; inset: 0; border-radius: 50px; background: linear-gradient(90deg, #e50914, #ff6b6b, #1DB954, #00A8E1, #e50914); background-size: 300% 100%; animation: sweep-border 4s linear infinite; z-index: -1; }
 @keyframes sweep-border { 0% { background-position: 0% 50%; } 100% { background-position: 100% 50%; } }
 .btn-surface { display: flex; align-items: center; justify-content: center; gap: 12px; background: #0a0a0a; padding: 18px 40px; border-radius: 48px; position: relative; overflow: hidden; width: 100%; }
-.btn-surface::after { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transform: skewX(-20deg); animation: glass-shimmer 4s ease-in-out infinite; }
-@keyframes glass-shimmer { 0% { left: -100%; } 20%, 100% { left: 200%; } }
+
+/* --- PERFORMANCE FIX: GPU ACCELERATED SHIMMER ANIMATION --- */
+.btn-surface::after { content: ''; position: absolute; top: 0; left: 0; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transform: translateX(-200%) skewX(-20deg); animation: glass-shimmer 4s ease-in-out infinite; will-change: transform; }
+@keyframes glass-shimmer { 0% { transform: translateX(-200%) skewX(-20deg); } 20%, 100% { transform: translateX(400%) skewX(-20deg); } }
+
 .btn-hyper-connect i { color: #e50914; font-size: 1.4rem; filter: drop-shadow(0 0 8px rgba(229, 9, 20, 0.8)); animation: heartbeat 1.5s ease-in-out infinite; }
 @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
 .btn-text { background: linear-gradient(to right, #ffffff, #d1d1d1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.25rem; font-weight: 800; letter-spacing: 0.5px; font-family: 'Outfit', sans-serif; }

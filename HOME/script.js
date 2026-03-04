@@ -77,14 +77,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // === 5. SWIPEABLE + FAST AUTO-SCROLL MARQUEE ===
+    // === 5. SWIPEABLE + FAST AUTO-SCROLL MARQUEE (PERFORMANCE OPTIMIZED) ===
     const marquee = document.getElementById('swipe-marquee');
     const track = document.getElementById('marquee-track');
     let isDown = false;
     let startX;
     let scrollLeft;
     let autoScrollSpeed = 2; 
-    let autoScrollActive = true;
+    let autoScrollActive = false; // Start false, let observer handle it
+    let animationFrameId;
 
     const autoScroll = () => {
         if (autoScrollActive && !isDown && marquee) {
@@ -93,10 +94,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 marquee.scrollLeft = 0;
             }
         }
-        requestAnimationFrame(autoScroll);
+        animationFrameId = requestAnimationFrame(autoScroll);
     };
+
     if (marquee && track) {
-        requestAnimationFrame(autoScroll);
+        // Only run CPU-intensive animation when the marquee is actually visible
+        const marqueeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    autoScrollActive = true;
+                    autoScroll(); // Start animation loop
+                } else {
+                    autoScrollActive = false;
+                    cancelAnimationFrame(animationFrameId); // Stop draining CPU
+                }
+            });
+        });
+        marqueeObserver.observe(marquee);
     }
 
     if(marquee) {
