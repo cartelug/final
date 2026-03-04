@@ -35,8 +35,8 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .text-emerald { color: var(--clr-emerald); text-shadow: 0 0 20px rgba(0,255,178,0.4); }
 .text-hollow { color: transparent; -webkit-text-stroke: 1px var(--clr-text); }
 
-/* --- DYNAMIC SPOTLIGHT --- */
-.cursor-spotlight { position: fixed; top: 0; left: 0; width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: opacity 0.3s; mix-blend-mode: screen; }
+/* --- DYNAMIC SPOTLIGHT (GPU Accelerated) --- */
+.cursor-spotlight { position: fixed; top: 0; left: 0; width: 600px; height: 600px; background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate3d(-50%, -50%, 0); will-change: transform, left, top; transition: opacity 0.3s; mix-blend-mode: screen; }
 
 /* --- PRECISION NAVBAR --- */
 .precision-nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 24px 0; transition: all 0.5s var(--curve-smooth); border-bottom: 1px solid transparent; }
@@ -106,7 +106,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .btn-text { background: linear-gradient(to right, #ffffff, #d1d1d1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 1.25rem; font-weight: 800; letter-spacing: 0.5px; font-family: 'Outfit', sans-serif; }
 .btn-hyper-connect:active, .btn-hyper-connect:hover { transform: scale(0.96) translateY(2px); box-shadow: 0 5px 15px rgba(229, 9, 20, 0.4); }
 
-.btn-text-only { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 1.05rem; color: var(--clr-muted); transition: color 0.3s; }
+.btn-text-only { display: flex; align-items: center; gap: 8px; font-weight: 500; font-size: 1.05rem; color: var(--clr-muted); transition: color 0.3s; margin-top: 15px; }
 .btn-text-only:hover { color: var(--clr-text); }
 
 
@@ -168,7 +168,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .btn-get-now.disabled::after { display: none; }
 
 @media(max-width: 768px) {
-    .native-snap-track::after { content: ''; flex: 0 0 1px; } /* Allows end scrolling margin */
+    .native-snap-track::after { content: ''; flex: 0 0 1px; } 
     .spatial-card { flex: 0 0 280px; height: 440px; padding: 24px; }
 }
 
@@ -196,7 +196,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 
 
 /* ==========================================================================
-   STAGE 4: LIVE CHAT & COMMUNITY (MOBILE EXPERT DESIGN)
+   STAGE 4: LIVE CHAT & COMMUNITY
    ========================================================================== */
 .stage-intel { position: relative; padding: 100px 0; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.02); }
 
@@ -249,3 +249,75 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 
 .sc-arrow { font-size: 1.2rem; color: rgba(255,255,255,0.3); transition: color 0.3s, transform 0.3s; }
 .social-card:hover .sc-arrow { color: #fff; transform: translateX(5px); }
+
+
+/* ==========================================================================
+   ADVANCED OBSIDIAN FOOTER 
+   ========================================================================== */
+.obsidian-footer {
+    position: relative;
+    padding: 80px 0 32px;
+    background: rgba(5, 5, 8, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 5;
+    overflow: hidden;
+}
+
+/* Subtle Emerald Glow Top Border */
+.obsidian-footer::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 178, 0.5), transparent);
+}
+
+/* Floor Ambient Glow */
+.obsidian-footer::after {
+    content: ''; position: absolute; bottom: -50%; left: 50%;
+    transform: translateX(-50%); width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(0, 255, 178, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.footer-matrix { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 48px; margin-bottom: 64px; }
+.f-brand img { width: 40px; margin-bottom: 24px; filter: drop-shadow(0 5px 15px rgba(255,255,255,0.1)); }
+.f-brand p { color: var(--clr-muted); max-width: 250px; font-size: 0.95rem; }
+.f-head { font-size: 1.1rem; margin-bottom: 24px; color: var(--clr-text); }
+.f-links { display: flex; flex-direction: column; gap: 16px; }
+
+/* Interactive Sliding Link Effects */
+.f-links a {
+    position: relative; color: var(--clr-muted); font-weight: 500;
+    transition: color 0.3s, transform 0.3s; display: inline-flex; align-items: center; width: max-content;
+}
+.f-links a::after {
+    content: '→'; position: absolute; right: -20px; opacity: 0;
+    transform: translateX(-10px); transition: all 0.3s ease; color: var(--clr-emerald);
+}
+.f-links a:hover { color: #fff; transform: translateX(5px); text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+.f-links a:hover::after { opacity: 1; transform: translateX(0); }
+
+.footer-bottom { text-align: center; padding-top: 32px; border-top: 1px solid rgba(255,255,255,0.05); }
+
+/* System Operational Beacon */
+.sys-op {
+    display: inline-flex; align-items: center; gap: 10px;
+    color: var(--clr-muted); font-size: 0.9rem; font-family: var(--font-display);
+    padding: 8px 20px; border-radius: 100px; background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+.pulse-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--clr-emerald); box-shadow: 0 0 10px var(--clr-emerald);
+    animation: pulse-op 2s infinite;
+}
+@keyframes pulse-op {
+    0% { box-shadow: 0 0 0 0 rgba(0, 255, 178, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(0, 255, 178, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(0, 255, 178, 0); }
+}
+
+/* --- ANIMATIONS --- */
+.fade-up { opacity: 0; transform: translateY(40px); transition: 1s var(--curve-smooth); will-change: opacity, transform; }
+.fade-up.is-visible { opacity: 1; transform: translateY(0); }
+.delay-1 { transition-delay: 0.1s; } .delay-2 { transition-delay: 0.2s; } .delay-3 { transition-delay: 0.3s; } .delay-4 { transition-delay: 0.4s; }

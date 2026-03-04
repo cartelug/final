@@ -50,7 +50,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if(vaultTrack && cards.length > 0) {
         
-        // --- Dock Filter Logic ---
         filterPills.forEach(pill => {
             pill.addEventListener('click', () => {
                 filterPills.forEach(p => p.classList.remove('active'));
@@ -77,19 +76,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-// === 5. LIVE CHAT POP-IN SEQUENCER ===
-    // This creates the "someone is texting you" stagger effect
+    // === 5. LIVE CHAT POP-IN SEQUENCER ===
     const chatObserverOptions = { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.1 };
     
     const chatObserver = new IntersectionObserver((entries, observer) => {
-        // Find all entries that are intersecting
         const visibleEntries = entries.filter(entry => entry.isIntersecting);
         
-        // Add a slight delay to each one based on its position so they pop one by one
         visibleEntries.forEach((entry, index) => {
             setTimeout(() => {
                 entry.target.classList.add('is-visible');
-            }, index * 200); // 200ms delay between each bubble
+            }, index * 200); // 200ms stagger between each chat bubble popping up
             
             observer.unobserve(entry.target);
         });
@@ -99,4 +95,4 @@ document.addEventListener('DOMContentLoaded', () => {
         chatObserver.observe(chat);
     });
 
-}); // End of DOMContentLoaded
+});

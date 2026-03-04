@@ -4,15 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>AccessUG | Digital Services</title>
-    <link rel="preload" href="IMAGES/netflix.png" as="image">
-    <link rel="preload" href="IMAGES/spotify.png" as="image">
-    <link rel="preload" href="IMAGES/prime-video.png" as="image">
     <meta name="description" content="Uganda's premium digital upgrades. Connect First, Pay via Mobile money. Netflix, Prime, Spotify.">
     
     <link rel="icon" href="IMAGES/logo.png" type="image/png">
+    
+    <link rel="preload" href="IMAGES/netflix.png" as="image">
+    <link rel="preload" href="IMAGES/spotify.png" as="image">
+    <link rel="preload" href="IMAGES/prime-video.png" as="image">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&f[]=satoshi@400,500,700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"></noscript>
@@ -22,11 +25,6 @@
 <body>
 
     <div class="cursor-spotlight" id="spotlight"></div>
-
-    <div id="lightbox" class="lightbox-overlay">
-        <span class="lightbox-close">&times;</span>
-        <img id="lightbox-img" src="" alt="Zoomed Proof">
-    </div>
 
     <nav class="precision-nav" id="navbar">
         <div class="container nav-grid">
@@ -333,7 +331,7 @@
             </div>
         </section>
 
-<section id="intel" class="stage-intel">
+        <section id="intel" class="stage-intel">
             <div class="container relative-z">
                 <div class="section-title text-center fade-up">
                     <h2 class="heading-large">Verified <span class="text-emerald">Intel.</span></h2>
@@ -376,7 +374,7 @@
                     </div>
                     
                     <div class="social-cards">
-                        <a href="https://www.instagram.com/theaccessug?igsh=MTVjbWhmMDBkM202OA==" target="_blank" class="social-card ig-card fade-up">
+                        <a href="https://www.instagram.com/theaccessug?igsh=MTVjbWhmMDBkM202OA==" target="_blank" class="social-card ig-card fade-up delay-1">
                             <div class="sc-icon"><i class="fab fa-instagram"></i></div>
                             <div class="sc-info">
                                 <h3>Instagram</h3>
@@ -385,7 +383,7 @@
                             <div class="sc-arrow"><i class="fas fa-arrow-right"></i></div>
                         </a>
 
-                        <a href="https://www.facebook.com/share/1C9cjQCknW/?mibextid=wwXIfr" target="_blank" class="social-card fb-card fade-up">
+                        <a href="https://www.facebook.com/share/1C9cjQCknW/?mibextid=wwXIfr" target="_blank" class="social-card fb-card fade-up delay-2">
                             <div class="sc-icon"><i class="fab fa-facebook-f"></i></div>
                             <div class="sc-info">
                                 <h3>Facebook</h3>
@@ -397,6 +395,7 @@
                 </div>
             </div>
         </section>
+
     </main>
 
     <footer class="obsidian-footer">
@@ -419,7 +418,9 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2026 AccessUG. System Operational.</p>
+            <div class="sys-op">
+                <span class="pulse-dot"></span> 2026 AccessUG. System Operational.
+            </div>
         </div>
     </footer>
 
