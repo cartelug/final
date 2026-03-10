@@ -90,11 +90,21 @@
         </section>
 
         <section id="vault" class="stage-vault-spatial">
-            <div class="spatial-bg" id="spatial-bg"><div class="silk-mesh"></div></div>
+            <div class="spatial-bg" id="spatial-bg">
+                <div class="premium-aurora"></div>
+                <div class="silk-mesh"></div>
+            </div>
 
             <div class="container relative-z">
                 <div class="section-title fade-up">
                     <h2 class="heading-large">Our <span class="text-emerald">Services.</span></h2>
+                </div>
+
+                <div class="search-container fade-up delay-1">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" id="vault-search" placeholder="Search Netflix, Spotify, Boosts..." autocomplete="off">
+                    </div>
                 </div>
 
                 <div class="swipe-guide fade-up delay-1">
@@ -104,8 +114,8 @@
 
                 <div class="glass-dock scale-in delay-2" id="filter-dock">
                     <button class="dock-btn active" data-filter="all"><i class="fas fa-layer-group"></i> All</button>
-                    <button class="dock-btn" data-filter="music"><i class="fas fa-headphones-simple"></i> Music</button>
                     <button class="dock-btn" data-filter="streaming"><i class="fas fa-tv"></i> Streaming</button>
+                    <button class="dock-btn" data-filter="music"><i class="fas fa-headphones-simple"></i> Music</button>
                     <button class="dock-btn" data-filter="social"><i class="fas fa-fire-flame-curved"></i> Social Boosts</button>
                     <button class="dock-btn" data-filter="pro"><i class="fas fa-wand-magic-sparkles"></i> Pro Tools</button>
                 </div>
@@ -114,107 +124,204 @@
             <div class="carousel-container fade-up delay-3">
                 <div class="native-snap-track" id="vault-track">
                     
-                    <div class="spatial-card" data-category="streaming">
+                    <div class="spatial-card card-livetv" data-category="streaming" data-keywords="live tv streaming channels movies series uefa epl nba ppv dstv smarter cable sports">
+                        <div class="card-top">
+                            <div class="brand-crest"><i class="fas fa-satellite-dish" style="color: var(--brand-color);"></i></div>
+                            <span class="status-tag tag-fire">Smarter Than Cable</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>Access Live TV</h3>
+                            <div class="cable-comparison">
+                                <span class="old-way">DStv = 250,000 UGX/mo.</span>
+                                <span class="new-way">You pay once.</span>
+                            </div>
+                            <div class="feature-pills">
+                                <div class="f-pill"><i class="fas fa-tv"></i> <span>21,000+ Live Channels — Sports, News & More</span></div>
+                                <div class="f-pill"><i class="fas fa-film"></i> <span>180,000+ Movies & Series in Blu-ray Quality</span></div>
+                                <div class="f-pill"><i class="fas fa-futbol"></i> <span>Every Match Live — Football, UFC, NBA & More</span></div>
+                                <div class="f-pill"><i class="fas fa-laptop-house"></i> <span>Works on Any Device, Anywhere</span></div>
+                                <div class="f-pill"><i class="fas fa-money-bill-wave"></i> <span>Pay Once. Never Again.</span></div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <a href="livetv-order/" class="btn-get-now">Get Now ➔</a>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card card-netflix" data-category="streaming" data-keywords="netflix movies series streaming 4k video cinema tv offline show">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/netflix.png" alt="Netflix" loading="lazy"></div>
                             <span class="status-tag tag-red">Top Seller</span>
                         </div>
                         <div class="card-info">
                             <h3>Netflix 4K</h3>
-                            <ul class="spec-matrix">
-                                <li><i class="fas fa-check glow-tick"></i> 4K Video Quality</li>
-                                <li><i class="fas fa-check glow-tick"></i> Works on TV & Phone</li>
-                                <li><i class="fas fa-check glow-tick"></i> Fast WhatsApp Setup</li>
-                            </ul>
+                            <div class="feature-pills">
+                                <div class="f-pill"><i class="fas fa-desktop"></i> <span>4K Ultra HD Quality</span></div>
+                                <div class="f-pill"><i class="fas fa-mobile-alt"></i> <span>Works on TV, Mobile & Tablet</span></div>
+                                <div class="f-pill"><i class="fas fa-ban"></i> <span>No Ads, No Interruptions</span></div>
+                                <div class="f-pill"><i class="fas fa-headset"></i> <span>24/7 Support</span></div>
+                                <div class="f-pill"><i class="fas fa-shield-check"></i> <span>Warranty Included</span></div>
+                            </div>
                         </div>
                         <div class="card-action">
                             <a href="netflix-order/" class="btn-get-now">Get Now ➔</a>
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="streaming">
+                    <div class="spatial-card card-prime" data-category="streaming" data-keywords="prime video amazon movies streaming 4k originals offline tv">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/prime-video.png" alt="Prime" loading="lazy"></div>
                             <span class="status-tag tag-blue">Best Value</span>
                         </div>
                         <div class="card-info">
                             <h3>Prime Video</h3>
-                            <ul class="spec-matrix">
-                                <li><i class="fas fa-check glow-tick"></i> Amazon Movies & Shows</li>
-                                <li><i class="fas fa-check glow-tick"></i> 4K Video Quality</li>
-                                <li><i class="fas fa-check glow-tick"></i> Watch Offline</li>
-                            </ul>
+                            <div class="feature-pills">
+                                <div class="f-pill"><i class="fas fa-desktop"></i> <span>4K Ultra HD Quality</span></div>
+                                <div class="f-pill"><i class="fas fa-mobile-alt"></i> <span>Works on TV, Mobile & Tablet</span></div>
+                                <div class="f-pill"><i class="fab fa-amazon"></i> <span>Amazon Originals Included</span></div>
+                                <div class="f-pill"><i class="fas fa-headset"></i> <span>24/7 Support</span></div>
+                                <div class="f-pill"><i class="fas fa-shield-check"></i> <span>Warranty Included</span></div>
+                            </div>
                         </div>
                         <div class="card-action">
                             <a href="prime-order/" class="btn-get-now">Get Now ➔</a>
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="music">
+                    <div class="spatial-card card-apple" data-category="music" data-keywords="apple music songs audio spatial offline podcasts itunes streaming">
+                        <div class="card-top">
+                            <div class="brand-crest"><i class="fab fa-apple" style="color: var(--brand-color);"></i></div>
+                            <span class="status-tag tag-pink">New Arrival</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>Apple Music</h3>
+                            <div class="feature-pills">
+                                <div class="f-pill"><i class="fas fa-music"></i> <span>100M+ Songs Available</span></div>
+                                <div class="f-pill"><i class="fas fa-download"></i> <span>Offline Listening</span></div>
+                                <div class="f-pill"><i class="fas fa-headphones-alt"></i> <span>Spatial Audio Quality</span></div>
+                                <div class="f-pill"><i class="fas fa-headset"></i> <span>24/7 Support</span></div>
+                                <div class="f-pill"><i class="fas fa-shield-check"></i> <span>Warranty Included</span></div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <a href="applemusic-order/" class="btn-get-now">Get Now ➔</a>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card card-spotify" data-category="music" data-keywords="spotify premium music songs offline playlists ad-free audio streaming">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/spotify.png" alt="Spotify" loading="lazy"></div>
                             <span class="status-tag tag-green">Trending</span>
                         </div>
                         <div class="card-info">
                             <h3>Spotify Premium</h3>
-                            <ul class="spec-matrix">
-                                <li><i class="fas fa-check glow-tick"></i> No Ads</li>
-                                <li><i class="fas fa-check glow-tick"></i> Keep Your Playlists</li>
-                                <li><i class="fas fa-check glow-tick"></i> Best Sound Quality</li>
-                            </ul>
+                            <div class="feature-pills">
+                                <div class="f-pill"><i class="fas fa-ban"></i> <span>No Ads, Ever</span></div>
+                                <div class="f-pill"><i class="fas fa-list-music"></i> <span>Save Your Playlists</span></div>
+                                <div class="f-pill"><i class="fas fa-download"></i> <span>Download & Listen Offline</span></div>
+                                <div class="f-pill"><i class="fas fa-headset"></i> <span>24/7 Support</span></div>
+                                <div class="f-pill"><i class="fas fa-shield-check"></i> <span>Warranty Included</span></div>
+                            </div>
                         </div>
                         <div class="card-action">
                             <a href="spotify-order/" class="btn-get-now">Get Now ➔</a>
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="social">
+                    <div class="spatial-card card-youtube" data-category="social" data-keywords="youtube boost views subscribers monetization channel growth engagement real">
+                        <div class="card-top">
+                            <div class="brand-crest"><img src="IMAGES/youtube.png" alt="YouTube" loading="lazy" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1NzYgNTEyIj48cGF0aCBmaWxsPSIjRkYwMDAwIiBkPSJNNTQ5LjY1NSAxMjQuMDg0Yy02LjI4MS0yMy42NS0yNC43ODctNDIuMjc2LTQ4LjI4NC00OC41OTdDMzU4LjE0NiA2NCAyODggNjQgMjg4IDY0UzIxNy44NTQgNjQgMTc0LjYzMSA3NS40ODdjLTIzLjQ5NyA2LjMyMi00Mi4wMDMgMjQuOTQ3LTQ4LjI4NCA0OC41OTctMTEuNDEyIDQyLjg2Ny0xMS40MTIgMTMyLjMwNS0xMS40MTIgMTMyLjMwNXMuMDAyIDg5LjQzNiAxMS40MTUgMTMyLjMwNWM2LjI4MSAyMy42NSAyNC43ODcgNDIuMjc2IDQ4LjI4NCA0OC41OTdDMTc0LjE1IDQ0OCAyODggNDQ4IDI4OCA0NDhzMTEzLjg1NCAwIDE1Ni4zNy0xMS40ODhjMjMuNDk3LTYuMzIxIDQyLjAwMy0yNC45NDcgNDguMjg0LTQ4LjU5NCAxMS40MTItNDIuODY4IDExLjQxMi0xMzIuMzA1IDExLjQxMi0xMzIuMzA1cy0uMDAyLTg5LjQzOC0xMS40MTEtMTMyLjMwNXpNMjI5LjkwMSAzMjEuMDNWMTkwLjk2TDM3Mi40MDQgMjU2bDExMi41MDMgNjUuMDN6Ii8+PC9zdmc+'"></div>
+                            <span class="status-tag tag-red">Viral Growth</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>YouTube Boost</h3>
+                            <div class="feature-pills">
+                                <div class="f-pill"><i class="fas fa-users"></i> <span>Real Views & Subscribers</span></div>
+                                <div class="f-pill"><i class="fas fa-dollar-sign"></i> <span>Monetization Friendly</span></div>
+                                <div class="f-pill"><i class="fas fa-chart-line"></i> <span>Gradual & Safe Delivery</span></div>
+                                <div class="f-pill"><i class="fas fa-unlock"></i> <span>No Password Needed</span></div>
+                                <div class="f-pill"><i class="fas fa-check-circle"></i> <span>Channel Growth Guaranteed</span></div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <a href="youtube-boost/" class="btn-get-now">Get Now ➔</a>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card card-facebook" data-category="social" data-keywords="facebook boost page likes followers engagement post reach real">
+                        <div class="card-top">
+                            <div class="brand-crest"><i class="fab fa-facebook-f" style="color: var(--brand-color);"></i></div>
+                            <span class="status-tag tag-blue">Trending</span>
+                        </div>
+                        <div class="card-info">
+                            <h3>Facebook Boost</h3>
+                            <div class="feature-pills">
+                                <div class="f-pill"><i class="fas fa-thumbs-up"></i> <span>More Page Likes & Followers</span></div>
+                                <div class="f-pill"><i class="fas fa-bullhorn"></i> <span>Post Reach Amplified</span></div>
+                                <div class="f-pill"><i class="fas fa-comments"></i> <span>Real Engagement Only</span></div>
+                                <div class="f-pill"><i class="fas fa-unlock"></i> <span>No Password Needed</span></div>
+                                <div class="f-pill"><i class="fas fa-bolt"></i> <span>Fast & Discreet Delivery</span></div>
+                            </div>
+                        </div>
+                        <div class="card-action">
+                            <a href="facebook-boost/" class="btn-get-now">Get Now ➔</a>
+                        </div>
+                    </div>
+
+                    <div class="spatial-card card-tiktok" data-category="social" data-keywords="tiktok boost followers views likes viral social media engagement real">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/tiktok.png" alt="TikTok" loading="lazy"></div>
                             <span class="status-tag tag-cyan">Viral</span>
                         </div>
                         <div class="card-info">
                             <h3>TikTok Boost</h3>
-                            <ul class="spec-matrix">
-                                <li><i class="fas fa-check glow-tick"></i> Real Followers</li>
-                                <li><i class="fas fa-check glow-tick"></i> More Views & Likes</li>
-                                <li><i class="fas fa-check glow-tick"></i> Go Viral Faster</li>
-                            </ul>
+                            <div class="feature-pills">
+                                <div class="f-pill"><i class="fas fa-user-plus"></i> <span>Real Followers, Fast</span></div>
+                                <div class="f-pill"><i class="fas fa-heart"></i> <span>More Views & Likes</span></div>
+                                <div class="f-pill"><i class="fas fa-rocket"></i> <span>Go Viral Faster</span></div>
+                                <div class="f-pill"><i class="fas fa-unlock"></i> <span>No Password Needed</span></div>
+                                <div class="f-pill"><i class="fas fa-shield-alt"></i> <span>Safe & Gradual Delivery</span></div>
+                            </div>
                         </div>
                         <div class="card-action">
                             <a href="tiktok-boost/" class="btn-get-now">Get Now ➔</a>
                         </div>
                     </div>
 
-                    <div class="spatial-card" data-category="social">
+                    <div class="spatial-card card-ig" data-category="social" data-keywords="instagram ig boost followers reels views likes real engagement">
                         <div class="card-top">
                             <div class="brand-crest"><img src="IMAGES/instagram.png" alt="Instagram" loading="lazy"></div>
-                            <span class="status-tag tag-red">Popular</span>
+                            <span class="status-tag tag-purple">Popular</span>
                         </div>
                         <div class="card-info">
                             <h3>IG Boost</h3>
-                            <ul class="spec-matrix">
-                                <li><i class="fas fa-check glow-tick"></i> Grow Your Profile</li>
-                                <li><i class="fas fa-check glow-tick"></i> More Reel Views</li>
-                                <li><i class="fas fa-check glow-tick"></i> Followers Don't Drop</li>
-                            </ul>
+                            <div class="feature-pills">
+                                <div class="f-pill"><i class="fas fa-arrow-up"></i> <span>Grow Your Profile</span></div>
+                                <div class="f-pill"><i class="fas fa-video"></i> <span>More Reel Views</span></div>
+                                <div class="f-pill"><i class="fas fa-user-check"></i> <span>Real-Looking Followers</span></div>
+                                <div class="f-pill"><i class="fas fa-unlock"></i> <span>No Password Needed</span></div>
+                                <div class="f-pill"><i class="fas fa-anchor"></i> <span>Followers Don't Drop</span></div>
+                            </div>
                         </div>
                         <div class="card-action">
                             <a href="instagram-boost/" class="btn-get-now">Get Now ➔</a>
                         </div>
                     </div>
 
-                    <div class="spatial-card locked" data-category="pro">
+                    <div class="spatial-card card-canva locked" data-category="pro" data-keywords="canva pro design templates editing graphics premium tools">
                         <div class="card-top">
                             <div class="brand-crest"><i class="fas fa-paint-brush text-cyan"></i></div>
                             <span class="status-tag tag-locked">Coming Soon</span>
                         </div>
                         <div class="card-info">
                             <h3 class="text-muted">Canva Pro</h3>
-                            <ul class="spec-matrix opacity-half">
-                                <li><i class="fas fa-lock"></i> Pro Designs & Images</li>
-                                <li><i class="fas fa-lock"></i> Easy Branding</li>
-                            </ul>
+                            <div class="feature-pills opacity-half">
+                                <div class="f-pill"><i class="fas fa-palette"></i> <span>Pro Design & Templates</span></div>
+                                <div class="f-pill"><i class="fas fa-tint-slash"></i> <span>Zero Watermarks</span></div>
+                                <div class="f-pill"><i class="fas fa-briefcase"></i> <span>Brand Kit Access</span></div>
+                                <div class="f-pill"><i class="fas fa-gem"></i> <span>All Premium Elements</span></div>
+                                <div class="f-pill"><i class="fas fa-headset"></i> <span>24/7 Support</span></div>
+                            </div>
                         </div>
                         <div class="card-action"><button class="btn-get-now disabled" disabled>Locked 🔒</button></div>
                     </div>
@@ -223,45 +330,52 @@
             </div>
         </section>
 
-        <section id="framework" class="stage-framework">
-            <div class="framework-bg fade-in"><div class="data-stream"></div></div>
+        <section id="framework" class="stage-framework-cinematic">
+            <div class="framework-hero-bg">
+                <div class="fluid-gradient"></div>
+                <div class="noise-overlay"></div>
+                <div class="god-rays"></div>
+                <div class="glass-layer"></div>
+            </div>
 
             <div class="container relative-z">
-                <div class="framework-layout">
-                    <div class="framework-text fade-up">
-                        <h2 class="heading-large">Zero Risk <span class="text-emerald">Steps.</span></h2>
-                        <p class="subtitle">A simple, safe, and instant process.</p>
+                <div class="framework-grid">
+                    
+                    <div class="sticky-heading-col">
+                        <h2 class="heading-massive">Zero Risk <br><span class="text-gradient-trust">Protocol.</span></h2>
+                        <p class="subtitle-bold">A completely frictionless, architectural standard of trust.</p>
                     </div>
                     
-                    <div class="framework-steps">
-                        <div class="step-module slide-in-right delay-1">
-                            <div class="step-digit">01</div>
-                            <div class="step-content">
-                                <h4>Choose Service</h4>
-                                <p>Pick Netflix, Prime, or Spotify from the Vault.</p>
-                            </div>
+                    <div class="steps-scroller">
+                        
+                        <div class="step-observable">
+                            <div class="watermark">01</div>
+                            <div class="step-icon"><i class="fas fa-layer-group"></i></div>
+                            <h4>Choose Service</h4>
+                            <p>Select your premium upgrade from our Vault. No sign-ups required to begin.</p>
                         </div>
-                        <div class="step-module slide-in-right delay-2">
-                            <div class="step-digit">02</div>
-                            <div class="step-content">
-                                <h4>Enter Details</h4>
-                                <p>Give us your name and the device you want to use.</p>
-                            </div>
+                        
+                        <div class="step-observable">
+                            <div class="watermark">02</div>
+                            <div class="step-icon"><i class="fas fa-keyboard"></i></div>
+                            <h4>Enter Details</h4>
+                            <p>Provide your name and WhatsApp number. We use this exclusively to securely deliver your setup.</p>
                         </div>
-                        <div class="step-module slide-in-right delay-3">
-                            <div class="step-digit">03</div>
-                            <div class="step-content">
-                                <h4>Get Connected</h4>
-                                <p>Our team connects your TV or phone instantly via WhatsApp.</p>
-                            </div>
+                        
+                        <div class="step-observable">
+                            <div class="watermark">03</div>
+                            <div class="step-icon"><i class="fas fa-satellite-dish"></i></div>
+                            <h4>Instant Connection</h4>
+                            <p>Our technical team connects your TV or phone instantly via WhatsApp. Zero settings to touch.</p>
                         </div>
-                        <div class="step-module module-highlight scale-in delay-4">
-                            <div class="step-digit"><i class="fas fa-mobile-alt"></i></div>
-                            <div class="step-content">
-                                <h4 class="text-emerald">Pay via Mobile Money After</h4>
-                                <p>Send your payment only <b>after</b> you are fully logged in and watching.</p>
-                            </div>
+
+                        <div class="step-observable final-vault">
+                            <div class="vault-glow"></div>
+                            <i class="fas fa-shield-check breathing-icon"></i>
+                            <h4>Pay Only When It Works</h4>
+                            <p>We connect your device first. You pay securely via Mobile Money only after you are 100% satisfied.</p>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -358,6 +472,7 @@
                 <a href="netflix-order/">Netflix 4K Ultra</a>
                 <a href="prime-order/">Amazon Prime</a>
                 <a href="spotify-order/">Spotify Premium</a>
+                <a href="livetv-order/">Access Live TV</a>
             </div>
             <div class="f-links fade-up delay-3">
                 <h4 class="f-head">Command Center</h4>
