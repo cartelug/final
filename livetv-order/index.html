@@ -1,252 +1,1099 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get AccessUG LiveTV | The DSTV Killer</title>
-    
-    <link rel="icon" href="../IMAGES/logo.png" type="image/png">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-    
-    <link rel="stylesheet" href="../HOME/style.css?v=7.0">
-    <link rel="stylesheet" href="style.css?v=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AccessUG LiveTV — The DStv Killer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --red: #FF1744;
+  --red-glow: rgba(255,23,68,0.35);
+  --red-dim: rgba(255,23,68,0.12);
+  --gold: #FFD740;
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #161616;
+  --border: rgba(255,255,255,0.07);
+  --text: #F0F0F0;
+  --muted: #888;
+  --card-bg: rgba(18,18,18,0.95);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* ── CUSTOM CURSOR ── */
+#cursor {
+  position: fixed;
+  width: 12px; height: 12px;
+  background: var(--red);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: width 0.2s, height 0.2s, background 0.2s;
+  mix-blend-mode: screen;
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1.5px solid rgba(255,23,68,0.5);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: all 0.12s ease;
+}
+body:hover #cursor { opacity: 1; }
+
+/* ── CANVAS BG ── */
+#bgCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* ── NOISE OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── SCANLINE OVERLAY ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.03) 2px,
+    rgba(0,0,0,0.03) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── MAIN WRAP ── */
+.wrap {
+  position: relative;
+  z-index: 10;
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 20px 80px;
+}
+
+/* ── HEADER ── */
+.site-header {
+  display: flex;
+  justify-content: center;
+  padding: 28px 0 0;
+}
+.logo-text {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 3px;
+  color: #fff;
+}
+.logo-text span { color: var(--red); }
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 52px 0 44px;
+  position: relative;
+}
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--red-dim);
+  border: 1px solid var(--red-glow);
+  border-radius: 999px;
+  padding: 6px 18px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 24px;
+  animation: badgePulse 3s ease-in-out infinite;
+}
+@keyframes badgePulse {
+  0%,100% { box-shadow: 0 0 0 0 var(--red-glow); }
+  50% { box-shadow: 0 0 20px 4px var(--red-glow); }
+}
+.hero-badge::before {
+  content: '';
+  width: 7px; height: 7px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: dot 1.4s ease-in-out infinite;
+}
+@keyframes dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.hero h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.hero h1 .line1 { display: block; color: #fff; }
+.hero h1 .line2 {
+  display: block;
+  color: var(--red);
+  text-shadow: 0 0 40px var(--red-glow), 0 0 80px var(--red-glow);
+}
+
+.hero-sub {
+  font-size: 1rem;
+  color: var(--muted);
+  max-width: 420px;
+  margin: 16px auto 0;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* floating sport icons */
+.float-icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.fi {
+  position: absolute;
+  font-size: 1.6rem;
+  opacity: 0.12;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100%) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.12; }
+  90% { opacity: 0.12; }
+  100% { transform: translateY(-120%) rotate(360deg); opacity: 0; }
+}
+
+/* ── PROGRESS STEPS ── */
+.steps-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0 0 44px;
+  position: relative;
+}
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 2;
+}
+.step-num {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+  background: var(--bg2);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.step-label {
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  transition: color 0.3s;
+  white-space: nowrap;
+}
+.step-item.active .step-num {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  box-shadow: 0 0 20px var(--red-glow), 0 0 40px var(--red-glow);
+  transform: scale(1.15);
+}
+.step-item.active .step-label { color: var(--red); }
+.step-item.done .step-num {
+  background: rgba(255,23,68,0.2);
+  border-color: var(--red);
+  color: var(--red);
+}
+.step-item.done .step-label { color: rgba(255,23,68,0.6); }
+
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin: 0 8px;
+  position: relative;
+  top: -12px;
+  min-width: 30px;
+  max-width: 80px;
+  overflow: hidden;
+}
+.step-line-fill {
+  height: 100%;
+  background: var(--red);
+  width: 0%;
+  transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 0 8px var(--red);
+}
+
+/* ── CURRENCY TOGGLE ── */
+.currency-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.currency-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+.currency-label.active { color: var(--text); }
+
+.toggle-switch {
+  width: 52px; height: 26px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.3s;
+}
+.toggle-switch.on { background: var(--red-dim); border-color: var(--red); }
+.toggle-knob {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+.toggle-switch.on .toggle-knob { transform: translateX(26px); background: var(--red); }
+
+/* ── PLAN CARDS ── */
+.plans-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+
+.plan-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 18px;
+  padding: 22px 24px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+  user-select: none;
+}
+.plan-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--red-dim) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: inherit;
+}
+.plan-card:hover { transform: translateY(-2px) scale(1.01); }
+.plan-card:hover::before { opacity: 0.5; }
+.plan-card.selected {
+  border-color: var(--red);
+  box-shadow: 0 0 0 1px var(--red), 0 8px 40px var(--red-glow), inset 0 0 40px rgba(255,23,68,0.06);
+  transform: scale(1.02);
+}
+.plan-card.selected::before { opacity: 1; }
+
+/* ripple */
+.plan-card .ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,23,68,0.25);
+  transform: scale(0);
+  animation: rippleAnim 0.6s linear;
+  pointer-events: none;
+}
+@keyframes rippleAnim {
+  to { transform: scale(4); opacity: 0; }
+}
+
+.plan-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.plan-left { display: flex; flex-direction: column; gap: 4px; }
+.plan-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 4px;
+}
+.badge-starter { background: rgba(255,255,255,0.08); color: var(--muted); }
+.badge-seller { background: var(--gold); color: #000; }
+.badge-ultimate { background: var(--red); color: #fff; box-shadow: 0 0 12px var(--red-glow); }
+
+.plan-name {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+.plan-right { text-align: right; }
+.plan-was {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-decoration: line-through;
+  margin-bottom: 2px;
+}
+.plan-price {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+  line-height: 1;
+  color: #fff;
+  transition: color 0.3s;
+}
+.plan-card.selected .plan-price { color: var(--red); text-shadow: 0 0 20px var(--red-glow); }
+.plan-price-unit {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.plan-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.feat-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 0.72rem;
+  color: #ccc;
+  font-weight: 500;
+  transition: background 0.3s, border-color 0.3s;
+}
+.plan-card.selected .feat-tag {
+  background: var(--red-dim);
+  border-color: rgba(255,23,68,0.2);
+  color: #fff;
+}
+
+/* selected check */
+.plan-check {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--red);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  opacity: 0;
+  transform: scale(0) rotate(-90deg);
+  transition: all 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow: 0 0 12px var(--red-glow);
+}
+.plan-card.selected .plan-check { opacity: 1; transform: scale(1) rotate(0); }
+
+/* ── CTA BUTTON ── */
+.btn-main {
+  width: 100%;
+  background: var(--red);
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 18px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.3s;
+  box-shadow: 0 4px 24px var(--red-glow);
+}
+.btn-main::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.5s;
+}
+.btn-main:hover::before { left: 100%; }
+.btn-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px var(--red-glow);
+}
+.btn-main:active { transform: scale(0.98); }
+.btn-main:disabled {
+  background: #333;
+  color: var(--muted);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.btn-main:disabled:hover { transform: none; }
+
+.btn-back {
+  width: 100%;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.2s;
+}
+.btn-back:hover { border-color: var(--muted); color: var(--text); }
+
+/* ── SECTION PANELS ── */
+.section-panel {
+  display: none;
+  animation: panelIn 0.5s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+.section-panel.active { display: block; }
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.section-title h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  margin-bottom: 6px;
+}
+.section-title p { color: var(--muted); font-size: 0.9rem; }
+
+/* ── GIFTS STEP ── */
+.gifts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.gift-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.gift-card.unlocked {
+  border-color: var(--gold);
+  box-shadow: 0 0 20px rgba(255,215,64,0.2);
+}
+.gift-card.locked { opacity: 0.5; filter: grayscale(0.5); }
+.gift-icon { font-size: 2.2rem; margin-bottom: 8px; }
+.gift-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+.gift-desc { font-size: 0.72rem; color: var(--muted); }
+.gift-lock {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-size: 0.75rem;
+  background: rgba(255,215,64,0.15);
+  color: var(--gold);
+  border: 1px solid rgba(255,215,64,0.3);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-weight: 600;
+}
+.gift-free {
+  position: absolute;
+  top: 10px; right: 10px;
+  font-size: 0.7rem;
+  background: rgba(255,215,64,0.2);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-weight: 700;
+}
+
+/* gift unlock text */
+.gift-unlock-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--muted);
+  padding: 14px;
+  background: var(--bg3);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+.gift-unlock-note strong { color: var(--gold); }
+
+/* ── TRUST STEP ── */
+.trust-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.trust-card {
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 22px 18px;
+  text-align: center;
+}
+.trust-icon { font-size: 1.8rem; margin-bottom: 10px; }
+.trust-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--red);
+  letter-spacing: 1px;
+}
+.trust-label { font-size: 0.75rem; color: var(--muted); margin-top: 4px; }
+
+.trust-banner {
+  background: linear-gradient(135deg, rgba(255,23,68,0.08), rgba(255,23,68,0.03));
+  border: 1px solid rgba(255,23,68,0.2);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.trust-banner-icon { font-size: 2rem; flex-shrink: 0; }
+.trust-banner-text h4 { font-weight: 700; margin-bottom: 4px; font-size: 0.95rem; }
+.trust-banner-text p { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+/* ── FORM STEP ── */
+.form-group {
+  margin-bottom: 16px;
+}
+.form-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.form-input, .form-select {
+  width: 100%;
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  appearance: none;
+  -webkit-appearance: none;
+}
+.form-input:focus, .form-select:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px var(--red-dim);
+}
+.form-input::placeholder { color: #444; }
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* referral */
+.referral-row {
+  display: flex;
+  gap: 10px;
+}
+.referral-row .form-input { flex: 1; }
+.btn-apply {
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 20px;
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-apply:hover { border-color: var(--red); color: var(--red); }
+.referral-success {
+  font-size: 0.78rem;
+  color: #4CAF50;
+  margin-top: 6px;
+  display: none;
+}
+.referral-success.show { display: block; }
+
+/* order summary */
+.order-summary {
+  background: var(--bg3);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+.summary-row:last-child { border-bottom: none; }
+.summary-row .key { color: var(--muted); }
+.summary-row .val { font-weight: 600; }
+.summary-row.total .key { color: var(--text); font-weight: 700; }
+.summary-row.total .val {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  color: var(--red);
+  letter-spacing: 1px;
+}
+
+/* payment methods */
+.pay-methods {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.pay-method {
+  flex: 1;
+  background: var(--card-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.pay-method.active { border-color: var(--gold); background: rgba(255,215,64,0.05); }
+.pay-method img { height: 28px; object-fit: contain; }
+.pay-method-name { font-size: 0.7rem; color: var(--muted); margin-top: 6px; font-weight: 600; }
+
+/* connect first badge */
+.connect-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(76,175,80,0.08);
+  border: 1px solid rgba(76,175,80,0.25);
+  border-radius: 12px;
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  font-size: 0.82rem;
+  color: #81C784;
+  font-weight: 600;
+}
+.connect-badge::before { content: '🔒'; font-size: 1rem; }
+
+/* ── SUCCESS STEP ── */
+#step-success {
+  text-align: center;
+  padding: 40px 20px;
+}
+.success-anim {
+  width: 80px; height: 80px;
+  background: rgba(76,175,80,0.1);
+  border: 2px solid #4CAF50;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 24px;
+  animation: successPop 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes successPop {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+#step-success h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+#step-success p { color: var(--muted); font-size: 0.9rem; line-height: 1.6; }
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #fff;
+  border: none;
+  border-radius: 14px;
+  padding: 16px 32px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 28px;
+  text-decoration: none;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.3);
+}
+.whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.4); }
+
+/* ── FOOTER ── */
+.site-footer {
+  text-align: center;
+  padding: 32px 0 0;
+  font-size: 0.72rem;
+  color: #333;
+  border-top: 1px solid var(--border);
+  margin-top: 60px;
+}
+.site-footer a { color: #555; text-decoration: none; }
+
+/* ── CONFETTI ── */
+.confetti-piece {
+  position: fixed;
+  width: 8px; height: 8px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: confettiFall 1.5s ease-in forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* ── MOBILE ── */
+@media (max-width: 540px) {
+  .gifts-grid { grid-template-columns: 1fr; }
+  .trust-grid { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 3rem; }
+  .steps-bar { gap: 0; }
+  .step-label { font-size: 0.58rem; }
+  .pay-methods { flex-direction: column; }
+}
+
+/* ── GLOW LINES ── */
+.glow-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  margin: 32px 0;
+  opacity: 0.4;
+}
+
+/* loading state */
+.btn-main.loading {
+  pointer-events: none;
+}
+.btn-main.loading::after {
+  content: '';
+  display: inline-block;
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
 </head>
-<body class="livetv-mode">
+<body>
 
-    <div id="red-flash" class="red-flash"></div>
+<!-- Custom Cursor -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
 
-    <canvas id="stadiumLights"></canvas>
+<!-- Particle Canvas -->
+<canvas id="bgCanvas"></canvas>
 
-    <div id="region-gatekeeper" class="gatekeeper-overlay">
-        <div class="gatekeeper-modal glass-panel">
-            <div class="glow-orb blue-orb"></div>
-            <h2>Select Your Region</h2>
-            <p>Tap your location for accurate local pricing.</p>
-            
-            <div class="region-grid">
-                <div class="region-btn" onclick="setRegion('UG')">
-                    <img src="../IMAGES/uganda-flag.png" alt="Uganda">
-                    <span>Uganda</span>
-                </div>
-                <div class="region-btn" onclick="setRegion('SS')">
-                    <img src="../IMAGES/south-sudan-flag.png" alt="South Sudan">
-                    <span>South Sudan</span>
-                </div>
-                <div class="region-btn" onclick="setRegion('CD')">
-                    <img src="https://flagcdn.com/w80/cd.png" alt="DRC Congo">
-                    <span>DRC Congo</span>
-                </div>
-            </div>
-        </div>
+<div class="wrap">
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="logo-text"><span>ACCESS</span>UG</div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="float-icons" id="floatIcons"></div>
+    <div class="hero-badge">🔴 Live Now — East Africa's #1 TV Service</div>
+    <h1>
+      <span class="line1">ACCESS UG</span>
+      <span class="line2">LIVE TV</span>
+    </h1>
+    <p class="hero-sub">The DStv Killer. 21,000+ channels, every Premier League match, 180K+ movies. One payment. Forever.</p>
+  </section>
+
+  <!-- Step Progress -->
+  <div class="steps-bar" id="stepsBar">
+    <div class="step-item active" id="si-1">
+      <div class="step-num">1</div>
+      <div class="step-label">Plan</div>
+    </div>
+    <div class="step-line"><div class="step-line-fill" id="line1"></div></div>
+    <div class="step-item" id="si-2">
+      <div class="step-num">2</div>
+      <div class="step-label">Gifts</div>
+    </div>
+    <div class="step-line"><div class="step-line-fill" id="line2"></div></div>
+    <div class="step-item" id="si-3">
+      <div class="step-num">3</div>
+      <div class="step-label">Trust</div>
+    </div>
+    <div class="step-line"><div class="step-line-fill" id="line3"></div></div>
+    <div class="step-item" id="si-4">
+      <div class="step-num">4</div>
+      <div class="step-label">Finalize</div>
+    </div>
+  </div>
+
+  <!-- ── STEP 1: PLAN ── -->
+  <div class="section-panel active" id="step-1">
+    <div class="section-title">
+      <h2>Choose Your <span style="color:var(--red)">Access</span></h2>
+      <p>Best value first. The longer you go, the more you save.</p>
     </div>
 
-    <nav class="navbar">
-        <div class="container nav-content">
-            <a href="../index.html" class="logo-wrapper">
-                <img src="../IMAGES/logo.png" alt="AccessUG" class="brand-logo">
-            </a>
-            <a href="../index.html" class="nav-item back-link"><i class="fas fa-arrow-left"></i> Back</a>
+    <!-- Currency Toggle -->
+    <div class="currency-row">
+      <span class="currency-label active" id="ugx-label">UGX</span>
+      <div class="toggle-switch" id="currToggle" onclick="toggleCurrency()">
+        <div class="toggle-knob"></div>
+      </div>
+      <span class="currency-label" id="usd-label">USD</span>
+    </div>
+
+    <div class="plans-grid" id="plansGrid">
+
+      <!-- 1 Year -->
+      <div class="plan-card" data-plan="year" onclick="selectPlan(this, event)">
+        <div class="plan-check">✓</div>
+        <div class="plan-top">
+          <div class="plan-left">
+            <span class="plan-badge badge-ultimate">ULTIMATE VALUE</span>
+            <div class="plan-name">1 Year Access</div>
+          </div>
+          <div class="plan-right">
+            <div class="plan-was" id="was-year">400,000 UGX</div>
+            <div class="plan-price" id="price-year">180K</div>
+            <div class="plan-price-unit" id="unit-year">UGX</div>
+          </div>
         </div>
-    </nav>
-
-    <main class="order-container">
-        
-        <div class="hero-section">
-            <div class="live-badge"><div class="pulse-dot"></div> LIVE NOW</div>
-            <h1 class="bebas-title">THE DSTV KILLER</h1>
-            
-            <div class="stat-row">
-                <div class="stat-box">
-                    <span class="stat-num" id="stat-channels" data-target="21000">0</span>
-                    <span class="stat-label">Live Channels</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-num" id="stat-vod" data-target="180000">0</span>
-                    <span class="stat-label">VOD Movies & Series</span>
-                </div>
-            </div>
+        <div class="plan-features">
+          <span class="feat-tag">📺 21K+ Channels</span>
+          <span class="feat-tag">🏆 Live Sports</span>
+          <span class="feat-tag">📱 All Devices</span>
+          <span class="feat-tag">🎬 VOD Library</span>
+          <span class="feat-tag">🔄 24/7 Support</span>
         </div>
+      </div>
 
-        <div class="feature-strip">
-            <div class="feature-track">
-                <span>⚽ All Sports Channels (UEFA, EPL, NBA, NFL)</span>
-                <span>🥊 PPV Events Fully Included (UFC, WWE)</span>
-                <span>⭐ Ultra-Stable Zero Buffering Server</span>
-                <span>📺 Works on Smart TV, Android Box, iOS, Firestick</span>
-                <span>✅ Family Friendly (No Adult Content)</span>
-                <span>⏮️ Catch-Up & EPG Included</span>
-                <span>⚽ All Sports Channels (UEFA, EPL, NBA, NFL)</span>
-                <span>🥊 PPV Events Fully Included (UFC, WWE)</span>
-                <span>⭐ Ultra-Stable Zero Buffering Server</span>
-                <span>📺 Works on Smart TV, Android Box, iOS, Firestick</span>
-                <span>✅ Family Friendly (No Adult Content)</span>
-                <span>⏮️ Catch-Up & EPG Included</span>
-            </div>
+      <!-- 6 Months -->
+      <div class="plan-card" data-plan="six" onclick="selectPlan(this, event)">
+        <div class="plan-check">✓</div>
+        <div class="plan-top">
+          <div class="plan-left">
+            <span class="plan-badge badge-seller">BEST SELLER</span>
+            <div class="plan-name">6 Months Access</div>
+          </div>
+          <div class="plan-right">
+            <div class="plan-was" id="was-six">250,000 UGX</div>
+            <div class="plan-price" id="price-six">150K</div>
+            <div class="plan-price-unit" id="unit-six">UGX</div>
+          </div>
         </div>
-
-        <div class="trust-banner main-trust">
-            <i class="fas fa-shield-check banner-icon"></i>
-            <div class="banner-text">
-                <h3>WE FULLY SET IT UP FOR YOU. YOU JUST WATCH.</h3>
-                <p>You do not touch any settings. Our team installs and configures everything on your device via WhatsApp <strong>before you pay a single shilling.</strong></p>
-            </div>
+        <div class="plan-features">
+          <span class="feat-tag">📺 21K+ Channels</span>
+          <span class="feat-tag">🏆 Live Sports</span>
+          <span class="feat-tag">📱 All Devices</span>
+          <span class="feat-tag">🎬 VOD Library</span>
         </div>
+      </div>
 
-        <div class="progress-track">
-            <div class="step active" data-step="1">
-                <svg class="check-svg" viewBox="0 0 52 52"><circle class="check-circle" cx="26" cy="26" r="25" fill="none"/><path class="check-path" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
-                <span>Plan</span>
-            </div>
-            <div class="step" data-step="2">
-                <svg class="check-svg" viewBox="0 0 52 52"><circle class="check-circle" cx="26" cy="26" r="25" fill="none"/><path class="check-path" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
-                <span>Gifts</span>
-            </div>
-            <div class="step" data-step="3">
-                <svg class="check-svg" viewBox="0 0 52 52"><circle class="check-circle" cx="26" cy="26" r="25" fill="none"/><path class="check-path" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
-                <span>Checkout</span>
-            </div>
+      <!-- 3 Months -->
+      <div class="plan-card" data-plan="three" onclick="selectPlan(this, event)">
+        <div class="plan-check">✓</div>
+        <div class="plan-top">
+          <div class="plan-left">
+            <span class="plan-badge badge-starter">STARTER</span>
+            <div class="plan-name">3 Months Access</div>
+          </div>
+          <div class="plan-right">
+            <div class="plan-was" id="was-three">180,000 UGX</div>
+            <div class="plan-price" id="price-three">120K</div>
+            <div class="plan-price-unit" id="unit-three">UGX</div>
+          </div>
         </div>
-
-        <div class="wizard-card glass-panel">
-            
-            <div class="wizard-step active-step" id="step-1">
-                <div class="step-header">
-                    <h2>Select <span class="highlight-blue">Access Pass</span></h2>
-                    <p>Unlock the ultimate stadium experience.</p>
-                </div>
-
-                <div class="plan-grid">
-                    <div class="plan-card" id="card-1year">
-                        <div class="tag gold">Best Value</div>
-                        <div class="card-content">
-                            <div class="plan-header">
-                                <h3>1 Year Ultimate</h3>
-                                <div class="price-lockup">
-                                    <div class="price-flip-container"><span class="new-price">...</span></div>
-                                    <span class="currency">...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="plan-card" id="card-6mo">
-                        <div class="tag blue">Most Popular</div>
-                        <div class="card-content">
-                            <div class="plan-header">
-                                <h3>6 Months Pro</h3>
-                                <div class="price-lockup">
-                                    <div class="price-flip-container"><span class="new-price">...</span></div>
-                                    <span class="currency">...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="plan-card" id="card-3mo">
-                        <div class="tag outline">Starter</div>
-                        <div class="card-content">
-                            <div class="plan-header">
-                                <h3>3 Months Basic</h3>
-                                <div class="price-lockup">
-                                    <div class="price-flip-container"><span class="new-price">...</span></div>
-                                    <span class="currency">...</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn primary-action disabled" id="btn-step-1" onclick="goToStep(2)">
-                    Lock In Package <i class="fas fa-bolt"></i>
-                </button>
-            </div>
-
-            <div class="wizard-step" id="step-2">
-                <div class="step-header">
-                    <h2>Claim <span class="highlight-gold">Bonuses</span></h2>
-                    <p>Free with your LiveTV order today.</p>
-                </div>
-
-                <div class="bonus-box">
-                    <div class="bonus-item locked" id="bonus-1" onclick="unlockBonus(1)">
-                        <div class="icon-box prime-blue"><i class="fab fa-amazon"></i></div>
-                        <div class="bonus-info">
-                            <h4>Prime Video</h4>
-                            <p>Premium Access</p> <span class="status">Tap to Unlock</span>
-                        </div>
-                    </div>
-
-                    <div class="bonus-item locked" id="bonus-2" onclick="unlockBonus(2)">
-                        <div class="icon-box spotify-green"><i class="fab fa-spotify"></i></div>
-                        <div class="bonus-info">
-                            <h4>Spotify Premium</h4>
-                            <p>Ad-Free Music</p>
-                            <span class="status">Tap to Unlock</span>
-                        </div>
-                    </div>
-                </div>
-
-                <button class="btn primary-action disabled" id="btn-step-2" onclick="goToStep(3)">
-                    Continue to Setup <i class="fas fa-arrow-right"></i>
-                </button>
-            </div>
-
-            <div class="wizard-step" id="step-3">
-                <div class="step-header">
-                    <h2>Finalize <span class="highlight-red">Setup</span></h2>
-                    <p>We connect you before you pay.</p>
-                </div>
-
-                <div class="referral-module">
-                    <label class="ref-label">Did someone refer you?</label>
-                    <div class="pill-toggle-group">
-                        <button type="button" class="pill-btn active" id="btn-ref-no" onclick="switchReferral(false)">No</button>
-                        <button type="button" class="pill-btn" id="btn-ref-yes" onclick="switchReferral(true)">Yes</button>
-                    </div>
-                    <div class="ref-input-slide" id="ref-input-slide">
-                        <div class="floating-group">
-                            <input type="text" id="referralCode" placeholder=" ">
-                            <label>Friend's Name or Code</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="floating-group">
-                    <input type="text" id="clientName" placeholder=" ">
-                    <label>Full Name</label>
-                </div>
-
-                <div class="floating-group">
-                    <input type="tel" id="clientNumber" placeholder=" ">
-                    <label id="phone-label">WhatsApp Number</label>
-                </div>
-
-                <div class="floating-group select-group">
-                    <select id="paymentMethod">
-                    </select>
-                    <label class="select-label">Preferred Payment Method</label>
-                </div>
-
-                <div class="order-summary">
-                    <div class="summary-row total">
-                        <span>Total Due After Setup</span>
-                        <span class="val highlight-blue" id="sum-total">...</span>
-                    </div>
-                </div>
-
-                <a href="#" id="whatsapp-btn" class="btn whatsapp-pulse-btn" onclick="return validateAndSend()">
-                    <div class="light-sweep"></div>
-                    <i class="fab fa-whatsapp"></i> CONNECT VIA WHATSAPP
-                </a>
-            </div>
-
+        <div class="plan-features">
+          <span class="feat-tag">📺 21K+ Channels</span>
+          <span class="feat-tag">🏆 Live Sports</span>
+          <span class="feat-tag">📱 All Devices</span>
         </div>
-    </main>
+      </div>
 
-    <script src="script.js?v=2.0"></script>
-</body>
-</html>
+    </div>
+
+    <button class="btn-main" id="btn-step1" onclick="goStep(2)" disabled>
+      Continue — Choose Plan First
+    </button>
+  </div>
+
+  <!-- ── STEP 2: GIFTS ── -->
+  <div class="section-panel" id="step-2">
+    <div class="section-title">
+      <h2>Your Free <span style="color:var(--gold)">Gifts</span></h2>
+      <p>Every plan comes with exclusive bonuses.</p>
+    </div>
+
+    <div class="gift-unlock-note" id="giftNote">
+      🎁 You selected: <strong id="selectedPlanName">—</strong>. Here's what you unlock for free.
+    </div>
+
+    <div class="gifts-grid">
+      <div class="gift-card unlocked">
+        <div class="gift-free">FREE</div>
+        <div class="gift-icon">🔧</div>
+        <div class="gift-name">WhatsApp Setup</div>
+        <div class="gift-desc">Our team installs everything on your device personally.</div>
+      </div>
+      <div class="gift-card" id="gift-spotify">
+        <div class="gift-icon">🎵</div>
+        <div class="gift-name">Spotify Premium</div>
+        <div class="gift-desc">1 Month free with 6-month or 1-year plan.</div>
+      </div>
+      <div class="gift-card" id="gift-prime">
+        <div class="gift-icon">🎬</div>
+        <div class="gift-name">Prime Video</div>
+        <div class="gift-desc">1 Month free — 1 Year plan only.</div>
+      </div>
+      <div class="gift-card" id="gift-canva">
+        <div class="gift-icon">🎨</div>
+        <div class="gift-name">Canva Pro</div>
+        <div class="gift-desc">7-day trial — 1 Year plan only.</div>
+      </div>
+    </div>
+
+    <button class="btn-main" onclick="goStep(3)">Continue →</button>
+    <button class="btn-back" onclick="goStep(1)">← Back</button>
+  </div>
+
+  <!-- ── STEP 3: TRUST ── -->
+  <div class="section-panel" id="step-3">
+    <div class="section-title">
+      <h2>Why <span style="color:var(--red)">We're</span> Different</h2>
+      <p>The undisputed standard in East Africa since 2022.</p>
+    </div>
+
+    <div class="trust-grid">
+      <div class="trust-card">
+        <div class="trust-icon">👑</div>
+        <div class="trust-num" data-count="2300">0</div>
+        <div class="trust-label">Active VIP Users</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">💸</div>
+        <div class="trust-num" data-count="5000">0</div>
+        <div class="trust-label">Payments Processed</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">⚡</div>
+        <div class="trust-num">5min</div>
+        <div class="trust-label">Avg Setup Time</div>
+      </div>
+      <div class="trust-card">
+        <div class="trust-icon">🌍</div>
+        <div class="trust-num">2</div>
+        <div class="trust-label">Countries Served</div>
+      </div>
+    </div>
+
+    <div class="trust-banner">
+      <div class="trust-banner-icon">🔒</div>
+      <div class="trust-banner-text">
+        <h4>Connect First. Pay After.</h4>
+        <p>We never ask for money first. You get fully set up via WhatsApp, watch live TV, confirm it works — then you pay. Zero risk. Zero scam.</p>
+      </div>
+    </div>
+
+    <div class="trust-banner" style="margin-bottom:0">
+      <div class="trust-banner-icon">📺</div>
+      <div class="trust-banner-text">
+        <h4>DStv charges 250,000 UGX every single month.</h4>
+        <p>You're paying that once — for an entire year — and getting more channels, better quality, and 180,000+ movies on demand.</p>
+      </div>
+    </div>
+
+    <div class="glow-line"></div>
+    <button class="btn-main" onclick="goStep(4)">I'm Ready — Finalize My Order →</button>
+    <button class="btn-back" onclick="goStep(2)">← Back</button>
+  </div>
+
+  <!-- ── STEP 4: FINALIZE ── -->
+  <div class="section-panel" id="step-4">
+    <div class="section-title">
