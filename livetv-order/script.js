@@ -36,7 +36,7 @@ let calculatedExpiryText = '';
 let currentStepIndex = 0;
 const totalSteps = 6;
 
-// Custom Ordinal Calculator (Preserved)
+// Custom Ordinal Calculator
 function getOrdinalNum(n) {
     return n + (n > 0 ? ['th', 'st', 'nd', 'rd'][(n > 3 && n < 21) || n % 10 > 3 ? 0 : n % 10] : '');
 }
@@ -59,7 +59,6 @@ function calculateExpiryDates() {
 }
 
 // --- WIZARD NAVIGATION & LOGIC ---
-
 function updateProgress(step) {
     const pct = (step / totalSteps) * 100;
     document.getElementById('progress-bar').style.width = pct + '%';
@@ -69,7 +68,6 @@ function updateProgress(step) {
 function selectRegion(regionCode, el) {
     if(navigator.vibrate) navigator.vibrate(40);
     
-    // Checkmark interaction
     document.querySelectorAll('.region-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
 
@@ -87,7 +85,7 @@ function selectRegion(regionCode, el) {
     });
 
     const paymentSelect = document.getElementById('paymentMethod');
-    paymentSelect.innerHTML = `<option value="" disabled selected></option>`;
+    paymentSelect.innerHTML = `<option value="" disabled selected>Select how you will pay later</option>`;
     data.payments.forEach(method => {
         let opt = document.createElement('option');
         opt.value = method;
@@ -95,7 +93,6 @@ function selectRegion(regionCode, el) {
         paymentSelect.appendChild(opt);
     });
 
-    // Short satisfying delay before advancing
     setTimeout(() => { nextStep(1); triggerStep1Animations(); }, 350);
 }
 
@@ -133,16 +130,7 @@ function triggerStep5Animations() {
     pillars.forEach((p, i) => { setTimeout(() => p.classList.add('show'), 100 + (i * 150)); });
 }
 
-// Accordion Logic
-function toggleAccordion(el) {
-    const group = document.querySelectorAll('.accordion');
-    const isOpen = el.classList.contains('open');
-    group.forEach(a => a.classList.remove('open'));
-    if(!isOpen) el.classList.add('open');
-}
-
 // --- CHECKOUT & BOTTOM SHEET ---
-
 function selectPlan(el, planName, planId) {
     el.classList.add('selected');
     if(navigator.vibrate) navigator.vibrate([30, 50]); 
@@ -150,7 +138,7 @@ function selectPlan(el, planName, planId) {
     setTimeout(() => {
         openCheckout(planName, planId, el.classList.contains('premium'));
         el.classList.remove('selected');
-    }, 400); // Wait for burst
+    }, 400); 
 }
 
 function openCheckout(planName, planId, isPremium) {
@@ -171,7 +159,6 @@ function openCheckout(planName, planId, isPremium) {
     if(isPremium) banner.classList.add('premium-banner');
     else banner.classList.remove('premium-banner');
 
-    // Setup Phone Prefix
     const phoneInput = document.getElementById('clientNumber');
     const prefixMap = { 'UG': '+256 ', 'SS': '+211 ', 'CD': '+243 ' };
     if(!phoneInput.value) phoneInput.value = prefixMap[currentRegion] || '';
@@ -187,17 +174,20 @@ function closeCheckout(force = false) {
     }
 }
 
-// Phone Auto-format (Maintain Prefix)
-document.getElementById('clientNumber').addEventListener('input', function(e) {
-    const prefix = currentRegion === 'UG' ? '+256 ' : currentRegion === 'SS' ? '+211 ' : '+243 ';
-    if (!this.value.startsWith(prefix.trim())) {
-        this.value = prefix;
-    }
-});
+// --- FORM EVENTS ---
+document.addEventListener('DOMContentLoaded', () => {
+    // Phone Auto-format
+    document.getElementById('clientNumber').addEventListener('input', function(e) {
+        const prefix = currentRegion === 'UG' ? '+256 ' : currentRegion === 'SS' ? '+211 ' : '+243 ';
+        if (!this.value.startsWith(prefix.trim())) {
+            this.value = prefix;
+        }
+    });
 
-// Remove Error state on input
-document.querySelectorAll('.input-group input, .input-group select').forEach(el => {
-    el.addEventListener('input', () => el.parentElement.classList.remove('error'));
+    // Remove Error state gracefully on typing
+    document.querySelectorAll('.input-group input, .input-group select').forEach(el => {
+        el.addEventListener('input', () => el.parentElement.classList.remove('error'));
+    });
 });
 
 function toggleReferral(cb) {
@@ -212,13 +202,11 @@ function toggleReferral(cb) {
     }
 }
 
-// --- FORM SUBMISSION & WEBHOOK (Strictly Preserved) ---
-
+// --- SUBMISSION & WEBHOOK ---
 async function submitOrder(e) {
     e.preventDefault(); 
     let hasError = false;
 
-    // Gentle Validation
     const nameEl = document.getElementById('clientName');
     const numEl = document.getElementById('clientNumber');
     const payEl = document.getElementById('paymentMethod');
@@ -237,9 +225,8 @@ async function submitOrder(e) {
     const payment = payEl.value;
     const referrer = document.getElementById('referralCode').value.trim() || "Funnel Setup";
 
-    // Premium Interaction Button State
     const submitBtn = document.getElementById('submit-btn');
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Opening WhatsApp...';
+    submitBtn.innerHTML = 'Opening WhatsApp...';
     submitBtn.style.pointerEvents = 'none';
     if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
@@ -247,7 +234,6 @@ async function submitOrder(e) {
     const sheetNumber = "'" + cleanNumber; 
     const data = regionData[currentRegion];
 
-    // Google Sheets POST (DO NOT CHANGE)
     const formData = new URLSearchParams();
     formData.append('ClientName', name);
     formData.append('Number', sheetNumber);
@@ -262,7 +248,6 @@ async function submitOrder(e) {
         });
     } catch (err) { }
 
-    // WhatsApp Builder (DO NOT CHANGE FORMAT)
     const phone = "256762193386"; 
     
     let message = `*🟢 NEW LIVETV ORDER [${currentRegion}]*\n`;
@@ -270,7 +255,6 @@ async function submitOrder(e) {
     message += `*Package:* ${selectedPlanName}\n`;
     message += `*Validity:* ${calculatedExpiryText.replace('Covered until ', '')}\n`; 
     message += `*Amount:* ${selectedPlanRawPrice} ${data.currency}\n\n`;
-    
     message += `*Client Name:* ${name}\n`;
     message += `*WhatsApp:* ${cleanNumber}\n`;
     message += `*Payment Via:* ${payment}\n`;
@@ -280,7 +264,6 @@ async function submitOrder(e) {
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     
-    // Deliberate Premium Delay (600ms as requested)
     setTimeout(() => { window.location.href = url; }, 600);
 }
 
@@ -302,7 +285,7 @@ setInterval(() => {
 }, 1000);
 
 function dismissExit(e) {
-    e.stopPropagation();
+    if(e) e.stopPropagation();
     document.getElementById('exit-pill').classList.remove('visible');
 }
 
