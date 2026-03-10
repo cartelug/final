@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AccessUG LiveTV | The Smart Way to Watch</title>
+    <title>AccessUG LiveTV | Premium Setup</title>
     
     <link rel="icon" href="../IMAGES/logo.png" type="image/png">
     
@@ -16,144 +16,158 @@
 </head>
 <body>
 
-    <div id="region-gatekeeper" class="gatekeeper-overlay">
-        <div class="gatekeeper-box">
-            <div class="secure-icon"><i class="fas fa-shield-check"></i></div>
-            <h2>Verify Your Location</h2>
-            <p>Please select your country to see accurate local pricing and secure payment options.</p>
-            
-            <div class="region-buttons">
-                <button class="btn-region" onclick="enterStore('UG')">
-                    <img src="../IMAGES/uganda-flag.png" alt="Uganda"> <span>Uganda</span> <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="btn-region" onclick="enterStore('SS')">
-                    <img src="../IMAGES/south-sudan-flag.png" alt="South Sudan"> <span>South Sudan</span> <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="btn-region" onclick="enterStore('CD')">
-                    <img src="https://flagcdn.com/w80/cd.png" alt="DRC Congo"> <span>DRC Congo</span> <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
-            <div class="secure-badge"><i class="fas fa-lock"></i> 256-bit Secure Connection</div>
+    <div class="cinematic-wall-bg">
+        <div class="scroll-track track-up">
+            <div class="screen sports-screen"></div>
+            <div class="screen movie-screen"></div>
+            <div class="screen dark-screen"></div>
+            <div class="screen sports-screen"></div>
         </div>
-    </div>
-
-    <div class="top-banner">
-        <div class="container">
-            <i class="fas fa-check-circle"></i> <strong>Zero Risk:</strong> We fully configure your device before you pay.
+        <div class="scroll-track track-down">
+            <div class="screen movie-screen"></div>
+            <div class="screen dark-screen"></div>
+            <div class="screen sports-screen"></div>
+            <div class="screen movie-screen"></div>
         </div>
+        <div class="scroll-track track-up delay-track">
+            <div class="screen dark-screen"></div>
+            <div class="screen sports-screen"></div>
+            <div class="screen movie-screen"></div>
+            <div class="screen dark-screen"></div>
+        </div>
+        <div class="super-blur-overlay"></div>
     </div>
 
     <nav class="navbar">
-        <div class="nav-container">
-            <img src="../IMAGES/logo.png" alt="AccessUG" class="brand-logo">
-            <a href="../index.html" class="nav-exit">Cancel</a>
-        </div>
+        <img src="../IMAGES/logo.png" alt="AccessUG" class="brand-logo">
+        <a href="../index.html" class="nav-exit">Cancel</a>
     </nav>
 
-    <main class="app-layout" id="main-content">
+    <main class="funnel-container">
         
-        <header class="hero">
-            <div class="trust-pill">
-                <div class="avatars">
-                    <img src="https://i.pravatar.cc/100?img=1" alt="User">
-                    <img src="https://i.pravatar.cc/100?img=2" alt="User">
-                    <img src="https://i.pravatar.cc/100?img=3" alt="User">
-                </div>
-                <span>Trusted by 5,000+ Users in East Africa</span>
-            </div>
+        <div class="cream-card" id="wizard-card">
             
-            <h1>Stop Paying Expensive TV Bills. <span class="text-blue">Watch Everything Here.</span></h1>
-            <p class="hero-subtext">Get 21,000+ live channels, every football match, and 180,000 movies directly on your Smart TV or Phone. Zero buffering. One simple app.</p>
-        </header>
-
-        <section class="benefits-grid">
-            <div class="benefit-card">
-                <div class="icon-wrap blue"><i class="fas fa-futbol"></i></div>
-                <div>
-                    <h3>All Live Sports</h3>
-                    <p>EPL, UEFA, NBA, NFL & PPV.</p>
-                </div>
-            </div>
-            <div class="benefit-card">
-                <div class="icon-wrap red"><i class="fas fa-film"></i></div>
-                <div>
-                    <h3>Unlimited Movies</h3>
-                    <p>4K VOD, Netflix & Apple TV series.</p>
-                </div>
-            </div>
-            <div class="benefit-card">
-                <div class="icon-wrap green"><i class="fas fa-bolt"></i></div>
-                <div>
-                    <h3>Zero Buffering</h3>
-                    <p>Ultra-stable premium servers.</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="pricing-section">
-            <h2 class="section-title">Select Your Plan</h2>
-            <p class="section-subtitle">No contracts. Cancel anytime. Connects to any device.</p>
-
-            <div class="pricing-stack">
+            <div class="wizard-step active" id="step-0">
+                <div class="step-icon"><i class="fas fa-globe-africa"></i></div>
+                <h2>Where are you watching from?</h2>
+                <p>We need your location to show accurate pricing and connect you to the fastest local server.</p>
                 
-                <div class="price-card premium" onclick="openCheckout('1 Year Access', '1year')">
-                    <div class="card-badge">BEST VALUE (SAVE 60%)</div>
-                    <div class="card-header">
-                        <div>
-                            <h3>12 Months Premium</h3>
-                            <span class="expiry-date dynamic-date-12"><i class="far fa-calendar-alt"></i> Active until ...</span>
-                        </div>
-                        <div class="price-lockup">
-                            <span class="currency">...</span><span class="amount" id="price-1year">...</span>
-                        </div>
-                    </div>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-green"></i> 21,000+ Channels & All Sports</li>
-                        <li><i class="fas fa-check text-green"></i> 180,000+ Movies & Series</li>
-                        <li class="highlight"><i class="fas fa-gift text-blue"></i> <strong>FREE Prime Video Included</strong></li>
-                        <li class="highlight"><i class="fas fa-gift text-blue"></i> <strong>FREE Spotify Premium Included</strong></li>
-                    </ul>
-                    <button class="btn-primary">Select Premium Pass</button>
+                <div class="action-list">
+                    <button class="list-btn" onclick="setRegionAndNext('UG')">🇺🇬 Uganda <i class="fas fa-chevron-right"></i></button>
+                    <button class="list-btn" onclick="setRegionAndNext('SS')">🇸🇸 South Sudan <i class="fas fa-chevron-right"></i></button>
+                    <button class="list-btn" onclick="setRegionAndNext('CD')">🇨🇩 DRC Congo <i class="fas fa-chevron-right"></i></button>
                 </div>
-
-                <div class="price-card standard" onclick="openCheckout('6 Months Access', '6mo')">
-                    <div class="card-header">
-                        <div>
-                            <h3>6 Months Standard</h3>
-                            <span class="expiry-date dynamic-date-6"><i class="far fa-calendar-alt"></i> Active until ...</span>
-                        </div>
-                        <div class="price-lockup">
-                            <span class="currency">...</span><span class="amount" id="price-6mo">...</span>
-                        </div>
-                    </div>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-green"></i> 21,000+ Channels & All Sports</li>
-                        <li><i class="fas fa-check text-green"></i> 180,000+ Movies & Series</li>
-                        <li class="highlight"><i class="fas fa-gift text-blue"></i> FREE Prime Video Included</li>
-                    </ul>
-                    <button class="btn-outline">Select Standard Pass</button>
-                </div>
-
-                <div class="price-card basic" onclick="openCheckout('3 Months Access', '3mo')">
-                    <div class="card-header">
-                        <div>
-                            <h3>3 Months Starter</h3>
-                            <span class="expiry-date dynamic-date-3"><i class="far fa-calendar-alt"></i> Active until ...</span>
-                        </div>
-                        <div class="price-lockup">
-                            <span class="currency">...</span><span class="amount" id="price-3mo">...</span>
-                        </div>
-                    </div>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-green"></i> 21,000+ Channels & All Sports</li>
-                        <li><i class="fas fa-check text-green"></i> 180,000+ Movies & Series</li>
-                        <li><i class="fas fa-headset text-gray"></i> 24/7 Priority Support</li>
-                    </ul>
-                    <button class="btn-outline">Select Starter Pass</button>
-                </div>
-
+                <div class="secure-badge"><i class="fas fa-lock"></i> 256-bit Secure Session</div>
             </div>
-        </section>
+
+            <div class="wizard-step" id="step-1">
+                <div class="avatars-large">
+                    <img src="https://i.pravatar.cc/100?img=33" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=47" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=12" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=5" alt="User">
+                </div>
+                <h2>Trusted by 5,000+ Users</h2>
+                <p>Join thousands of East Africans who have stopped paying expensive TV bills. Let's build your ultimate entertainment package.</p>
+                <button class="btn-primary-large" onclick="nextStep(2)">Continue <i class="fas fa-arrow-right"></i></button>
+            </div>
+
+            <div class="wizard-step" id="step-2">
+                <div class="step-hero-icon green"><i class="fas fa-futbol"></i></div>
+                <h2>Never Miss a Match ⚽</h2>
+                <p>Get crystal-clear live streams of the <strong>English Premier League, UEFA Champions League, NBA, NFL</strong>, and exclusive PPV boxing & UFC fights.</p>
+                <button class="btn-primary-large" onclick="nextStep(3)">Sounds Good <i class="fas fa-check"></i></button>
+            </div>
+
+            <div class="wizard-step" id="step-3">
+                <div class="step-hero-icon red"><i class="fas fa-film"></i></div>
+                <h2>Unlimited Movies & Series 🎬</h2>
+                <p>Unlock over <strong>180,000+ movies and episodes</strong>. Why pay for Netflix, Prime Video, and Apple TV? Watch all their shows in one place in 4K.</p>
+                <button class="btn-primary-large" onclick="nextStep(4)">Amazing <i class="fas fa-check"></i></button>
+            </div>
+
+            <div class="wizard-step" id="step-4">
+                <div class="step-hero-icon blue"><i class="fas fa-bolt"></i></div>
+                <h2>Zero Buffering. Zero Stress ⚡</h2>
+                <p>Experience ultra-stable premium servers. Best of all? <strong>We completely set up your Smart TV or Phone for you via WhatsApp before you pay.</strong></p>
+                <button class="btn-primary-large" onclick="revealPricing()">See My Plans <i class="fas fa-unlock"></i></button>
+            </div>
+
+            <div class="wizard-step pricing-step" id="step-5">
+                
+                <div class="summary-block">
+                    <h3>Your Access Pass Includes:</h3>
+                    <div class="summary-grid">
+                        <div class="sum-item"><i class="fas fa-futbol text-green"></i> All Live Sports & PPV</div>
+                        <div class="sum-item"><i class="fas fa-film text-red"></i> 180k+ Movies & Series</div>
+                        <div class="sum-item"><i class="fas fa-tv text-blue"></i> Works on All Devices</div>
+                        <div class="sum-item"><i class="fas fa-headset text-dark"></i> We Set It Up For You</div>
+                    </div>
+                </div>
+
+                <h2 class="pricing-title">Select Your Plan</h2>
+
+                <div class="pricing-stack">
+                    
+                    <div class="price-card premium" onclick="openCheckout('1 Year Access', '1year')">
+                        <div class="card-badge">BEST VALUE (SAVE 60%)</div>
+                        <div class="card-header">
+                            <div>
+                                <h3>12 Months Premium</h3>
+                                <span class="expiry-date dynamic-date-12">
+                                    <span class="pulse-dot"></span><i class="fas fa-sync-alt"></i> Renews on ...
+                                </span>
+                            </div>
+                            <div class="price-lockup">
+                                <span class="currency">...</span><span class="amount" id="price-1year">...</span>
+                            </div>
+                        </div>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-green"></i> 21,000+ Channels & All VOD</li>
+                            <li class="highlight"><i class="fas fa-gift text-blue"></i> <strong>FREE Prime Video Included</strong></li>
+                            <li class="highlight"><i class="fas fa-gift text-blue"></i> <strong>FREE Spotify Premium</strong></li>
+                        </ul>
+                        <button class="btn-select">Select Premium Pass</button>
+                    </div>
+
+                    <div class="price-card standard" onclick="openCheckout('6 Months Access', '6mo')">
+                        <div class="card-header">
+                            <div>
+                                <h3>6 Months Standard</h3>
+                                <span class="expiry-date dynamic-date-6">
+                                    <i class="fas fa-sync-alt"></i> Renews on ...
+                                </span>
+                            </div>
+                            <div class="price-lockup">
+                                <span class="currency">...</span><span class="amount" id="price-6mo">...</span>
+                            </div>
+                        </div>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check text-green"></i> 21,000+ Channels & All VOD</li>
+                            <li class="highlight"><i class="fas fa-gift text-blue"></i> FREE Prime Video Included</li>
+                        </ul>
+                        <button class="btn-outline">Select Standard Pass</button>
+                    </div>
+
+                    <div class="price-card basic" onclick="openCheckout('3 Months Access', '3mo')">
+                        <div class="card-header">
+                            <div>
+                                <h3>3 Months Starter</h3>
+                                <span class="expiry-date dynamic-date-3">
+                                    <i class="fas fa-sync-alt"></i> Renews on ...
+                                </span>
+                            </div>
+                            <div class="price-lockup">
+                                <span class="currency">...</span><span class="amount" id="price-3mo">...</span>
+                            </div>
+                        </div>
+                        <button class="btn-outline">Select Starter Pass</button>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
     </main>
 
     <div id="checkout-sheet" class="sheet-overlay" onclick="closeCheckout(event)">

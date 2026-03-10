@@ -1,4 +1,4 @@
-// --- HIGH-CONVERSION FINTECH LOGIC ENGINE ---
+// --- FUNNEL & LOGIC ENGINE ---
 
 const regionData = {
     UG: {
@@ -35,49 +35,52 @@ let selectedPlanName = '';
 let selectedPlanRawPrice = '';
 let calculatedExpiryText = '';
 
-// Lock background scrolling on initial load for Gatekeeper
-document.body.style.overflow = 'hidden';
+// --- CUSTOM ORDINAL DATE CALCULATOR ---
+function getOrdinalNum(n) {
+    return n + (n > 0 ? ['th', 'st', 'nd', 'rd'][(n > 3 && n < 21) || n % 10 > 3 ? 0 : n % 10] : '');
+}
 
-// --- DYNAMIC EXPIRY CALCULATOR ---
+function formatPremiumDate(date) {
+    const day = getOrdinalNum(date.getDate());
+    const month = date.toLocaleDateString('en-GB', { month: 'short' });
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
+}
+
 function calculateExpiryDates() {
     const today = new Date();
-    
-    // Formatting: e.g. "10 Mar 2027"
-    const formatDate = (date) => {
-        return date.toLocaleDateString('en-GB', { 
-            day: 'numeric', month: 'short', year: 'numeric' 
-        });
-    };
 
     // 3 Months
     let d3 = new Date(today); d3.setMonth(d3.getMonth() + 3);
-    document.querySelector('.dynamic-date-3').innerHTML = `<i class="far fa-calendar-alt"></i> Renews on ${formatDate(d3)}`;
+    document.querySelector('.dynamic-date-3').innerHTML = `<i class="fas fa-sync-alt"></i> Renews on ${formatPremiumDate(d3)}`;
 
     // 6 Months
     let d6 = new Date(today); d6.setMonth(d6.getMonth() + 6);
-    document.querySelector('.dynamic-date-6').innerHTML = `<i class="far fa-calendar-alt"></i> Renews on ${formatDate(d6)}`;
+    document.querySelector('.dynamic-date-6').innerHTML = `<i class="fas fa-sync-alt"></i> Renews on ${formatPremiumDate(d6)}`;
 
     // 12 Months
     let d12 = new Date(today); d12.setFullYear(d12.getFullYear() + 1);
-    document.querySelector('.dynamic-date-12').innerHTML = `<i class="far fa-calendar-alt"></i> Renews on ${formatDate(d12)}`;
+    document.querySelector('.dynamic-date-12').innerHTML = `<span class="pulse-dot"></span><i class="fas fa-sync-alt"></i> Renews on ${formatPremiumDate(d12)}`;
 }
 
-// --- 1. GATEKEEPER ENTRY ---
-function enterStore(regionCode) {
+
+// --- WIZARD / FUNNEL NAVIGATION ---
+
+// User selects region on Step 0, instantly moves to Step 1
+function setRegionAndNext(regionCode) {
     currentRegion = regionCode;
     const data = regionData[regionCode];
 
     if(navigator.vibrate) navigator.vibrate(40);
 
-    // Calculate dates
+    // Calc Dates
     calculateExpiryDates();
 
-    // Inject Prices into Cards
+    // Inject Prices into DOM
     document.getElementById('price-1year').textContent = data.prices["1year"].display;
     document.getElementById('price-6mo').textContent = data.prices["6mo"].display;
     document.getElementById('price-3mo').textContent = data.prices["3mo"].display;
     
-    // Inject Currencies
     document.querySelectorAll('.currency').forEach(el => {
         el.textContent = (regionCode === 'SS' || regionCode === 'CD') ? '$' : data.currency + ' ';
     });
@@ -92,40 +95,54 @@ function enterStore(regionCode) {
         paymentSelect.appendChild(opt);
     });
 
-    // Dismiss Gatekeeper Smoothly
-    const gatekeeper = document.getElementById('region-gatekeeper');
-    gatekeeper.style.opacity = '0';
-    setTimeout(() => {
-        gatekeeper.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Unlock scroll
-        document.getElementById('main-content').classList.add('visible'); // Fade in content
-    }, 400);
+    // Move to next step
+    nextStep(1);
 }
 
-// --- 2. BOTTOM SHEET CHECKOUT ---
+function nextStep(stepNum) {
+    // Hide all steps
+    document.querySelectorAll('.wizard-step').forEach(el => {
+        el.classList.remove('active');
+    });
+    
+    // Show target step
+    document.getElementById(`step-${stepNum}`).classList.add('active');
+    
+    if(navigator.vibrate) navigator.vibrate(30);
+    
+    // Scroll to top of card just in case
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function revealPricing() {
+    // Expand the card horizontally on Desktop for the 3 columns
+    document.getElementById('wizard-card').classList.add('expanded');
+    nextStep(5);
+}
+
+
+// --- BOTTOM SHEET CHECKOUT ---
 function openCheckout(planName, planId) {
     const data = regionData[currentRegion];
     selectedPlanName = planName;
     selectedPlanRawPrice = data.prices[planId].raw;
 
-    // Grab the exact expiry date calculated for this specific card
+    // Grab exact expiry date text
     let durationClass = planId === '1year' ? '.dynamic-date-12' : planId === '6mo' ? '.dynamic-date-6' : '.dynamic-date-3';
-    calculatedExpiryText = document.querySelector(durationClass).textContent;
+    calculatedExpiryText = document.querySelector(durationClass).textContent.trim();
 
-    // Populate Sheet Summary
+    // Populate Sheet
     document.getElementById('summary-plan-name').textContent = planName;
-    document.getElementById('summary-expiry').textContent = calculatedExpiryText;
+    document.getElementById('summary-expiry').innerHTML = `<i class="fas fa-sync-alt"></i> ${calculatedExpiryText}`;
     
     const prefix = (currentRegion === 'SS' || currentRegion === 'CD') ? '$' : data.currency + ' ';
     document.getElementById('summary-plan-price').textContent = `${prefix}${data.prices[planId].display}`;
 
-    // Open Modal
+    // Show
     document.getElementById('checkout-sheet').classList.add('active');
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden'; // Lock background scroll
     
     if(navigator.vibrate) navigator.vibrate([30, 50]); 
-    
-    // Auto-focus name field for zero friction
     setTimeout(() => document.getElementById('clientName').focus(), 300);
 }
 
@@ -136,7 +153,7 @@ function closeCheckout(force = false) {
     }
 }
 
-// --- 3. REFERRAL TOGGLE LOGIC ---
+// --- REFERRAL TOGGLE ---
 function switchReferral(isYes) {
     const btnNo = document.getElementById('btn-ref-no');
     const btnYes = document.getElementById('btn-ref-yes');
@@ -156,26 +173,24 @@ function switchReferral(isYes) {
     }
 }
 
-// --- 4. SECURE DATA SUBMISSION ---
+// --- SECURE DATA SUBMISSION ---
 async function submitOrder(e) {
     e.preventDefault(); 
 
     const name = document.getElementById('clientName').value.trim();
     const rawNumber = document.getElementById('clientNumber').value.trim();
     const payment = document.getElementById('paymentMethod').value;
-    const referrer = document.getElementById('referralCode').value.trim() || "Direct Setup";
+    const referrer = document.getElementById('referralCode').value.trim() || "Funnel Setup";
 
     if (rawNumber.length < 8) {
-        alert("Please provide a valid WhatsApp number so our team can send the setup file.");
-        document.getElementById('clientNumber').focus();
+        alert("Please provide a valid WhatsApp number so our team can send the setup instructions.");
         return false;
     }
 
-    // Button UI Feedback (Creates illusion of processing)
+    // Processing UI
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> GENERATING SECURE LINK...';
     submitBtn.style.pointerEvents = 'none';
-    submitBtn.style.opacity = '0.9';
 
     if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
 
@@ -183,7 +198,7 @@ async function submitOrder(e) {
     const sheetNumber = "'" + cleanNumber; 
     const data = regionData[currentRegion];
 
-    // --- GOOGLE SHEETS POST (Silent) ---
+    // --- GOOGLE SHEETS POST ---
     const formData = new URLSearchParams();
     formData.append('ClientName', name);
     formData.append('Number', sheetNumber);
@@ -198,7 +213,7 @@ async function submitOrder(e) {
         });
     } catch (err) { }
 
-    // --- WHATSAPP PAYLOAD BUILDER ---
+    // --- WHATSAPP BUILDER ---
     const phone = "256762193386"; 
     
     let message = `*🟢 NEW LIVETV DEPLOYMENT [${currentRegion}]*\n`;
@@ -210,12 +225,11 @@ async function submitOrder(e) {
     message += `*Client Name:* ${name}\n`;
     message += `*WhatsApp:* ${cleanNumber}\n`;
     message += `*Payment Via:* ${payment}\n`;
-    if(referrer !== "Direct Setup") message += `*Referred By:* ${referrer}\n`;
+    if(referrer !== "Funnel Setup") message += `*Referred By:* ${referrer}\n`;
     message += `━━━━━━━━━━━━━━━━━━━━━\n`;
     message += `_Please assist with immediate device configuration._`;
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     
-    // Small delay so user sees button loading state
     setTimeout(() => { window.location.href = url; }, 500);
 }
