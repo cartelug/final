@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get AccessUG LiveTV | The Smart Way to Watch TV</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Get AccessUG LiveTV | The Smart Way to Watch</title>
     
     <link rel="icon" href="../IMAGES/logo.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
@@ -17,186 +17,168 @@
 <body>
 
     <div class="top-banner">
-        <i class="fas fa-shield-check"></i> <strong>Zero Risk Guarantee:</strong> We connect your device fully via WhatsApp before you pay a single shilling.
+        <i class="fas fa-check-circle"></i> We set up your device <b>before</b> you pay. Zero risk.
     </div>
 
     <nav class="navbar">
         <div class="nav-container">
             <img src="../IMAGES/logo.png" alt="AccessUG" class="brand-logo">
-            <a href="../index.html" class="nav-exit">Exit</a>
+            <a href="../index.html" class="nav-exit">Cancel</a>
         </div>
     </nav>
 
-    <header class="hero">
-        <div class="hero-container">
-            <div class="trust-badge">
+    <main class="app-layout">
+        <header class="hero">
+            <div class="trust-pill">
                 <div class="avatars">
-                    <img src="https://i.pravatar.cc/100?img=1" alt="User">
-                    <img src="https://i.pravatar.cc/100?img=2" alt="User">
-                    <img src="https://i.pravatar.cc/100?img=3" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=33" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=47" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=12" alt="User">
                 </div>
-                <span>Trusted by 5,000+ East Africans</span>
+                <span>Trusted by 5,000+ Users</span>
             </div>
             
-            <h1>Stop Paying Expensive TV Bills. <span class="text-highlight">Watch Everything Here.</span></h1>
-            <p class="hero-subtext">Get 21,000+ live channels, every football match, and 180,000 movies directly on your Smart TV, Android Box, or Phone. No dishes, no decoders, no buffering.</p>
+            <h1>Stop Overpaying for TV. <br><span class="text-blue">Watch Everything Here.</span></h1>
+            <p class="hero-subtext">21,000+ live channels, every football match, and 180,000 movies directly on your Smart TV or Phone. Zero buffering.</p>
             
             <button class="btn-primary hero-btn" onclick="scrollToPricing()">
-                See Plans & Pricing <i class="fas fa-arrow-down"></i>
+                View Plans & Pricing
             </button>
-        </div>
-    </header>
+        </header>
 
-    <section class="benefits-section">
-        <div class="container">
-            <h2 class="section-title">Everything You Need. One Simple App.</h2>
+        <section class="benefits-section">
+            <div class="benefits-scroll-track">
+                <div class="benefit-card">
+                    <div class="icon-wrap blue"><i class="fas fa-futbol"></i></div>
+                    <h3>All Live Sports</h3>
+                    <p>EPL, UEFA, NBA, & PPV.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon-wrap red"><i class="fas fa-film"></i></div>
+                    <h3>Unlimited Movies</h3>
+                    <p>4K VOD & Series included.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon-wrap green"><i class="fas fa-bolt"></i></div>
+                    <h3>Zero Buffering</h3>
+                    <p>Ultra-stable premium servers.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing-section" id="pricing-target">
+            <h2 class="section-title">Select Your Pass</h2>
             
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="icon-wrapper blue"><i class="fas fa-futbol"></i></div>
-                    <h3>Never Miss a Match</h3>
-                    <p>Live streams of EPL, UEFA Champions League, NBA, NFL, and PPV fights. If it's live, we have it.</p>
-                </div>
-                
-                <div class="benefit-card">
-                    <div class="icon-wrapper red"><i class="fas fa-film"></i></div>
-                    <h3>Unlimited Movies & Series</h3>
-                    <p>Why pay for Netflix, Prime, and Apple TV? Get all their shows in stunning 4K and Blu-ray quality in one place.</p>
-                </div>
-                
-                <div class="benefit-card">
-                    <div class="icon-wrapper orange"><i class="fas fa-bolt"></i></div>
-                    <h3>Zero Buffering Server</h3>
-                    <p>We use premium, ultra-stable servers designed for smooth streaming, even on average internet connections.</p>
-                </div>
-                
-                <div class="benefit-card">
-                    <div class="icon-wrapper green"><i class="fas fa-child"></i></div>
-                    <h3>Safe for the Family</h3>
-                    <p>100% clean viewing. We strictly provide family-friendly content with zero adult channels.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="pricing-section" id="pricing-target">
-        <div class="container">
-            <h2 class="section-title">Choose Your Access Pass</h2>
-            <p class="section-subtitle">Select your country to see local pricing, then pick your plan.</p>
-
-            <div class="region-selector">
-                <button class="region-btn active" id="btn-UG" onclick="setRegion('UG')">🇺🇬 Uganda</button>
-                <button class="region-btn" id="btn-SS" onclick="setRegion('SS')">🇸🇸 S. Sudan</button>
-                <button class="region-btn" id="btn-CD" onclick="setRegion('CD')">🇨🇩 DRC Congo</button>
+            <div class="region-tabs">
+                <button class="tab-btn active" id="btn-UG" onclick="setRegion('UG')">UG</button>
+                <button class="tab-btn" id="btn-SS" onclick="setRegion('SS')">SS</button>
+                <button class="tab-btn" id="btn-CD" onclick="setRegion('CD')">DRC</button>
             </div>
 
-            <div class="pricing-cards">
+            <div class="pricing-stack">
                 
-                <div class="pricing-card" onclick="selectPlan('3 Months Access', '3mo')">
-                    <div class="card-header">
-                        <h3>Starter Plan</h3>
-                        <p>3 Months of Access</p>
+                <div class="price-card premium" onclick="openCheckout('1 Year Access', '1year')">
+                    <div class="card-badge">BEST VALUE (SAVE 60%)</div>
+                    <div class="card-content">
+                        <div class="plan-info">
+                            <h3>12 Months Premium</h3>
+                            <div class="price-lockup">
+                                <span class="currency">...</span><span class="amount" id="price-1year">...</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right action-icon"></i>
                     </div>
-                    <div class="card-price">
-                        <span class="currency">...</span><span class="amount" id="price-3mo">...</span>
+                    <div class="card-footer">
+                        <span><i class="fas fa-check text-green"></i> All Channels & Movies</span>
+                        <span><i class="fas fa-gift text-blue"></i> Free Prime Video & Spotify</span>
                     </div>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-green"></i> All Live Channels & Sports</li>
-                        <li><i class="fas fa-check text-green"></i> All Movies & Series</li>
-                        <li><i class="fas fa-check text-green"></i> 24/7 Tech Support</li>
-                    </ul>
-                    <button class="btn-outline">Select Plan</button>
                 </div>
 
-                <div class="pricing-card popular" onclick="selectPlan('1 Year Access', '1year')">
-                    <div class="popular-tag">BEST VALUE - SAVE 60%</div>
-                    <div class="card-header">
-                        <h3>Premium Plan</h3>
-                        <p>12 Months of Access</p>
+                <div class="price-card standard" onclick="openCheckout('6 Months Access', '6mo')">
+                    <div class="card-content">
+                        <div class="plan-info">
+                            <h3>6 Months Standard</h3>
+                            <div class="price-lockup">
+                                <span class="currency">...</span><span class="amount" id="price-6mo">...</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right action-icon"></i>
                     </div>
-                    <div class="card-price">
-                        <span class="currency">...</span><span class="amount" id="price-1year">...</span>
+                    <div class="card-footer">
+                        <span><i class="fas fa-check text-green"></i> All Channels & Movies</span>
+                        <span><i class="fas fa-gift text-blue"></i> Free Prime Video</span>
                     </div>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-green"></i> All Live Channels & Sports</li>
-                        <li><i class="fas fa-check text-green"></i> All Movies & Series</li>
-                        <li><i class="fas fa-gift text-red"></i> <strong>FREE Prime Video</strong></li>
-                        <li><i class="fas fa-gift text-red"></i> <strong>FREE Spotify Premium</strong></li>
-                    </ul>
-                    <button class="btn-primary">Select Premium</button>
                 </div>
 
-                <div class="pricing-card" onclick="selectPlan('6 Months Access', '6mo')">
-                    <div class="card-header">
-                        <h3>Standard Plan</h3>
-                        <p>6 Months of Access</p>
+                <div class="price-card basic" onclick="openCheckout('3 Months Access', '3mo')">
+                    <div class="card-content">
+                        <div class="plan-info">
+                            <h3>3 Months Starter</h3>
+                            <div class="price-lockup">
+                                <span class="currency">...</span><span class="amount" id="price-3mo">...</span>
+                            </div>
+                        </div>
+                        <i class="fas fa-chevron-right action-icon"></i>
                     </div>
-                    <div class="card-price">
-                        <span class="currency">...</span><span class="amount" id="price-6mo">...</span>
-                    </div>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-check text-green"></i> All Live Channels & Sports</li>
-                        <li><i class="fas fa-check text-green"></i> All Movies & Series</li>
-                        <li><i class="fas fa-gift text-red"></i> FREE Prime Video</li>
-                    </ul>
-                    <button class="btn-outline">Select Plan</button>
                 </div>
 
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <div id="checkout-modal" class="modal-overlay">
-        <div class="checkout-box">
-            <button class="close-modal" onclick="closeCheckout()"><i class="fas fa-times"></i></button>
+    <div class="mobile-sticky-cta" id="sticky-cta">
+        <button class="btn-primary" onclick="scrollToPricing()">Choose a Plan</button>
+    </div>
+
+    <div id="app-sheet-overlay" class="sheet-overlay" onclick="closeCheckout(event)">
+        <div class="bottom-sheet" id="checkout-sheet" onclick="event.stopPropagation()">
+            <div class="sheet-handle"></div>
             
-            <div class="checkout-header">
-                <h2>Final Step</h2>
-                <p>Provide your details so our team can connect your device immediately.</p>
+            <div class="sheet-header">
+                <h2>Setup Details</h2>
+                <button class="close-btn" onclick="closeCheckout(true)"><i class="fas fa-times"></i></button>
             </div>
 
-            <div class="selected-summary">
-                <span class="summary-label">Selected Package:</span>
-                <strong id="summary-plan-name">...</strong>
-                <span class="summary-price" id="summary-plan-price">...</span>
+            <div class="selected-plan-banner">
+                <div class="banner-left">
+                    <span class="label">Selected</span>
+                    <strong id="summary-plan-name">...</strong>
+                </div>
+                <div class="banner-right" id="summary-plan-price">...</div>
             </div>
 
             <form id="order-form" onsubmit="return submitOrder(event)">
                 
-                <div class="input-group">
+                <div class="input-field">
+                    <input type="text" id="clientName" placeholder=" " required>
                     <label>Your Full Name</label>
-                    <input type="text" id="clientName" placeholder="e.g. John Okello" required>
                 </div>
 
-                <div class="input-group">
+                <div class="input-field">
+                    <input type="tel" id="clientNumber" placeholder=" " required>
                     <label>WhatsApp Number</label>
-                    <input type="tel" id="clientNumber" placeholder="Number we will use to set you up" required>
                 </div>
 
-                <div class="input-group">
-                    <label>How will you pay later?</label>
+                <div class="input-field select-field">
                     <select id="paymentMethod" required></select>
-                    <span class="input-hint"><i class="fas fa-lock"></i> You will only pay AFTER your TV is working.</span>
+                    <label>Pay Later Via</label>
                 </div>
 
                 <div class="referral-box">
-                    <label class="ref-question">Did a friend or agent refer you?</label>
-                    <div class="pill-toggle">
-                        <button type="button" class="pill active" id="btn-ref-no" onclick="switchReferral(false)">No</button>
-                        <button type="button" class="pill" id="btn-ref-yes" onclick="switchReferral(true)">Yes</button>
+                    <div class="ref-header" onclick="toggleReferral()">
+                        <span>Referred by an agent?</span>
+                        <i class="fas fa-plus" id="ref-icon"></i>
                     </div>
-                    <div class="ref-input-area" id="ref-input-slide">
-                        <input type="text" id="referralCode" placeholder="Enter their name or code">
+                    <div class="ref-input-slide" id="ref-slide">
+                        <input type="text" id="referralCode" placeholder="Enter Agent Code">
                     </div>
                 </div>
 
-                <button type="submit" class="btn-whatsapp-large">
-                    <i class="fab fa-whatsapp"></i> Send Details to WhatsApp
+                <button type="submit" class="btn-whatsapp-massive" id="submit-btn">
+                    <i class="fab fa-whatsapp"></i> Send to WhatsApp
                 </button>
                 
-                <div class="secure-footer">
-                    <i class="fas fa-shield-alt"></i> 100% Secure & Confidential
-                </div>
+                <p class="security-note"><i class="fas fa-lock"></i> No payment needed until setup is complete.</p>
             </form>
         </div>
     </div>

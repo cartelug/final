@@ -1,5 +1,4 @@
-// --- SALES MACHINE LOGIC ENGINE ---
-// Focused on speed, zero errors, and smooth data transfer
+// --- APP-LIKE LOGIC ENGINE ---
 
 const regionData = {
     UG: {
@@ -18,7 +17,7 @@ const regionData = {
             "6mo": { display: "45", raw: "45" },
             "3mo": { display: "35", raw: "35" }
         },
-        payments: ["Mobile Money Agent", "Give cash in South Sudan"]
+        payments: ["Mobile Money Agent", "Cash in South Sudan"]
     },
     CD: {
         currency: "USD",
@@ -31,42 +30,57 @@ const regionData = {
     }
 };
 
-let currentRegion = 'UG'; // Default for least friction
+let currentRegion = 'UG'; 
 let selectedPlanName = '';
 let selectedPlanRawPrice = '';
 
-// Initialize page
 document.addEventListener("DOMContentLoaded", () => {
-    setRegion('UG'); // Set default region prices on load without a gatekeeper
+    setRegion('UG'); // Default state
+    setupScrollListener(); // Mobile Sticky CTA logic
 });
 
-// Smooth scroll to pricing
 function scrollToPricing() {
     document.getElementById('pricing-target').scrollIntoView({ behavior: 'smooth' });
 }
 
-// --- 1. SEAMLESS REGION SWITCHING ---
+// Show/Hide Sticky Button on scroll past hero
+function setupScrollListener() {
+    const hero = document.querySelector('.hero');
+    const stickyCta = document.getElementById('sticky-cta');
+    
+    window.addEventListener('scroll', () => {
+        if(window.scrollY > hero.offsetHeight - 50) {
+            stickyCta.classList.add('visible');
+        } else {
+            stickyCta.classList.remove('visible');
+        }
+    });
+}
+
+// --- REGION TABS ---
 function setRegion(regionCode) {
     currentRegion = regionCode;
     const data = regionData[regionCode];
 
-    // Toggle button UI
-    document.querySelectorAll('.region-btn').forEach(btn => btn.classList.remove('active'));
+    // Native App Tab Switch UI
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`btn-${regionCode}`).classList.add('active');
+
+    // Haptic feedback
+    if(navigator.vibrate) navigator.vibrate(30);
 
     // Update Prices
     document.getElementById('price-1year').textContent = data.prices["1year"].display;
     document.getElementById('price-6mo').textContent = data.prices["6mo"].display;
     document.getElementById('price-3mo').textContent = data.prices["3mo"].display;
     
-    // Update Currencies
     document.querySelectorAll('.currency').forEach(el => {
-        el.textContent = regionCode === 'SS' || regionCode === 'CD' ? '$' : data.currency + ' ';
+        el.textContent = (regionCode === 'SS' || regionCode === 'CD') ? '$' : data.currency + ' ';
     });
 
-    // Populate Payment Dropdown for Checkout
+    // Populate Payment Dropdown
     const paymentSelect = document.getElementById('paymentMethod');
-    paymentSelect.innerHTML = `<option value="" disabled selected>Select an option...</option>`;
+    paymentSelect.innerHTML = `<option value="" disabled selected></option>`;
     data.payments.forEach(method => {
         let opt = document.createElement('option');
         opt.value = method;
@@ -75,77 +89,76 @@ function setRegion(regionCode) {
     });
 }
 
-// --- 2. OPEN CHECKOUT MODAL ---
-function selectPlan(planName, planId) {
+// --- BOTTOM SHEET MODAL LOGIC ---
+function openCheckout(planName, planId) {
     const data = regionData[currentRegion];
     selectedPlanName = planName;
     selectedPlanRawPrice = data.prices[planId].raw;
 
-    // Update Summary in Modal
+    // Update Sheet UI
     document.getElementById('summary-plan-name').textContent = planName;
     const prefix = (currentRegion === 'SS' || currentRegion === 'CD') ? '$' : data.currency + ' ';
     document.getElementById('summary-plan-price').textContent = `${prefix}${data.prices[planId].display}`;
 
-    // Show Modal
-    document.getElementById('checkout-modal').classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    // Show Sheet
+    document.getElementById('app-sheet-overlay').classList.add('active');
+    document.body.style.overflow = 'hidden'; // Lock background scroll
     
-    // Focus Name Input
-    setTimeout(() => document.getElementById('clientName').focus(), 300);
+    if(navigator.vibrate) navigator.vibrate(50);
 }
 
-function closeCheckout() {
-    document.getElementById('checkout-modal').classList.remove('active');
-    document.body.style.overflow = 'auto';
-}
-
-// --- 3. REFERRAL TOGGLE (Netflix Logic) ---
-function switchReferral(isYes) {
-    const btnNo = document.getElementById('btn-ref-no');
-    const btnYes = document.getElementById('btn-ref-yes');
-    const slideBox = document.getElementById('ref-input-slide');
-    const inputField = document.getElementById('referralCode');
-
-    if (isYes) {
-        btnNo.classList.remove('active');
-        btnYes.classList.add('active');
-        slideBox.classList.add('open');
-        setTimeout(() => inputField.focus(), 200);
-    } else {
-        btnYes.classList.remove('active');
-        btnNo.classList.add('active');
-        slideBox.classList.remove('open');
-        inputField.value = ""; 
+function closeCheckout(force = false) {
+    // If event is passed, check if they clicked the overlay background
+    if(force === true || event.target.id === 'app-sheet-overlay') {
+        document.getElementById('app-sheet-overlay').classList.remove('active');
+        document.body.style.overflow = 'auto';
     }
 }
 
-// --- 4. SECURE DATA SUBMISSION ---
+// --- MINIMAL REFERRAL TOGGLE ---
+function toggleReferral() {
+    const slide = document.getElementById('ref-slide');
+    const icon = document.getElementById('ref-icon');
+    const input = document.getElementById('referralCode');
+
+    if(slide.classList.contains('open')) {
+        slide.classList.remove('open');
+        icon.className = 'fas fa-plus';
+        input.value = '';
+    } else {
+        slide.classList.add('open');
+        icon.className = 'fas fa-minus';
+        setTimeout(() => input.focus(), 200);
+    }
+}
+
+// --- SECURE SUBMISSION (Zero Friction) ---
 async function submitOrder(e) {
-    e.preventDefault(); // Prevent standard form reload
+    e.preventDefault(); 
 
     const name = document.getElementById('clientName').value.trim();
     const rawNumber = document.getElementById('clientNumber').value.trim();
     const payment = document.getElementById('paymentMethod').value;
-    const referrer = document.getElementById('referralCode').value.trim() || "Direct Organic";
+    const referrer = document.getElementById('referralCode').value.trim() || "Organic App";
 
-    // Validate phone length (basic)
     if (rawNumber.length < 8) {
-        alert("Please enter a valid WhatsApp number.");
-        document.getElementById('clientNumber').focus();
+        alert("Please provide a valid WhatsApp number.");
         return false;
     }
 
-    // Change button text to show action
-    const submitBtn = document.querySelector('.btn-whatsapp-large');
-    const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Securing Line...';
+    // Visual loading state
+    const submitBtn = document.getElementById('submit-btn');
+    submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Initializing...';
+    submitBtn.style.opacity = '0.8';
     submitBtn.style.pointerEvents = 'none';
 
+    if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
+
     const cleanNumber = rawNumber.replace(/\D/g, ''); 
-    const sheetNumber = "'" + cleanNumber; // Append quote to prevent Excel formula errors
+    const sheetNumber = "'" + cleanNumber; 
     const data = regionData[currentRegion];
 
-    // --- GOOGLE SHEETS POST ---
+    // GOOGLE SHEETS POST
     const formData = new URLSearchParams();
     formData.append('ClientName', name);
     formData.append('Number', sheetNumber);
@@ -155,37 +168,24 @@ async function submitOrder(e) {
     formData.append('Referrer', referrer);
 
     try {
-        // Fire asynchronously, do not await so user isn't kept waiting
         fetch("https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec", { 
             method: 'POST', body: formData, mode: 'no-cors' 
         });
-    } catch (err) {
-        console.log("Analytics sync delayed.");
-    }
+    } catch (err) { console.log("Silent error handled."); }
 
-    // --- WHATSAPP REDIRECT BUILDER ---
+    // WHATSAPP BUILDER
     const phone = "256762193386"; 
-    
-    // Formatting a clean, professional order slip for the WhatsApp agent
-    let message = `*🟢 NEW LIVETV ACTIVATION [${currentRegion}]*\n`;
-    message += `━━━━━━━━━━━━━━━━━━━━━\n`;
-    message += `*Package:* ${selectedPlanName}\n`;
+    let message = `*⚡ NEW APP ACTIVATION [${currentRegion}]*\n\n`;
+    message += `*Plan:* ${selectedPlanName}\n`;
     message += `*Price:* ${selectedPlanRawPrice} ${data.currency}\n\n`;
-    
-    message += `*Client Name:* ${name}\n`;
+    message += `*Name:* ${name}\n`;
     message += `*WhatsApp:* ${cleanNumber}\n`;
     message += `*Payment:* ${payment}\n`;
-    
-    if(referrer !== "Direct Organic") {
-        message += `*Agent/Ref:* ${referrer}\n`;
-    }
-    message += `━━━━━━━━━━━━━━━━━━━━━\n`;
-    message += `_Please assist with device configuration._`;
+    if(referrer !== "Organic App") message += `*Ref:* ${referrer}\n`;
+    message += `\n_Client is ready for immediate setup._`;
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     
-    // Tiny delay so user sees the "Securing line" text, increasing perceived security
-    setTimeout(() => {
-        window.location.href = url;
-    }, 600);
+    // Smooth redirect
+    setTimeout(() => { window.location.href = url; }, 500);
 }
