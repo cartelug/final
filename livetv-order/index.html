@@ -3,180 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get AccessUG LiveTV | Premium Streaming</title>
+    <title>AccessUG LiveTV | The Ultimate Package</title>
     
     <link rel="icon" href="../IMAGES/logo.png" type="image/png">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="aurora-bg">
-        <div class="aurora-blob blob-1"></div>
-        <div class="aurora-blob blob-2"></div>
-        <div class="aurora-blob blob-3"></div>
+    <div class="ambient-background"></div>
+
+    <div id="region-gatekeeper" class="gatekeeper-overlay">
+        <div class="modal-bento">
+            <div class="icon-circle pulse-blue"><i class="fas fa-globe-africa"></i></div>
+            <h2>Where are you watching from?</h2>
+            <p>We need your country to show the right prices and payment options.</p>
+            
+            <div class="country-list">
+                <button onclick="setRegion('UG')">
+                    <img src="../IMAGES/uganda-flag.png" alt="Uganda"> <span>Uganda</span> <i class="fas fa-arrow-right"></i>
+                </button>
+                <button onclick="setRegion('SS')">
+                    <img src="../IMAGES/south-sudan-flag.png" alt="South Sudan"> <span>South Sudan</span> <i class="fas fa-arrow-right"></i>
+                </button>
+                <button onclick="setRegion('CD')">
+                    <img src="https://flagcdn.com/w80/cd.png" alt="DRC Congo"> <span>DRC Congo</span> <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
     </div>
 
     <nav class="navbar">
-        <a href="../index.html" class="nav-back"><i class="fas fa-arrow-left"></i> Back to Home</a>
-        <img src="../IMAGES/logo.png" alt="AccessUG" class="nav-logo">
+        <a href="../index.html" class="back-btn"><i class="fas fa-chevron-left"></i> Home</a>
+        <img src="../IMAGES/logo.png" alt="AccessUG" class="logo">
     </nav>
 
-    <main class="app-container glass-panel">
+    <main class="main-container">
         
-        <div class="slider-track" id="slider-track">
-            
-            <div class="slide" id="slide-1">
-                <div class="text-center">
-                    <span class="badge-subtle">Step 1 of 3</span>
-                    <h1 class="title">Welcome to Premium TV</h1>
-                    <p class="subtitle">To show you the correct pricing and payment options, please select where you are watching from.</p>
-                </div>
+        <header class="page-header">
+            <div class="badge-live"><span class="dot"></span> 100% Online & Ready</div>
+            <h1>Everything You Love.<br><span class="text-gradient">In One Simple App.</span></h1>
+            <p>Say goodbye to expensive decoders. Get every channel, movie, and sport directly on your TV or phone.</p>
+        </header>
 
-                <div class="region-list">
-                    <button class="region-card" onclick="setRegion('UG')">
-                        <img src="../IMAGES/uganda-flag.png" alt="Uganda">
-                        <span>Uganda</span>
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <button class="region-card" onclick="setRegion('SS')">
-                        <img src="../IMAGES/south-sudan-flag.png" alt="South Sudan">
-                        <span>South Sudan</span>
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <button class="region-card" onclick="setRegion('CD')">
-                        <img src="https://flagcdn.com/w80/cd.png" alt="DRC Congo">
-                        <span>DRC Congo</span>
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                </div>
+        <section class="bento-grid">
+            
+            <div class="bento-item span-2 tv-box">
+                <i class="fas fa-tv huge-icon"></i>
+                <h3>21,000+ Live Channels</h3>
+                <p>News, Entertainment, Documentaries & Kids TV from all over the world.</p>
             </div>
 
-            <div class="slide" id="slide-2">
-                <div class="text-center">
-                    <span class="badge-subtle">Step 2 of 3</span>
-                    <h1 class="title">Choose Your Plan</h1>
-                    <p class="subtitle">Unlock 21,000+ live channels, ultimate sports, and movies.</p>
-                </div>
+            <div class="bento-item span-2 movie-box">
+                <i class="fas fa-film huge-icon"></i>
+                <h3>180,000+ Movies & Series</h3>
+                <p>On-Demand VOD in stunning Blu-ray & 4K quality. Netflix, Hulu & Apple TV shows included.</p>
+            </div>
 
-                <div class="trust-banner">
-                    <div class="trust-icon"><i class="fas fa-magic"></i></div>
-                    <div class="trust-text">
-                        <strong>We set it up for you. You just watch.</strong>
-                        <p>Our team configures your device via WhatsApp before you pay. Zero stress.</p>
+            <div class="bento-item sports-box">
+                <div class="icon-row">
+                    <i class="fas fa-futbol"></i> <i class="fas fa-basketball-ball"></i>
+                </div>
+                <h3>All Live Sports</h3>
+                <p>EPL, UEFA, NBA, NFL. Never miss a game.</p>
+            </div>
+
+            <div class="bento-item ppv-box">
+                <i class="fas fa-boxing-glove"></i>
+                <h3>PPV & Fights</h3>
+                <p>UFC, Boxing & WWE events fully included.</p>
+            </div>
+
+            <div class="bento-item span-4 stability-box">
+                <i class="fas fa-bolt"></i>
+                <h3>Ultra-Stable Server</h3>
+                <p>Zero buffering. Zero freezing. Smooth streaming all day long.</p>
+            </div>
+
+            <div class="bento-item span-2 device-box">
+                <div class="icon-row"><i class="fas fa-mobile-alt"></i> <i class="fas fa-laptop"></i></div>
+                <h3>Works on Any Device</h3>
+                <p>Smart TV, Phone, Android Box, or Firestick.</p>
+            </div>
+
+            <div class="bento-item span-2 family-box">
+                <i class="fas fa-child"></i>
+                <h3>Family Friendly</h3>
+                <p>Safe viewing with NO adult channels included.</p>
+            </div>
+
+            <div class="bento-item span-4 trust-box">
+                <div class="trust-content">
+                    <i class="fas fa-handshake huge-icon"></i>
+                    <div>
+                        <h2>We Set It Up For You.</h2>
+                        <p>You don't touch any settings. Our team installs and configures everything on your device via WhatsApp <strong>before you pay anything.</strong> You just sit back and watch.</p>
                     </div>
                 </div>
-
-                <div class="plan-options">
-                    <label class="plan-radio popular">
-                        <input type="radio" name="plan" value="1year" onclick="selectPlan('1 Year Access', '1year')">
-                        <div class="plan-radio-content">
-                            <div class="plan-info">
-                                <span class="plan-name">12 Months <span class="tag-best">Best Value</span></span>
-                                <span class="plan-desc">Includes free Spotify & Prime Video</span>
-                            </div>
-                            <div class="plan-price">
-                                <span class="price-val" id="price-1year">...</span>
-                                <span class="currency"></span>
-                            </div>
-                        </div>
-                    </label>
-
-                    <label class="plan-radio">
-                        <input type="radio" name="plan" value="6mo" onclick="selectPlan('6 Months Access', '6mo')">
-                        <div class="plan-radio-content">
-                            <div class="plan-info">
-                                <span class="plan-name">6 Months</span>
-                                <span class="plan-desc">Includes free Spotify & Prime Video</span>
-                            </div>
-                            <div class="plan-price">
-                                <span class="price-val" id="price-6mo">...</span>
-                                <span class="currency"></span>
-                            </div>
-                        </div>
-                    </label>
-
-                    <label class="plan-radio">
-                        <input type="radio" name="plan" value="3mo" onclick="selectPlan('3 Months Access', '3mo')">
-                        <div class="plan-radio-content">
-                            <div class="plan-info">
-                                <span class="plan-name">3 Months</span>
-                                <span class="plan-desc">Starter package</span>
-                            </div>
-                            <div class="plan-price">
-                                <span class="price-val" id="price-3mo">...</span>
-                                <span class="currency"></span>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-
-                <div class="action-row">
-                    <button class="btn-text" onclick="goBack(1)">Back</button>
-                    <button class="btn-primary" id="btn-next-2" disabled onclick="goToStep(3)">Continue <i class="fas fa-arrow-right"></i></button>
-                </div>
             </div>
 
-            <div class="slide" id="slide-3">
-                <div class="text-center">
-                    <span class="badge-subtle">Step 3 of 3</span>
-                    <h1 class="title">Where should we send your setup?</h1>
-                    <p class="subtitle">Provide your details so our technical team can connect you.</p>
+        </section>
+
+        <section class="pricing-section">
+            <h2>Choose Your Plan</h2>
+            <p class="subtitle">Select a package to start your setup.</p>
+
+            <div class="pricing-grid">
+                
+                <label class="price-card best-value">
+                    <input type="radio" name="plan" value="1year" onclick="selectPlan('1 Year Access', '1year')">
+                    <div class="card-inner">
+                        <div class="tag"><i class="fas fa-star"></i> BEST VALUE</div>
+                        <h3>12 Months</h3>
+                        <div class="price">
+                            <span class="value" id="price-1year">...</span>
+                            <span class="currency">...</span>
+                        </div>
+                        <ul class="perks">
+                            <li><i class="fas fa-check-circle"></i> All LiveTV Features</li>
+                            <li><i class="fas fa-gift"></i> FREE Spotify Premium</li>
+                            <li><i class="fas fa-gift"></i> FREE Prime Video</li>
+                        </ul>
+                    </div>
+                </label>
+
+                <label class="price-card">
+                    <input type="radio" name="plan" value="6mo" onclick="selectPlan('6 Months Access', '6mo')">
+                    <div class="card-inner">
+                        <h3>6 Months</h3>
+                        <div class="price">
+                            <span class="value" id="price-6mo">...</span>
+                            <span class="currency">...</span>
+                        </div>
+                        <ul class="perks">
+                            <li><i class="fas fa-check-circle"></i> All LiveTV Features</li>
+                            <li><i class="fas fa-gift"></i> FREE Prime Video</li>
+                        </ul>
+                    </div>
+                </label>
+
+                <label class="price-card">
+                    <input type="radio" name="plan" value="3mo" onclick="selectPlan('3 Months Access', '3mo')">
+                    <div class="card-inner">
+                        <h3>3 Months</h3>
+                        <div class="price">
+                            <span class="value" id="price-3mo">...</span>
+                            <span class="currency">...</span>
+                        </div>
+                        <ul class="perks">
+                            <li><i class="fas fa-check-circle"></i> All LiveTV Features</li>
+                        </ul>
+                    </div>
+                </label>
+
+            </div>
+        </section>
+
+        <section class="checkout-section" id="checkout-area">
+            <h2>Final Step: Let's Connect</h2>
+            
+            <div class="form-card">
+                <div class="input-box">
+                    <i class="fas fa-user icon"></i>
+                    <input type="text" id="clientName" placeholder="Your Full Name">
                 </div>
 
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="clientName" placeholder="e.g. John Doe">
+                <div class="input-box">
+                    <i class="fab fa-whatsapp icon"></i>
+                    <input type="tel" id="clientNumber" placeholder="Your WhatsApp Number">
                 </div>
 
-                <div class="form-group">
-                    <label id="phone-label">WhatsApp Number</label>
-                    <input type="tel" id="clientNumber" placeholder="Enter your number">
-                </div>
-
-                <div class="form-group">
-                    <label>Preferred Payment Method</label>
+                <div class="input-box">
+                    <i class="fas fa-wallet icon"></i>
                     <select id="paymentMethod"></select>
                 </div>
 
-                <div class="referral-toggle-group">
-                    <div class="toggle-header">
-                        <span>Did a friend refer you?</span>
-                        <label class="switch">
-                            <input type="checkbox" id="ref-checkbox" onchange="toggleReferral()">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="ref-input-container" id="ref-container">
-                        <input type="text" id="referralCode" placeholder="Enter friend's name or code">
-                    </div>
+                <div class="input-box optional">
+                    <i class="fas fa-users icon"></i>
+                    <input type="text" id="referralCode" placeholder="Referred by a friend? (Optional)">
                 </div>
 
-                <div class="checkout-summary">
-                    <div class="summary-text">
-                        <span id="summary-plan-name">Selected Plan</span>
-                        <div class="gift-tags">
-                            <span><i class="fas fa-gift"></i> Prime Video Included</span>
-                            <span><i class="fas fa-gift"></i> Spotify Included</span>
-                        </div>
-                    </div>
-                    <div class="summary-price" id="summary-total">...</div>
-                </div>
-
-                <div class="action-row">
-                    <button class="btn-text" onclick="goBack(2)">Back</button>
-                    <button class="btn-whatsapp" onclick="return processOrder()">
-                        <i class="fab fa-whatsapp"></i> Connect via WhatsApp
-                    </button>
-                </div>
+                <button class="btn-submit" onclick="return submitOrder()">
+                    <i class="fab fa-whatsapp"></i> Send to WhatsApp for Setup
+                </button>
+                <p class="safe-text"><i class="fas fa-lock"></i> No payment required until setup is complete.</p>
             </div>
+        </section>
 
-        </div>
     </main>
 
     <script src="script.js"></script>
