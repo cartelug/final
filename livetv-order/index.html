@@ -9,162 +9,233 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="cinematic-wall-bg">
-        <div class="scroll-track track-up">
-            <div class="screen sports-screen"></div>
-            <div class="screen movie-screen"></div>
-            <div class="screen dark-screen"></div>
-            <div class="screen sports-screen"></div>
-        </div>
-        <div class="scroll-track track-down">
-            <div class="screen movie-screen"></div>
-            <div class="screen dark-screen"></div>
-            <div class="screen sports-screen"></div>
-            <div class="screen movie-screen"></div>
-        </div>
-        <div class="scroll-track track-up delay-track">
-            <div class="screen dark-screen"></div>
-            <div class="screen sports-screen"></div>
-            <div class="screen movie-screen"></div>
-            <div class="screen dark-screen"></div>
-        </div>
-        <div class="super-blur-overlay"></div>
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
     </div>
-
-    <nav class="navbar">
-        <img src="../IMAGES/logo.png" alt="AccessUG" class="brand-logo">
-        <a href="../index.html" class="nav-exit">Cancel</a>
-    </nav>
 
     <main class="funnel-container">
         
-        <div class="cream-card" id="wizard-card">
+        <div class="wizard-card" id="wizard-card">
             
             <div class="wizard-step active" id="step-0">
-                <div class="step-icon"><i class="fas fa-globe-africa"></i></div>
-                <h2>Where are you watching from?</h2>
-                <p>We need your location to show accurate pricing and connect you to the fastest local server.</p>
+                <h2>Let's build your perfect entertainment setup.</h2>
+                <p class="sub-line">Takes less than 2 minutes. No payment until your TV is working.</p>
                 
-                <div class="action-list">
-                    <button class="list-btn" onclick="setRegionAndNext('UG')">🇺🇬 Uganda <i class="fas fa-chevron-right"></i></button>
-                    <button class="list-btn" onclick="setRegionAndNext('SS')">🇸🇸 South Sudan <i class="fas fa-chevron-right"></i></button>
-                    <button class="list-btn" onclick="setRegionAndNext('CD')">🇨🇩 DRC Congo <i class="fas fa-chevron-right"></i></button>
+                <div class="region-grid">
+                    <div class="region-card" onclick="selectRegion('UG', this)">
+                        <div class="region-info">
+                            <span class="flag">🇺🇬</span>
+                            <div class="region-text">
+                                <span class="country">Uganda</span>
+                                <span class="trust-line">Same-day setup · 3,200+ active households</span>
+                            </div>
+                        </div>
+                        <div class="checkmark"><i class="fas fa-check"></i></div>
+                    </div>
+                    
+                    <div class="region-card" onclick="selectRegion('SS', this)">
+                        <div class="region-info">
+                            <span class="flag">🇸🇸</span>
+                            <div class="region-text">
+                                <span class="country">South Sudan</span>
+                                <span class="trust-line">Local support · 800+ subscribers</span>
+                            </div>
+                        </div>
+                        <div class="checkmark"><i class="fas fa-check"></i></div>
+                    </div>
+
+                    <div class="region-card" onclick="selectRegion('CD', this)">
+                        <div class="region-info">
+                            <span class="flag">🇨🇩</span>
+                            <div class="region-text">
+                                <span class="country">DRC Congo</span>
+                                <span class="trust-line">Full local assistance · growing fast</span>
+                            </div>
+                        </div>
+                        <div class="checkmark"><i class="fas fa-check"></i></div>
+                    </div>
                 </div>
-                <div class="secure-badge"><i class="fas fa-lock"></i> 256-bit Secure Session</div>
+                <div class="secure-footer">🔒 256-bit secure session · Your data is never shared</div>
             </div>
 
             <div class="wizard-step" id="step-1">
-                <div class="avatars-large">
+                <div class="avatars-overlap">
                     <img src="https://i.pravatar.cc/100?img=33" alt="User">
                     <img src="https://i.pravatar.cc/100?img=47" alt="User">
                     <img src="https://i.pravatar.cc/100?img=12" alt="User">
                     <img src="https://i.pravatar.cc/100?img=5" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=19" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=22" alt="User">
+                    <img src="https://i.pravatar.cc/100?img=27" alt="User">
+                    <div class="avatar-more">+</div>
                 </div>
-                <h2>Trusted by 5,000+ Users</h2>
-                <p>Join thousands of East Africans who have stopped paying expensive TV bills. Let's build your ultimate entertainment package.</p>
-                <button class="btn-primary-large" onclick="nextStep(2)">Continue <i class="fas fa-arrow-right"></i></button>
+                <h2 class="social-number">5,247 households</h2>
+                <p class="social-sub">set up this month across East Africa.</p>
+                
+                <div class="testimonial-list">
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="quote">"Cancelled DStv after 6 years. Saved 3 million shillings."</p>
+                        <p class="author">Ronald, Kampala 🇺🇬</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="quote">"My kids watch everything. Setup took 8 minutes."</p>
+                        <p class="author">Grace, Juba 🇸🇸</p>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars">★★★★★</div>
+                        <p class="quote">"Thought it was too good. It wasn't."</p>
+                        <p class="author">Patrick, Kinshasa 🇨🇩</p>
+                    </div>
+                </div>
+                
+                <button class="btn-primary" onclick="nextStep(2)">Join 5,247 Households →</button>
             </div>
 
             <div class="wizard-step" id="step-2">
-                <div class="step-hero-icon green"><i class="fas fa-futbol"></i></div>
-                <h2>Never Miss a Match ⚽</h2>
-                <p>Get crystal-clear live streams of the <strong>English Premier League, UEFA Champions League, NBA, NFL</strong>, and exclusive PPV boxing & UFC fights.</p>
-                <button class="btn-primary-large" onclick="nextStep(3)">Sounds Good <i class="fas fa-check"></i></button>
+                <div class="live-score-card">
+                    <span class="live-indicator"><span class="pulse-dot"></span> LIVE</span>
+                    <div class="score-row">MAN CITY <span>2</span></div>
+                    <div class="score-row">ARSENAL <span>1</span></div>
+                    <div class="time-elapsed">78'</div>
+                </div>
+                <h2>The match kicked off 12 minutes ago.</h2>
+                <p>Right now, 847 of our subscribers are watching it live. Are you?</p>
+                
+                <ul class="desire-list">
+                    <li><i class="fas fa-check text-green"></i> <strong>Your Premier League</strong> — every match, every goal, live.</li>
+                    <li><i class="fas fa-check text-green"></i> <strong>Your UFC & Boxing</strong> — every PPV main event.</li>
+                    <li><i class="fas fa-check text-green"></i> <strong>Your NBA & NFL</strong> — no blackouts, ever.</li>
+                </ul>
+                <button class="btn-primary" onclick="nextStep(3)">I want every match →</button>
             </div>
 
             <div class="wizard-step" id="step-3">
-                <div class="step-hero-icon red"><i class="fas fa-film"></i></div>
-                <h2>Unlimited Movies & Series 🎬</h2>
-                <p>Unlock over <strong>180,000+ movies and episodes</strong>. Why pay for Netflix, Prime Video, and Apple TV? Watch all their shows in one place in 4K.</p>
-                <button class="btn-primary-large" onclick="nextStep(4)">Amazing <i class="fas fa-check"></i></button>
+                <h2>180,000 titles. Everything you're already paying for — in one place.</h2>
+                <p>You've been paying for all of them separately. This replaces every single one — and costs less than one month of Netflix alone.</p>
+                
+                <div class="competitor-row">
+                    <span class="crossed-out">Netflix</span> · 
+                    <span class="crossed-out">Prime</span> · 
+                    <span class="crossed-out">Apple TV</span> · 
+                    <span class="crossed-out">Disney+</span>
+                </div>
+                <div class="brand-glow">AccessUG LiveTV</div>
+                
+                <button class="btn-primary" onclick="nextStep(4)">This replaces everything →</button>
             </div>
 
             <div class="wizard-step" id="step-4">
-                <div class="step-hero-icon blue"><i class="fas fa-bolt"></i></div>
-                <h2>Zero Buffering. Zero Stress ⚡</h2>
-                <p>Experience ultra-stable premium servers. Best of all? <strong>We completely set up your Smart TV or Phone for you via WhatsApp before you pay.</strong></p>
-                <button class="btn-primary-large" onclick="revealPricing()">See My Plans <i class="fas fa-unlock"></i></button>
+                <h2>We know what you're thinking.</h2>
+                
+                <div class="accordion-group">
+                    <div class="accordion" onclick="toggleAccordion(this)">
+                        <div class="accordion-header">Is this legal and safe? <i class="fas fa-chevron-down"></i></div>
+                        <div class="accordion-body">Yes. We provide access to private offshore servers via secure 256-bit encryption. It is completely safe, private, and secure for home use.</div>
+                    </div>
+                    <div class="accordion" onclick="toggleAccordion(this)">
+                        <div class="accordion-header">What if it stops working after I pay? <i class="fas fa-chevron-down"></i></div>
+                        <div class="accordion-body">You are covered by our active guarantee. If a server goes down, we instantly migrate you to a backup server. Our technical team is available 7 days a week on WhatsApp.</div>
+                    </div>
+                    <div class="accordion" onclick="toggleAccordion(this)">
+                        <div class="accordion-header">Is this too good to be true? <i class="fas fa-chevron-down"></i></div>
+                        <div class="accordion-body">Thousands of East Africans thought the same thing before joining. That's exactly why we set everything up for you and prove it works <i>before</i> you pay a single shilling.</div>
+                    </div>
+                </div>
+                
+                <button class="btn-primary" onclick="nextStep(5)">I'm ready. Show me the plans →</button>
+                <a href="https://wa.me/256762193386" class="secondary-link">Still unsure? Message us on WhatsApp before ordering.</a>
             </div>
 
-            <div class="wizard-step pricing-step" id="step-5">
+            <div class="wizard-step" id="step-5">
+                <h2 class="calm-heading">We connect your TV before you pay. Full stop.</h2>
                 
-                <div class="summary-block">
-                    <h3>Your Access Pass Includes:</h3>
-                    <div class="summary-grid">
-                        <div class="sum-item"><i class="fas fa-futbol text-green"></i> All Live Sports & PPV</div>
-                        <div class="sum-item"><i class="fas fa-film text-red"></i> 180k+ Movies & Series</div>
-                        <div class="sum-item"><i class="fas fa-tv text-blue"></i> Works on All Devices</div>
-                        <div class="sum-item"><i class="fas fa-headset text-dark"></i> We Set It Up For You</div>
+                <div class="guarantee-grid">
+                    <div class="guarantee-pillar">
+                        <div class="g-icon"><i class="fas fa-shield-alt"></i></div>
+                        <h3>Zero Upfront Risk</h3>
+                        <p>Your setup is complete and working before we mention payment.</p>
+                    </div>
+                    <div class="guarantee-pillar">
+                        <div class="g-icon"><i class="fas fa-headset"></i></div>
+                        <h3>Real Human Setup</h3>
+                        <p>A real person walks you through everything on WhatsApp. Not a bot.</p>
+                    </div>
+                    <div class="guarantee-pillar">
+                        <div class="g-icon"><i class="fas fa-sync-alt"></i></div>
+                        <h3>If It Breaks, We Fix It</h3>
+                        <p>Technical issue after setup? We sort it. That's our promise.</p>
                     </div>
                 </div>
+                
+                <hr class="divider">
+                <p class="social-proof-small">500+ five-star setups completed this month.</p>
+                <button class="btn-primary" onclick="revealPricing()">Perfect. Show Me the Plans →</button>
+            </div>
 
-                <h2 class="pricing-title">Select Your Plan</h2>
-
+            <div class="wizard-step pricing-step" id="step-6">
+                <div class="urgency-pill"><span class="pulse-dot-green"></span> ⚡ 14 people ordered in the last 24 hours</div>
+                
                 <div class="pricing-stack">
                     
-                    <div class="price-card premium" onclick="openCheckout('1 Year Access', '1year')">
-                        <div class="card-badge">BEST VALUE (SAVE 60%)</div>
-                        <div class="card-header">
-                            <div>
-                                <h3>12 Months Premium</h3>
-                                <span class="expiry-date dynamic-date-12">
-                                    <span class="pulse-dot"></span><i class="fas fa-sync-alt"></i> Renews on ...
-                                </span>
-                            </div>
-                            <div class="price-lockup">
-                                <span class="currency">...</span><span class="amount" id="price-1year">...</span>
-                            </div>
+                    <div class="price-card premium" onclick="selectPlan(this, '1 Year Access', '1year')">
+                        <div class="gold-badge">BEST VALUE — SAVE 60%</div>
+                        <h3 class="plan-name">12 Months Premium</h3>
+                        <div class="expiry-pill dynamic-date-12">Covered until ...</div>
+                        
+                        <div class="price-display">
+                            <span class="currency">...</span><span class="amount" id="price-1year">...</span>
                         </div>
-                        <ul class="feature-list">
-                            <li><i class="fas fa-check text-green"></i> 21,000+ Channels & All VOD</li>
-                            <li class="highlight"><i class="fas fa-gift text-blue"></i> <strong>FREE Prime Video Included</strong></li>
-                            <li class="highlight"><i class="fas fa-gift text-blue"></i> <strong>FREE Spotify Premium</strong></li>
+                        <p class="micro-price">Less than 500 UGX per day.</p>
+                        
+                        <ul class="feature-list-ownership">
+                            <li><i class="fas fa-check text-green"></i> Your complete channel list</li>
+                            <li><i class="fas fa-check text-green"></i> 4K Match Day Servers</li>
+                            <li><i class="fas fa-check text-green"></i> VIP WhatsApp Support</li>
                         </ul>
-                        <button class="btn-select">Select Premium Pass</button>
+                        <button class="btn-select-plan">Select Premium <i class="fas fa-check"></i></button>
+                        <div class="burst-layer"></div>
                     </div>
 
-                    <div class="price-card standard" onclick="openCheckout('6 Months Access', '6mo')">
-                        <div class="card-header">
-                            <div>
-                                <h3>6 Months Standard</h3>
-                                <span class="expiry-date dynamic-date-6">
-                                    <i class="fas fa-sync-alt"></i> Renews on ...
-                                </span>
-                            </div>
-                            <div class="price-lockup">
-                                <span class="currency">...</span><span class="amount" id="price-6mo">...</span>
-                            </div>
+                    <div class="price-card standard" onclick="selectPlan(this, '6 Months Access', '6mo')">
+                        <h3 class="plan-name">6 Months Standard</h3>
+                        <div class="expiry-pill dynamic-date-6">Covered until ...</div>
+                        
+                        <div class="price-display">
+                            <span class="currency">...</span><span class="amount" id="price-6mo">...</span>
                         </div>
-                        <ul class="feature-list">
-                            <li><i class="fas fa-check text-green"></i> 21,000+ Channels & All VOD</li>
-                            <li class="highlight"><i class="fas fa-gift text-blue"></i> FREE Prime Video Included</li>
+                        
+                        <ul class="feature-list-ownership">
+                            <li><i class="fas fa-check text-green"></i> Your complete channel list</li>
+                            <li><i class="fas fa-check text-green"></i> Standard Support</li>
                         </ul>
-                        <button class="btn-outline">Select Standard Pass</button>
+                        <button class="btn-select-plan">Select Standard</button>
+                        <div class="burst-layer"></div>
                     </div>
 
-                    <div class="price-card basic" onclick="openCheckout('3 Months Access', '3mo')">
-                        <div class="card-header">
-                            <div>
-                                <h3>3 Months Starter</h3>
-                                <span class="expiry-date dynamic-date-3">
-                                    <i class="fas fa-sync-alt"></i> Renews on ...
-                                </span>
-                            </div>
-                            <div class="price-lockup">
-                                <span class="currency">...</span><span class="amount" id="price-3mo">...</span>
-                            </div>
+                    <div class="price-card basic" onclick="selectPlan(this, '3 Months Access', '3mo')">
+                        <h3 class="plan-name">3 Months Starter</h3>
+                        <div class="expiry-pill dynamic-date-3">Covered until ...</div>
+                        
+                        <div class="price-display">
+                            <span class="currency">...</span><span class="amount" id="price-3mo">...</span>
                         </div>
-                        <button class="btn-outline">Select Starter Pass</button>
+                        
+                        <button class="btn-select-plan">Select Starter</button>
+                        <div class="burst-layer"></div>
                     </div>
 
                 </div>
+                
+                <p class="secure-footer-center">🔒 You will not be charged a single shilling until your TV is fully working.</p>
             </div>
 
         </div>
@@ -174,56 +245,67 @@
         <div class="bottom-sheet" onclick="event.stopPropagation()">
             <div class="sheet-handle"></div>
             
-            <div class="sheet-header">
-                <h2>Finalize Connection</h2>
-                <button class="close-btn" onclick="closeCheckout(true)"><i class="fas fa-times"></i></button>
-            </div>
-
-            <div class="selected-plan-banner">
+            <div class="selected-plan-banner" id="sheet-banner">
                 <div class="banner-left">
-                    <span class="label">Selected Package</span>
                     <strong id="summary-plan-name">...</strong>
                     <div class="banner-expiry" id="summary-expiry">...</div>
                 </div>
                 <div class="banner-right" id="summary-plan-price">...</div>
             </div>
 
-            <form id="order-form" onsubmit="return submitOrder(event)">
+            <form id="order-form" onsubmit="return submitOrder(event)" novalidate>
                 
                 <div class="input-group">
-                    <label>Your Full Name</label>
-                    <input type="text" id="clientName" placeholder="e.g. John Doe" required>
+                    <input type="text" id="clientName" placeholder="Full Name">
+                    <label>Full Name</label>
+                    <span class="input-hint">So we know what to call you during setup.</span>
+                    <div class="error-msg">We just need your name to get started.</div>
                 </div>
 
                 <div class="input-group">
+                    <input type="tel" id="clientNumber" inputmode="tel" placeholder="WhatsApp Number">
                     <label>WhatsApp Number</label>
-                    <input type="tel" id="clientNumber" placeholder="Number for setup instructions" required>
+                    <span class="input-hint">Only used to send your setup link — no spam, ever.</span>
+                    <div class="error-msg">Please provide a valid WhatsApp number.</div>
                 </div>
 
                 <div class="input-group">
-                    <label>Preferred Payment Method</label>
-                    <select id="paymentMethod" required></select>
-                    <span class="input-hint"><i class="fas fa-shield-alt text-green"></i> You will only pay AFTER your TV is working.</span>
+                    <select id="paymentMethod">
+                        <option value="" disabled selected></option>
+                        </select>
+                    <label>Payment Method</label>
+                    <span class="input-hint">You only pay after your TV is confirmed working.</span>
+                    <div class="error-msg">Please select how you intend to pay later.</div>
                 </div>
 
                 <div class="referral-box">
-                    <label class="ref-label">Did an agent refer you?</label>
-                    <div class="pill-toggle">
-                        <button type="button" class="pill active" id="btn-ref-no" onclick="switchReferral(false)">No</button>
-                        <button type="button" class="pill" id="btn-ref-yes" onclick="switchReferral(true)">Yes</button>
+                    <div class="ref-header">
+                        <span class="ref-label">Referred by an agent?</span>
+                        <label class="switch">
+                            <input type="checkbox" id="ref-toggle" onchange="toggleReferral(this)">
+                            <span class="slider round"></span>
+                        </label>
                     </div>
                     <div class="ref-input-area" id="ref-input-slide">
-                        <input type="text" id="referralCode" placeholder="Enter Agent Name or Code">
+                        <input type="text" id="referralCode" placeholder="Agent Name or Code">
                     </div>
                 </div>
 
-                <button type="submit" class="btn-whatsapp-massive" id="submit-btn">
-                    <i class="fab fa-whatsapp"></i> GENERATE DEPLOYMENT LINK
+                <div class="identity-moment">✅ You're one step away from never missing a match again.</div>
+
+                <button type="submit" class="btn-whatsapp" id="submit-btn">
+                    <i class="fab fa-whatsapp"></i> Complete My Setup on WhatsApp →
                 </button>
                 
-                <p class="security-note"><i class="fas fa-lock"></i> 100% Secure & Confidential</p>
+                <p class="bottom-security">🔒 Secure · No spam · Setup in under 10 minutes · Cancel any conversation anytime</p>
             </form>
         </div>
+    </div>
+
+    <div id="exit-pill" class="exit-pill" onclick="triggerExitWhatsApp()">
+        <i class="fab fa-whatsapp"></i>
+        <span>Still thinking? Message us — we'll answer any question in under 2 minutes.</span>
+        <button class="close-exit" onclick="dismissExit(event)"><i class="fas fa-times"></i></button>
     </div>
 
     <script src="script.js"></script>
