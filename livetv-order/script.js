@@ -1,4 +1,5 @@
-// --- APP-LIKE LOGIC ENGINE ---
+// --- HIGH-CONVERSION ENGINE ---
+// Features: Date Calculation, Zero-Friction Flow, Haptic Feedback
 
 const regionData = {
     UG: {
@@ -8,7 +9,7 @@ const regionData = {
             "6mo": { display: "150,000", raw: "150000" },
             "3mo": { display: "120,000", raw: "120000" }
         },
-        payments: ["MTN Mobile Money", "Airtel Money", "Cash in Office (Kampala)"]
+        payments: ["MTN Mobile Money", "Airtel Money", "Cash in Office"]
     },
     SS: {
         currency: "USD",
@@ -30,46 +31,48 @@ const regionData = {
     }
 };
 
-let currentRegion = 'UG'; 
+let currentRegion = null;
 let selectedPlanName = '';
 let selectedPlanRawPrice = '';
+let calculatedExpiryText = ''; // To pass to summary
 
-document.addEventListener("DOMContentLoaded", () => {
-    setRegion('UG'); // Default state
-    setupScrollListener(); // Mobile Sticky CTA logic
-});
+document.body.style.overflow = 'hidden';
 
-function scrollToPricing() {
-    document.getElementById('pricing-target').scrollIntoView({ behavior: 'smooth' });
-}
-
-// Show/Hide Sticky Button on scroll past hero
-function setupScrollListener() {
-    const hero = document.querySelector('.hero');
-    const stickyCta = document.getElementById('sticky-cta');
+// --- MAGIC DATE CALCULATOR ---
+// Calculates exact future date: e.g. "Active until 10 Mar 2027"
+function calculateExpiryDates() {
+    const today = new Date();
     
-    window.addEventListener('scroll', () => {
-        if(window.scrollY > hero.offsetHeight - 50) {
-            stickyCta.classList.add('visible');
-        } else {
-            stickyCta.classList.remove('visible');
-        }
-    });
+    const formatDate = (date) => {
+        return date.toLocaleDateString('en-GB', { 
+            day: 'numeric', month: 'short', year: 'numeric' 
+        });
+    };
+
+    // 3 Months
+    let d3 = new Date(today); d3.setMonth(d3.getMonth() + 3);
+    document.querySelector('.dynamic-date-3').innerHTML = `<i class="far fa-calendar-check"></i> Active until ${formatDate(d3)}`;
+
+    // 6 Months
+    let d6 = new Date(today); d6.setMonth(d6.getMonth() + 6);
+    document.querySelector('.dynamic-date-6').innerHTML = `<i class="far fa-calendar-check"></i> Active until ${formatDate(d6)}`;
+
+    // 12 Months
+    let d12 = new Date(today); d12.setFullYear(d12.getFullYear() + 1);
+    document.querySelector('.dynamic-date-12').innerHTML = `<i class="far fa-calendar-check"></i> Active until ${formatDate(d12)}`;
 }
 
-// --- REGION TABS ---
-function setRegion(regionCode) {
+// --- GATEKEEPER ENTRY ---
+function enterPortal(regionCode) {
     currentRegion = regionCode;
     const data = regionData[regionCode];
 
-    // Native App Tab Switch UI
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(`btn-${regionCode}`).classList.add('active');
+    if(navigator.vibrate) navigator.vibrate(50);
 
-    // Haptic feedback
-    if(navigator.vibrate) navigator.vibrate(30);
+    // Calculate Dates dynamically
+    calculateExpiryDates();
 
-    // Update Prices
+    // Inject Prices
     document.getElementById('price-1year').textContent = data.prices["1year"].display;
     document.getElementById('price-6mo').textContent = data.prices["6mo"].display;
     document.getElementById('price-3mo').textContent = data.prices["3mo"].display;
@@ -80,76 +83,94 @@ function setRegion(regionCode) {
 
     // Populate Payment Dropdown
     const paymentSelect = document.getElementById('paymentMethod');
-    paymentSelect.innerHTML = `<option value="" disabled selected></option>`;
+    paymentSelect.innerHTML = `<option value="" disabled selected>Select Payment Method</option>`;
     data.payments.forEach(method => {
         let opt = document.createElement('option');
         opt.value = method;
         opt.textContent = method;
         paymentSelect.appendChild(opt);
     });
+
+    // Animate Gatekeeper Away
+    const gatekeeper = document.getElementById('region-gatekeeper');
+    gatekeeper.style.opacity = '0';
+    setTimeout(() => {
+        gatekeeper.style.display = 'none';
+        document.body.style.overflow = 'auto';
+        
+        // Reveal Main UI Smoothly
+        document.getElementById('main-content').classList.add('visible');
+    }, 400);
 }
 
-// --- BOTTOM SHEET MODAL LOGIC ---
-function openCheckout(planName, planId) {
+// --- BOTTOM SHEET CHECKOUT ---
+function triggerCheckout(planName, planId) {
     const data = regionData[currentRegion];
     selectedPlanName = planName;
     selectedPlanRawPrice = data.prices[planId].raw;
 
-    // Update Sheet UI
-    document.getElementById('summary-plan-name').textContent = planName;
+    // Grab the pre-calculated expiry date string from the clicked card
+    let durationClass = planId === '1year' ? '.dynamic-date-12' : planId === '6mo' ? '.dynamic-date-6' : '.dynamic-date-3';
+    calculatedExpiryText = document.querySelector(durationClass).textContent;
+
+    // Populate Sheet
+    document.getElementById('summary-name').textContent = planName;
+    document.getElementById('summary-expiry').textContent = calculatedExpiryText;
+    
     const prefix = (currentRegion === 'SS' || currentRegion === 'CD') ? '$' : data.currency + ' ';
-    document.getElementById('summary-plan-price').textContent = `${prefix}${data.prices[planId].display}`;
+    document.getElementById('summary-price').textContent = `${prefix}${data.prices[planId].display}`;
 
     // Show Sheet
-    document.getElementById('app-sheet-overlay').classList.add('active');
-    document.body.style.overflow = 'hidden'; // Lock background scroll
+    document.getElementById('checkout-sheet').classList.add('active');
+    document.body.style.overflow = 'hidden';
     
-    if(navigator.vibrate) navigator.vibrate(50);
+    if(navigator.vibrate) navigator.vibrate([30, 50]); // double tap feel
 }
 
 function closeCheckout(force = false) {
-    // If event is passed, check if they clicked the overlay background
-    if(force === true || event.target.id === 'app-sheet-overlay') {
-        document.getElementById('app-sheet-overlay').classList.remove('active');
+    if(force === true || event.target.id === 'checkout-sheet') {
+        document.getElementById('checkout-sheet').classList.remove('active');
         document.body.style.overflow = 'auto';
     }
 }
 
-// --- MINIMAL REFERRAL TOGGLE ---
-function toggleReferral() {
-    const slide = document.getElementById('ref-slide');
-    const icon = document.getElementById('ref-icon');
-    const input = document.getElementById('referralCode');
+// --- REFERRAL TOGGLE ---
+function toggleReferral(isYes) {
+    const btnNo = document.getElementById('ref-no');
+    const btnYes = document.getElementById('ref-yes');
+    const slideBox = document.getElementById('ref-input-box');
+    const inputField = document.getElementById('referralCode');
 
-    if(slide.classList.contains('open')) {
-        slide.classList.remove('open');
-        icon.className = 'fas fa-plus';
-        input.value = '';
+    if (isYes) {
+        btnNo.classList.remove('active');
+        btnYes.classList.add('active');
+        slideBox.classList.add('open');
+        setTimeout(() => inputField.focus(), 200);
     } else {
-        slide.classList.add('open');
-        icon.className = 'fas fa-minus';
-        setTimeout(() => input.focus(), 200);
+        btnYes.classList.remove('active');
+        btnNo.classList.add('active');
+        slideBox.classList.remove('open');
+        inputField.value = ""; 
     }
 }
 
-// --- SECURE SUBMISSION (Zero Friction) ---
-async function submitOrder(e) {
+// --- FINAL SUBMISSION LOGIC ---
+async function finalizeOrder(e) {
     e.preventDefault(); 
 
     const name = document.getElementById('clientName').value.trim();
     const rawNumber = document.getElementById('clientNumber').value.trim();
     const payment = document.getElementById('paymentMethod').value;
-    const referrer = document.getElementById('referralCode').value.trim() || "Organic App";
+    const referrer = document.getElementById('referralCode').value.trim() || "Portal App";
 
     if (rawNumber.length < 8) {
-        alert("Please provide a valid WhatsApp number.");
+        alert("A valid WhatsApp number is required for the technical team to connect you.");
         return false;
     }
 
-    // Visual loading state
+    // Button UI Feedback
     const submitBtn = document.getElementById('submit-btn');
-    submitBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Initializing...';
-    submitBtn.style.opacity = '0.8';
+    submitBtn.innerHTML = '<i class="fas fa-satellite-dish fa-spin"></i> GENERATING LINK...';
     submitBtn.style.pointerEvents = 'none';
 
     if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
@@ -158,7 +179,7 @@ async function submitOrder(e) {
     const sheetNumber = "'" + cleanNumber; 
     const data = regionData[currentRegion];
 
-    // GOOGLE SHEETS POST
+    // --- 1. SILENT ANALYTICS (Sheets) ---
     const formData = new URLSearchParams();
     formData.append('ClientName', name);
     formData.append('Number', sheetNumber);
@@ -171,21 +192,25 @@ async function submitOrder(e) {
         fetch("https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec", { 
             method: 'POST', body: formData, mode: 'no-cors' 
         });
-    } catch (err) { console.log("Silent error handled."); }
+    } catch (err) {}
 
-    // WHATSAPP BUILDER
+    // --- 2. WHATSAPP PAYLOAD BUILDER ---
     const phone = "256762193386"; 
-    let message = `*⚡ NEW APP ACTIVATION [${currentRegion}]*\n\n`;
+    
+    let message = `*🟢 PREMIUM ACCESS REQUEST [${currentRegion}]*\n`;
+    message += `━━━━━━━━━━━━━━━━━━━━━\n`;
     message += `*Plan:* ${selectedPlanName}\n`;
-    message += `*Price:* ${selectedPlanRawPrice} ${data.currency}\n\n`;
-    message += `*Name:* ${name}\n`;
-    message += `*WhatsApp:* ${cleanNumber}\n`;
+    message += `*Valid:* ${calculatedExpiryText.replace('Active until ', '')}\n`; // Pushing calculated date to agents
+    message += `*Amount:* ${selectedPlanRawPrice} ${data.currency}\n\n`;
+    
+    message += `*Commander:* ${name}\n`;
+    message += `*Contact:* ${cleanNumber}\n`;
     message += `*Payment:* ${payment}\n`;
-    if(referrer !== "Organic App") message += `*Ref:* ${referrer}\n`;
-    message += `\n_Client is ready for immediate setup._`;
+    if(referrer !== "Portal App") message += `*Agent Ref:* ${referrer}\n`;
+    message += `━━━━━━━━━━━━━━━━━━━━━\n`;
+    message += `_Please configure my device now._`;
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     
-    // Smooth redirect
-    setTimeout(() => { window.location.href = url; }, 500);
+    setTimeout(() => { window.location.href = url; }, 400);
 }
