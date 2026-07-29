@@ -110,7 +110,7 @@ function selectPlan(cardElement, planName, planId) {
     // 3. Update Summary
     document.getElementById('sum-total').textContent = `${rawPrice} ${data.currency}`;
 
-    // 4. Update the Netflix Gift text dynamically!
+    // 4. Update the complimentary access text dynamically.
     document.querySelector('#bonus-1 p').textContent = `${currentPlanDuration} Free`;
 
     // 5. Enable button text
