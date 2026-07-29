@@ -4,9 +4,9 @@ const regionData = {
         name: "Uganda",
         currency: "UGX",
         prices: {
-            "1year": { old: "500K", new: "250K", rawValue: "250,000" },
-            "9mo": { old: "400K", new: "200K", rawValue: "200,000" },
-            "6mo": { old: "300K", new: "150K", rawValue: "150,000" }
+            "1year": { old: "240K", new: "120K", rawValue: "120,000" },
+            "9mo": { old: "180K", new: "90K", rawValue: "90,000" },
+            "6mo": { old: "120K", new: "60K", rawValue: "60,000" }
         },
         payments: ["MTN Mobile Money", "Airtel Money", "Cash in Office (Kampala)"]
     },
@@ -14,9 +14,9 @@ const regionData = {
         name: "South Sudan",
         currency: "USD",
         prices: {
-            "1year": { old: "$180", new: "$100", rawValue: "100" },
-            "9mo": { old: "$140", new: "$80", rawValue: "80" },
-            "6mo": { old: "$90", new: "$50", rawValue: "50" }
+            "1year": { old: "$80", new: "$40", rawValue: "40" },
+            "9mo": { old: "$60", new: "$30", rawValue: "30" },
+            "6mo": { old: "$40", new: "$20", rawValue: "20" }
         },
         payments: ["MoMo - wire via agent", "Give cash in South Sudan"]
     },
@@ -24,9 +24,9 @@ const regionData = {
         name: "DRC Congo",
         currency: "USD",
         prices: {
-            "1year": { old: "$180", new: "$100", rawValue: "100" },
-            "9mo": { old: "$140", new: "$80", rawValue: "80" },
-            "6mo": { old: "$90", new: "$50", rawValue: "50" }
+            "1year": { old: "$80", new: "$40", rawValue: "40" },
+            "9mo": { old: "$60", new: "$30", rawValue: "30" },
+            "6mo": { old: "$40", new: "$20", rawValue: "20" }
         },
         payments: ["Mobile Money"]
     }
@@ -110,8 +110,8 @@ function selectPlan(cardElement, planName, planId) {
     // 3. Update Summary
     document.getElementById('sum-total').textContent = `${rawPrice} ${data.currency}`;
 
-    // 4. Update the Netflix Gift text dynamically!
-    document.querySelector('#bonus-1 p').textContent = `${currentPlanDuration} Free`;
+    // 4. Set the Netflix Gift text permanently to 1 Month Free
+    document.querySelector('#bonus-1 p').textContent = `1 Month Free`;
 
     // 5. Enable button text
     const btn = document.getElementById('btn-step-1');
@@ -185,7 +185,7 @@ async function validateAndSend() {
     const formData = new URLSearchParams();
     formData.append('ClientName', name);
     formData.append('Number', sheetNumber); // Added newly captured number
-    formData.append('Service', 'Prime Video'); // Identifies the service
+    formData.append('Service', 'Spotify Premium'); // FIXED: Was incorrectly labeled Netflix Premium
     formData.append('Package', currentPlanName);
     formData.append('Price', rawPrice.replace(/,/g, '')); // Removes commas for math
     formData.append('Referrer', referrer);
@@ -203,7 +203,7 @@ async function validateAndSend() {
     const phone = "256762193386"; 
     
     let message = `*NEW ORDER [${data.name.toUpperCase()}]*\n\n`;
-    message += `*Service:* Prime Video\n`; // FIXED: Now correctly says Prime Video
+    message += `*Service:* Spotify Premium\n`;
     message += `*Package:* ${currentPlanName}\n`;
     message += `*Price:* ${rawPrice} ${data.currency}\n`;
     message += `*Referrer:* ${referrer}\n\n`; 
@@ -215,6 +215,7 @@ async function validateAndSend() {
     window.location.href = url;
     return false;
 }
+
 // --- DUAL-PILL REFERRAL LOGIC ---
 function switchReferral(isYes) {
     const btnNo = document.getElementById('btn-ref-no');

@@ -96,29 +96,22 @@ function setRegion(regionCode) {
 
 // --- WIZARD LOGIC ---
 function selectPlan(cardElement, planName, planId) {
-    // 1. Visual selection
     document.querySelectorAll('.plan-card').forEach(c => c.classList.remove('selected'));
     cardElement.classList.add('selected');
 
-    // 2. Store data
     currentPlanName = planName;
     currentPlanDuration = planName; 
     
     const data = regionData[currentRegion];
     const rawPrice = data.prices[planId].rawValue;
 
-    // 3. Update Summary
     document.getElementById('sum-total').textContent = `${rawPrice} ${data.currency}`;
-
-    // 4. Update the Netflix Gift text dynamically!
     document.querySelector('#bonus-1 p').textContent = `${currentPlanDuration} Free`;
 
-    // 5. Enable button text
     const btn = document.getElementById('btn-step-1');
     btn.classList.remove('disabled');
     btn.innerHTML = `Continue <i class="fas fa-arrow-right"></i>`;
 
-    // 6. Smooth scroll
     setTimeout(() => {
         btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 350);
@@ -154,7 +147,6 @@ async function validateAndSend() {
     const name = document.getElementById('clientName').value.trim();
     const rawNumber = document.getElementById('clientNumber').value.trim();
     const payment = document.getElementById('paymentMethod').value;
-    // Add this line to grab the referral code
     const referrer = document.getElementById('referralCode')?.value.trim() || "Direct";
 
     // Form Validation
@@ -181,17 +173,15 @@ async function validateAndSend() {
     else if (currentPlanName.includes("6 Months")) rawPrice = data.prices["6mo"].rawValue;
 
     // --- START: GOOGLE SHEETS INTEGRATION ---
-    // This sends data to your sheet in the background
     const formData = new URLSearchParams();
     formData.append('ClientName', name);
     formData.append('Number', sheetNumber); // Added newly captured number
-    formData.append('Service', 'Prime Video'); // Identifies the service
+    formData.append('Service', 'Netflix Premium');
     formData.append('Package', currentPlanName);
-    formData.append('Price', rawPrice.replace(/,/g, '')); // Removes commas for math
+    formData.append('Price', rawPrice.replace(/,/g, '')); 
     formData.append('Referrer', referrer);
 
     try {
-        // Uses your Google Web App URL
         fetch("https://script.google.com/macros/s/AKfycbzsER7toUR8OwPWPic7Oqbbjz-ew2pR_HJ4Um3V9o6eVmlf730ibwF7ELv6GCekmgl2aA/exec", { 
             method: 'POST', 
             body: formData, 
@@ -203,10 +193,10 @@ async function validateAndSend() {
     const phone = "256762193386"; 
     
     let message = `*NEW ORDER [${data.name.toUpperCase()}]*\n\n`;
-    message += `*Service:* Prime Video\n`; // FIXED: Now correctly says Prime Video
+    message += `*Service:* Netflix Premium\n`;
     message += `*Package:* ${currentPlanName}\n`;
     message += `*Price:* ${rawPrice} ${data.currency}\n`;
-    message += `*Referrer:* ${referrer}\n\n`; 
+    message += `*Referrer:* ${referrer}\n\n`;
     message += `*Name:* ${name}\n`;
     message += `*WhatsApp:* ${cleanNumber}\n`; // Added to message
     message += `*Payment Method:* ${payment}`;
@@ -215,6 +205,7 @@ async function validateAndSend() {
     window.location.href = url;
     return false;
 }
+
 // --- DUAL-PILL REFERRAL LOGIC ---
 function switchReferral(isYes) {
     const btnNo = document.getElementById('btn-ref-no');
@@ -226,11 +217,11 @@ function switchReferral(isYes) {
         btnNo.classList.remove('active');
         btnYes.classList.add('active');
         slideBox.classList.add('open');
-        setTimeout(() => inputField.focus(), 150); // Auto-focuses keyboard
+        setTimeout(() => inputField.focus(), 150);
     } else {
         btnYes.classList.remove('active');
         btnNo.classList.add('active');
         slideBox.classList.remove('open');
-        inputField.value = ""; // Clears the box if they change their mind
+        inputField.value = ""; 
     }
 }
