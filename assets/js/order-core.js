@@ -51,7 +51,7 @@
 
   function messageFor(payload) {
     const lines = [
-      '*97 WORLD - NEW REQUEST*',
+      `*${String(config.brandName || 'AccessUG').toUpperCase()} - NEW REQUEST*`,
       '',
       `*Reference:* ${payload.order_id}`,
       `*Offer:* ${payload.offer}`,
@@ -118,7 +118,7 @@
       order_id: orderId(form.dataset.prefix || '97W'),
       created_at: new Date().toISOString(),
       source: product.source || form.dataset.product || 'website',
-      offer: product.offer || form.dataset.offer || '97 World request',
+      offer: product.offer || form.dataset.offer || 'AccessUG request',
       package: selectedLabel(form, 'package') || form.dataset.defaultPackage || '',
       price,
       currency,

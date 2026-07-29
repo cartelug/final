@@ -163,6 +163,7 @@ h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height
 .card-apple { --brand-color: #FA243C; --brand-color-rgb: 250, 36, 60; }
 .card-youtube { --brand-color: #FF0000; --brand-color-rgb: 255, 0, 0; }
 .card-facebook { --brand-color: #1877F2; --brand-color-rgb: 24, 119, 242; }
+.card-website { --brand-color: #00F57A; --brand-color-rgb: 0, 245, 122; }
 /* LiveTV has its own animated theme now */
 
 .spatial-card { position: relative; flex: 0 0 350px; height: max-content; background: rgba(10,10,12,0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; padding: 28px; display: flex; flex-direction: column; scroll-snap-align: center; box-shadow: 0 15px 40px rgba(0,0,0,0.6); transition: all 0.4s var(--curve-spring); }
